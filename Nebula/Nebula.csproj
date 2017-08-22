@@ -1,0 +1,1214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C898ED5D-D2C7-42ED-9370-FF739D29BCE9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nebula</RootNamespace>
+    <AssemblyName>Nebula</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <IncludeIisSettings>true</IncludeIisSettings>
+    <PublishDatabases>false</PublishDatabases>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.4.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\oracle\odp.net\bin\4\Oracle.DataAccess.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\NebulaDBManageController.cs" />
+    <Compile Include="Controllers\NebulaReportController.cs" />
+    <Compile Include="Controllers\NebulaUserController.cs" />
+    <Compile Include="Controllers\ExtenalDataController.cs" />
+    <Compile Include="Controllers\MiniPIPController.cs" />
+    <Compile Include="Controllers\ShareDataController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CookieUtility.cs" />
+    <Compile Include="Models\DBUtility.cs" />
+    <Compile Include="Models\EventDataVM.cs" />
+    <Compile Include="Models\NebulaDataCollector.cs" />
+    <Compile Include="Models\NebulaRPVM.cs" />
+    <Compile Include="Models\NebulaUserCacheVM.cs" />
+    <Compile Include="Models\NebulaUserViewModels.cs" />
+    <Compile Include="Models\NebulaVM.cs" />
+    <Compile Include="Models\EmailUtility.cs" />
+    <Compile Include="Models\ExcelReader.cs" />
+    <Compile Include="Models\UserRankViewModel.cs" />
+    <Compile Include="Models\WebPageVM.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ckeditor\adapters\jquery.js" />
+    <Content Include="ckeditor\build-config.js" />
+    <Content Include="ckeditor\ckeditor.js" />
+    <Content Include="ckeditor\config.js" />
+    <Content Include="ckeditor\contents.css" />
+    <Content Include="ckeditor\lang\af.js" />
+    <Content Include="ckeditor\lang\ar.js" />
+    <Content Include="ckeditor\lang\bg.js" />
+    <Content Include="ckeditor\lang\bn.js" />
+    <Content Include="ckeditor\lang\bs.js" />
+    <Content Include="ckeditor\lang\ca.js" />
+    <Content Include="ckeditor\lang\cs.js" />
+    <Content Include="ckeditor\lang\cy.js" />
+    <Content Include="ckeditor\lang\da.js" />
+    <Content Include="ckeditor\lang\de-ch.js" />
+    <Content Include="ckeditor\lang\de.js" />
+    <Content Include="ckeditor\lang\el.js" />
+    <Content Include="ckeditor\lang\en-au.js" />
+    <Content Include="ckeditor\lang\en-ca.js" />
+    <Content Include="ckeditor\lang\en-gb.js" />
+    <Content Include="ckeditor\lang\en.js" />
+    <Content Include="ckeditor\lang\eo.js" />
+    <Content Include="ckeditor\lang\es.js" />
+    <Content Include="ckeditor\lang\et.js" />
+    <Content Include="ckeditor\lang\eu.js" />
+    <Content Include="ckeditor\lang\fa.js" />
+    <Content Include="ckeditor\lang\fi.js" />
+    <Content Include="ckeditor\lang\fo.js" />
+    <Content Include="ckeditor\lang\fr-ca.js" />
+    <Content Include="ckeditor\lang\fr.js" />
+    <Content Include="ckeditor\lang\gl.js" />
+    <Content Include="ckeditor\lang\gu.js" />
+    <Content Include="ckeditor\lang\he.js" />
+    <Content Include="ckeditor\lang\hi.js" />
+    <Content Include="ckeditor\lang\hr.js" />
+    <Content Include="ckeditor\lang\hu.js" />
+    <Content Include="ckeditor\lang\id.js" />
+    <Content Include="ckeditor\lang\is.js" />
+    <Content Include="ckeditor\lang\it.js" />
+    <Content Include="ckeditor\lang\ja.js" />
+    <Content Include="ckeditor\lang\ka.js" />
+    <Content Include="ckeditor\lang\km.js" />
+    <Content Include="ckeditor\lang\ko.js" />
+    <Content Include="ckeditor\lang\ku.js" />
+    <Content Include="ckeditor\lang\lt.js" />
+    <Content Include="ckeditor\lang\lv.js" />
+    <Content Include="ckeditor\lang\mk.js" />
+    <Content Include="ckeditor\lang\mn.js" />
+    <Content Include="ckeditor\lang\ms.js" />
+    <Content Include="ckeditor\lang\nb.js" />
+    <Content Include="ckeditor\lang\nl.js" />
+    <Content Include="ckeditor\lang\no.js" />
+    <Content Include="ckeditor\lang\pl.js" />
+    <Content Include="ckeditor\lang\pt-br.js" />
+    <Content Include="ckeditor\lang\pt.js" />
+    <Content Include="ckeditor\lang\ro.js" />
+    <Content Include="ckeditor\lang\ru.js" />
+    <Content Include="ckeditor\lang\si.js" />
+    <Content Include="ckeditor\lang\sk.js" />
+    <Content Include="ckeditor\lang\sl.js" />
+    <Content Include="ckeditor\lang\sq.js" />
+    <Content Include="ckeditor\lang\sr-latn.js" />
+    <Content Include="ckeditor\lang\sr.js" />
+    <Content Include="ckeditor\lang\sv.js" />
+    <Content Include="ckeditor\lang\th.js" />
+    <Content Include="ckeditor\lang\tr.js" />
+    <Content Include="ckeditor\lang\tt.js" />
+    <Content Include="ckeditor\lang\ug.js" />
+    <Content Include="ckeditor\lang\uk.js" />
+    <Content Include="ckeditor\lang\vi.js" />
+    <Content Include="ckeditor\lang\zh-cn.js" />
+    <Content Include="ckeditor\lang\zh.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\de-ch.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\eu.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\fo.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\tt.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="ckeditor\plugins\icons.png" />
+    <Content Include="ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="ckeditor\plugins\magicline\images\hidpi\icon-rtl.png" />
+    <Content Include="ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="ckeditor\plugins\magicline\images\icon-rtl.png" />
+    <Content Include="ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\af.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\da.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\de-ch.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\en-gb.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\eu.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\ko.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\lt.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\tt.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="ckeditor\samples\css\samples.css" />
+    <Content Include="ckeditor\samples\img\github-top.png" />
+    <Content Include="ckeditor\samples\img\header-bg.png" />
+    <Content Include="ckeditor\samples\img\header-separator.png" />
+    <Content Include="ckeditor\samples\img\logo.png" />
+    <Content Include="ckeditor\samples\img\navigation-tip.png" />
+    <Content Include="ckeditor\samples\index.html" />
+    <Content Include="ckeditor\samples\js\sample.js" />
+    <Content Include="ckeditor\samples\js\sf.js" />
+    <Content Include="ckeditor\samples\old\ajax.html" />
+    <Content Include="ckeditor\samples\old\api.html" />
+    <Content Include="ckeditor\samples\old\appendto.html" />
+    <Content Include="ckeditor\samples\old\assets\inlineall\logo.png" />
+    <Content Include="ckeditor\samples\old\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="ckeditor\samples\old\assets\sample.jpg" />
+    <Content Include="ckeditor\samples\old\assets\uilanguages\languages.js" />
+    <Content Include="ckeditor\samples\old\datafiltering.html" />
+    <Content Include="ckeditor\samples\old\dialog\assets\my_dialog.js" />
+    <Content Include="ckeditor\samples\old\dialog\dialog.html" />
+    <Content Include="ckeditor\samples\old\divreplace.html" />
+    <Content Include="ckeditor\samples\old\enterkey\enterkey.html" />
+    <Content Include="ckeditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.swf" />
+    <Content Include="ckeditor\samples\old\htmlwriter\assets\outputforflash\swfobject.js" />
+    <Content Include="ckeditor\samples\old\htmlwriter\outputforflash.html" />
+    <Content Include="ckeditor\samples\old\htmlwriter\outputhtml.html" />
+    <Content Include="ckeditor\samples\old\index.html" />
+    <Content Include="ckeditor\samples\old\inlineall.html" />
+    <Content Include="ckeditor\samples\old\inlinebycode.html" />
+    <Content Include="ckeditor\samples\old\inlinetextarea.html" />
+    <Content Include="ckeditor\samples\old\jquery.html" />
+    <Content Include="ckeditor\samples\old\magicline\magicline.html" />
+    <Content Include="ckeditor\samples\old\readonly.html" />
+    <Content Include="ckeditor\samples\old\replacebyclass.html" />
+    <Content Include="ckeditor\samples\old\replacebycode.html" />
+    <Content Include="ckeditor\samples\old\sample.css" />
+    <Content Include="ckeditor\samples\old\sample.js" />
+    <Content Include="ckeditor\samples\old\tabindex.html" />
+    <Content Include="ckeditor\samples\old\toolbar\toolbar.html" />
+    <Content Include="ckeditor\samples\old\uicolor.html" />
+    <Content Include="ckeditor\samples\old\uilanguages.html" />
+    <Content Include="ckeditor\samples\old\wysiwygarea\fullpage.html" />
+    <Content Include="ckeditor\samples\old\xhtmlstyle.html" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\css\fontello.css" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.svg" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\font\LICENSE.txt" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\index.html" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\js\abstracttoolbarmodifier.js" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\js\fulltoolbareditor.js" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\js\toolbarmodifier.js" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\js\toolbartextmodifier.js" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\codemirror.css" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\codemirror.js" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\javascript.js" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\neo.css" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.css" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.js" />
+    <Content Include="ckeditor\skins\moono-lisa\dev\icons16.png" />
+    <Content Include="ckeditor\skins\moono-lisa\dev\icons16.svg" />
+    <Content Include="ckeditor\skins\moono-lisa\dev\icons32.png" />
+    <Content Include="ckeditor\skins\moono-lisa\dev\icons32.svg" />
+    <Content Include="ckeditor\skins\moono-lisa\dialog.css" />
+    <Content Include="ckeditor\skins\moono-lisa\dialog_ie.css" />
+    <Content Include="ckeditor\skins\moono-lisa\dialog_ie8.css" />
+    <Content Include="ckeditor\skins\moono-lisa\dialog_iequirks.css" />
+    <Content Include="ckeditor\skins\moono-lisa\editor.css" />
+    <Content Include="ckeditor\skins\moono-lisa\editor_gecko.css" />
+    <Content Include="ckeditor\skins\moono-lisa\editor_ie.css" />
+    <Content Include="ckeditor\skins\moono-lisa\editor_ie8.css" />
+    <Content Include="ckeditor\skins\moono-lisa\editor_iequirks.css" />
+    <Content Include="ckeditor\skins\moono-lisa\images\arrow.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\close.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\hidpi\close.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\hidpi\lock-open.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\hidpi\lock.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\hidpi\refresh.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\lock-open.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\lock.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\refresh.png" />
+    <Content Include="ckeditor\skins\moono-lisa\images\spinner.gif" />
+    <Content Include="ckeditor\skins\moono-lisa\skin.js" />
+    <Content Include="ckeditor\skins\moono\dialog.css" />
+    <Content Include="ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="ckeditor\skins\moono\editor.css" />
+    <Content Include="ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="ckeditor\skins\moono\editor_iequirks.css" />
+    <Content Include="ckeditor\skins\moono\icons.png" />
+    <Content Include="ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="ckeditor\skins\moono\images\arrow.png" />
+    <Content Include="ckeditor\skins\moono\images\close.png" />
+    <Content Include="ckeditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="ckeditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="ckeditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="ckeditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="ckeditor\skins\moono\images\lock-open.png" />
+    <Content Include="ckeditor\skins\moono\images\lock.png" />
+    <Content Include="ckeditor\skins\moono\images\refresh.png" />
+    <Content Include="ckeditor\skins\moono\images\spinner.gif" />
+    <Content Include="ckeditor\styles.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Nebula.css" />
+    <Content Include="Content\Finisar.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOComplete-done.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOComplete-pending.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOComplete-working.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOPending-done.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOPending-pending.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOPending-working.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOSignoff1-done.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOSignoff1-pending.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-ECOSignoff1-working.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-MiniPIPComplete-done.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-MiniPIPComplete-pending.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-MiniPIPComplete-working.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleBuilding-done.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleBuilding-pending.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleBuilding-working.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleCustomerApproval-done.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleCustomerApproval-pending.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleCustomerApproval-working.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleOrdering-done.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleOrdering-pending.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleOrdering-working.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleShipment-done.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleShipment-pending.png" />
+    <Content Include="Content\images\Default Vs Non-Sample\Default Vs Non-Sample-SampleShipment-working.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOComplete-done.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOComplete-pending.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOComplete-working.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOPending-done.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOPending-pending.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOPending-working.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOSignoff1-done.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOSignoff1-pending.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-ECOSignoff1-working.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-MiniPIPComplete-done.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-MiniPIPComplete-pending.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-MiniPIPComplete-working.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleBuilding-done.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleBuilding-pending.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleBuilding-working.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleCustomerApproval-done.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleCustomerApproval-pending.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleCustomerApproval-working.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleOrdering-done.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleOrdering-pending.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleOrdering-working.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleShipment-done.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleShipment-pending.png" />
+    <Content Include="Content\images\Default Vs Sample\Default Vs Sample-SampleShipment-working.png" />
+    <Content Include="Content\images\FinisarBuilding.jpg" />
+    <Content Include="Content\images\FinisarLogo.jpg" />
+    <Content Include="Content\images\icon\Add.png" />
+    <Content Include="Content\images\icon\delete.png" />
+    <Content Include="Content\images\icon\delete2.png" />
+    <Content Include="Content\images\icon\edit.png" />
+    <Content Include="Content\images\icon\edit2.png" />
+    <Content Include="Content\images\icon\extend.png" />
+    <Content Include="Content\images\icon\extendup.png" />
+    <Content Include="Content\images\icon\LowYield.png" />
+    <Content Include="Content\images\icon\pageloadingicon.gif" />
+    <Content Include="Content\images\icon\Upload.png" />
+    <Content Include="Content\images\minipip\Default Vs Non-Sample.png" />
+    <Content Include="Content\images\minipip\Default Vs Sample.png" />
+    <Content Include="Content\images\minipip\DefaultComplete.png" />
+    <Content Include="Content\images\minipip\ECOPendingOnlypending.png" />
+    <Content Include="Content\images\minipip\ECOPendingOnlyworking.png" />
+    <Content Include="Content\images\minipip\Revise Vs Non-Sample.png" />
+    <Content Include="Content\images\minipip\Revise Vs Sample.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-CustomerApprovalHold-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-CustomerApprovalHold-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-CustomerApprovalHold-working.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOComplete-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOComplete-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOComplete-working.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOPending-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOPending-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOPending-working.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOSignoff2-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOSignoff2-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-ECOSignoff2-working.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-MiniPIPComplete-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-MiniPIPComplete-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-MiniPIPComplete-working.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleBuilding-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleBuilding-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleBuilding-working.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleCustomerApproval-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleCustomerApproval-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleCustomerApproval-working.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleOrdering-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleOrdering-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleOrdering-working.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleShipment-done.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleShipment-pending.png" />
+    <Content Include="Content\images\Revise Vs Non-Sample\Revise Vs Non-Sample-SampleShipment-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-CustomerApprovalHold-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-CustomerApprovalHold-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-CustomerApprovalHold-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOComplete-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOComplete-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOComplete-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOPending-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOPending-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOPending-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOSignoff2-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOSignoff2-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-ECOSignoff2-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-MiniPIPComplete-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-MiniPIPComplete-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-MiniPIPComplete-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleBuilding-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleBuilding-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleBuilding-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleCustomerApproval-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleCustomerApproval-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleCustomerApproval-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleOrdering-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleOrdering-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleOrdering-working.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleShipment-done.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleShipment-pending.png" />
+    <Content Include="Content\images\Revise Vs Sample\Revise Vs Sample-SampleShipment-working.png" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\jquery.dataTables.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\themes\bootstrapfileinput.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\agiledownloadwraper\AgileDownload.exe" />
+    <Content Include="Scripts\agiledownloadwraper\AgileDownload.xml" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\awt.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\bci.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\agilefilecopy.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\agilefilecopy.xml" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\aglxtrct.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\interop.aglxtrct.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\jvm.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\Xusage.txt" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\dcpr.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\decora_sse.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\deploy.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\dtplugin\deployJava1.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\dtplugin\npdeployJava1.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\dt_shmem.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\dt_socket.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\eula.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\fontmanager.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\fxplugins.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\glass.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\glib-lite.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\gstreamer-lite.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\hprof.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\instrument.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\j2pcsc.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\j2pkcs11.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jaas_nt.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jabswitch.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\java-rmi.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\java.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\java.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\JavaAccessBridge-32.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\javacpl.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\javafx_font.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\javafx_font_t2k.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\javafx_iio.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\javaw.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\javaws.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\java_crw_demo.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jawt.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\JAWTAccessBridge-32.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jdwp.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jfr.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jfxmedia.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jfxwebkit.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jjs.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jli.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jp2iexp.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jp2launcher.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jp2native.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jp2ssv.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jpeg.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jsdt.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jsound.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\jsoundds.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\kcms.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\keytool.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\kinit.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\klist.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\ktab.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\lcms.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\management.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\mlib_image.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\msvcp120.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\msvcr100.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\msvcr120.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\net.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\nio.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\npt.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\orbd.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\pack200.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\plugin2\msvcr100.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\plugin2\npjp2.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\policytool.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\prism_common.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\prism_d3d.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\prism_sw.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\resource.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\rmid.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\rmiregistry.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\servertool.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\splashscreen.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\ssv.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\ssvagent.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\sunec.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\sunmscapi.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\t2k.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\tnameserv.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\unpack.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\unpack200.exe" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\verify.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\w2k_lsa_auth.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\WindowsAccessBridge-32.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\wsdetect.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\zip.dll" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\charsets.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\splash%402x.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\splash.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\splash_11%402x-lic.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\splash_11-lic.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\access-bridge-32.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\cldrdata.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\dnsns.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\jaccess.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\jfxrt.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\localedata.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\nashorn.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\sunec.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\sunjce_provider.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\sunmscapi.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\sunpkcs11.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\zipfs.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\images\cursors\invalid32x32.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\images\cursors\win32_CopyDrop32x32.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\images\cursors\win32_CopyNoDrop32x32.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\images\cursors\win32_LinkDrop32x32.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\images\cursors\win32_LinkNoDrop32x32.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\images\cursors\win32_MoveDrop32x32.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\images\cursors\win32_MoveNoDrop32x32.gif" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\javaws.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\jce.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\jfr.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\jfxswt.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\jsse.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\jvm.hprof.txt" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\management-agent.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\plugin.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\resources.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\rt.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\local_policy.jar" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\US_export_policy.jar" />
+    <Content Include="Scripts\ajaxfileupload.js" />
+    <Content Include="Scripts\AreaChart.xml" />
+    <Content Include="Scripts\BISuperYield.xml" />
+    <Content Include="Scripts\BOMFileAttachment.java" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ckeditor\CHANGES.md" />
+    <Content Include="ckeditor\LICENSE.md" />
+    <Content Include="ckeditor\plugins\scayt\CHANGELOG.md" />
+    <Content Include="ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="ckeditor\plugins\scayt\README.md" />
+    <Content Include="ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="ckeditor\plugins\wsc\README.md" />
+    <Content Include="ckeditor\README.md" />
+    <Content Include="ckeditor\samples\old\assets\posteddata.php" />
+    <Content Include="ckeditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <Content Include="ckeditor\samples\old\sample_posteddata.php" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\font\config.json" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.eot" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
+    <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <Content Include="ckeditor\skins\moono\readme.md" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\wells.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\bootstrap\utilities.less" />
+    <Content Include="Content\bootstrap\type.less" />
+    <Content Include="Content\bootstrap\tooltip.less" />
+    <Content Include="Content\bootstrap\thumbnails.less" />
+    <Content Include="Content\bootstrap\theme.less" />
+    <Content Include="Content\bootstrap\tables.less" />
+    <Content Include="Content\bootstrap\scaffolding.less" />
+    <Content Include="Content\bootstrap\responsive-utilities.less" />
+    <Content Include="Content\bootstrap\responsive-embed.less" />
+    <Content Include="Content\bootstrap\progress-bars.less" />
+    <Content Include="Content\bootstrap\print.less" />
+    <Content Include="Content\bootstrap\popovers.less" />
+    <Content Include="Content\bootstrap\panels.less" />
+    <Content Include="Content\bootstrap\pagination.less" />
+    <Content Include="Content\bootstrap\pager.less" />
+    <Content Include="Content\bootstrap\normalize.less" />
+    <Content Include="Content\bootstrap\navs.less" />
+    <Content Include="Content\bootstrap\navbar.less" />
+    <Content Include="Content\bootstrap\modals.less" />
+    <Content Include="Content\bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="Content\bootstrap\mixins\text-overflow.less" />
+    <Content Include="Content\bootstrap\mixins\text-emphasis.less" />
+    <Content Include="Content\bootstrap\mixins\table-row.less" />
+    <Content Include="Content\bootstrap\mixins\tab-focus.less" />
+    <Content Include="Content\bootstrap\mixins\size.less" />
+    <Content Include="Content\bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="Content\bootstrap\mixins\resize.less" />
+    <Content Include="Content\bootstrap\mixins\reset-text.less" />
+    <Content Include="Content\bootstrap\mixins\reset-filter.less" />
+    <Content Include="Content\bootstrap\mixins\progress-bar.less" />
+    <Content Include="Content\bootstrap\mixins\panels.less" />
+    <Content Include="Content\bootstrap\mixins\pagination.less" />
+    <Content Include="Content\bootstrap\mixins\opacity.less" />
+    <Content Include="Content\bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="Content\bootstrap\mixins\nav-divider.less" />
+    <Content Include="Content\bootstrap\mixins\list-group.less" />
+    <Content Include="Content\bootstrap\mixins\labels.less" />
+    <Content Include="Content\bootstrap\mixins\image.less" />
+    <Content Include="Content\bootstrap\mixins\hide-text.less" />
+    <Content Include="Content\bootstrap\mixins\grid.less" />
+    <Content Include="Content\bootstrap\mixins\grid-framework.less" />
+    <Content Include="Content\bootstrap\mixins\gradients.less" />
+    <Content Include="Content\bootstrap\mixins\forms.less" />
+    <Content Include="Content\bootstrap\mixins\clearfix.less" />
+    <Content Include="Content\bootstrap\mixins\center-block.less" />
+    <Content Include="Content\bootstrap\mixins\buttons.less" />
+    <Content Include="Content\bootstrap\mixins\border-radius.less" />
+    <Content Include="Content\bootstrap\mixins\background-variant.less" />
+    <Content Include="Content\bootstrap\mixins\alerts.less" />
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\media.less" />
+    <Content Include="Content\bootstrap\list-group.less" />
+    <Content Include="Content\bootstrap\labels.less" />
+    <Content Include="Content\bootstrap\jumbotron.less" />
+    <Content Include="Content\bootstrap\input-groups.less" />
+    <Content Include="Content\bootstrap\grid.less" />
+    <Content Include="Content\bootstrap\glyphicons.less" />
+    <Content Include="Content\bootstrap\forms.less" />
+    <Content Include="Content\bootstrap\dropdowns.less" />
+    <Content Include="Content\bootstrap\component-animations.less" />
+    <Content Include="Content\bootstrap\code.less" />
+    <Content Include="Content\bootstrap\close.less" />
+    <Content Include="Content\bootstrap\carousel.less" />
+    <Content Include="Content\bootstrap\buttons.less" />
+    <Content Include="Content\bootstrap\button-groups.less" />
+    <Content Include="Content\bootstrap\breadcrumbs.less" />
+    <Content Include="Content\bootstrap\bootstrap.less" />
+    <Content Include="Content\bootstrap\badges.less" />
+    <Content Include="Content\bootstrap\alerts.less" />
+    <Content Include="Scripts\burn_in_pn_list.xlsx" />
+    <Content Include="ckeditor\skins\moono-lisa\dev\locations.json" />
+    <Content Include="ckeditor\skins\moono-lisa\readme.md" />
+    <None Include="Properties\PublishProfiles\Nebulatest.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\agilefilecopy.exe.config" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\classes.jsa" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\dllkey.reg" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\client\FileAttachment.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\bin\javacpl.cpl" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\accessibility.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\calendars.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\classlist" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\cmm\CIEXYZ.pf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\cmm\GRAY.pf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\cmm\LINEAR_RGB.pf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\cmm\PYCC.pf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\cmm\sRGB.pf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\content-types.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\currency.data" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\ffjcext.zip" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_de.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_es.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_fr.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_it.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_ja.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_ko.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_pt_BR.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_sv.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_zh_CN.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_zh_HK.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\deploy\messages_zh_TW.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\ext\meta-index" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\flavormap.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fontconfig.bfc" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fontconfig.properties.src" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fonts\LucidaBrightDemiBold.ttf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fonts\LucidaBrightDemiItalic.ttf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fonts\LucidaBrightItalic.ttf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fonts\LucidaBrightRegular.ttf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fonts\LucidaSansDemiBold.ttf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fonts\LucidaSansRegular.ttf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fonts\LucidaTypewriterBold.ttf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\fonts\LucidaTypewriterRegular.ttf" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\hijrah-config-umalqura.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\i386\jvm.cfg" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\images\cursors\cursors.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\javafx.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\jfr\default.jfc" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\jfr\profile.jfc" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\logging.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\management\jmxremote.access" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\management\jmxremote.password.template" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\management\management.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\management\snmp.acl.template" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\meta-index" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\net.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\psfont.properties.ja" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\psfontj2d.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\blacklist" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\blacklisted.certs" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\cacerts" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\java.policy" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\java.security" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\javaws.policy" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\security\trusted.libraries" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\sound.properties" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\tzdb.dat" />
+    <Content Include="Scripts\agiledownloadwraper\jre\lib\tzmappings" />
+    <Content Include="Scripts\fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Scripts\fonts\fontawesome-webfont.woff" />
+    <Content Include="Scripts\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Scripts\fonts\FontAwesome.otf" />
+    <Content Include="Scripts\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\fonts\weathericons-regular-webfont.eot" />
+    <Content Include="Scripts\fonts\weathericons-regular-webfont.ttf" />
+    <Content Include="Scripts\fonts\weathericons-regular-webfont.woff" />
+    <Content Include="Scripts\fonts\WeatherIcons-Regular.otf" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Scripts\lobi\daterangepicker.js" />
+    <Content Include="Scripts\lobi\font-awesome.min.css" />
+    <Content Include="Scripts\lobi\fullcalendar.js" />
+    <Content Include="Scripts\lobi\jquery.ui.touch-punch.min.js" />
+    <Content Include="Scripts\lobi\lobiadmin-with-plugins.css" />
+    <Content Include="Scripts\lobi\moment.min.js" />
+    <Content Include="Scripts\Nebula-db-script.txt" />
+    <Content Include="Scripts\NebulaCfg.txt" />
+    <Content Include="Scripts\NebulaComplex.xml" />
+    <Content Include="Scripts\NebulaCycleTime.xml" />
+    <Content Include="Scripts\NebulaFABuilding.xml" />
+    <Content Include="Scripts\NebulaQAFACheck.xml" />
+    <Content Include="Scripts\NebulaWorkLoad.xml" />
+    <Content Include="Scripts\HeartBeat4Nebula.exe" />
+    <Content Include="Scripts\heartbeat4Nebula.txt" />
+    <Content Include="Scripts\exporting.js" />
+    <Content Include="Scripts\highcharts.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.base64.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.stickytableheaders.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\ParetoChart.xml" />
+    <Content Include="Scripts\PieChart.xml" />
+    <Content Include="Scripts\placeholders.min.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\SuperYield.xml" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\ColumnChart.xml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="userfiles\Upload.ashx" />
+    <Content Include="Scripts\project_list.xlsx" />
+    <Content Include="Scripts\project_pn_desc_list.xlsx" />
+    <Content Include="Scripts\project_model_id_list.xlsx" />
+    <Content Include="Scripts\project_indicative_datasetname_list.xlsx" />
+    <Content Include="Views\MiniPIP\ViewAll.cshtml" />
+    <Content Include="Views\MiniPIP\ECOSignoff1.cshtml" />
+    <Content Include="Views\MiniPIP\ECOPending.cshtml" />
+    <Content Include="Views\MiniPIP\CurrentECO.cshtml" />
+    <Content Include="Views\MiniPIP\ECOComplete.cshtml" />
+    <Content Include="Views\MiniPIP\ECOSignoff2.cshtml" />
+    <Content Include="Views\MiniPIP\SampleOrdering.cshtml" />
+    <Content Include="Views\MiniPIP\SampleBuilding.cshtml" />
+    <Content Include="Views\MiniPIP\SampleShipment.cshtml" />
+    <Content Include="Views\MiniPIP\SampleCustomerApproval.cshtml" />
+    <Content Include="Views\MiniPIP\MiniPIPComplete.cshtml" />
+    <Content Include="Views\MiniPIP\CustomerApprovalHold.cshtml" />
+    <Content Include="Views\ExtenalData\CommitUserMatrix.cshtml" />
+    <Content Include="Views\ExtenalData\ConfirmUserMatrix.cshtml" />
+    <Content Include="Views\MiniPIP\AgileWorkFlow.cshtml" />
+    <Content Include="Views\MiniPIP\AgileAttach.cshtml" />
+    <Content Include="Views\MiniPIP\CompletedMiniPIP.cshtml" />
+    <Content Include="Scripts\usermatrix.xlsx" />
+    <Content Include="userfiles\ImageUpload.ashx" />
+    <Content Include="Views\MiniPIP\ModifyCardComment.cshtml" />
+    <Content Include="Views\NebulaDBManage\ExecuteSQLs.cshtml" />
+    <Content Include="Views\NebulaDBManage\MoveDataBase.cshtml" />
+    <Content Include="Views\NebulaReport\Complex.cshtml" />
+    <Content Include="Views\NebulaReport\CycleTime.cshtml" />
+    <Content Include="Views\NebulaReport\FABuilding.cshtml" />
+    <Content Include="Views\NebulaReport\QAFACheck.cshtml" />
+    <Content Include="Views\NebulaReport\WorkLoad.cshtml" />
+    <Content Include="Views\NebulaUser\LoginUser.cshtml" />
+    <Content Include="Views\NebulaUser\RegisterUser.cshtml" />
+    <Content Include="Views\NebulaUser\ResetNoticeA.cshtml" />
+    <Content Include="Views\NebulaUser\ResetNoticeB.cshtml" />
+    <Content Include="Views\NebulaUser\ResetUser.cshtml" />
+    <Content Include="Views\NebulaUser\UserCachedInfo.cshtml" />
+    <Content Include="Views\NebulaUser\UserCenter.cshtml" />
+    <Content Include="Views\NebulaUser\ValidateNoticeA.cshtml" />
+    <Content Include="Views\NebulaUser\ValidateNoticeB.cshtml" />
+    <Content Include="Views\MiniPIP\JoSchedule.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Scripts\agiledownloadwraper\jre\lib\applet\" />
+    <Folder Include="userfiles\docs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64289</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:80/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:80/Nebula</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

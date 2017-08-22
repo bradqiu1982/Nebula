@@ -1,0 +1,48 @@
+﻿.tableFloatingHeaderOriginal th {
+    background-color: #D3D3D3;
+    border-bottom: 1px solid #DDD;
+}
+
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+
+.panel-default > .panel-heading-pending {
+    background: #F75D59; color: #fff;
+}
+
+.panel-default > .panel-body-pending {
+    background: #E41B17; color: #fff;
+}
+
+.panel-default > .panel-heading-done {
+    background: #5FFB17; color: #fff;
+}
+
+.panel-default > .panel-body-done {
+    background: #59E817; color: #fff;
+}
+
+.panel-default > .panel-heading-info {
+    background: #B6B6B4; color: #fff;
+}
+
+.panel-default > .panel-body-info {
+    background: #736F6E; color: #fff;
+}

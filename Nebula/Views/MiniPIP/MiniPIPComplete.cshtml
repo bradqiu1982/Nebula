@@ -1,0 +1,296 @@
+﻿@if (ViewBag.CurrentCard != null)
+{
+    using (Html.BeginForm("MiniPIPComplete", "MiniPIP", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div MYTP="orange"  class="col-lg-2" style="font-family:'Arial Narrow';font-size:18px"><strong>&nbsp;&nbsp;Information</strong></div>
+            <div class="col-lg-10">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label class="control-label col-lg-2">Page Name</label>
+                            <div class="col-lg-10">
+                                <input class="form-control text-box single-line" value="@ViewBag.CardDetailPage" readonly="readonly" id="modalname" name="modalname" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label col-lg-2">Sample Approve Date</label>
+                            <div class="col-lg-10">
+                                <input class="form-control text-box single-line" value="@ViewBag.SampleCustomerApproveDate" readonly="readonly" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label class="control-label col-lg-2">MCO Issued</label>
+                            <div class="col-lg-10">
+                                <input class="form-control text-box single-line" value="@ViewBag.MCOIssued" readonly="readonly" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label col-lg-2">FAI Approve Date</label>
+                            <div class="col-lg-10">
+                                <input class="form-control text-box single-line" value="@ViewBag.FACustomerApproval" readonly="readonly" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label class="control-label col-lg-2">ECO Lifecycle</label>
+                            <div class="col-lg-10">
+                                @Html.DropDownList("ECOPartLifeCycleList", null, new { @id = "ECOPartLifeCycleList", @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label col-lg-2">Generic Lifecycle</label>
+                            <div class="col-lg-10">
+                                @Html.DropDownList("GenericPartLifeCycleList", null, new { @id = "GenericPartLifeCycleList", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input class="form-control text-box single-line" value="@ViewBag.ECOKey" type="hidden" id="ECOKey" name="ECOKey" />
+                        </div>
+                        <div class="col-lg-6">
+                            <input class="form-control text-box single-line" value="@ViewBag.CardKey" type="hidden" id="CardKey" name="CardKey" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div MYTP="green"  class="row" style="margin-left:3px">
+                <div class="col-lg-2">
+                    <a data-toggle="collapse" href="#attachwell" aria-expanded="false" aria-controls="collapseExample" style="font-size:18px;font-family:'Arial Narrow';">
+                        <font color="black"><strong>&nbsp;&nbsp;@(ViewBag.CurrentCard.AttachList.Count) Attachements</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;<img src="~/Content/images/icon/extend.png" style="height:25px; width:14px">
+                    </a>
+                </div>
+                <div class="col-lg-10">
+                    <div class="col-lg-3">
+                        <span class="btn btn-default btn-file" id="choosefile3" style="padding:0px;background-color:transparent !important;border-color:transparent !important;">
+                            <img src="~/Content/images/icon/Upload.png" MYTP="HOVER" style="height:20px; width:34px"><input type="file" name="file3" id="file3" runat="server" onchange="ShowFileNames3(this)" />
+                        </span>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="col-lg-11">
+                            <label class="control-label" id="showfile1" name="showfile1"></label>
+                        </div>
+                        <div class="col-lg-1">
+                            <input class="form-control text-box single-line" value="" id="attachmentupload" name="attachmentupload" type="hidden" />
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function ShowFileNames3(oFile) {
+                        $('#showfile1').text(oFile.value);
+                        document.getElementById("attachmentupload").value = oFile.value;
+                    }
+                </script>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">&nbsp;</div>
+            </div>
+
+            <div class="row" style="margin-left:10px">
+                <div class="collapse in" id="attachwell">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-10">
+                                @foreach (var item in ViewBag.CurrentCard.AttachList)
+                                {
+                                    var fns = item.Split(new char[] { '/' });
+                                    var fn = fns[fns.Length - 1];
+                                    <div class="row col-lg-12">
+                                        <div class="col-lg-11">
+                                            <a href="@item" target="_blank">
+                                                <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>@fn
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            @if (ViewBag.badmin != null && ViewBag.badmin)
+                                            {
+                                                <img src="~/Content/images/icon/delete2.png" MYTP="HOVER" style="height:30px; width:18px" onclick="DeleteCardAttachment1('@fn')">
+                                            }
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div MYTP="blue"  class="row" style="margin-left:3px">
+                <div class="col-lg-12">
+                    <a data-toggle="collapse" href="#generalcomment" aria-expanded="false" aria-controls="collapseExample" style="font-size:18px;font-family:'Arial Narrow';">
+                        <font color="black"><strong>&nbsp;&nbsp;@(ViewBag.CurrentCard.CommentList.Count) Comments</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;<img src="~/Content/images/icon/extend.png" style="height:25px; width:14px">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">&nbsp;</div>
+            </div>
+            <div class="row" style="margin-left:10px">
+                <div class="collapse in" id="generalcomment">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-11">
+                                @foreach (var item in ViewBag.CurrentCard.CommentList)
+                                {
+                                    <div class="well" MYTP="HOVER" style="margin-bottom:2px;padding-bottom:2px;margin-top:2px;padding-top:2px;background-color:transparent !important;border-left-color:#006DC0;border-top-color:transparent !important;border-right-color:transparent !important;border-bottom-color:transparent !important;border-top-left-radius:0px;border-bottom-left-radius:0px;border-top-width:0px">
+                                        <div class="row" MYTP="HOVER" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
+                                            <div class="row" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
+                                                <div class="col-lg-6">
+                                                    <div class="col-lg-7">@(item.Reporter.Split(new char[] { '@' })[0])&nbsp;&nbsp;@item.CommentDate.ToString("yyyy-MM-dd hh:mm:ss")</div>
+                                                    <div class="col-lg-2">
+                                                        @if (ViewBag.badmin != null && ViewBag.badmin)
+                                                        {
+                                                            <img src="~/Content/images/icon/edit2.png" MYTP="HOVER" style="height:34px; width:24px" onclick="ModifyCardComment1('CardKey=@(item.CardKey)&Date=@(item.CommentDate.ToString())')">
+                                                        }
+                                                    </div>
+                                                    <div class="col-lg-3"></div>
+                                                </div>
+                                                <div class="col-lg-6"></div>
+                                            </div>
+                                            <div class="row" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-11">@Html.Raw(item.Comment)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div MYTP="red"  class="row" style="margin-left:3px">
+                <div class="col-lg-12">
+                    <a data-toggle="collapse" href="#commentinput" aria-expanded="false" aria-controls="collapseExample" style="font-size:18px;font-family:'Arial Narrow';">
+                        <font color="black"><strong>&nbsp;&nbsp;Comment Input</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;<img src="~/Content/images/icon/extend.png" style="height:25px; width:14px">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">&nbsp;</div>
+            </div>
+            <div class="row" style="margin-left:10px">
+                <div class="collapse" id="commentinput">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-10">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <textarea name="commenteditor" id="commenteditor" rows="10" cols="80"></textarea>
+                                        <script>
+                            CKEDITOR.replace('commenteditor', { htmlEncodeOutput: true, filebrowserImageUploadUrl: '/userfiles/Upload.ashx', skin: 'moono-lisa' });
+                                        </script>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-4">
+                                                <span class="btn btn-default btn-file" id="choosefile6">
+                                                    Editor Attachment <input type="file" name="file6" id="file6" runat="server" onchange="ShowFileNames6(this)" />
+                                                </span>
+                                            </div>
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-1">@*<button class="form-control" type="button" data-toggle="tooltip" title="Save User Info" onclick="SaveUserContent()"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span></button>*@</div>
+                                            <div class="col-lg-1">@*<button class="form-control" type="button" data-toggle="tooltip" title="Retrieve User Info" onclick="UserCacheContent()"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></button>*@</div>
+                                            <div class="col-lg-5"></div>
+                                        </div>
+                                        <script type="text/javascript">
+                            function ShowFileNames6(oFile) {
+                                ajaxFileUpload();
+                            }
+                            function ajaxFileUpload() {
+                                $.ajaxFileUpload
+                                (
+                                    {
+                                        url: '/userfiles/ImageUpload.ashx',
+                                        secureuri: false,
+                                        fileElementId: 'file6',
+                                        dataType: 'HTML',
+                                        success: function (data, status) {
+                                            var wholeval = CKEDITOR.instances.commenteditor.getData() + data;
+                                            CKEDITOR.instances.commenteditor.setData(wholeval);
+                                        },
+                                        error: function (e) {
+                                            alert(e);
+                                        }
+                                    }
+                                )
+                                return false;
+                            }
+
+
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-horizontal">
+            <div class="row col-lg-12">
+                <div class="form-group">
+                    <div class="row col-lg-3">
+                        @if (ViewBag.badmin != null && ViewBag.badmin)
+                        { <button data-toggle="tooltip" title="Roll Back To This Card" type="button" class="btn btn-default" onclick="RollBack2ThisCard()"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> RollBack2This</button>}
+
+                    </div>
+                    <div class="row col-lg-2">
+                        <input type="submit" value="Commit Info" id="commitinfo" name="commitinfo" class="btn btn-default" />
+                    </div>
+                    <div class="row col-lg-2">
+                        <input type="submit" value="Pass Card" id="submitcard" name="submitcard" class="btn btn-default" />
+                    </div>
+                    <div class="row col-lg-2">
+                        @if (ViewBag.badmin != null && ViewBag.badmin)
+                        { <input type="submit" value="Force Pass" id="forcecard" name="forcecard" class="btn btn-default" />}
+                    </div>
+                    <div class="row col-lg-3">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+}
+
