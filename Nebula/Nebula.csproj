@@ -194,6 +194,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BRTraceController.cs" />
     <Compile Include="Controllers\NebulaDBManageController.cs" />
     <Compile Include="Controllers\NebulaReportController.cs" />
     <Compile Include="Controllers\NebulaUserController.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AgileVM.cs" />
     <Compile Include="Models\CookieUtility.cs" />
     <Compile Include="Models\DBUtility.cs" />
     <Compile Include="Models\EventDataVM.cs" />
@@ -706,8 +708,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\agiledownloadwraper\AgileDownload.exe" />
-    <Content Include="Scripts\agiledownloadwraper\AgileDownload.xml" />
+    <Content Include="Scripts\agiledownloadwraper\BRAgileDownload.exe" />
+    <Content Include="Scripts\agiledownloadwraper\BRAgileDownload.xml" />
     <Content Include="Scripts\agiledownloadwraper\jre\bin\awt.dll" />
     <Content Include="Scripts\agiledownloadwraper\jre\bin\bci.dll" />
     <Content Include="Scripts\agiledownloadwraper\jre\bin\client\agilefilecopy.exe" />
@@ -1118,6 +1120,9 @@
     <Content Include="Views\NebulaUser\ValidateNoticeA.cshtml" />
     <Content Include="Views\NebulaUser\ValidateNoticeB.cshtml" />
     <Content Include="Views\MiniPIP\JoSchedule.cshtml" />
+    <Content Include="Views\BRTrace\UpdateBR.cshtml" />
+    <Content Include="Views\BRTrace\NewBR.cshtml" />
+    <Content Include="Views\BRTrace\HeartBeat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
