@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Nebula.Models
 {
-    public class AgileVM
+    public class AgileDownloadVM
     {
         public static string PMLastUpdateTime(string pmname,string FirstTraceTime)
         {

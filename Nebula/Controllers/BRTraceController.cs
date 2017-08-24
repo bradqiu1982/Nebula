@@ -34,7 +34,7 @@ namespace Nebula.Controllers
                 var PMNames = syscfgdict["TRACEPM"];
                 var FirstTraceTime = syscfgdict["FIRSTTRACETIME"];
 
-                AgileVM.RetrieveNewBR(AGILEURL, LOCALSITEPORT, SAVELOCATION, PMNames, FirstTraceTime);
+                AgileDownloadVM.RetrieveNewBR(AGILEURL, LOCALSITEPORT, SAVELOCATION, PMNames, FirstTraceTime);
             }
             
         }
@@ -52,7 +52,7 @@ namespace Nebula.Controllers
                 var AGILEURL = syscfgdict["AGILEURL"];
                 var LOCALSITEPORT = syscfgdict["LOCALSITEPORT"];
                 var SAVELOCATION = (Server.MapPath("~/userfiles") + "\\docs\\").Replace("\\", "/");
-                AgileVM.UpdateExistBR(AGILEURL, LOCALSITEPORT, SAVELOCATION);
+                AgileDownloadVM.UpdateExistBR(AGILEURL, LOCALSITEPORT, SAVELOCATION);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Nebula.Controllers
             return View();
         }
 
-        public ActionResult NewBR(string BRLIST)
+        private void CreateAgileDir(string detaildir)
         {
             string datestring = DateTime.Now.ToString("yyyyMMdd");
             string datefolder = Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
@@ -73,33 +73,23 @@ namespace Nebula.Controllers
                 Directory.CreateDirectory(datefolder);
             }
 
-            var updatedfolder = datefolder + "agileupdated";
-            var newqueryfolder = datefolder + "agilenewqueried";
+            var newqueryfolder = datefolder + detaildir;
             if (!Directory.Exists(newqueryfolder))
             {
                 Directory.CreateDirectory(newqueryfolder);
             }
+        }
 
+        public ActionResult NewBR(string BRLIST)
+        {
+            BRAgileVM.LoadNewBR(BRLIST, this);
+            CreateAgileDir("agilenewqueried");
             return View();
         }
 
         public ActionResult UpdateBR()
         {
-            string datestring = DateTime.Now.ToString("yyyyMMdd");
-            string datefolder = Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
-
-            if (!Directory.Exists(datefolder))
-            {
-                Directory.CreateDirectory(datefolder);
-            }
-
-            var updatedfolder = datefolder + "agileupdated";
-
-            if (!Directory.Exists(updatedfolder))
-            {
-                Directory.CreateDirectory(updatedfolder);
-            }
-
+            CreateAgileDir("agileupdated");
             return View();
         }
 
