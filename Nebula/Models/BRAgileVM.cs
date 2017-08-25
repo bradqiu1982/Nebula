@@ -8,12 +8,23 @@ using System.Globalization;
 
 namespace Nebula.Models
 {
+    public class AGILEBRSTATUS
+    {
+        public static string APPROVE2BUILE = "Approved To Build";
+    }
+
     public class BRAgileVM
     {
         private static List<BRAgileBaseInfo> ParseBR(string BRLIST,Controller ctrl)
         {
             var ret = new List<BRAgileBaseInfo>();
             var brs = BRLIST.Split(new string[] { ":::" }, StringSplitOptions.RemoveEmptyEntries);
+            return ParseBR(brs.ToList(), ctrl);
+        }
+
+        private static List<BRAgileBaseInfo> ParseBR(List<string> brs, Controller ctrl)
+        {
+            var ret = new List<BRAgileBaseInfo>();
             BRAgileBaseInfo tempinfo = null;
             foreach (var br in brs)
             {
@@ -54,7 +65,8 @@ namespace Nebula.Models
                         }
                     }//end foreach
 
-                    ret.Add(tempinfo);
+                    if (tempinfo != null)
+                        ret.Add(tempinfo);
                 }
             }
             return ret;
@@ -62,7 +74,32 @@ namespace Nebula.Models
 
         public static void LoadNewBR(string BRLIST, Controller ctrl)
         {
-            ParseBR(BRLIST, ctrl);
+            var newbrlist =  ParseBR(BRLIST, ctrl);
+            foreach (var br in newbrlist)
+            {
+                AgileDownloadVM.UpdatePMLastUpdateTime(br.Originator, br.OriginalDate);
+                if (!string.IsNullOrEmpty(br.Description))
+                {
+                    if (BRAgileBaseInfo.BRExist(br.BRNumber,br.OriginalDate))
+                    {
+                        br.UpdateBRAgileInfo();
+                    }
+                    else
+                    {
+                        br.AddBRAgileInfo();
+                    }
+                }//end if
+            }//end foreach
+        }
+
+        public static void UpdateBR(Controller ctrl)
+        {
+            var brlist = BRAgileBaseInfo.RetrieveBRNumNeedToUpdate();
+            var newbrlist = ParseBR(brlist, ctrl);
+            foreach (var br in newbrlist)
+            {
+                br.UpdateBRAgileInfo();
+            }
         }
 
         public static DateTime ConvertUSLocalToDate(string obj)
@@ -136,6 +173,23 @@ namespace Nebula.Models
             }
             return item;
         }
+
+        public void AddBRAgileInfo(string brkey,string BRNumber)
+        {
+            var sql = "insert into AgileWorkFlow(BRKey,BRNumber,StatusCode,WorkFlow,WorkFlowStatus,Action,Reqd,Reviewer,SignoffUser,StatusChangedBy,SignoffComment,SignoffDuration,LocalTime) "
+                + " values('<BRKey>','<BRNumber>','<StatusCode>','<WorkFlow>','<WorkFlowStatus>','<Action>','<Reqd>','<Reviewer>','<SignoffUser>','<StatusChangedBy>',N'<SignoffComment>','<SignoffDuration>','<LocalTime>')";
+            sql = sql.Replace("<BRKey>", brkey).Replace("<BRNumber>", BRNumber).Replace("<StatusCode>", StatusCode).Replace("<WorkFlow>", WorkFlow)
+                .Replace("<WorkFlowStatus>", WorkFlowStatus).Replace("<Action>", Action).Replace("<Reqd>", Reqd).Replace("<Reviewer>", Reviewer)
+                .Replace("<SignoffUser>", SignoffUser).Replace("<StatusChangedBy>", StatusChangedBy).Replace("<SignoffComment>", SignoffComment).Replace("<SignoffDuration>", SignoffDuration)
+                .Replace("<LocalTime>", LocalTime.ToString());
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+        public static void RemoveBRAgileInfo(string brkey)
+        {
+            var sql = "delete from AgileWorkFlow where BRKey = '<BRKey>'";
+            sql = sql.Replace("<BRKey>", brkey);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
         public string StatusCode{set;get;}
         public string WorkFlow{set;get;}
         public string WorkFlowStatus{set;get;}
@@ -152,7 +206,7 @@ namespace Nebula.Models
     {
         public AgileAffectItem()
         {
-            itemnumber = "";
+            PN = "";
             itemsite = "";
             itemdesc = "";
             lifecycle = "";
@@ -170,7 +224,7 @@ namespace Nebula.Models
                 if (kv.Length > 1) value = kv[1].Replace("'", "");
 
                 if (string.Compare(kv[0], "itemnumber", true) == 0)
-                    item.itemnumber = value;
+                    item.PN = value;
                 if (string.Compare(kv[0], "itemsite", true) == 0)
                     item.itemsite = value;
                 if (string.Compare(kv[0], "itemdesc", true) == 0)
@@ -183,7 +237,21 @@ namespace Nebula.Models
             return item;
         }
 
-        public string itemnumber{set;get;}
+        public void AddBRAgileInfo(string brkey, string BRNumber)
+        {
+            var sql = "insert into AgileAffectItem(BRKey,BRNumber,PN,itemsite,itemdesc,lifecycle,commodity) "
+                + " values('<BRKey>','<BRNumber>','<PN>','<itemsite>',N'<itemdesc>','<lifecycle>','<commodity>')";
+            sql = sql.Replace("<BRKey>", brkey).Replace("<BRNumber>", BRNumber).Replace("<PN>", PN).Replace("<itemsite>", itemsite)
+                .Replace("<itemdesc>", itemdesc).Replace("<lifecycle>", lifecycle).Replace("<commodity>", commodity);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+        public static void RemoveBRAgileInfo(string brkey)
+        {
+            var sql = "delete from AgileAffectItem where BRKey = '<BRKey>'";
+            sql = sql.Replace("<BRKey>", brkey);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+        public string PN{set;get;}
         public string itemsite{set;get;}
         public string itemdesc{set;get;}
         public string lifecycle{set;get;}
@@ -231,6 +299,21 @@ namespace Nebula.Models
             return item;
         }
 
+        public void AddBRAgileInfo(string brkey, string BRNumber)
+        {
+            var sql = "insert into AgileHistory(BRKey,BRNumber,status,nextstatus,action,user,localtime,detail,usernotice) "
+                + " values('<BRKey>','<BRNumber>','<status>','<nextstatus>','<action>','<user>','<localtime>',N'<detail>','<usernotice>')";
+            sql = sql.Replace("<BRKey>", brkey).Replace("<BRNumber>", BRNumber).Replace("<status>", status).Replace("<nextstatus>", nextstatus)
+                .Replace("<action>", action).Replace("<user>", user).Replace("<localtime>", localtime.ToString()).Replace("<detail>", detail)
+                .Replace("<usernotice>", usernotice);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+        public static void RemoveBRAgileInfo(string brkey)
+        {
+            var sql = "delete from AgileHistory where BRKey = '<BRKey>'";
+            sql = sql.Replace("<BRKey>", brkey);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
         public string status{set;get;}
         public string nextstatus{set;get;}
         public string action{set;get;}
@@ -271,6 +354,20 @@ namespace Nebula.Models
             return item;
         }
 
+        public void AddBRAgileInfo(string brkey, string BRNumber)
+        {
+            var sql = "insert into AgileAttach(BRKey,BRNumber,FileName,LocalFilePath,Checkiner,ModifyDate) "
+                + " values('<BRKey>','<BRNumber>','<FileName>','<LocalFilePath>','<Checkiner>','<ModifyDate>')";
+            sql = sql.Replace("<BRKey>", brkey).Replace("<BRNumber>", BRNumber).Replace("<FileName>", FileName).Replace("<LocalFilePath>", LocalFilePath)
+                .Replace("<Checkiner>", Checkiner).Replace("<ModifyDate>", ModifyDate.ToString());
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+        public static void RemoveBRAgileInfo(string brkey)
+        {
+            var sql = "delete from AgileAttach where BRKey = '<BRKey>'";
+            sql = sql.Replace("<BRKey>", brkey);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
         public string FileName{set;get;}
         public DateTime ModifyDate{set;get;}
         public string Checkiner{set;get;}
@@ -279,10 +376,15 @@ namespace Nebula.Models
 
     public class BRAgileBaseInfo
     {
+        public static string GetUniqKey()
+        {
+            return Guid.NewGuid().ToString("N");
+        }
+
         public BRAgileBaseInfo()
         {
             ChangeType = "";
-            Number = "";
+            BRNumber = "";
             Description = "";
             Status = "";
             Workflow = "";
@@ -307,7 +409,7 @@ namespace Nebula.Models
                 if (string.Compare(kv[0], "ChangeType", true) == 0)
                     item.ChangeType = value;
                 if (string.Compare(kv[0], "Number", true) == 0)
-                    item.Number = value;
+                    item.BRNumber = value;
                 if (string.Compare(kv[0], "Description", true) == 0)
                     item.Description = value;
                 if (string.Compare(kv[0], "Status", true) == 0)
@@ -322,8 +424,84 @@ namespace Nebula.Models
             return item;
         }
 
+        public static bool BRExist(string brnum, DateTime originaltime)
+        {
+            var sql = "select BRNumber from BRAgileBaseInfo where BRNumber = '<BRNumber>' and OriginalDate = '<OriginalDate>'";
+            sql = sql.Replace("<BRNumber>",brnum).Replace("<OriginalDate>", originaltime.ToString("yyyy-MM-dd hh:mm:ss"));
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            if (dbret.Count > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public void AddBRAgileInfo()
+        {
+            var brkey = GetUniqKey();
+            var sql = "insert into BRAgileBaseInfo(BRKey,BRNumber,Description,Status,Workflow,Originator,ChangeType,OriginalDate) "
+                + " values('<BRKey>','<BRNumber>',N'<Description>','<Status>','<Workflow>','<Originator>','<ChangeType>','<OriginalDate>')";
+            sql = sql.Replace("<BRKey>",brkey).Replace("<BRNumber>", BRNumber).Replace("<Description>", Description)
+                .Replace("<Status>", Status).Replace("<Workflow>", Workflow).Replace("<Originator>", Originator)
+                .Replace("<ChangeType>", ChangeType).Replace("<OriginalDate>", OriginalDate.ToString("yyyy-MM-dd hh:mm:ss"));
+            DBUtility.ExeLocalSqlNoRes(sql);
+
+            foreach (var item in brworkflowlist)
+            { item.AddBRAgileInfo(brkey, BRNumber); }
+            foreach (var item in affectitem)
+            { item.AddBRAgileInfo(brkey, BRNumber); }
+            foreach (var item in history)
+            { item.AddBRAgileInfo(brkey, BRNumber); }
+            foreach (var item in attach)
+            { item.AddBRAgileInfo(brkey, BRNumber); }
+        }
+
+        public void UpdateBRAgileInfo()
+        {
+            if (brworkflowlist.Count > 0)
+            {
+                var currentstatus = brworkflowlist[0].WorkFlowStatus;
+                var sql = "update BRAgileBaseInfo set Status = '<Status>' where BRNumber = '<BRNumber>'";
+                sql = sql.Replace("<BRNumber>", BRNumber).Replace("<Status>", currentstatus);
+                DBUtility.ExeLocalSqlNoRes(sql);
+
+                sql = "select BRKey from BRAgileBaseInfo where BRNumber = '<BRNumber>'";
+                sql = sql.Replace("<BRNumber>", BRNumber);
+                var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+                if (dbret.Count > 0)
+                {
+                    var brkey = Convert.ToString(dbret[0][0]);
+                    AgileWorkFlow.RemoveBRAgileInfo(brkey);
+                    AgileAffectItem.RemoveBRAgileInfo(brkey);
+                    AgileHistory.RemoveBRAgileInfo(brkey);
+                    AgileAttach.RemoveBRAgileInfo(brkey);
+
+                    foreach (var item in brworkflowlist)
+                    { item.AddBRAgileInfo(brkey, BRNumber); }
+                    foreach (var item in affectitem)
+                    { item.AddBRAgileInfo(brkey, BRNumber); }
+                    foreach (var item in history)
+                    { item.AddBRAgileInfo(brkey, BRNumber); }
+                    foreach (var item in attach)
+                    { item.AddBRAgileInfo(brkey, BRNumber); }
+                }
+            }
+        }
+
+        public static List<string> RetrieveBRNumNeedToUpdate()
+        {
+            var sql = "select BRNumber from BRAgileBaseInfo where Status <> '<Status>'";
+            sql = sql.Replace("<Status>", AGILEBRSTATUS.APPROVE2BUILE);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            var ret = new List<string>();
+            foreach (var line in dbret)
+            {
+                ret.Add(Convert.ToString(line[0]));
+            }
+            return ret;
+        }
+
         public string ChangeType{set;get;}
-        public string Number{set;get;}
+        public string BRNumber{set;get;}
         public string Description{set;get;}
         public string Status{set;get;}
         public string Workflow{set;get;}

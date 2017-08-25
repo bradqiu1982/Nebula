@@ -9,13 +9,13 @@ namespace Nebula.Models
 {
     public class AgileDownloadVM
     {
-        public static string PMLastUpdateTime(string pmname,string FirstTraceTime)
+        public static string PMLastUpdateTime(string pmname, string FirstTraceTime)
         {
             var ret = string.Empty;
             try
             {
-                var sql = "select LatestTime from PMUpdateTime where PMName = '<PMName>'";
-                sql = sql.Replace("<PMName>", pmname);
+                var sql = "select LatestTime from PMUpdateTime where UserName = '<UserName>'";
+                sql = sql.Replace("<UserName>", pmname);
                 var dbret = DBUtility.ExeLocalSqlWithRes(sql);
                 if (dbret.Count > 0)
                 {
@@ -31,6 +31,34 @@ namespace Nebula.Models
                 ret = FirstTraceTime;
 
             return ret;
+        }
+
+        public static void UpdatePMLastUpdateTime(string pmname, DateTime BROriginalTime)
+        {
+            try
+            {
+                var sql = "select LatestTime from PMUpdateTime where UserName = '<UserName>'";
+                sql = sql.Replace("<UserName>", pmname);
+                var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+                if (dbret.Count > 0)
+                {
+                    var existdate = Convert.ToDateTime(dbret[0][0]);
+                    if (BROriginalTime > existdate)
+                    {
+                        sql = "update PMUpdateTime set LatestTime='<LatestTime>' where UserName = '<UserName>'";
+                        sql = sql.Replace("<UserName>", pmname).Replace("<LatestTime>", BROriginalTime.ToString());
+                        DBUtility.ExeLocalSqlNoRes(sql);
+                    }
+                }
+                else
+                {
+                    sql = "insert into PMUpdateTime(UserName,LatestTime) values('<UserName>','<LatestTime>')";
+                    sql = sql.Replace("<UserName>", pmname).Replace("<LatestTime>", BROriginalTime.ToString());
+                    DBUtility.ExeLocalSqlNoRes(sql);
+                }
+            }
+            catch (Exception ex)
+            {}
         }
 
         public static void RetrieveNewBR(string AGILEURL,string LOCALSITEPORT,string SAVELOCATION,string PMNames,string FirstTraceTime)
@@ -57,6 +85,11 @@ namespace Nebula.Models
         public static void UpdateExistBR(string AGILEURL, string LOCALSITEPORT, string SAVELOCATION)
         {
             var args = "UPDATEBRLIST " + AGILEURL + " " + LOCALSITEPORT + " " + SAVELOCATION;
+            var brlist = BRAgileBaseInfo.RetrieveBRNumNeedToUpdate();
+            foreach (var br in brlist)
+            {
+                args = args + " " + br;
+            }
 
             using (Process myprocess = new Process())
             {

@@ -89,6 +89,7 @@ namespace Nebula.Controllers
 
         public ActionResult UpdateBR()
         {
+            BRAgileVM.UpdateBR(this);
             CreateAgileDir("agileupdated");
             return View();
         }
