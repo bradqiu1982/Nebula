@@ -227,7 +227,7 @@ CREATE TABLE [dbo].[AgileHistory] (
     [status] NVARCHAR (200) DEFAULT ('') NOT NULL,
     [nextstatus] NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[action] NVARCHAR (200) DEFAULT ('') NOT NULL,
-    [user] NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [actionuser] NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[detail] NVARCHAR (MAX) DEFAULT ('') NOT NULL,
 	[usernotice] NVARCHAR (MAX) DEFAULT ('') NOT NULL,
 	[localtime] DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL,
@@ -274,3 +274,46 @@ CREATE TABLE [dbo].[AgileWorkFlow] (
     [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
 );
 
+CREATE TABLE [dbo].[JOBaseInfo] (
+	[BRKey] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[BRNumber] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[JONumber] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[JOType] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[JOStatus] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[DateReleased]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL,
+	[PN]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[PNDesc]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Category]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[StartQuantity]     INT DEFAULT (0) NOT NULL,
+	[MRPNetQuantity]     INT DEFAULT (0) NOT NULL,
+	[QuantityCompleted]     INT DEFAULT (0) NOT NULL,
+	[WIP]     INT DEFAULT (0) NOT NULL,
+	[IncurredSum]     FLOAT DEFAULT (0.0) NOT NULL,
+	[IncurredMaterialSum]     FLOAT DEFAULT (0.0) NOT NULL,
+	[Planner]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[CreatedBy]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[ExistQty]     INT DEFAULT (0) NOT NULL,
+	[APVal1]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [APVal2]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal3]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal4]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+    [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
+);
+
+CREATE TABLE [dbo].[JOComponentInfo] (
+	[BRKey] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[BRNumber] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[JONumber] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[MPN]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[MPNDesc]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[ReqdSum]     FLOAT DEFAULT (0.0) NOT NULL,
+	[ItemCost]     FLOAT DEFAULT (0.0) NOT NULL,
+	[QtyIssuedSum]     FLOAT DEFAULT (0.0) NOT NULL,
+	[QtyOpen]     FLOAT DEFAULT (0.0) NOT NULL,
+	[CostSum]     FLOAT DEFAULT (0.0) NOT NULL,
+	[APVal1]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [APVal2]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal3]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal4]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+    [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
+);

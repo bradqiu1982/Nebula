@@ -30,7 +30,8 @@ namespace Nebula.Controllers
                 var syscfgdict = NebulaDataCollector.GetSysConfig(this);
                 var AGILEURL = syscfgdict["AGILEURL"];
                 var LOCALSITEPORT = syscfgdict["LOCALSITEPORT"];
-                var SAVELOCATION = (Server.MapPath("~/userfiles") + "\\docs\\").Replace("\\", "/");
+                var SAVELOCATION = (Server.MapPath("~/userfiles") + "\\docs\\Agile\\").Replace("\\", "/");
+                Directory.CreateDirectory(SAVELOCATION);
                 var PMNames = syscfgdict["TRACEPM"];
                 var FirstTraceTime = syscfgdict["FIRSTTRACETIME"];
 
@@ -51,15 +52,18 @@ namespace Nebula.Controllers
                 var syscfgdict = NebulaDataCollector.GetSysConfig(this);
                 var AGILEURL = syscfgdict["AGILEURL"];
                 var LOCALSITEPORT = syscfgdict["LOCALSITEPORT"];
-                var SAVELOCATION = (Server.MapPath("~/userfiles") + "\\docs\\").Replace("\\", "/");
+                var SAVELOCATION = (Server.MapPath("~/userfiles") + "\\docs\\Agile\\").Replace("\\", "/");
+                Directory.CreateDirectory(SAVELOCATION);
                 AgileDownloadVM.UpdateExistBR(AGILEURL, LOCALSITEPORT, SAVELOCATION);
             }
         }
 
         public ActionResult HeartBeat()
         {
-            UpdateExistBR();
-            LoadNewBR();
+            //UpdateExistBR();
+            //LoadNewBR();
+            //ERPVM.LoadJOBaseInfo(this);
+            ERPVM.LoadJOComponentInfo(this);
             return View();
         }
 
@@ -93,6 +97,8 @@ namespace Nebula.Controllers
             CreateAgileDir("agileupdated");
             return View();
         }
+
+        
 
     }
 }

@@ -29,7 +29,7 @@ namespace Nebula.Models
             foreach (var br in brs)
             {
                 tempinfo = null;
-                string brfile = ctrl.Server.MapPath("~/userfiles") + "\\docs\\" + br.Trim() + "\\" + br.Trim() + "-" + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+                string brfile = ctrl.Server.MapPath("~/userfiles") + "\\docs\\Agile\\" + br.Trim() + "\\" + br.Trim() + "-" + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
                 if (File.Exists(brfile))
                 {
                     var alllines = File.ReadAllLines(brfile);
@@ -265,7 +265,7 @@ namespace Nebula.Models
             status = "";
             nextstatus = "";
             action = "";
-            user = "";
+            actionuser = "";
             localtime = DateTime.Parse("1982-05-06 10:00:00"); ;
             detail = "";
             usernotice = "";
@@ -288,7 +288,7 @@ namespace Nebula.Models
                 if (string.Compare(kv[0], "action", true) == 0)
                     item.action = value;
                 if (string.Compare(kv[0], "user", true) == 0)
-                    item.user = value;
+                    item.actionuser = value;
                 if (string.Compare(kv[0], "localtime", true) == 0)
                     item.localtime = BRAgileVM.ConvertUSLocalToDate(value);
                 if (string.Compare(kv[0], "detail", true) == 0)
@@ -301,10 +301,10 @@ namespace Nebula.Models
 
         public void AddBRAgileInfo(string brkey, string BRNumber)
         {
-            var sql = "insert into AgileHistory(BRKey,BRNumber,status,nextstatus,action,user,localtime,detail,usernotice) "
-                + " values('<BRKey>','<BRNumber>','<status>','<nextstatus>','<action>','<user>','<localtime>',N'<detail>','<usernotice>')";
+            var sql = "insert into AgileHistory(BRKey,BRNumber,status,nextstatus,action,actionuser,localtime,detail,usernotice) "
+                + " values('<BRKey>','<BRNumber>','<status>','<nextstatus>','<action>','<actionuser>','<localtime>',N'<detail>','<usernotice>')";
             sql = sql.Replace("<BRKey>", brkey).Replace("<BRNumber>", BRNumber).Replace("<status>", status).Replace("<nextstatus>", nextstatus)
-                .Replace("<action>", action).Replace("<user>", user).Replace("<localtime>", localtime.ToString()).Replace("<detail>", detail)
+                .Replace("<action>", action).Replace("<actionuser>", actionuser).Replace("<localtime>", localtime.ToString()).Replace("<detail>", detail)
                 .Replace("<usernotice>", usernotice);
             DBUtility.ExeLocalSqlNoRes(sql);
         }
@@ -317,7 +317,7 @@ namespace Nebula.Models
         public string status{set;get;}
         public string nextstatus{set;get;}
         public string action{set;get;}
-        public string user{set;get;}
+        public string actionuser{set;get;}
         public DateTime localtime{set;get;}
         public string detail{set;get;}
         public string usernotice{set;get;}
@@ -489,13 +489,29 @@ namespace Nebula.Models
 
         public static List<string> RetrieveBRNumNeedToUpdate()
         {
-            var sql = "select BRNumber from BRAgileBaseInfo where Status <> '<Status>'";
-            sql = sql.Replace("<Status>", AGILEBRSTATUS.APPROVE2BUILE);
+            var sql = "select BRNumber from BRAgileBaseInfo where Status <> '<Status>' and OriginalDate > '<threemonth>'";
+            sql = sql.Replace("<Status>", AGILEBRSTATUS.APPROVE2BUILE).Replace("<threemonth>", DateTime.Now.AddMonths(-3).ToString());
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             var ret = new List<string>();
             foreach (var line in dbret)
             {
                 ret.Add(Convert.ToString(line[0]));
+            }
+            return ret;
+        }
+
+        public static Dictionary<string, string> RetrieveAllBRDictIn3Month()
+        {
+            var ret = new Dictionary<string, string>();
+            var sql = "select BRKey,BRNumber from BRAgileBaseInfo where OriginalDate > '<threemonth>'";
+            sql = sql.Replace("<threemonth>", DateTime.Now.AddMonths(-3).ToString());
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var brnum = Convert.ToString(line[1]);
+                var brkey = Convert.ToString(line[0]);
+                if(!ret.ContainsKey(brnum))
+                    ret.Add(brnum, brkey);
             }
             return ret;
         }

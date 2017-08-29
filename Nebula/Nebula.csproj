@@ -208,6 +208,7 @@
     <Compile Include="Models\BRAgileVM.cs" />
     <Compile Include="Models\CookieUtility.cs" />
     <Compile Include="Models\DBUtility.cs" />
+    <Compile Include="Models\ERPVM.cs" />
     <Compile Include="Models\EventDataVM.cs" />
     <Compile Include="Models\NebulaDataCollector.cs" />
     <Compile Include="Models\NebulaRPVM.cs" />
