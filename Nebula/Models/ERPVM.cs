@@ -68,6 +68,31 @@ namespace Nebula.Models
             DBUtility.ExeLocalSqlNoRes(sql);
         }
 
+        public static List<string> RetrieveJOin3Month()
+        {
+            var ret = new List<string>();
+            var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
+            var brkeylist = brdict.Values.ToList();
+            if (brkeylist.Count > 0)
+            {
+                var brcond = "'";
+                foreach (var k in brkeylist)
+                {
+                    brcond = brcond + k + "','";
+                }
+                brcond = brcond.Substring(0, brcond.Length - 2);
+
+                var sql = "select distinct JONumber from JOBaseInfo where BRKey in (<BRCOND>)";
+                sql = sql.Replace("<BRCOND>", brcond);
+                var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+                foreach (var line in dbret)
+                {
+                    ret.Add(Convert.ToString(line[0]));
+                }
+            }
+            return ret;
+        }
+
         public string BRKey { set; get; }
         public string BRNumber { set; get; }
         public string JONumber { set; get; }

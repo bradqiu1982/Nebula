@@ -206,6 +206,7 @@
     </Compile>
     <Compile Include="Models\AgileDownloadVM.cs" />
     <Compile Include="Models\BRAgileVM.cs" />
+    <Compile Include="Models\CamstarVM.cs" />
     <Compile Include="Models\CookieUtility.cs" />
     <Compile Include="Models\DBUtility.cs" />
     <Compile Include="Models\ERPVM.cs" />

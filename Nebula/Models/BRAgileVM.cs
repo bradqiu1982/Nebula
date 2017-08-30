@@ -251,6 +251,32 @@ namespace Nebula.Models
             sql = sql.Replace("<BRKey>", brkey);
             DBUtility.ExeLocalSqlNoRes(sql);
         }
+
+        public static List<string> BRPNIn3Month()
+        {
+            var ret = new List<string>();
+            var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
+            var brkeylist = brdict.Values.ToList();
+            if (brkeylist.Count > 0)
+            {
+                var brcond = "'";
+                foreach (var k in brkeylist)
+                {
+                    brcond = brcond + k + "','";
+                }
+                brcond = brcond.Substring(0, brcond.Length - 2);
+
+                var sql = "select distinct PN from AgileAffectItem where BRKey in (<BRCOND>)";
+                sql = sql.Replace("<BRCOND>", brcond);
+                var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+                foreach(var line in dbret)
+                {
+                    ret.Add(Convert.ToString(line[0]));
+                }
+            }
+            return ret;
+        }
+
         public string PN{set;get;}
         public string itemsite{set;get;}
         public string itemdesc{set;get;}

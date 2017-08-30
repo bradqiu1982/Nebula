@@ -63,7 +63,9 @@ namespace Nebula.Controllers
             //UpdateExistBR();
             //LoadNewBR();
             //ERPVM.LoadJOBaseInfo(this);
-            ERPVM.LoadJOComponentInfo(this);
+            //ERPVM.LoadJOComponentInfo(this);
+            //CamstarVM.UpdatePNWorkflow();
+            CamstarVM.UpdateJoStatus();
             return View();
         }
 
