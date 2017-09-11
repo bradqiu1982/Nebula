@@ -160,7 +160,7 @@ namespace Nebula.Models
         {
             try
             {
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var folderuser = syscfgdict["SHAREFOLDERUSER"];
                 var folderdomin = syscfgdict["SHAREFOLDERDOMIN"];
                 var folderpwd = syscfgdict["SHAREFOLDERPWD"];
@@ -183,7 +183,7 @@ namespace Nebula.Models
             {
 
 
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var folderuser = syscfgdict["SHAREFOLDERUSER"];
                 var folderdomin = syscfgdict["SHAREFOLDERDOMIN"];
                 var folderpwd = syscfgdict["SHAREFOLDERPWD"];
@@ -210,7 +210,7 @@ namespace Nebula.Models
         {
             try
             {
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var folderuser = syscfgdict["SHAREFOLDERUSER"];
                 var folderdomin = syscfgdict["SHAREFOLDERDOMIN"];
                 var folderpwd = syscfgdict["SHAREFOLDERPWD"];
@@ -231,7 +231,7 @@ namespace Nebula.Models
         {
             try
             {
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var folderuser = syscfgdict["SHAREFOLDERUSER"];
                 var folderdomin = syscfgdict["SHAREFOLDERDOMIN"];
                 var folderpwd = syscfgdict["SHAREFOLDERPWD"];
@@ -253,7 +253,7 @@ namespace Nebula.Models
         {
             try
             {
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var folderuser = syscfgdict["SHAREFOLDERUSER"];
                 var folderdomin = syscfgdict["SHAREFOLDERDOMIN"];
                 var folderpwd = syscfgdict["SHAREFOLDERPWD"];
@@ -273,7 +273,7 @@ namespace Nebula.Models
         {
             try
             {
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var folderuser = syscfgdict["SHAREFOLDERUSER"];
                 var folderdomin = syscfgdict["SHAREFOLDERDOMIN"];
                 var folderpwd = syscfgdict["SHAREFOLDERPWD"];
@@ -291,29 +291,9 @@ namespace Nebula.Models
             }
         }
 
-        public static Dictionary<string, string> GetSysConfig(Controller ctrl)
-        {
-            var lines = System.IO.File.ReadAllLines(ctrl.Server.MapPath("~/Scripts/NebulaCfg.txt"));
-            var ret = new Dictionary<string, string>();
-            foreach (var line in lines)
-            {
-                if (line.Contains("##"))
-                {
-                    continue;
-                }
-
-                if (line.Contains(":::"))
-                {
-                    var kvpair = line.Split(new string[] { ":::" }, StringSplitOptions.RemoveEmptyEntries);
-                    ret.Add(kvpair[0].Trim(), kvpair[1].Trim());
-                }
-            }
-            return ret;
-        }
-
         public static void DownloadAgile(List<string> ecolist, Controller ctrl,string downloadtype)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var AGILEURL = syscfgdict["AGILEURL"];
             var LOCALSITEPORT = syscfgdict["LOCALSITEPORT"];
             var SAVELOCATION = syscfgdict["SAVELOCATION"];
@@ -339,7 +319,7 @@ namespace Nebula.Models
         {
             var rawdata = new List<ECOWorkFlowRAWData>();
 
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var dir = syscfgdict["SAVELOCATION"] + "\\" + ECONUM;
             var workflowfile = dir + "\\" + ECONUM + "_WorkFlowTable.csv";
             if (FileExist(ctrl,workflowfile))
@@ -425,7 +405,7 @@ namespace Nebula.Models
 
         public static void UpdateECOWeeklyUpdate(Controller ctrl, ECOBaseInfo baseinfo, string cardkey)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
 
             string datestring = DateTime.Now.ToString("yyyyMMdd");
             string imgdir = ctrl.Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
@@ -505,7 +485,7 @@ namespace Nebula.Models
 
         private static void updateecolist(List<List<string>> data, Controller ctrl, string localdir, string urlfolder)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var baseinfos = ECOBaseInfo.RetrieveAllExistECOBaseInfo();
 
             foreach (var line in data)
@@ -753,7 +733,7 @@ namespace Nebula.Models
 
         public static void SetForceECORefresh(Controller ctrl)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             string datestring = DateTime.Now.ToString("yyyyMMdd");
             string imgdir = ctrl.Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
             var desfile = imgdir + syscfgdict["MINIPIPECOFILENAME"];
@@ -769,7 +749,7 @@ namespace Nebula.Models
 
         public static void RefreshECOList(Controller ctrl)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
 
             string datestring = DateTime.Now.ToString("yyyyMMdd");
             string imgdir = ctrl.Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
@@ -801,7 +781,7 @@ namespace Nebula.Models
         public static void RefreshECOPendingAttachInfo(Controller ctrl, string ECOKey)
         {
 
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             string datestring = DateTime.Now.ToString("yyyyMMdd");
             string imgdir = ctrl.Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
             var baseinfos = ECOBaseInfo.RetrieveECOBaseInfo(ECOKey);
@@ -900,7 +880,7 @@ namespace Nebula.Models
         private static void RefreshQAEEPROMFAI(ECOBaseInfo baseinfo, string CardKey, Controller ctrl)
         {
 
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcrootfolder = syscfgdict["QAEEPROMFAI"];
             var eepromfilter = syscfgdict["QAEEPROMCHECKLISTFILTER"];
 
@@ -1016,7 +996,7 @@ namespace Nebula.Models
 
         private static void RefreshQALabelFAI(ECOBaseInfo baseinfo, string CardKey, Controller ctrl)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcrootfolder = syscfgdict["QALABELFAI"];
             var labelfilter = syscfgdict["QALABELFILTER"];
 
@@ -1142,7 +1122,7 @@ namespace Nebula.Models
             var existfiledict = new Dictionary<string, bool>();
 
             var ret = new List<string>();
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             if (syscfgdict.ContainsKey("OAQADBSTRING"))
             {
                 var conn = DBUtility.GetConnector(syscfgdict["OAQADBSTRING"]);
@@ -1175,7 +1155,7 @@ namespace Nebula.Models
         private static void OARefreshQAEEPROMFAI(ECOBaseInfo baseinfo, string CardKey, Controller ctrl)
         {
 
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var eepromfilter = syscfgdict["QAEEPROMCHECKLISTFILTER"];
 
                 var currentcard = NebulaVM.RetrieveCard(CardKey);
@@ -1246,7 +1226,7 @@ namespace Nebula.Models
 
         private static void OARefreshQALabelFAI(ECOBaseInfo baseinfo, string CardKey, Controller ctrl)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var labelfilter = syscfgdict["QALABELFILTER"];
 
                 var currentcard = NebulaVM.RetrieveCard(CardKey);
@@ -1317,7 +1297,7 @@ namespace Nebula.Models
 
         public static void RefreshQAFAI(ECOBaseInfo baseinfo, string CardKey, Controller ctrl)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             if (syscfgdict.ContainsKey("OAQASWITH")
                 && string.Compare(syscfgdict["OAQASWITH"].Trim().ToUpper(), "TRUE") == 0)
             {
@@ -1445,7 +1425,7 @@ namespace Nebula.Models
 
         public static void RefreshTnuableQAFAI(Controller ctrl,ECOBaseInfo baseinfo, string CardKey)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
 
             var srcrootfolder = syscfgdict["TUNABLEQAEEPROMFAI"];
             var eepromfilter = syscfgdict["TUNABLEQAEEPROMFILTER"];
@@ -1469,7 +1449,7 @@ namespace Nebula.Models
 
         public static void UpdateOrderInfoFromExcel(Controller ctrl, ECOBaseInfo baseinfo, string cardkey)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
 
             var currentcard = NebulaVM.RetrieveCard(cardkey);
 
@@ -1588,7 +1568,7 @@ namespace Nebula.Models
 
         public static void UpdateJOInfoFromExcel(Controller ctrl, ECOBaseInfo baseinfo, string cardkey)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
 
             var currentcard = NebulaVM.RetrieveCard(cardkey);
 
@@ -1691,7 +1671,7 @@ namespace Nebula.Models
                     }
                 }
 
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var currentcard = NebulaVM.RetrieveCard(cardkey);
 
                 string datestring = DateTime.Now.ToString("yyyyMMdd");
@@ -1778,7 +1758,7 @@ namespace Nebula.Models
                     }
                 }
 
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var currentcard = NebulaVM.RetrieveCard(cardkey);
 
                 string datestring = DateTime.Now.ToString("yyyyMMdd");
@@ -1875,7 +1855,7 @@ namespace Nebula.Models
                     }
                 }
 
-                var syscfgdict = GetSysConfig(ctrl);
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
                 var currentcard = NebulaVM.RetrieveCard(cardkey);
 
                 string datestring = DateTime.Now.ToString("yyyyMMdd");
@@ -1930,7 +1910,7 @@ namespace Nebula.Models
 
         public static void UpdateShipInfoFromExcel(Controller ctrl, ECOBaseInfo baseinfo, string cardkey)
         {
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
 
             var ordercard = NebulaVM.RetrieveSpecialCard(baseinfo, NebulaCardType.SampleOrdering);
             var orderinfos = NebulaVM.RetrieveOrderInfo(ordercard[0].CardKey);
@@ -2018,7 +1998,7 @@ namespace Nebula.Models
         public static List<QACheckData> RetrieveAllQACheckInfo(Controller ctrl)
         {
             var ret = new List<QACheckData>();
-            var syscfgdict = GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcfile = syscfgdict["QAFACHECKCHART"];
             var sheetname = syscfgdict["QAFACHECKCHARTSHEET"];
             string datestring = DateTime.Now.ToString("yyyyMMdd");

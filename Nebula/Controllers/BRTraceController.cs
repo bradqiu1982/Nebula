@@ -27,7 +27,7 @@ namespace Nebula.Controllers
             if (Directory.Exists(updatedfolder) 
                 && !Directory.Exists(newqueryfolder))
             {
-                var syscfgdict = NebulaDataCollector.GetSysConfig(this);
+                var syscfgdict = CfgUtility.GetSysConfig(this);
                 var AGILEURL = syscfgdict["AGILEURL"];
                 var LOCALSITEPORT = syscfgdict["LOCALSITEPORT"];
                 var SAVELOCATION = (Server.MapPath("~/userfiles") + "\\docs\\Agile\\").Replace("\\", "/");
@@ -49,7 +49,7 @@ namespace Nebula.Controllers
             {
                 Directory.CreateDirectory(datefolder);
 
-                var syscfgdict = NebulaDataCollector.GetSysConfig(this);
+                var syscfgdict = CfgUtility.GetSysConfig(this);
                 var AGILEURL = syscfgdict["AGILEURL"];
                 var LOCALSITEPORT = syscfgdict["LOCALSITEPORT"];
                 var SAVELOCATION = (Server.MapPath("~/userfiles") + "\\docs\\Agile\\").Replace("\\", "/");

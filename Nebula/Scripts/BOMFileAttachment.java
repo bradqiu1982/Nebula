@@ -2,11 +2,14 @@ package mytest;
 
 import java.io.*;
 import java.net.*;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
+
 
 import com.agile.api.*;
 
@@ -58,6 +61,9 @@ class WorkFlowTable
 	
 	public void SetValue(int key,String value)
 	{
+		if(value == null)
+			return;
+		
 		if(key == ChangeConstants.ATT_WORKFLOW_STATUS_CODE) StatusCode = value;
 		if(key == ChangeConstants.ATT_WORKFLOW_WORKFLOW) WorkFlow = value;
 		if(key == ChangeConstants.ATT_WORKFLOW_WORKFLOW_STATUS) WorkFlowStatus = value;
@@ -83,17 +89,506 @@ class WorkFlowTable
 	public String SignoffComment;
 	public String SignoffDuration;
 	
+	public void ExportBR(DataOutputStream out) throws IOException
+	{
+		out.writeBytes("<<WORKFLOW>> StatusCode:::"+StatusCode+"###"+"WorkFlow:::"+WorkFlow+"###"+"WorkFlowStatus:::"+WorkFlowStatus+"###"+"Action:::"+Action
+				+"###"+"Reqd:::"+Reqd+"###"+"Reviewer:::"+Reviewer+"###"+"SignoffUser:::"+SignoffUser+"###"+"StatusChangedBy:::"+StatusChangedBy
+				+"###"+"LocalTime:::"+LocalTime+"###"+"SignoffComment:::"+SignoffComment+"###"+"SignoffDuration:::"+SignoffDuration+"\r\n");
+	}
+			
 }
+
+class BRBaseInfo
+{
+	public BRBaseInfo()
+	{
+		ChangeType = "";
+		Number = "";
+		Description = "";
+		Status = "";
+		Workflow = "";
+		Originator = "";
+		OriginalDate = "";
+		brworkflowlist = null;
+		affectitem = null;
+		history = null;
+		attach = null;
+	}
+	
+	public void SetValue(int key,String value)
+	{
+		if(value == null)
+			return;
+		
+		if(key == ChangeConstants.ATT_COVER_PAGE_CHANGE_TYPE) ChangeType = value;
+		if(key == ChangeConstants.ATT_COVER_PAGE_NUMBER) Number = value;
+		if(key == ChangeConstants.ATT_COVER_PAGE_DESCRIPTION) Description = value;
+		if(key == ChangeConstants.ATT_COVER_PAGE_DESCRIPTION_OF_CHANGE) Description = value;
+		if(key == ChangeConstants.ATT_COVER_PAGE_STATUS) Status = value;
+		if(key == ChangeConstants.ATT_COVER_PAGE_WORKFLOW) Workflow = value;
+		if(key == ChangeConstants.ATT_COVER_PAGE_ORIGINATOR) Originator = value;
+		if(key == ChangeConstants.ATT_COVER_PAGE_DATE_ORIGINATED) OriginalDate = value;
+	}
+	
+	public String ChangeType;
+	public String Number;
+	public String Description;
+	public String Status;
+	public String Workflow;
+	public String Originator;
+	public String OriginalDate;
+	
+	List<WorkFlowTable> brworkflowlist;
+	List<BRAffectItem> affectitem;
+	List<BRHistory> history;
+	List<BRAttachment> attach;
+	
+	private static boolean CreateDir(String dirstr)
+	{
+		File dir = new File(dirstr);
+		if(!dir.exists())
+		{
+			try
+			{
+				dir.mkdirs();
+				return true;
+			}
+			catch(Exception ex)
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static String getCurrentTimeStamp() {
+	    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+	    Date now = new Date();
+	    String strDate = sdfDate.format(now);
+	    return strDate;
+	}
+	
+	public void ExportBR(String AgileDir)
+	{
+		if(!Number.isEmpty())
+		{
+			String dir = AgileDir+Number;
+			if(CreateDir(dir))
+			{
+				String brfilename = dir+"/"+Number+"-"+getCurrentTimeStamp()+".txt";
+				File f=new File(brfilename);
+				DataOutputStream out=null;
+				try {
+					out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(brfilename)));
+					out.writeBytes("<<BASEINFO>> Number:::"+Number+"###"+"ChangeType:::"+ChangeType+"###"+"Status:::"+Status
+							+"###"+"Workflow:::"+Workflow+"###"+"Originator:::"+Originator+"###"+"OriginalDate:::"+OriginalDate+"###"+"Description:::"+Description+"\r\n");
+					if(brworkflowlist != null && brworkflowlist.size() > 0)
+					{
+						for(int idx = 0;idx < brworkflowlist.size();idx++)
+						{
+							brworkflowlist.get(idx).ExportBR(out);
+						}
+					}
+					if(affectitem != null && affectitem.size() > 0)
+					{
+						for(int idx = 0;idx < affectitem.size();idx++)
+						{
+							affectitem.get(idx).ExportBR(out);
+						}
+					}
+					if(history != null && history.size() > 0)
+					{
+						for(int idx = 0;idx < history.size();idx++)
+						{
+							history.get(idx).ExportBR(out);
+						}
+					}
+					if(attach != null && attach.size() > 0)
+					{
+						for(int idx = 0;idx < attach.size();idx++)
+						{
+							attach.get(idx).ExportBR(out);
+						}
+					}
+					out.close();
+				}catch(Exception ex)
+				{
+					System.out.println(ex.getMessage());
+				}
+				
+			}//end if
+		}//end if
+	}
+	
+}
+
+class BRAffectItem
+{
+	public BRAffectItem()
+	{
+		itemnumber = "";
+		itemsite = "";
+		itemdesc = "";
+		lifecycle = "";
+		commodity = "";
+	}
+	
+	public void SetValue(int key,String value)
+	{
+		if(value == null)
+			return;
+		
+		if(key == ChangeConstants.ATT_AFFECTED_ITEMS_ITEM_NUMBER) itemnumber = value;
+		if(key == ChangeConstants.ATT_AFFECTED_ITEMS_SITES) itemsite = value;
+		if(key == ChangeConstants.ATT_AFFECTED_ITEMS_ITEM_DESCRIPTION) itemdesc = value;
+		if(key == ChangeConstants.ATT_AFFECTED_ITEMS_LIFECYCLE_PHASE) lifecycle = value;
+		if(key == ChangeConstants.ATT_AFFECTED_ITEMS_COMMODITY) commodity = value;
+	}
+	
+	public String itemnumber;
+	public String itemsite;
+	public String itemdesc;
+	public String lifecycle;
+	public String commodity;
+	
+	public void ExportBR(DataOutputStream out) throws IOException
+	{
+		out.writeBytes("<<AFFECT>> itemnumber:::"+itemnumber+"###"+"itemsite:::"+itemsite+"###"+"itemdesc:::"+itemdesc+"###"+"lifecycle:::"+lifecycle+"###"+"commodity:::"+commodity+"\r\n");
+	}
+}
+
+class BRAttachment
+{
+	public BRAttachment()
+	{
+		FileName = "";
+		ModifyDate = "";
+		Checkiner = "";
+		LocalFilePath = "";
+	}
+	
+	public void SetValue(int key,String value)
+	{
+		if(value == null)
+			return;
+		
+		if(key == ChangeConstants.ATT_ATTACHMENTS_FILE_NAME) FileName = value;
+		if(key == ChangeConstants.ATT_ATTACHMENTS_MODIFIED_DATE) ModifyDate = value;
+		if(key == ChangeConstants.ATT_ATTACHMENTS_CHECKIN_USER) Checkiner = value;
+	}
+	
+	public String FileName;
+	public String ModifyDate;
+	public String Checkiner;
+	public String LocalFilePath;
+	
+	public void ExportBR(DataOutputStream out) throws IOException
+	{
+		out.writeBytes("<<ATTACH>> FileName:::"+FileName+"###"+"ModifyDate:::"+ModifyDate+"###"+"Checkiner:::"+Checkiner+"###"+"LocalFilePath:::"+LocalFilePath+"\r\n");
+	}
+}
+
+class BRHistory
+{
+	public BRHistory()
+	{
+		status = "";
+		nextstatus = "";
+		action = "";
+		user = "";
+		localtime = "";
+		detail = "";
+		usernotice = "";
+	}
+	
+	public void SetValue(int key,String value)
+	{
+		if(value == null)
+			return;
+		
+		if(key == ChangeConstants.ATT_HISTORY_STATUS) status = value;
+		if(key == ChangeConstants.ATT_HISTORY_NEXT_STATUS) nextstatus = value;
+		if(key == ChangeConstants.ATT_HISTORY_ACTION) action = value;
+		if(key == ChangeConstants.ATT_HISTORY_USER) user = value;
+		if(key == ChangeConstants.ATT_HISTORY_LOCAL_CLIENT_TIME) localtime = value;
+		if(key == ChangeConstants.ATT_HISTORY_DETAILS) detail = value;
+		if(key == ChangeConstants.ATT_HISTORY_USERS_NOTIFIED) usernotice = value;
+	}
+	
+	public String status;
+	public String nextstatus;
+	public String action;
+	public String user;
+	public String localtime;
+	public String detail;
+	public String usernotice;
+	
+	public void ExportBR(DataOutputStream out) throws IOException
+	{
+		out.writeBytes("<<HISTORY>> status:::"+status+"###"+"nextstatus:::"+nextstatus+"###"+"action:::"+action+"###"+"user:::"+user
+				+"###"+"localtime:::"+localtime+"###"+"detail:::"+detail+"###"+"usernotice:::"+usernotice+"\r\n");
+	}
+}
+
 
 public class BOMFileAttachment {
 
-	//public ResourceBundle rb=ResourceBundle.getBundle("FileAttachment");
 	public static final MyLog goLogger =new MyLog();//Logger.getLogger(BOMFileAttachment.class);
-    
+
    // main method.. 
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args)
 	{
-		if(args.length > 4)
+		BRFromAgile(args);
+		ECOFromAgile(args);
+	}
+	    
+	
+	private static void NewBRQuery(String[] args,String AgileURL,String AgileDir,String LocalSitePort)
+	{
+		goLogger.info("get AgileURL "+AgileURL);
+		
+		IAgileSession sess =  getAgileSession(AgileURL,"mkbomctx","agiledll");
+		if(sess != null)
+		{
+			List<String> brstrlist = new ArrayList<String>();
+			
+			for(int aidx = 4;aidx < args.length;aidx++)
+			{
+				String pmnametime = args[aidx];
+				String pmname = pmnametime.split(";;;")[0].replace("###", " ");
+				String latesttime = pmnametime.split(";;;")[1].replace("###", " ");
+				
+				if(sess == null)
+				{
+					sess =  getAgileSession(AgileURL,"mkbomctx","agiledll");
+					if(sess == null)
+						return;
+				}
+				List<BRBaseInfo> brlist =  null;
+				try
+				{
+					BOMFileAttachment gfa=new BOMFileAttachment();
+					sess.setDateFormats(new DateFormat[]{new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")});
+					brlist =  gfa.RetrieveBRBaseInfo(pmname,latesttime,sess);
+					
+					for(int idx = 0;idx < brlist.size();idx++)
+					{
+						BRBaseInfo brinfo = brlist.get(idx);
+						IChange BR = (IChange)sess.getObject(IChange.OBJECT_TYPE, brinfo.Number);
+						if(BR != null)
+						{
+							brinfo.brworkflowlist = gfa.RetrieveBRWorkFlow(BR);
+							brinfo.affectitem =  gfa.RetrieveBRAffectItem(BR);
+							brinfo.history = gfa.RetrieveBRHistory(BR);
+							brinfo.attach = gfa.RetrieveBRAttachment(BR,AgileDir+brinfo.Number+"/");
+						}
+					}
+					
+				}
+				catch(Exception ex)
+				{
+					System.out.println(ex.getMessage());
+					sess.close();
+					sess = null;
+				}
+				
+
+				if(brlist != null)
+				{
+					try
+					{
+						for(int idx=0;idx < brlist.size();idx++)
+						{
+							brlist.get(idx).ExportBR(AgileDir);
+							brstrlist.add(brlist.get(idx).Number);
+						}
+					}catch(Exception ex){}
+				}
+
+
+			}//end for
+			
+			if(sess != null)
+			{
+				sess.close();
+			}
+			
+			NoticNebulaNewBR(LocalSitePort,brstrlist);
+		}//end if
+	}
+	
+	private static void UpdateBRList(String[] args,String AgileURL,String AgileDir,String LocalSitePort)
+	{
+		IAgileSession sess =  getAgileSession(AgileURL,"mkbomctx","agiledll");
+		if(sess != null)
+		{
+			List<BRBaseInfo> brlist =  new ArrayList<BRBaseInfo>();
+			if(args.length > 4)
+			{
+				for(int aidx = 4;aidx < args.length;aidx++)
+				{
+					String brstr = args[aidx];
+					
+					if(sess == null)
+					{
+						sess =  getAgileSession(AgileURL,"mkbomctx","agiledll");
+						if(sess == null)
+							return;
+					}
+					try
+					{
+						BRBaseInfo brinfo = new BRBaseInfo();
+						brinfo.Number = brstr;
+						
+						BOMFileAttachment gfa=new BOMFileAttachment();
+						sess.setDateFormats(new DateFormat[]{new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")});
+						
+						IChange BR = (IChange)sess.getObject(IChange.OBJECT_TYPE, brstr);
+						if(BR != null)
+						{
+							brinfo.brworkflowlist = gfa.RetrieveBRWorkFlow(BR);
+							brinfo.affectitem =  gfa.RetrieveBRAffectItem(BR);
+							brinfo.history = gfa.RetrieveBRHistory(BR);
+							brinfo.attach = gfa.RetrieveBRAttachment(BR,AgileDir+brinfo.Number+"/");
+							
+							brlist.add(brinfo);
+						}
+					}
+					catch(Exception ex)
+					{
+						System.out.println(ex.getMessage());
+						sess.close();
+						sess = null;
+					}
+				}//end for				
+			}
+			
+			if(brlist.size() > 0)
+			{
+				try
+				{
+					for(int idx=0;idx < brlist.size();idx++)
+					{
+						brlist.get(idx).ExportBR(AgileDir);
+					}
+				}catch(Exception ex){}
+			}
+			
+			if(sess != null)
+			{
+				sess.close();
+			}
+			
+			NoticNebulaUpdateBR(LocalSitePort);
+		}//end if
+	}
+	
+	//http://sny-agile9app-p64:7001/Agile
+	private static void BRFromAgile(String[] args)
+	{
+		if(args.length > 3)
+		{
+			
+			for(int idx = 0;idx < args.length;idx++)
+			{
+				goLogger.info("java main...param "+idx+" is "+args[idx]);				
+			}
+			String Function = args[0];
+			String AgileURL = args[1];
+			String LocalSitePort = args[2];
+			String AgileDir = args[3];
+			goLogger.info("Function  is "+Function);
+			
+			if(Function.equalsIgnoreCase("UPDATEBRLIST"))
+			{
+				goLogger.info("run update br list");
+				UpdateBRList(args, AgileURL, AgileDir, LocalSitePort);
+			}
+			else if(Function.equalsIgnoreCase("NEWBRQUERY"))
+			{
+				goLogger.info("run new query");
+				NewBRQuery(args, AgileURL, AgileDir, LocalSitePort);
+			}
+		}//end if
+		else
+		{
+			goLogger.error("\n Usage: UPDATEBRLIST/NEWBRQUERY  AgileURL LocalSitePort AgileDir User###Name1;;;TIME1 User###Name2;;;TIME2 User###Name3;;;TIME3.....");	
+		}
+	}
+	
+	private static void NoticNebulaNewBR(String LocalSitePort,List<String> brlist)
+	{
+			String brstr = "";
+
+			for(int idx = 0;idx < brlist.size();idx++)
+			{
+				brstr = brstr + ":::"+ brlist.get(idx);
+			}
+			
+			try
+			{
+				goLogger.info( "try to query: "+"http://localhost:"+LocalSitePort+"/Nebula/BRTrace/NewBR?BRLIST="+brstr);
+				
+				URL url = new URL("http://localhost:"+LocalSitePort+"/Nebula/BRTrace/NewBR?BRLIST="+brstr);
+		        URLConnection URLconnection = url.openConnection();  
+		        HttpURLConnection httpConnection = (HttpURLConnection)URLconnection;  
+		        int responseCode = httpConnection.getResponseCode();
+		        if (responseCode == HttpURLConnection.HTTP_OK) {  
+		        	goLogger.info("Query HTTP server successfully");
+		        	
+		        	InputStream urlStream = httpConnection.getInputStream();  
+		            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlStream));  
+		            String sCurrentLine = "";  
+		            while ((sCurrentLine = bufferedReader.readLine()) != null) {  
+		            	goLogger.info( sCurrentLine);
+		            }  
+		        }
+		        else
+		        {
+		        	goLogger.error("Fail to access url:"+"http://localhost:"+LocalSitePort+"/Nebula/BRTrace/NewBR?BRLIST="+brstr);
+		        }
+			}catch(Exception ex)
+			{
+				goLogger.error("Fail to query url:"+ex.getMessage());			
+			}	
+	}
+	
+	private static void NoticNebulaUpdateBR(String LocalSitePort)
+	{
+			try
+			{
+				goLogger.info( "try to query: "+"http://localhost:"+LocalSitePort+"/Nebula/BRTrace/UpdateBR");
+				
+				URL url = new URL("http://localhost:"+LocalSitePort+"/Nebula/BRTrace/UpdateBR");
+		        URLConnection URLconnection = url.openConnection();  
+		        HttpURLConnection httpConnection = (HttpURLConnection)URLconnection;  
+		        int responseCode = httpConnection.getResponseCode();
+		        if (responseCode == HttpURLConnection.HTTP_OK) {  
+		        	goLogger.info("Query HTTP server successfully");
+		        	
+		        	InputStream urlStream = httpConnection.getInputStream();  
+		            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlStream));  
+		            String sCurrentLine = "";  
+		            while ((sCurrentLine = bufferedReader.readLine()) != null) {  
+		            	goLogger.info( sCurrentLine);
+		            }  
+		        }
+		        else
+		        {
+		        	goLogger.error("Fail to access url:"+"http://localhost:"+LocalSitePort+"/Nebula/BRTrace/UpdateBR");
+		        }
+			}catch(Exception ex)
+			{
+				goLogger.error("Fail to query url:"+ex.getMessage());			
+			}	
+	}
+	
+	
+	private static void ECOFromAgile(String[] args)
+	{
+		
+		/*		if(args.length > 4)
 		{
 			for(int idx = 0;idx < args.length;idx++)
 			{
@@ -128,9 +623,11 @@ public class BOMFileAttachment {
 					BOMFileAttachment gfa=new BOMFileAttachment();
 					gfa.getAgileFilesByName(sess,ecolist,AgileDir,localfiledict,false);
 					
-					NoticNebulaAttach(LocalSitePort,ecolist,"AgileAttach");
-					NoticNebulaAttach(LocalSitePort,ecolist,"AgileAttach");
+					NoticDominoAttach(LocalSitePort,ecolist,"AgileAttach");
+					NoticDominoAttach(LocalSitePort,ecolist,"AgileAttach");
+					sess.close();
 				}
+				
 				//gfa.getAgileFilesByName("E150570");
 				//gfa.getAgileFilesByName("WI-MFG-318");
 				//gfa.getAgileFilesByName("38200039");
@@ -142,10 +639,13 @@ public class BOMFileAttachment {
 				{
 					BOMFileAttachment gfa=new BOMFileAttachment();
 					gfa.getAgileFilesByName(sess,ecolist,AgileDir,localfiledict,true);
+					sess.close();
 					
-					NoticNebulaAttach(LocalSitePort,ecolist,"AgileAttach");
-					NoticNebulaAttach(LocalSitePort,ecolist,"AgileAttach");
+					NoticDominoAttach(LocalSitePort,ecolist,"AgileAttach");
+					NoticDominoAttach(LocalSitePort,ecolist,"AgileAttach");
+					
 				}
+				
 			}
 			else if(Mode.equalsIgnoreCase("WORKFLOW"))
 			{
@@ -154,9 +654,10 @@ public class BOMFileAttachment {
 				{
 					BOMFileAttachment gfa=new BOMFileAttachment();
 					gfa.getAgileWorkFlow(sess,ecolist,AgileDir);
+					sess.close();
 					
-					NoticNebulaAttach(LocalSitePort,ecolist,"AgileWorkFlow");
-					NoticNebulaAttach(LocalSitePort,ecolist,"AgileWorkFlow");
+					NoticDominoAttach(LocalSitePort,ecolist,"AgileWorkFlow");
+					NoticDominoAttach(LocalSitePort,ecolist,"AgileWorkFlow");
 				}
 			}
 		}
@@ -164,8 +665,229 @@ public class BOMFileAttachment {
 		{
 			goLogger.error("\n Usage: ATTACH/WORKFLOW/ATTACHNAME AgileURL LocalSitePort AgileDir ECONUM1 ECONUM2 ECONUM3 .....");
 			return;
+		}*/
+		
+	}
+	
+	
+	
+	public List<BRBaseInfo> RetrieveBRBaseInfo(String pmname,String starttime,IAgileSession sess)
+	{
+		List<BRBaseInfo> ret = new ArrayList<BRBaseInfo>();
+		
+		try
+		{
+			IQuery query = (IQuery)sess.createObject(IQuery.OBJECT_TYPE,ChangeConstants.CLASS_CHANGE_BASE_CLASS);
+			query.setCaseSensitive(false);
+			query.setCriteria("[Cover Page.Originator] == '"+pmname+"' and " 
+					+"[Cover Page.Change Type] == 'Build Requests' and "
+					+"[Cover Page.Date Originated] > '"+starttime+"' ");
+			
+			Integer resatt [] = {ChangeConstants.ATT_COVER_PAGE_CHANGE_TYPE,ChangeConstants.ATT_COVER_PAGE_NUMBER
+					,ChangeConstants.ATT_COVER_PAGE_DESCRIPTION
+					,ChangeConstants.ATT_COVER_PAGE_STATUS,ChangeConstants.ATT_COVER_PAGE_WORKFLOW
+					,ChangeConstants.ATT_COVER_PAGE_ORIGINATOR,ChangeConstants.ATT_COVER_PAGE_DATE_ORIGINATED};
+			query.setResultAttributes(resatt);
+			
+			ITable tb = query.execute();
+			Iterator ite=tb.iterator();
+			while(ite.hasNext()){
+				IRow row=(IRow) ite.next();
+				BRBaseInfo brinfo = new BRBaseInfo();
+				
+				Map<Integer,Object> mvalues = row.getValues();
+				goLogger.debug(mvalues.toString());
+				for(Entry<Integer,Object> e: mvalues.entrySet())
+				{
+					int key = e.getKey();
+					if(e.getValue() != null)
+					{
+						String value = e.getValue().toString();
+						brinfo.SetValue(key, value.replace("'", "").replace(",", "").replace("\r", "").replace("\n", ""));
+					}
+				}
+				
+				ret.add(brinfo);
+			}
+		}catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+			ret.clear();
+		}
+		return ret;
+	}
+	
+	public List<WorkFlowTable> RetrieveBRWorkFlow(IChange BR)
+	{
+		List<WorkFlowTable> ret = new ArrayList<WorkFlowTable>();
+		try
+		{
+			ITable workflowtable = BR.getTable(ChangeConstants.TABLE_WORKFLOW);
+			if(workflowtable != null)
+			{
+				Iterator ite=workflowtable.iterator();
+				while(ite.hasNext()){
+					IRow row=(IRow) ite.next();
+					WorkFlowTable wtabrow = new WorkFlowTable();
+					Map<Integer,Object> mvalues = row.getValues();
+					
+					goLogger.debug(mvalues.toString());
+					
+					for(Entry<Integer,Object> e: mvalues.entrySet())
+					{
+						int key = e.getKey();
+						if(e.getValue() != null)
+						{
+							String value = e.getValue().toString();
+							wtabrow.SetValue(key, value.replace("'", "").replace(",", "").replace("\r", "").replace("\n", ""));
+						}
+					}
+					ret.add(wtabrow);
+				}//end while
+			}
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+			ret.clear();
 		}
 		
+		return ret;
+	}
+	
+	public List<BRAffectItem> RetrieveBRAffectItem(IChange BR)
+	{
+		List<BRAffectItem> ret = new ArrayList<BRAffectItem>();
+		try
+		{
+			ITable affecttable = BR.getTable(ChangeConstants.TABLE_AFFECTEDITEMS);
+			if(affecttable != null)
+			{
+				Iterator ite=affecttable.iterator();
+				while(ite.hasNext()){
+					IRow row=(IRow) ite.next();
+					BRAffectItem wtabrow = new BRAffectItem();
+					Map<Integer,Object> mvalues = row.getValues();
+					
+					goLogger.debug(mvalues.toString());
+					
+					for(Entry<Integer,Object> e: mvalues.entrySet())
+					{
+						int key = e.getKey();
+						if(e.getValue() != null)
+						{
+							String value = e.getValue().toString();
+							wtabrow.SetValue(key, value.replace("'", "").replace(",", "").replace("\r", "").replace("\n", ""));
+						}
+					}
+					ret.add(wtabrow);
+				}//end while
+			}
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+			ret.clear();
+		}
+		
+		return ret;
+	}
+	
+	public List<BRHistory> RetrieveBRHistory(IChange BR)
+	{
+		List<BRHistory> ret = new ArrayList<BRHistory>();
+		try
+		{
+			ITable historytable = BR.getTable(ChangeConstants.TABLE_HISTORY);
+			if(historytable != null)
+			{
+				Iterator ite=historytable.iterator();
+				while(ite.hasNext()){
+					IRow row=(IRow) ite.next();
+					BRHistory wtabrow = new BRHistory();
+					Map<Integer,Object> mvalues = row.getValues();
+					
+					goLogger.debug(mvalues.toString());
+					
+					for(Entry<Integer,Object> e: mvalues.entrySet())
+					{
+						int key = e.getKey();
+						if(e.getValue() != null)
+						{
+							String value = e.getValue().toString();
+							wtabrow.SetValue(key, value.replace("'", "").replace(",", "").replace("\r", "").replace("\n", ""));
+						}
+					}
+					ret.add(wtabrow);
+				}//end while
+			}
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+			ret.clear();
+		}
+		
+		return ret;
+	}
+	
+	public List<BRAttachment> RetrieveBRAttachment(IChange BR,String savedlocation)
+	{
+		List<BRAttachment> ret = new ArrayList<BRAttachment>();
+		try
+		{
+			ITable atttable = BR.getTable(ChangeConstants.TABLE_ATTACHMENTS);
+			if(atttable != null)
+			{
+				Iterator ite=atttable.iterator();
+				while(ite.hasNext()){
+					IRow row=(IRow) ite.next();
+					BRAttachment wtabrow = new BRAttachment();
+					Map<Integer,Object> mvalues = row.getValues();
+					
+					goLogger.debug(mvalues.toString());
+					
+					for(Entry<Integer,Object> e: mvalues.entrySet())
+					{
+						int key = e.getKey();
+						if(e.getValue() != null)
+						{
+							String value = e.getValue().toString();
+							wtabrow.SetValue(key, value.replace("'", "").replace(",", "").replace("\r", "").replace("\n", ""));
+						}
+					}
+					
+					if(!wtabrow.FileName.isEmpty())
+					{
+						try
+						{
+							goLogger.debug("start download attachment:"+wtabrow.FileName);
+							if(CreateDir(savedlocation))
+							{
+								wtabrow.LocalFilePath = savedlocation+wtabrow.FileName;
+								File localfile = new File(wtabrow.LocalFilePath);
+								if(!localfile.exists())
+								{
+									InputStream is=((IAttachmentFile)row).getFile();
+									createFile(is,wtabrow.FileName,savedlocation);
+								}
+							}
+						}catch(Exception ex)
+						{
+							goLogger.debug("download attachment exception:"+ex.getMessage());
+						}
+					}
+					ret.add(wtabrow);
+				}//end while
+			}
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+			ret.clear();
+		}
+		
+		return ret;
 	}
 	
 	public void getAgileFilesByName(IAgileSession sess,List<String> ecolist,String AgileDir,HashMap<String,HashMap<String,String>> localfiledict,boolean justname) {
@@ -294,16 +1016,16 @@ public class BOMFileAttachment {
 		return true;
 	}
 		
-	private static void NoticNebulaAttach(String LocalSitePort,List<String> ecolist,String action)
+	private static void NoticDominoAttach(String LocalSitePort,List<String> ecolist,String action)
 	{
 		for(int idx = 0;idx < ecolist.size();idx++)
 		{
 			String econum = ecolist.get(idx);
 			try
 			{
-				goLogger.info( "try to query: "+"http://localhost:"+LocalSitePort+"/Nebula/MiniPIP/"+action+"?ECONUM="+econum);
+				goLogger.info( "try to query: "+"http://localhost:"+LocalSitePort+"/Domino/MiniPIP/"+action+"?ECONUM="+econum);
 				
-				URL url = new URL("http://localhost:"+LocalSitePort+"/Nebula/MiniPIP/"+action+"?ECONUM="+econum);
+				URL url = new URL("http://localhost:"+LocalSitePort+"/Domino/MiniPIP/"+action+"?ECONUM="+econum);
 		        URLConnection URLconnection = url.openConnection();  
 		        HttpURLConnection httpConnection = (HttpURLConnection)URLconnection;  
 		        int responseCode = httpConnection.getResponseCode();
@@ -319,7 +1041,7 @@ public class BOMFileAttachment {
 		        }
 		        else
 		        {
-		        	goLogger.error("Fail to access url:"+"http://localhost:"+LocalSitePort+"/Nebula/MiniPIP/"+action+"?ECONUM="+econum);
+		        	goLogger.error("Fail to access url:"+"http://localhost:"+LocalSitePort+"/Domino/MiniPIP/"+action+"?ECONUM="+econum);
 		        }
 			}catch(Exception ex)
 			{
@@ -477,7 +1199,7 @@ public class BOMFileAttachment {
 								if(e.getValue() != null)
 								{
 									String value = e.getValue().toString();
-									wtabrow.SetValue(key, value.replace("'", "").replace(",", ""));
+									wtabrow.SetValue(key, value.replace("'", "").replace(",", "").replace("\r", "").replace("\n", ""));
 								}
 							}
 							wtab.add(wtabrow);

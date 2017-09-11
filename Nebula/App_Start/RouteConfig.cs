@@ -15,16 +15,9 @@ namespace Nebula
 
             routes.MapRoute(
                 name: "Nebula",
-                url: "Nebula/{controller}/{action}",
-                defaults: new { controller = "MiniPIP", action = "ViewAll" }
+                url: "{controller}/{action}",
+                defaults: new { controller = "NebulaUser", action = "UserLogin" }
             );
-
-            //WHEN REAL DEPLOY , THIS SHOULD BE COMMENTED
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}",
-            //    defaults: new { controller = "MiniPIP", action = "ViewAll" }
-            //);
 
         }
     }

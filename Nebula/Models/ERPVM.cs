@@ -238,7 +238,7 @@ namespace Nebula.Models
         {
             var joexistmainstore = LoadJOExistMainstore(ctrl);
 
-            var syscfgdict = NebulaDataCollector.GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcfile = syscfgdict["ERPJOBASEINFO"];
             var descfile = DownloadERPFile(srcfile, ctrl);
             if (descfile != null && File.Exists(descfile))
@@ -280,7 +280,7 @@ namespace Nebula.Models
 
         public static void LoadJOComponentInfo(Controller ctrl)
         {
-            var syscfgdict = NebulaDataCollector.GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcfile = syscfgdict["ERPJOCOMPONENTINFO"];
             var descfile = DownloadERPFile(srcfile, ctrl);
             if (descfile != null && File.Exists(descfile))
@@ -317,7 +317,7 @@ namespace Nebula.Models
         private static Dictionary<string,int> LoadJOExistMainstore(Controller ctrl)
         {
             var ret = new Dictionary<string, int>();
-            var syscfgdict = NebulaDataCollector.GetSysConfig(ctrl);
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcfile = syscfgdict["ERPJOEXISTMAINSTORE"];
             var descfile = DownloadERPFile(srcfile, ctrl);
             if (descfile != null && File.Exists(descfile))

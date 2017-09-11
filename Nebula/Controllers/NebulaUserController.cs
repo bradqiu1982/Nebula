@@ -17,12 +17,10 @@ namespace Nebula.Controllers
 {
     public class NebulaUserController : Controller
     {
-
-        private bool checkexistuser(string user)
+        public ActionResult UserLogin()
         {
-            return false;
+            return View();
         }
-
 
         public ActionResult RegisterUser()
         {
@@ -44,7 +42,7 @@ namespace Nebula.Controllers
 
             var toaddrs = new List<string>();
             toaddrs.Add(username);
-            EmailUtility.SendEmail("NPI Website Active Link",toaddrs, validatestr);
+            EmailUtility.SendEmail(this,"NPI Website Active Link",toaddrs, validatestr);
         }
 
         [HttpPost, ActionName("RegisterUser")]
@@ -168,7 +166,7 @@ namespace Nebula.Controllers
 
             var toaddrs = new List<string>();
             toaddrs.Add(username);
-            EmailUtility.SendEmail("NPI Website Active Link", toaddrs, validatestr);
+            EmailUtility.SendEmail(this,"NPI Website Active Link", toaddrs, validatestr);
             return RedirectToAction("ResetNoticeA");
         }
 
@@ -297,10 +295,6 @@ namespace Nebula.Controllers
             return RedirectToAction("ViewAll", "MiniPIP");
         }
 
-        public ActionResult UserCenter()
-        {
-            return View();
-        }
 
         [HttpPost, ActionName("SaveCacheInfo")]
         public string SaveCacheInfo()

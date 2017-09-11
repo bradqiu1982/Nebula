@@ -3,35 +3,13 @@ LOCALSITEPORT:::80
 TRACEPM:::Rose Wang;Chris Bao;
 FIRSTTRACETIME:::2017-07-01 10:00:00
 
+APPEMAILADRESS:::WXNPI.Trace@finisar.com
+APPEMAILPWD:::abc@12345
+EMAILSERVER:::wmail.finisar.com
+
 SHAREFOLDERUSER:::brad.qiu
 SHAREFOLDERDOMIN:::china
 SHAREFOLDERPWD:::wangle@5323
 ERPJOBASEINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\WXI Finisar WIP Value Report.xls
 ERPJOCOMPONENTINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\Jobs_WXI.CSV
 ERPJOEXISTMAINSTORE:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WXI.csv
-
-#OAQASWITH:::TRUE
-#OAQADBSTRING:::Server=wux-prod03\prod01;uid=OA_FAI_Reader;pwd=123_FAI_#;Database=OA;Connection Timeout=30;
-#DEMOECONUM:::E155220;E155508;E155206;E153282;E150849;E155901;E154011;E154347;E154801
-#MINIPIPECOFOLDER:::\\Sny-netapp-01\share_ipoh\Department\Product Engineering\Mini-PIP's
-#MINIPIPECOFILENAME:::Mini-PIP_log_current.xlsm
-#MINIPIPSHEETNAME:::Mini-PIP
-#MINIPIPCUSTOMERFOLDER:::\\Sny-netapp-01\share_ipoh\Department\Product Engineering\Mini-PIP's
-#QAEEPROMFAI:::\\wux-fs\PUBLIC\Quality\31. Parallel TQM\3_FAI Check\FAI-EEPROM
-#QALABELFAI:::\\wux-fs\PUBLIC\Quality\31. Parallel TQM\3_FAI Check\FLI
-#QAEEPROMCHECKLISTFILTER:::CHECKLISTEEPROM
-#QALABELFILTER:::_FAI_
-#WEEKLYUPDATE:::\\cn-file01\Public\Active NPI\Product_Engineering\PE_Weekly report\MiniPIP report\MINIPIP Progress\
-#ORDERINFOPATH:::\\wux-fs\public\ERP_Report\WXI\Planning\Backlog Report
-#JOORDERINFO:::\\wux-fs\PUBLIC\ERP_Report\WXI\Planning\WXI Finisar WIP Value Report.xls
-#JO1STCHECKINFO:::\\cn-file01\Public\Active NPI\Product_Engineering\PE_Weekly report\MiniPIP report\FA JO checklist_Engineering.xlsx
-#JO2NDCHECKINFO:::\\wux-file01\Public\Quality\31. Parallel TQM\3_FAI Check
-#JO2MAINSTORE:::\\wux-fs\PUBLIC\ERP_Report\WXI\Planning\WXI Finisar WIP Value Report.xls
-#SHIPMENTINFOPATH:::\\wux-fs\PUBLIC\ERP_Report\WXI\Planning
-#QAFACHECKCHART:::\\wux-fs\PUBLIC\Quality\31. Parallel TQM\3_FAI Check\FAI summary.xlsx
-#QAFACHECKCHARTSHEET:::EEPROM&FLI Data Resource
-#TUNABLEQAEEPROMFAI:::\\wux-fs\Public\Quality\29.T-XFP TQM\17. FAI  Checking Record\FAI-EEPROM
-#TUNABLEQAEEPROMFILTER:::CHECKLISTEEPROM
-#TUNABLEQALABELFAI:::\\wux-fs\Public\Quality\29.T-XFP TQM\17. FAI  Checking Record\FLI
-#TUNABLEQALABELFILTER:::FLI_CHECK
-

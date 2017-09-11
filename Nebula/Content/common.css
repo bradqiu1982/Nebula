@@ -1,0 +1,232 @@
+html,body{
+    margin:0px;
+    height:100%;
+    background-color: #001D2E;
+}
+.container{
+    position:absolute;
+    margin: 0;
+    width: 100% !important;
+    z-index: 1001;
+}
+
+.logo{
+    position: absolute;
+    margin-top: 3%;
+    height: 50px;
+    background-image: url(./images/logo.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    z-index: 1001;
+}
+
+
+/* Login */
+#login-body{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    background-image: url(./images/login.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    opacity: 0.5;
+    -moz-opacity: 0.5;
+    filter: alpha(opacity=50);
+    z-index: 1000;
+}
+
+.login-welcome{
+    margin-top: 15%;
+    margin-left: 18%;
+    text-align: left;
+    font-size: 45px;
+    color: #fff;
+}
+
+.login-form{
+    margin-top: 15%;
+    margin-left: 20%;
+}
+
+.login-input{
+    opacity: 1;
+    border: #33CCFF 2px solid;
+    width: 25%;
+    height: 40px;
+    font-size: 14px;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #fff;
+    margin-left: 2%;
+}
+
+.login-btn{
+    opacity: 1;
+    border: #33CCFF 2px solid;
+    width: 10%;
+    height: 40px;
+    border-radius: 6px;
+    background-color: #33CCFF;
+    color: #000;
+    margin-left: 2%;
+}
+
+.forget-pwd{
+    font-size: 10px;
+    margin-left: 2%;
+    color: #fff;
+    text-decoration: underline;
+}
+
+.forget-pwd:hover{
+    color: #33CCFF;
+}
+
+/* Home */
+.search{
+    position: relative;
+    float: right;
+    padding-top: 30px;
+    padding-right: 30px;
+    margin-top: 8%;
+    background-image: url(./images/search.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+}
+
+.welcome{
+    position: relative;
+    float: left;
+    color: #f0f0f0;
+    font-size: 16px;
+    margin-left: 5%;
+    margin-top: 2%;
+}
+
+.nav-type{
+    float: right;
+    color: #f0f0f0;
+    font-size: 14px;
+    margin-top: 2%;
+}
+
+.nav-link{
+    margin: 5px;
+    text-align: right;
+    padding-right: 4px;
+    cursor: pointer;
+}
+
+.nav-link:hover{
+    background-color: #ababab;
+    color: #fff;
+}
+
+.nav-line{
+    width: 80px;
+    padding-top: 10px;
+    border-bottom: gray 2px solid;
+}
+
+.info{
+    margin-left: 50%;
+    margin-top: 2%;
+}
+
+.info-count{
+    color: #f0f0f0;
+    font-size: 96px;
+    text-align: center;
+    padding-right: 5%;
+}
+
+.info-description{
+    color: #f0f0f0;
+    font-size: 40px;
+    text-align: center;
+}
+
+.label-panel{
+    margin-top: 5%;
+    margin-right: -10%;  
+}
+
+.label-color{
+    float: right;
+    width: 60%;
+    font-size: 18px;
+    text-align: center;
+    color: #000;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+}
+
+.label-green{
+    background-image: url(./images/label_green.png);
+}
+
+.label-blue{
+    background-image: url(./images/label_blue.png);
+}
+
+.label-purple{
+    background-image: url(./images/label_purple.png);
+}
+
+.label-yellow{
+    background-image: url(./images/label_yellow.png);
+}
+
+.label-rosered{
+    background-image: url(./images/label_rosered.png);
+}
+
+.f-picture{
+    position: fixed;
+    bottom: 0;
+    height: 360px;
+    background-image: url(./images/fpic.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+}
+
+.f-picture-hide{
+    position: fixed;
+    bottom: 0;
+    height: 20px;
+    margin-left: -5%;
+    background-image: url(./images/fpic_hide.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+}
+
+.f-picture:hover{
+
+}

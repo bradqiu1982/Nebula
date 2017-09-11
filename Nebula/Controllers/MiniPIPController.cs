@@ -28,7 +28,7 @@ namespace Nebula.Controllers
             titlectrl[0].Disabled = true;
             ViewBag.titlelist = titlectrl;
 
-            ViewBag.evenstrs = "{id:'abcd',title:'All Day Event',start:'2017-08-01'},{id:'efgh',title:'Long Event',start:'2017-08-07',end:'2015-09-10',className:'bg-success border-transparent'}";
+            ViewBag.evenstrs = "{id:'abcd',title:'All Day Event',start:'2017-09-01'},{id:'efgh',title:'Long Event',start:'2017-09-07',end:'2015-09-10',className:'bg-success border-transparent'}";
             ViewBag.today = DateTime.Now.ToString("yyyy-MM-dd");
             return View();
         }
@@ -877,7 +877,7 @@ namespace Nebula.Controllers
                 ViewBag.badmin = NebulaUserViewModels.IsAdmin(ckdict["logonuser"].Split(new char[] { '|' })[0]);
                 ViewBag.demo = NebulaUserViewModels.IsDemo(ckdict["logonuser"].Split(new char[] { '|' })[0]);
 
-                var syscfgdict = NebulaDataCollector.GetSysConfig(this);
+                var syscfgdict = CfgUtility.GetSysConfig(this);
                 var demoecolist = syscfgdict["DEMOECONUM"].Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
                 var demoecodict = new Dictionary<string, bool>();
                 foreach (var demo in demoecolist)
@@ -3316,7 +3316,7 @@ namespace Nebula.Controllers
 
         private void StoreAgileAttch(string ECONUM,List<NebulaVM> vm)
         {
-            var syscfgdict = NebulaDataCollector.GetSysConfig(this);
+            var syscfgdict = CfgUtility.GetSysConfig(this);
             var dir = syscfgdict["SAVELOCATION"] +"\\" + ECONUM;
             if (Directory.Exists(dir))
             {
