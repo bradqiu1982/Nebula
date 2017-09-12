@@ -889,7 +889,9 @@
     <Content Include="Scripts\fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\less.min.js" />
     <Content Include="Scripts\lobi\daterangepicker.js" />
     <Content Include="Scripts\lobi\font-awesome.min.css" />
@@ -910,8 +912,6 @@
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\highcharts.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.base64.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.stickytableheaders.js" />
