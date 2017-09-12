@@ -1,5 +1,101 @@
 var Login = function () {
-    var show = function(){
+    var show = function () {
+        $('body').on('click', '#login-submit', function () {
+            var loginid = $('#login_id').val();
+            var loginpwd = $('#login_pwd').val();
+            if (loginid && loginpwd) {
+                loginid = loginid.toUpperCase();
+                if (loginid.indexOf("@FINISAR.COM") !== -1) {
+                    $.post('/NebulaUser/UserLoginPost',
+                    {
+                        loginid: loginid,
+                        loginpwd: loginpwd
+                    },
+                    function(output) {
+                        if (output.success) {
+                            window.location.href = '#';
+                        }
+                        else {
+                            alert(output.msg);
+                        }
+                    });
+                }
+                else {
+                    alert("Please input Your Finisar email adress!")
+                }
+            }
+            else {
+                alert("UserName and Password need to be input !");
+            }
+            return false;
+        });
+
+        $('body').on('click', '.change-pwd', function () {
+            var loginid = $('#login_id').val();
+            if (loginid) {
+                loginid = loginid.toUpperCase();
+                if (loginid.toUpperCase().indexOf("@FINISAR.COM") !== -1) {
+                    $.post('/NebulaUser/ResetPWD',
+                    {
+                        loginid: loginid
+                    },
+                    function (output) {
+                        alert(output.msg);
+                        return false;
+                    });
+                }
+                else {
+                    alert("Please input Your Finisar email adress!")
+                }
+            }
+            else
+            {
+                alert("UserName need to be input !");
+            }
+        });
+
+
+        $('body').on('click', '#resetpwd-submit', function () {
+            var loginid = $('#login_id').val();
+            var newpwd = $('#new_pwd').val();
+            var cpwd = $('#confirm_pwd').val();
+
+            if (loginid && newpwd && cpwd)
+            {
+                loginid = loginid.toUpperCase();
+                if (newpwd === cpwd)
+                {
+                    if (loginid.indexOf("@FINISAR.COM") !== -1)
+                    {
+                            $.post('/NebulaUser/ResetPWDLinkPost',
+                            {
+                                loginid: loginid,
+                                loginpwd: newpwd
+                            },
+                            function(output) {
+                                if (output.success) {
+                                    window.location.href = '';
+                                }
+                                else {
+                                    alert(output.msg);
+                                }
+                            });
+                    }
+                    else 
+                    {
+                        alert("Please input Your Finisar email adress!")
+                    }
+                }
+                else {
+                    alert("New Password is not same as confirm password!")
+                }
+            }
+            else {
+                alert("UserName and Password need to be input !");
+            }
+            return false;
+                });
+
     }
 
     return {

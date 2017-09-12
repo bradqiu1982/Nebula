@@ -184,6 +184,9 @@ CREATE TABLE [dbo].[UserTable] (
     [APVal3]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
 );
 
+
+
+
 //-----Nebula database
 
 CREATE TABLE [dbo].[PMUpdateTime] (
@@ -341,3 +344,15 @@ CREATE TABLE [dbo].[JOSNStatus] (
 	[APVal4]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
     [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
 );
+
+
+CREATE TABLE [dbo].[UserTable] (
+    [UserName]   NVARCHAR (200) NOT NULL,
+    [PassWD]     NVARCHAR (200) NOT NULL,
+    [UpdateDate] DATETIME       NOT NULL,
+    [APVal1]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+    [APVal2]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+	[APVal3]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+    [APVal4]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
+);
+

@@ -24,36 +24,36 @@ namespace Nebula
             //    return;
             //}
 
-            var fooCookie = filterContext.HttpContext.Request.Cookies["activenpiNebula"];
+        //    var fooCookie = filterContext.HttpContext.Request.Cookies["activenpiNebula"];
 
-            if (fooCookie != null)
-            {
-                var ret = new Dictionary<string, string>();
-                try
-                {
-                    foreach (var key in fooCookie.Values.AllKeys)
-                    {
-                        ret.Add(key, UTF8Encoding.UTF8.GetString(Convert.FromBase64String(fooCookie.Values[key])));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ret.Clear();
-                }
+        //    if (fooCookie != null)
+        //    {
+        //        var ret = new Dictionary<string, string>();
+        //        try
+        //        {
+        //            foreach (var key in fooCookie.Values.AllKeys)
+        //            {
+        //                ret.Add(key, UTF8Encoding.UTF8.GetString(Convert.FromBase64String(fooCookie.Values[key])));
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ret.Clear();
+        //        }
 
-                if (ret.ContainsKey("logonuser") && !string.IsNullOrEmpty(ret["logonuser"]))
-                {
-                    var username = ret["logonuser"].Split(new char[] { '|' })[0];
-                    if (!Nebula.Models.NebulaUserViewModels.UserExist(username))
-                    {
-                        //filterContext.Result = new RedirectToRouteResult("Nebula", new RouteValueDictionary(new { action = "ViewAll", controller = "MiniPIP" }));
-                        filterContext.Result = new HttpUnauthorizedResult();
-                        return;
-                    }
-                }
-            }
+        //        if (ret.ContainsKey("logonuser") && !string.IsNullOrEmpty(ret["logonuser"]))
+        //        {
+        //            var username = ret["logonuser"].Split(new char[] { '|' })[0];
+        //            if (!Nebula.Models.NebulaUserViewModels.UserExist(username))
+        //            {
+        //                //filterContext.Result = new RedirectToRouteResult("Nebula", new RouteValueDictionary(new { action = "ViewAll", controller = "MiniPIP" }));
+        //                filterContext.Result = new HttpUnauthorizedResult();
+        //                return;
+        //            }
+        //        }
+        //    }
 
-            base.OnActionExecuting(filterContext);
+        //    base.OnActionExecuting(filterContext);
         }
     }
 
