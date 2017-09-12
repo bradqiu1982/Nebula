@@ -30,7 +30,7 @@ var Login = function () {
             return false;
         });
 
-        $('body').on('click', '.change-pwd', function () {
+        $('body').on('click', '.forget-pwd', function () {
             var loginid = $('#login_id').val();
             if (loginid) {
                 loginid = loginid.toUpperCase();
