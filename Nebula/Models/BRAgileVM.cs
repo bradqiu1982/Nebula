@@ -416,6 +416,7 @@ namespace Nebula.Models
             Workflow = "";
             Originator = "";
             OriginalDate = DateTime.Parse("1982-05-06 10:00:00");
+            BRKey = "";
             brworkflowlist = new List<AgileWorkFlow>();
             affectitem = new List<AgileAffectItem>();
             history = new List<AgileHistory>();
@@ -542,6 +543,61 @@ namespace Nebula.Models
             return ret;
         }
 
+        public static List<BRAgileBaseInfo> RetrieveActiveBRAgileInfo(string reviewer)
+        {
+            var ret = new List<BRAgileBaseInfo>();
+
+            var sql = string.Empty;
+            if (reviewer == null)
+            {
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate from BRAgileBaseInfo order by OriginalDate Desc";
+            }
+            else
+            {
+                reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate from BRAgileBaseInfo where Originator = '<Originator>'  order by OriginalDate Desc";
+                sql = sql.Replace("<Originator>", reviewer);
+            }
+
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new BRAgileBaseInfo();
+                temp.BRKey = Convert.ToString(line[0]);
+                temp.BRNumber = Convert.ToString(line[1]);
+                temp.Description = Convert.ToString(line[2]);
+                temp.Status = Convert.ToString(line[3]);
+                temp.Originator = Convert.ToString(line[4]);
+                temp.OriginalDate = Convert.ToDateTime(line[5]);
+                ret.Add(temp);
+            }
+
+            return ret;
+        }
+
+        public static List<BRAgileBaseInfo> RetrieveBRAgileInfo(string BRNum)
+        {
+            var ret = new List<BRAgileBaseInfo>();
+
+            var sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate from BRAgileBaseInfo where BRNumber like '%<BRNumber>%'";
+            sql = sql.Replace("<BRNumber>", BRNum);
+
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new BRAgileBaseInfo();
+                temp.BRKey = Convert.ToString(line[0]);
+                temp.BRNumber = Convert.ToString(line[1]);
+                temp.Description = Convert.ToString(line[2]);
+                temp.Status = Convert.ToString(line[3]);
+                temp.Originator = Convert.ToString(line[4]);
+                temp.OriginalDate = Convert.ToDateTime(line[5]);
+                ret.Add(temp);
+            }
+
+            return ret;
+        }
+
         public string ChangeType{set;get;}
         public string BRNumber{set;get;}
         public string Description{set;get;}
@@ -549,6 +605,7 @@ namespace Nebula.Models
         public string Workflow{set;get;}
         public string Originator{set;get;}
         public DateTime OriginalDate{set;get;}
+        public string BRKey { set; get; }
 
         public List<AgileWorkFlow> brworkflowlist{set;get;}
         public List<AgileAffectItem> affectitem{set;get;}

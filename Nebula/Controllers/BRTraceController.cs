@@ -10,6 +10,20 @@ namespace Nebula.Controllers
 {
     public class BRTraceController : Controller
     {
+        public ActionResult Home()
+        {
+            var ckdict = CookieUtility.UnpackCookie(this);
+            if (!ckdict.ContainsKey("logonuser"))
+            {
+                return RedirectToAction("UserLogin", "NebulaUser");
+            }
+            var loginer = ckdict["logonuser"];
+
+            ViewBag.brlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+            ViewBag.jolist = JOBaseInfo.RetrieveActiveJoInfo(null);
+
+            return View();
+        }
 
         public void LoadNewBR()
         {

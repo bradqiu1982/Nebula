@@ -30,6 +30,7 @@ namespace Nebula.Models
             Planner  = "";
             CreatedBy  = "";
             ExistQty = 0;
+            Originator = "";
     }
 
         public static JOBaseInfo CreateItem(List<string> line)
@@ -93,6 +94,92 @@ namespace Nebula.Models
             return ret;
         }
 
+        public static List<JOBaseInfo> RetrieveActiveJoInfo(string reviewer)
+        {
+            var ret = new List<JOBaseInfo>();
+
+            var sql = string.Empty;
+            if (reviewer == null)
+            {
+                sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty from JOBaseInfo j (nolock) "
+                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey order by JONumber";
+            }
+            else
+            {
+                reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
+                sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty from JOBaseInfo j (nolock) "
+                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where a.Originator = '<Originator>' order by JONumber";
+                sql = sql.Replace("<Originator>", reviewer);
+            }
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new JOBaseInfo();
+                temp.Originator = Convert.ToString(line[0]);
+                temp.BRNumber = Convert.ToString(line[1]);
+                temp.JONumber = Convert.ToString(line[2]);
+                temp.JOType = Convert.ToString(line[3]);
+                temp.JOStatus = Convert.ToString(line[4]);
+                temp.DateReleased = Convert.ToDateTime(line[5]);
+                temp.PN = Convert.ToString(line[6]);
+                temp.PNDesc = Convert.ToString(line[7]);
+                temp.Category = Convert.ToString(line[8]);
+                temp.StartQuantity = ERPVM.Convert2Int(line[9]);
+                temp.MRPNetQuantity = ERPVM.Convert2Int(line[10]);
+                temp.QuantityCompleted = ERPVM.Convert2Int(line[11]);
+                temp.WIP = ERPVM.Convert2Int(line[12]);
+                temp.IncurredSum = ERPVM.Convert2Double(line[13]);
+                temp.IncurredMaterialSum = ERPVM.Convert2Double(line[14]);
+                temp.Planner = Convert.ToString(line[15]);
+                temp.CreatedBy = Convert.ToString(line[16]);
+                temp.ExistQty = ERPVM.Convert2Int(line[17]);
+
+                ret.Add(temp);
+            }
+
+            return ret;
+        }
+
+        public static List<JOBaseInfo> RetrieveJoInfo(string JoNum)
+        {
+            var ret = new List<JOBaseInfo>();
+
+            var sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty from  JOBaseInfo j (nolock) "
+                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where j.JONumber like '%<JONumber>%' ";
+            sql = sql.Replace("<JONumber>", JoNum);
+
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new JOBaseInfo();
+                temp.Originator = Convert.ToString(line[0]);
+                temp.BRNumber = Convert.ToString(line[1]);
+                temp.JONumber = Convert.ToString(line[2]);
+                temp.JOType = Convert.ToString(line[3]);
+                temp.JOStatus = Convert.ToString(line[4]);
+                temp.DateReleased = Convert.ToDateTime(line[5]);
+                temp.PN = Convert.ToString(line[6]);
+                temp.PNDesc = Convert.ToString(line[7]);
+                temp.Category = Convert.ToString(line[8]);
+                temp.StartQuantity = ERPVM.Convert2Int(line[9]);
+                temp.MRPNetQuantity = ERPVM.Convert2Int(line[10]);
+                temp.QuantityCompleted = ERPVM.Convert2Int(line[11]);
+                temp.WIP = ERPVM.Convert2Int(line[12]);
+                temp.IncurredSum = ERPVM.Convert2Double(line[13]);
+                temp.IncurredMaterialSum = ERPVM.Convert2Double(line[14]);
+                temp.Planner = Convert.ToString(line[15]);
+                temp.CreatedBy = Convert.ToString(line[16]);
+                temp.ExistQty = ERPVM.Convert2Int(line[17]);
+
+                ret.Add(temp);
+            }
+
+            return ret;
+        }
+
         public string BRKey { set; get; }
         public string BRNumber { set; get; }
         public string JONumber { set; get; }
@@ -111,6 +198,7 @@ namespace Nebula.Models
         public string Planner { set; get; }
         public string CreatedBy { set; get; }
         public int ExistQty { set; get; }
+        public string Originator { set; get; }
     }
 
     public class JOComponentInfo
@@ -193,8 +281,47 @@ namespace Nebula.Models
                 }
             }
         }
+        public static double Convert2Double(object num)
+        {
+            var numstr = Convert.ToString(num);
+            if (string.IsNullOrEmpty(numstr))
+            {
+                return 0.0;
+            }
+            else
+            {
+                try
+                {
+                    return Convert.ToDouble(numstr);
+                }
+                catch (Exception ex)
+                {
+                    return 0.0;
+                }
+            }
+        }
         public static int Convert2Int(string numstr)
         {
+            if (string.IsNullOrEmpty(numstr))
+            {
+                return 0;
+            }
+            else
+            {
+                try
+                {
+                    return Convert.ToInt32(numstr);
+                }
+                catch (Exception ex)
+                {
+                    return 0;
+                }
+            }
+        }
+
+        public static int Convert2Int(object num)
+        {
+            var numstr = Convert.ToString(num);
             if (string.IsNullOrEmpty(numstr))
             {
                 return 0;

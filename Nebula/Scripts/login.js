@@ -13,7 +13,7 @@ var Login = function () {
                     },
                     function(output) {
                         if (output.success) {
-                            window.location.href = '#';
+                            window.location.href = '/BRTrace/Home';
                         }
                         else {
                             alert(output.msg);
@@ -74,7 +74,7 @@ var Login = function () {
                             },
                             function(output) {
                                 if (output.success) {
-                                    window.location.href = '';
+                                    window.location.href = '/BRTrace/Home';
                                 }
                                 else {
                                     alert(output.msg);

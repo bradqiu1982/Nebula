@@ -195,9 +195,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BRTraceController.cs" />
-    <Compile Include="Controllers\NebulaDBManageController.cs" />
     <Compile Include="Controllers\NebulaUserController.cs" />
-    <Compile Include="Controllers\ExtenalDataController.cs" />
     <Compile Include="Controllers\ShareDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -559,6 +557,8 @@
     <Content Include="Content\images\loupe.png" />
     <Content Include="Content\images\nav_line.png" />
     <Content Include="Content\images\search.png" />
+    <Content Include="Content\images\search_bg.png" />
+    <Content Include="Content\images\search_icon.png" />
     <Content Include="Content\images\search_stretch.ng.png" />
     <Content Include="Content\images\search_stretch.png" />
     <Content Include="Content\Nebula.css" />
@@ -889,6 +889,7 @@
     <Content Include="Scripts\fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Scripts\jo.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
@@ -933,6 +934,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Scripts\ColumnChart.xml" />
     <Content Include="Views\NebulaUser\UserLogin.cshtml" />
+    <Content Include="Views\BRTrace\Home.cshtml" />
     <None Include="Views\Shared\_layout0.cshtml" />
     <None Include="Views\Shared\_layout1.cshtml" />
     <None Include="Views\Shared\_layout2.cshtml" />
@@ -949,20 +951,9 @@
     <Content Include="Scripts\project_pn_desc_list.xlsx" />
     <Content Include="Scripts\project_model_id_list.xlsx" />
     <Content Include="Scripts\project_indicative_datasetname_list.xlsx" />
-    <Content Include="Views\ExtenalData\CommitUserMatrix.cshtml" />
-    <Content Include="Views\ExtenalData\ConfirmUserMatrix.cshtml" />
     <Content Include="Scripts\usermatrix.xlsx" />
     <Content Include="userfiles\ImageUpload.ashx" />
-    <Content Include="Views\NebulaDBManage\ExecuteSQLs.cshtml" />
-    <Content Include="Views\NebulaDBManage\MoveDataBase.cshtml" />
-    <Content Include="Views\NebulaUser\LoginUser_bak.cshtml" />
-    <Content Include="Views\NebulaUser\RegisterUser.cshtml" />
-    <Content Include="Views\NebulaUser\ResetNoticeA.cshtml" />
-    <Content Include="Views\NebulaUser\ResetNoticeB.cshtml" />
     <Content Include="Views\NebulaUser\ResetPWDLink.cshtml" />
-    <Content Include="Views\NebulaUser\UserCachedInfo.cshtml" />
-    <Content Include="Views\NebulaUser\ValidateNoticeA.cshtml" />
-    <Content Include="Views\NebulaUser\ValidateNoticeB.cshtml" />
     <Content Include="Views\BRTrace\UpdateBR.cshtml" />
     <Content Include="Views\BRTrace\NewBR.cshtml" />
     <Content Include="Views\BRTrace\HeartBeat.cshtml" />

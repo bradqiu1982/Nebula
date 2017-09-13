@@ -16,7 +16,7 @@ namespace Nebula
             routes.MapRoute(
                 name: "Nebula",
                 url: "{controller}/{action}",
-                defaults: new { controller = "NebulaUser", action = "UserLogin" }
+                defaults: new { controller = "BRTrace", action = "Home" }
             );
 
         }
