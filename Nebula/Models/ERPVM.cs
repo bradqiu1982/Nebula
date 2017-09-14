@@ -180,6 +180,44 @@ namespace Nebula.Models
             return ret;
         }
 
+        public static List<JOBaseInfo> RetrieveJoInfoByBRNum(string BRNum)
+        {
+            var ret = new List<JOBaseInfo>();
+
+            var sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty from  JOBaseInfo j (nolock) "
+                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where j.BRNumber = '<BRNumber>' ";
+            sql = sql.Replace("<BRNumber>", BRNum);
+
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new JOBaseInfo();
+                temp.Originator = Convert.ToString(line[0]);
+                temp.BRNumber = Convert.ToString(line[1]);
+                temp.JONumber = Convert.ToString(line[2]);
+                temp.JOType = Convert.ToString(line[3]);
+                temp.JOStatus = Convert.ToString(line[4]);
+                temp.DateReleased = Convert.ToDateTime(line[5]);
+                temp.PN = Convert.ToString(line[6]);
+                temp.PNDesc = Convert.ToString(line[7]);
+                temp.Category = Convert.ToString(line[8]);
+                temp.StartQuantity = ERPVM.Convert2Int(line[9]);
+                temp.MRPNetQuantity = ERPVM.Convert2Int(line[10]);
+                temp.QuantityCompleted = ERPVM.Convert2Int(line[11]);
+                temp.WIP = ERPVM.Convert2Int(line[12]);
+                temp.IncurredSum = ERPVM.Convert2Double(line[13]);
+                temp.IncurredMaterialSum = ERPVM.Convert2Double(line[14]);
+                temp.Planner = Convert.ToString(line[15]);
+                temp.CreatedBy = Convert.ToString(line[16]);
+                temp.ExistQty = ERPVM.Convert2Int(line[17]);
+
+                ret.Add(temp);
+            }
+
+            return ret;
+        }
+
         public string BRKey { set; get; }
         public string BRNumber { set; get; }
         public string JONumber { set; get; }

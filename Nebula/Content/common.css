@@ -21,6 +21,7 @@ html,body{
     -webkit-background-size: contain;
     -moz-background-size: contain;
     z-index: 1001;
+    cursor:pointer;
 }
 
 

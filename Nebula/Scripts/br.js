@@ -5,27 +5,8 @@ var BR = function(){
             $('.footer-pic').removeClass('f-picture-hide').addClass('f-picture');
             pic_timeout();
         });
-    }
 
-    var pic_timeout = function(){
-        setTimeout("$('.footer-pic').removeClass('f-picture').addClass('f-picture-hide')",3000);
-    }
-
-    var common = function(){
-        //search event
-        $('body').on('mouseenter', '.row-search', function(){
-            $('.search').addClass('hide');
-            $('.search-div').removeClass('hide');
-        })
-
-        $('body').on('mouseleave', '.row-search', function(){
-            if($('#keywords').val() == ''){
-                $('.search').removeClass('hide');
-                $('.search-div').addClass('hide');
-            }
-        })
-
-        //$('body').on('click', '.nav-link', function(){
+       //$('body').on('click', '.nav-link', function(){
         //    $('.nav-link').removeClass('nav-active');
         //    $(this).addClass('nav-active');
         //})
@@ -48,35 +29,93 @@ var BR = function(){
             alert($(this).html());
         })
 
+    }
+
+    var pic_timeout = function(){
+        setTimeout("$('.footer-pic').removeClass('f-picture').addClass('f-picture-hide')",3000);
+    }
+
+    var common = function(){
+        //search event
+        $('body').on('mouseenter', '.row-search', function(){
+            $('.search').addClass('hide');
+            $('.search-div').removeClass('hide');
+        })
+
+        $('body').on('mouseleave', '.row-search', function(){
+            if($('#keywords').val() === ''){
+                $('.search').removeClass('hide');
+                $('.search-div').addClass('hide');
+            }
+        })
+
         $('body').on('click', '.search-icon', function () {
-            if ($('#keywords').val())
+            var keyword = $('#keywords').val();
+            keyword = keyword.replace("'", "");
+            if (keyword)
             {
-                alert($('#keywords').val());
+                window.location.href = '/BRTrace/SearchKeyWord?Keywords=' + keyword;
             }
         })
 
         $('body').on('keydown', '#keywords', function (e) {
-            if (e.which == 13 && $('#keywords').val()) {
-                alert($('#keywords').val());
+            var keyword = $('#keywords').val();
+            keyword = keyword.replace("'", "");
+            if (e.which === 13 && keyword) {
+                window.location.href = '/BRTrace/SearchKeyWord?Keywords=' + keyword;
             }
+        })
+
+        $('body').on('click', '.logo', function () {
+            window.location.href = '/BRTrace/Home';
         })
     }
 
-    var list = function(){
+    var brlist = function(){
         //tr click event
         $('body').on('click', '.cus-table > tbody > tr', function(){
             $('.cus-table > tbody > tr').each(function(){
                 $(this).attr('style', 'background-color: transparent;');
             })
             $(this).attr('style', 'background-color: #07151E;');
-            // var br_no = $(this).children().eq(0).html();
-            // $.post('/', {
-            //     br_no: br_no
-            // }, function(output){
-            //     $('.br-list-right').attr('style', 'display: block;');
-            // })
-            //for test
-            $('.br-list-right').attr('style', 'display: block;');
+            var br_no = $(this).children().eq(0).html();
+            $.post('/BRTrace/BRAgileData', {
+                 br_no: br_no
+             }, function (output) {
+                 if (output.success) {
+                     $('#br_orignator').html(output.Originator);
+                     $('#br_date').html(output.OriginalDate);
+                     $('#br_desc').html(output.Description);
+                     $('#br_stat').html(output.Status);
+                     $('#br_detail').attr('href', '/BRTrace/BRInfo?BRNum=' + br_no + '&SearchWords=' + $('#h-searchkeyword').val());
+                    $('.br-list-right').attr('style', 'display: block;');
+                 }
+             })
+        })
+    }
+
+    var jolist = function () {
+        //tr click event
+        $('body').on('click', '.cus-table > tbody > tr', function () {
+            $('.cus-table > tbody > tr').each(function () {
+                $(this).attr('style', 'background-color: transparent;');
+            })
+            $(this).attr('style', 'background-color: #07151E;');
+            var jo_no = $(this).children().eq(0).html();
+            $.post('/BRTrace/BRJOData', {
+                jo_no: jo_no
+            }, function (output) {
+                if (output.success) {
+                    $('#jo_pn').html(output.pn);
+                    $('#jo_type').html(output.jotype);
+                    $('#jo_stat').html(output.jostat);
+                    $('#jo_date').html(output.jodate);
+                    $('#jo_wip').html(output.jowip);
+                    $('#jo_planner').html(output.joplanner);
+                    $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
+                    $('.br-list-right').attr('style', 'display: block;');
+                }
+            })
         })
     }
 
@@ -102,13 +141,21 @@ var BR = function(){
             show();
             common();
         },
-        list: function(){
-            list();
+        brlist: function(){
+            brlist();
+            common();
+        },
+        jolist: function () {
+            jolist();
             common();
         },
         info: function(){
             info();
             common();
+        },
+        common: function () {
+            common();
         }
+
     };
 }();

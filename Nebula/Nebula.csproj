@@ -935,6 +935,9 @@
     <Content Include="Scripts\ColumnChart.xml" />
     <Content Include="Views\NebulaUser\UserLogin.cshtml" />
     <Content Include="Views\BRTrace\Home.cshtml" />
+    <Content Include="Views\BRTrace\BRList.cshtml" />
+    <Content Include="Views\BRTrace\JOList.cshtml" />
+    <Content Include="Views\BRTrace\BRInfo.cshtml" />
     <None Include="Views\Shared\_layout0.cshtml" />
     <None Include="Views\Shared\_layout1.cshtml" />
     <None Include="Views\Shared\_layout2.cshtml" />

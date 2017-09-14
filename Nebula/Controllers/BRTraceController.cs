@@ -25,6 +25,90 @@ namespace Nebula.Controllers
             return View();
         }
 
+        public ActionResult SearchKeyWord(string Keywords)
+        {
+            var brlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(Keywords);
+            if (brlist.Count > 0)
+            {
+                ViewBag.searchkeyword = Keywords;
+                return View("BRList", brlist);
+            }
+            else
+            {
+                var jolist = JOBaseInfo.RetrieveJoInfo(Keywords);
+                if (jolist.Count > 0)
+                {
+                    ViewBag.searchkeyword = Keywords;
+                    return View("JOList", jolist);
+                }
+                else
+                {
+                    return RedirectToAction("Home", "BRTrace");
+                }
+            }
+        }
+
+        public JsonResult BRAgileData()
+        {
+            var brnum = Request.Form["br_no"];
+
+            var brinfolist = BRAgileBaseInfo.RetrieveBRAgileInfo(brnum);
+            if (brinfolist.Count > 0)
+            {
+                var res = new JsonResult();
+                res.Data = new { success = true
+                    , Originator = brinfolist[0].Originator
+                    , OriginalDate = brinfolist[0].OriginalDate.ToString("yyyy-MM-dd hh:mm:ss")
+                    , Description = brinfolist[0].Description
+                    , Status = brinfolist[0].Status
+                };
+                return res;
+            }
+            else
+            {
+                var res = new JsonResult();
+                res.Data = new { success = false};
+                return res;
+            }
+
+        }
+
+        public JsonResult BRJOData()
+        {
+            var jonum = Request.Form["jo_no"];
+            var jolist = JOBaseInfo.RetrieveJoInfo(jonum);
+            if (jolist.Count > 0)
+            {
+                var res = new JsonResult();
+                res.Data = new
+                {
+                    success = true,
+                    pn = jolist[0].PN + "-" + jolist[0].PNDesc,
+                    jotype = jolist[0].Category+"-"+jolist[0].JOType,
+                    jostat = jolist[0].JOStatus,
+                    jodate = jolist[0].DateReleased.ToString("yyyy-MM-dd hh:mm:ss"),
+                    jowip = jolist[0].WIP.ToString(),
+                    joplanner = jolist[0].Planner
+                };
+                return res;
+            }
+            else
+            {
+                var res = new JsonResult();
+                res.Data = new { success = false };
+                return res;
+            }
+        }
+
+        public ActionResult BRInfo(string BRNum, string SearchWords)
+        {
+            ViewBag.currentbr = BRAgileBaseInfo.RetrieveBRAgileInfo(BRNum)[0];
+            ViewBag.currentbrjolist = JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
+            ViewBag.currentsearchlist = BRAgileBaseInfo.RetrieveBRAgileInfo(SearchWords);
+            ViewBag.searchkeyword = SearchWords;
+            return View();
+        }
+
         public void LoadNewBR()
         {
             string datestring = DateTime.Now.ToString("yyyyMMdd");

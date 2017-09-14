@@ -604,7 +604,7 @@ namespace Nebula.Models
         public string Status{set;get;}
         public string Workflow{set;get;}
         public string Originator{set;get;}
-        public DateTime OriginalDate{set;get;}
+        public DateTime OriginalDate{ set; get; }
         public string BRKey { set; get; }
 
         public List<AgileWorkFlow> brworkflowlist{set;get;}
