@@ -25,6 +25,19 @@ namespace Nebula.Controllers
             return View();
         }
 
+        public ActionResult DefaultBRList()
+        {
+            var brlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+            ViewBag.searchkeyword = "";
+            return View("BRList", brlist);
+        }
+
+        public ActionResult DefaultJOList()
+        {
+            var jolist = JOBaseInfo.RetrieveActiveJoInfo(null);
+            return View("JOList", jolist);
+        }
+
         public ActionResult SearchKeyWord(string Keywords)
         {
             var brlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(Keywords);
@@ -38,7 +51,6 @@ namespace Nebula.Controllers
                 var jolist = JOBaseInfo.RetrieveJoInfo(Keywords);
                 if (jolist.Count > 0)
                 {
-                    ViewBag.searchkeyword = Keywords;
                     return View("JOList", jolist);
                 }
                 else
@@ -47,6 +59,8 @@ namespace Nebula.Controllers
                 }
             }
         }
+
+
 
         public JsonResult BRAgileData()
         {
@@ -104,8 +118,18 @@ namespace Nebula.Controllers
         {
             ViewBag.currentbr = BRAgileBaseInfo.RetrieveBRAgileInfo(BRNum)[0];
             ViewBag.currentbrjolist = JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
-            ViewBag.currentsearchlist = BRAgileBaseInfo.RetrieveBRAgileInfo(SearchWords);
-            ViewBag.searchkeyword = SearchWords;
+
+            if (!string.IsNullOrEmpty(SearchWords))
+            {
+                ViewBag.currentsearchlist = BRAgileBaseInfo.RetrieveBRAgileInfo(SearchWords);
+                ViewBag.searchkeyword = SearchWords;
+            }
+            else
+            {
+                ViewBag.currentsearchlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+                ViewBag.searchkeyword = "";
+            }
+            
             return View();
         }
 
