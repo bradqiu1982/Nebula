@@ -8,6 +8,18 @@ html,body{
     margin: 0;
     width: 100% !important;
     z-index: 1001;
+    padding: 0 !important;
+}
+
+/* rewrite row, col-md-8, col-md-4 */
+.row{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.col-md-8, .col-md-4, .col-md-3 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
 .logo{
@@ -47,38 +59,56 @@ html,body{
 
 .login-welcome{
     margin-top: 15%;
-    margin-left: 18%;
+    margin-left: 25%;
     text-align: left;
-    font-size: 45px;
+    font-size: 64px;
     color: #fff;
 }
 
 .login-form{
-    margin-top: 15%;
-    margin-left: 20%;
+    margin-top: 8%;
+    margin-left: 35%;
 }
 
 .login-input{
     opacity: 1;
     border: #33CCFF 2px solid;
-    width: 25%;
+    width: 100%;
     height: 40px;
     font-size: 14px;
     border-radius: 6px;
     background-color: transparent;
     color: #fff;
     margin-left: 2%;
+    margin-bottom: 5%;
 }
 
 .login-btn{
     opacity: 1;
     border: #33CCFF 2px solid;
-    width: 10%;
+    width: 100%;
     height: 40px;
     border-radius: 6px;
     background-color: #33CCFF;
     color: #000;
     margin-left: 2%;
+    margin-top: 5%;
+}
+
+.login-checkbox{
+    margin-left: 2% !important;
+}
+
+.remember-me{
+    font-size: 10px;
+    margin-left: 2%;
+    color: #fff;
+}
+
+.div-forget-pwd{
+    text-align: center;
+    margin-top: 2%;
+    width: 60%;
 }
 
 .forget-pwd{
@@ -211,7 +241,7 @@ html,body{
     width: 80%;
     font-size: 20px;
     text-align: center;
-    color: #fff;
+    color: #001D2E;
     margin-top: 1%;
     margin-bottom: 1.5%;
     background-color: transparent;
@@ -220,6 +250,7 @@ html,body{
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
+    cursor: pointer;
 }
 
 .label-green{
@@ -280,7 +311,7 @@ html,body{
 
 .content-title{
     width: 100%;
-    font-size: 24px;
+    font-size: 36px;
     text-align: center;
 }
 
@@ -306,6 +337,10 @@ html,body{
     border: transparent;
 }
 
+.cus-table > tbody > tr{
+    cursor: pointer;
+}
+
 .cus-table > tbody > tr > td{
     border: transparent;
 }
@@ -313,6 +348,7 @@ html,body{
 .cus-table > tbody > tr:hover {
     background-color: #07151E;
 }
+
 .des-table{
     border: transparent;
 }
@@ -332,7 +368,7 @@ html,body{
 
 .br-info-content{
     margin-top: 8%;
-    margin-left: 5%;
+    margin-left: 15%;
 }
 
 .jo-info-left{
