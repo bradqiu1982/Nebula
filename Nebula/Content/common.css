@@ -233,7 +233,9 @@ html,body{
 
 .label-panel{
     margin-top: 3%;
-    margin-right: 0;  
+    margin-right: 0;
+    height: 450px; 
+    overflow-y: scroll;
 }
 
 .label-color{
