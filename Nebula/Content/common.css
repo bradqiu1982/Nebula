@@ -66,8 +66,8 @@ html,body{
 }
 
 .login-form{
-    margin-top: 8%;
-    margin-left: 35%;
+    margin-top: 8% !important;
+    margin-left: 35% !important;
 }
 
 .login-input{
@@ -298,6 +298,7 @@ html,body{
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
+    z-index: 10001;
 }
 
 /* BR list */

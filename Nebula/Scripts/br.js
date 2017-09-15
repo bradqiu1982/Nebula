@@ -39,8 +39,7 @@ var BR = function(){
         $('body').on('click', '.search-icon', function () {
             var keyword = $('#keywords').val();
             keyword = keyword.replace("'", "");
-            if (keyword)
-            {
+            if (keyword) {
                 window.location.href = '/BRTrace/SearchKeyWord?Keywords=' + keyword;
             }
         })
@@ -48,7 +47,7 @@ var BR = function(){
         $('body').on('keydown', '#keywords', function (e) {
             var keyword = $('#keywords').val();
             keyword = keyword.replace("'", "");
-            if (e.which === 13 && keyword) {
+            if (e.keyCode === 13 && keyword) {
                 window.location.href = '/BRTrace/SearchKeyWord?Keywords=' + keyword;
             }
         })

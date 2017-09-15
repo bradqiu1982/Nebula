@@ -1,6 +1,16 @@
 var Login = function () {
     var show = function () {
         $('body').on('click', '#login-submit', function () {
+            login_submit();
+        });
+
+        $('body').on('keydown', '.login-input', function (e) {
+            if (e.keyCode === 13) {
+                login_submit();
+            }
+        });
+
+        var login_submit = function () {
             var loginid = $('#login_id').val();
             var loginpwd = $('#login_pwd').val();
             if (loginid && loginpwd) {
@@ -11,7 +21,7 @@ var Login = function () {
                         loginid: loginid,
                         loginpwd: loginpwd
                     },
-                    function(output) {
+                    function (output) {
                         if (output.success) {
                             window.location.href = '/BRTrace/Home';
                         }
@@ -21,14 +31,13 @@ var Login = function () {
                     });
                 }
                 else {
-                    alert("Please input Your Finisar email adress!")
+                    alert("Please input Your Finisar email address!")
                 }
             }
             else {
                 alert("UserName and Password need to be input !");
             }
-            return false;
-        });
+        }
 
         $('body').on('click', '.forget-pwd', function () {
             var loginid = $('#login_id').val();
