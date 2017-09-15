@@ -7,12 +7,20 @@
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/common.css" rel="stylesheet" />
+    <link href="~/Content/simplebar.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.2.1.min.js" type="text/javascript"></script>
     <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
-
+    <script src="~/Scripts/simplebar.js" type="text/javascript"></script>
 
 </head>
 <body>
+    <header>
+        <span class="col-md-3 logo"></span>
+        <div class="user-info">
+            <span class="header-user">@ViewBag.UserName</span>
+            <span class="logout glyphicon glyphicon-log-out" aria-hidden="true" title="Logout"></span>
+        </div>
+    </header>
     @*<div class="container body-content">*@
         @RenderBody()
     @*</div>*@

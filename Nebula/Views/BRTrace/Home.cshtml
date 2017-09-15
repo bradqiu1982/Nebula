@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "BR Center";
+    ViewBag.UserName = "Yan";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var labelarray = new List<string>();
     labelarray.Add("label-green");
@@ -12,19 +13,12 @@
     var joidx = 0;
 }
 
-<link href="~/Content/simplebar.css" rel="stylesheet" />
 <script src="~/Scripts/br.js" type="text/javascript"></script>
-<script src="~/Scripts/simplebar.js" type="text/javascript"></script>
-
 <script type="text/javascript">
-            $(function(){
-                BR.init();
-            })
+    $(function(){
+        BR.init();
+    })
 </script>
-
-<header>
-    <span class="col-md-3 logo"></span>
-</header>
 
 <div class="content">
     <div class="container">
