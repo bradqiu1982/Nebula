@@ -2,20 +2,18 @@
 
     @{
         ViewBag.Title = "JO List";
+        ViewBag.UserName = "Yan";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 
 <script src="~/Scripts/br.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-            $(function(){
-                BR.jolist();
-            })
+    $(function(){
+        BR.jolist();
+    })
 </script>
 
-<header>
-    <span class="col-md-3 logo"></span>
-</header>
 <div class="content">
     <div class="container">
         <div class="row row-search">
