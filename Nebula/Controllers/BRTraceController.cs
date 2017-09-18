@@ -13,7 +13,7 @@ namespace Nebula.Controllers
         public ActionResult Home()
         {
             var ckdict = CookieUtility.UnpackCookie(this);
-            if (!ckdict.ContainsKey("logonuser"))
+            if (!ckdict.ContainsKey("logonuser") || string.IsNullOrEmpty(ckdict["logonuser"]))
             {
                 return RedirectToAction("UserLogin", "NebulaUser");
             }

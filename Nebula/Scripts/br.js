@@ -22,7 +22,11 @@ var BR = function(){
         setTimeout("$('.footer-pic').removeClass('f-picture').addClass('f-picture-hide')",3000);
     }
 
-    var common = function(){
+    var common = function () {
+        $('body').on('click', '.logout', function () {
+            window.location.href = '/NebulaUser/Logout';
+        })
+
         //search event
         $('body').on('mouseenter', '.row-search', function(){
             $('.search').addClass('hide');

@@ -18,12 +18,17 @@ namespace Nebula.Models
     public class CookieUtility
     {
 
+        public static bool RemoveCookie(Controller ctrl)
+        {
+            ctrl.Response.Cookies["activenpiNebula"].Expires = DateTime.Now.AddDays(-1000);
+            return true;
+        }
+        
         public static bool SetCookie(Controller ctrl, Dictionary<string, string> values)
         {
             try
             {
                 HttpCookie ck = null;
-
                 if (ctrl.Request.Cookies["activenpiNebula"] != null)
                 {
                     ck = ctrl.Request.Cookies["activenpiNebula"];
@@ -31,7 +36,7 @@ namespace Nebula.Models
                     {
                         ck.Values[item.Key] = Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes(item.Value));
                     }
-
+                    //ck.Expires = DateTime.Now.AddDays(1);
                     if (ctrl.Response.Cookies["activenpiNebula"] != null)
                     {
                         ctrl.Response.SetCookie(ck);
@@ -40,7 +45,6 @@ namespace Nebula.Models
                     {
                         ctrl.Response.AppendCookie(ck);
                     }
-
                 }
                 else
                 {
@@ -49,7 +53,6 @@ namespace Nebula.Models
                     {
                         ck.Values[item.Key] = Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes(item.Value));
                     }
-
                     if (ctrl.Response.Cookies["activenpiNebula"] != null)
                     {
                         ctrl.Response.SetCookie(ck);
@@ -59,7 +62,6 @@ namespace Nebula.Models
                         ctrl.Response.AppendCookie(ck);
                     }
                 }
-
                 return true;
             }
             catch (Exception ex)
