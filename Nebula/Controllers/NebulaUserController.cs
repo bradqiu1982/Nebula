@@ -147,5 +147,11 @@ namespace Nebula.Controllers
 
         }
 
+        public ActionResult Logout()
+        {
+            CookieUtility.RemoveCookie(this);
+            return RedirectToAction("UserLogin", "NebulaUser");
+        }
+
     }
 }
