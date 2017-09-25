@@ -1,0 +1,41 @@
+﻿@{ 
+    var page = ViewBag.page;
+    var total_pages = ViewBag.total_pages;
+}
+<div class="pagination">
+    <span class="pages" data-data="1"><<</span>
+    @if (page == 1)
+    {
+        <span class="current-page" data-data="@page">@page</span>
+        if (total_pages >= 2)
+        {
+            <span class="pages" data-data="@(page + 1)">@(page + 1)</span>
+        }
+        if (total_pages >= 3)
+        {
+            <span class="pages" data-data="@(page + 2)">@(page + 2)</span>
+        }
+    }
+    else if (page == 2)
+    {
+        <span class="pages" data-data="@(page - 1)">@(page - 1)</span>
+                            <span class="current-page">@page</span>
+        if (total_pages >= 3)
+        {
+            <span class="pages" data-data="@(page + 1)">@(page + 1)</span>
+        }
+    }
+    else if (page == total_pages)
+    {
+        <span class="pages" data-data="@(page - 2)">@(page - 2)</span>
+        <span class="pages" data-data="@(page - 1)">@(page - 1)</span>
+        <span class="current-page">@page</span>
+    }
+    else
+    {
+        <span class="pages" data-data="@(page - 1)">@(page - 1)</span>
+        <span class="current-page">@page</span>
+        <span class="pages" data-data="@(page + 1)">@(page + 1)</span>
+    }
+    <span class="pages" data-data="@total_pages">>></span>
+</div>

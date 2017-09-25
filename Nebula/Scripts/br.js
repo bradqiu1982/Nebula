@@ -6,10 +6,10 @@ var BR = function(){
             pic_timeout();
         });
 
-       //$('body').on('click', '.nav-link', function(){
-        //    $('.nav-link').removeClass('nav-active');
-        //    $(this).addClass('nav-active');
-        //})
+        $('body').on('click', '.pages', function () {
+            var page = $(this).attr("data-data");
+            window.location.href = '/BRTrace/Home?p=' + page;
+        })
 
 
         $('body').on('click', '.label-color', function () {
@@ -90,9 +90,14 @@ var BR = function(){
                  }
              })
         })
+
+        $('body').on('click', '.pages', function () {
+            var page = $(this).attr("data-data");
+            window.location.href = '/BRTrace/DefaultBRList?p=' + page;
+        })
     }
 
-    var jolist = function () {
+    var brjolist = function () {
         //tr click event
         $('body').on('click', '.cus-table > tbody > tr', function () {
             $('.cus-table > tbody > tr').each(function () {
@@ -111,33 +116,64 @@ var BR = function(){
                     $('#jo_wip').html(output.jowip);
                     $('#jo_planner').html(output.joplanner);
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
-                    $('.br-list-right').attr('style', 'display: block;');
                     $('.jo-info-right').attr('style', 'display: block;');
                 }
             })
         })
 
         $('body').on('click', '.label-color', function () {
-            window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html() + '&SearchWords=' + $('#h-searchkeyword').val();
+            var page = $(".current-page").html();
+            window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html()
+                + '&SearchWords=' + $('#h-searchkeyword').val() + '&p=' + page;
+        })
+        
+        $('body').on('click', '.pages', function () {
+            var page = $(this).attr("data-data");
+            var sub_page = $(".sub-current-page").html();
+            window.location.href = '/BRTrace/BRInfo?BRNum=' + $("#br_num").html() + '&SearchWords='
+                + $('#h-searchkeyword').val() + '&p=' + page + '&sp=' + sub_page;
+        })
+
+        $('body').on('click', '.sub-pages', function () {
+            var sub_page = $(this).attr("data-data");
+            var page = $(".current-page").html();
+            window.location.href = '/BRTrace/BRInfo?BRNum=' + $("#br_num").html() + '&SearchWords='
+                + $('#h-searchkeyword').val() + '&p=' + page + '&sp=' + sub_page;
         })
     }
 
-    var info = function(){
+    var jolist = function(){
         //jo tr click event
-        $('body').on('click', '.cus-table > tbody > tr', function(){
+        $('body').on('click', '.cus-table > tbody > tr', function () {
             $('.cus-table > tbody > tr').each(function(){
                 $(this).attr('style', 'background-color: transparent;');
             })
             $(this).attr('style', 'background-color: #07151E;');
-            // var jr_no = $(this).children().eq(0).html();
-            // $.post('/', {
-            //     jr_no: jr_no
-            // }, function(output){
-            //     $('.jo-info-right').attr('style', 'display: block;');
-            // })
-            //for test
-            $('.jo-info-right').attr('style', 'display: block;');
+            var jo_no = $(this).children().eq(0).html();
+            $.post('/BRTrace/BRJOData', {
+                jo_no: jo_no
+            }, function (output) {
+                if (output.success) {
+                    $('#jo_pn').html(output.pn);
+                    $('#jo_type').html(output.jotype);
+                    $('#jo_stat').html(output.jostat);
+                    $('#jo_date').html(output.jodate);
+                    $('#jo_wip').html(output.jowip);
+                    $('#jo_planner').html(output.joplanner);
+                    $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
+                    $('.jo-list-right').attr('style', 'display: block;');
+                }
+            })
         })
+
+        $('body').on('click', '.pages', function () {
+            var page = $(this).attr("data-data");
+            window.location.href = '/BRTrace/DefaultJOList?p=' + page;
+        })
+    }
+
+    var jodetail = function () {
+
     }
     return {
         init: function () {
@@ -148,17 +184,17 @@ var BR = function(){
             brlist();
             common();
         },
+        brjolist: function () {
+            brjolist();
+            common();
+        },
         jolist: function () {
             jolist();
             common();
         },
-        info: function(){
-            info();
-            common();
-        },
-        common: function () {
+        jodetail: function () {
+            jodetail();
             common();
         }
-
     };
 }();

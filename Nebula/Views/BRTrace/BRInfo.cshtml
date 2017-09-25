@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
     $(function(){
-        BR.jolist();
+        BR.brjolist();
     })
 </script>
 
@@ -33,7 +33,7 @@
         <div class="br-info">
             <div class="col-md-9">
                 <div class="content-title">
-                    <span class="col-md-6">@ViewBag.currentbr.BRNumber</span>
+                    <span class="col-md-6" id="br_num">@ViewBag.currentbr.BRNumber</span>
                     <span class="col-md-6">OPEN</span>
                 </div>
                 <div class="br-info-content">
@@ -52,6 +52,10 @@
                                 <tr><td>@item.JONumber</td><td>OPEN</td></tr>
                             }
                         </table>
+                        @if (ViewBag.sub_total_pages > 1)
+                        {
+                            @Html.Partial("~/Views/Shared/_sub_pagination.cshtml")
+                        }
                     </div>
                     <div class="col-md-6 col-md-offset-1 jo-info-right">
                         <table class="table table-bordered des-table">
@@ -67,13 +71,17 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="label-panel" data-simplebar data-simplebar-autohide="false">
+                <div class="label-panel">
                     @foreach (var item in ViewBag.currentsearchlist)
                     {
                         <div class="label-color @(labelarray[bridx%labelarray.Count])">@item.BRNumber</div>
                         bridx = bridx + 1;
                     }
                 </div>
+                @if (ViewBag.total_pages > 1)
+                {
+                    @Html.Partial("~/Views/Shared/_pagination.cshtml")
+                }
             </div>
         </div>
     </div>

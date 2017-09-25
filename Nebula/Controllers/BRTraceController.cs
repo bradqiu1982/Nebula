@@ -10,7 +10,7 @@ namespace Nebula.Controllers
 {
     public class BRTraceController : Controller
     {
-        public ActionResult Home()
+        public ActionResult Home(int p = 1)
         {
             var ckdict = CookieUtility.UnpackCookie(this);
             if (!ckdict.ContainsKey("logonuser") || string.IsNullOrEmpty(ckdict["logonuser"]))
@@ -19,39 +19,62 @@ namespace Nebula.Controllers
             }
             var loginer = ckdict["logonuser"];
 
-            ViewBag.brlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
-            ViewBag.jolist = JOBaseInfo.RetrieveActiveJoInfo(null);
+            var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+            var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null);
+            var page_size = 10;
+            ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
+            ViewBag.page = p;
+            ViewBag.total_pages = allBrlist.Count / page_size + 1;
+            ViewBag.brlist_count = allBrlist.Count;
+            ViewBag.jolist_count = allJolist.Count;
 
             return View();
         }
 
-        public ActionResult DefaultBRList()
+        public ActionResult DefaultBRList(int p = 1)
         {
-            var brlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+            var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+            var page_size = 10;
+            ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
+            ViewBag.page = p;
+            ViewBag.total_pages = allBrlist.Count / page_size + 1;
             ViewBag.searchkeyword = "";
-            return View("BRList", brlist);
+
+            return View("BRList");
         }
 
-        public ActionResult DefaultJOList()
+        public ActionResult DefaultJOList(int p = 1)
         {
-            var jolist = JOBaseInfo.RetrieveActiveJoInfo(null);
-            return View("JOList", jolist);
+            var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null); 
+            var page_size = 10;
+            ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
+            ViewBag.page = p;
+            ViewBag.total_pages = allJolist.Count / page_size + 1;
+            ViewBag.searchkeyword = "";
+
+            return View("JOList");
         }
 
-        public ActionResult SearchKeyWord(string Keywords)
+        public ActionResult SearchKeyWord(string Keywords, int p = 1)
         {
-            var brlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(Keywords);
-            if (brlist.Count > 0)
+            var page_size = 10;
+            ViewBag.page = p;
+            ViewBag.searchkeyword = Keywords;
+            var allBrlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(Keywords);
+            if (allBrlist.Count > 0)
             {
-                ViewBag.searchkeyword = Keywords;
-                return View("BRList", brlist);
+                ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
+                ViewBag.total_pages = allBrlist.Count / page_size + 1;
+                return View("BRList");
             }
             else
             {
-                var jolist = JOBaseInfo.RetrieveJoInfo(Keywords);
-                if (jolist.Count > 0)
+                var allJolist = JOBaseInfo.RetrieveJoInfo(Keywords);
+                if (allJolist.Count > 0)
                 {
-                    return View("JOList", jolist);
+                    ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
+                    ViewBag.total_pages = allJolist.Count / page_size + 1;
+                    return View("JOList");
                 }
                 else
                 {
@@ -114,22 +137,24 @@ namespace Nebula.Controllers
             }
         }
 
-        public ActionResult BRInfo(string BRNum, string SearchWords)
+        public ActionResult BRInfo(string BRNum, string SearchWords, int p = 1, int sp = 1)
         {
             ViewBag.currentbr = BRAgileBaseInfo.RetrieveBRAgileInfo(BRNum)[0];
-            ViewBag.currentbrjolist = JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
+            var allcurrentbrjolist = JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
+            var allsearchlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo((!string.IsNullOrEmpty(SearchWords))? SearchWords : null);
+            //br pagination
+            var page_size = 10;
+            ViewBag.currentsearchlist = allsearchlist.Skip((p - 1) * page_size).Take(page_size);
+            ViewBag.page = p;
+            ViewBag.total_pages = allsearchlist.Count / page_size + 1;
+            ViewBag.searchkeyword = SearchWords;
 
-            if (!string.IsNullOrEmpty(SearchWords))
-            {
-                ViewBag.currentsearchlist = BRAgileBaseInfo.RetrieveBRAgileInfo(SearchWords);
-                ViewBag.searchkeyword = SearchWords;
-            }
-            else
-            {
-                ViewBag.currentsearchlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
-                ViewBag.searchkeyword = "";
-            }
-            
+            //jo pagination
+            var sub_page_size = 5;
+            ViewBag.currentbrjolist = allcurrentbrjolist.Skip((sp - 1) * sub_page_size).Take(sub_page_size);
+            ViewBag.sub_page = sp;
+            ViewBag.sub_total_pages = allcurrentbrjolist.Count / sub_page_size + 1;
+
             return View();
         }
 

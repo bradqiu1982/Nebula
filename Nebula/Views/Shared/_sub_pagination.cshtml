@@ -1,0 +1,41 @@
+﻿@{
+    var sub_page = ViewBag.sub_page;
+    var sub_total_pages = ViewBag.sub_total_pages;
+}
+<div class="pagination">
+    <span class="sub-pages" data-data="1"><<</span>
+    @if (sub_page == 1)
+    {
+        <span class="sub-current-page" data-data="@sub_page">@sub_page</span>
+        if (sub_total_pages >= 2)
+        {
+            <span class="sub-pages" data-data="@(sub_page + 1)">@(sub_page + 1)</span>
+        }
+        if (sub_total_pages >= 3)
+        {
+            <span class="sub-pages" data-data="@(sub_page + 2)">@(sub_page + 2)</span>
+        }
+    }
+    else if (sub_page == 2)
+    {
+        <span class="sub-pages" data-data="@(sub_page - 1)">@(sub_page - 1)</span>
+        <span class="sub-current-page">@sub_page</span>
+        if (sub_total_pages >= 3)
+        {
+            <span class="sub-pages" data-data="@(sub_page + 1)">@(sub_page + 1)</span>
+        }
+    }
+    else if (sub_page == sub_total_pages)
+    {
+        <span class="sub-pages" data-data="@(sub_page - 2)">@(sub_page - 2)</span>
+        <span class="sub-pages" data-data="@(sub_page - 1)">@(sub_page - 1)</span>
+        <span class="sub-current-page">@sub_page</span>
+    }
+    else
+    {
+        <span class="sub-pages" data-data="@(sub_page - 1)">@(sub_page - 1)</span>
+        <span class="sub-current-page">@sub_page</span>
+        <span class="sub-pages" data-data="@(sub_page + 1)">@(sub_page + 1)</span>
+    }
+    <span class="sub-pages" data-data="@sub_total_pages">>></span>
+</div>
