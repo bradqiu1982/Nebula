@@ -133,6 +133,12 @@ namespace Nebula.Controllers
             return View();
         }
 
+        public ActionResult JOInfo(string JONum)
+        {
+            var jolist = JOBaseInfo.RetrieveJoInfo(JONum);
+            return View(jolist[0]);
+        }
+
         public void LoadNewBR()
         {
             string datestring = DateTime.Now.ToString("yyyyMMdd");

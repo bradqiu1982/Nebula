@@ -1,0 +1,72 @@
+﻿@model Nebula.Models.JOBaseInfo
+
+@{
+    ViewBag.Title = "JOInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Scripts/jo.js" type="text/javascript"></script>
+<script type="text/javascript">
+            $(function(){
+                JO.init();
+            })
+</script>
+
+<header>
+    <span class="col-md-3 logo"></span>
+    <div class="nav-breadcrumb">
+        <span class="bc-jo">@Model.JONumber</span>
+        <span class="bc-br">@Model.BRNumber</span>
+    </div>
+</header>
+<div class="content">
+    <div class="container">
+        <div class="row row-search">
+            <span class="search"></span>
+            <div class="input-group search-div hide">
+                <input type="text" class="search-input" id="keywords" placeholder="Search for...">
+                <span class="input-group-btn search-icon"></span>
+            </div>
+        </div>
+        <div class="nav-type">
+            <div class="nav-link" id="br">BR</div>
+            <div class="nav-link nav-active" id="jo">JO</div>
+            <div class="nav-line"></div>
+        </div>
+        <div class="jo-detail">
+            <div class="row">
+                <div class="col-md-2 col-md-offset-3">
+                    <div id="jo-title"><span>@Model.JONumber</span></div>
+                    <div id="jo-status"><span>OPEN</span></div>
+                </div>
+                <div class="col-md-6 col-md-offset-1">
+                    <table class="table table-bordered des-table">
+                        <tr><td class="col-md-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc)</td></tr>
+                        <tr><td class="col-md-4">JO Type</td><td id="jo_type">@(Model.Category)-@(Model.JOType)</td></tr>
+                        <tr><td class="col-md-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
+                        <tr><td class="col-md-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd hh:mm:ss"))</td></tr>
+                        <tr><td class="col-md-4">WIP</td><td id="jo_wip">@(Model.WIP)</td></tr>
+                        <tr><td class="col-md-4">Planer</td><td id="jo_planner">@(Model.Planner)</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="jo-operation">
+    <div class="col-md-3 jo-op jo-blue">
+        <div class="jo-blue-tranparent"></div>
+    </div>
+    <div class="col-md-3 jo-op jo-green">
+        <div class="jo-green-tranparent"></div>
+    </div>
+    <div class="col-md-3 jo-op jo-yellow">
+        <div class="jo-yellow-tranparent"></div>
+    </div>
+    <div class="col-md-3 jo-op jo-darkblue">
+        <div class="jo-darkblue-up-tranparent"></div>
+        <div class="jo-darkblue-down-tranparent"></div>
+    </div>
+</div>
+<footer></footer>
