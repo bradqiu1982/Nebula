@@ -18,14 +18,53 @@ namespace Nebula.Controllers
 {
     public class NebulaUserController : Controller
     {
+        
+        private void UserAuth()
+        {
+            var ckdict = CookieUtility.UnpackCookie(this);
+            if (ckdict.ContainsKey("logonuser"))
+            {
+                ViewBag.EmailAddr = ckdict["logonuser"];
+                ViewBag.UserName = ckdict["logonuser"].Replace("@FINISAR.COM","");
+            }
+        }
+
         public ActionResult UserLogin()
         {
+            var logined = false;
+            var ckdict = CookieUtility.UnpackCookie(this);
+            if (ckdict.ContainsKey("loginkey") && !string.IsNullOrEmpty(ckdict["loginkey"]))
+            {
+                var loginid = NebulaUserViewModels.RetrieveUserByKey(ckdict["loginkey"]);
+                if (!string.IsNullOrEmpty(loginid))
+                {
+                    if (!ckdict.ContainsKey("logonuser") || string.IsNullOrEmpty(ckdict["logonuser"]))
+                    {
+                        var ck = new Dictionary<string, string>();
+                        ck.Add("logonuser", loginid);
+                        CookieUtility.SetCookie(this, ck);
+                    }//end if
+
+                    logined = true;
+                }
+            }
+
+            if (logined)
+            {
+                return RedirectToAction("Home", "BRTrace");
+            }
+
             return View();
+        }
+
+        private string GetUniqKey()
+        {
+            return Guid.NewGuid().ToString("N");
         }
 
         public JsonResult UserLoginPost()
         {
-            var loginid = Request.Form["loginid"];
+            var loginid = Request.Form["loginid"].ToUpper();
             var loginpwd = Request.Form["loginpwd"];
 
             var dbret = NebulaUserViewModels.RetrieveUser(loginid);
@@ -39,6 +78,14 @@ namespace Nebula.Controllers
                     user.RegistUser();
 
                     var ck = new Dictionary<string, string>();
+                    if(!string.IsNullOrEmpty(Request.Form["remember_me"])
+                        && string.Compare(Request.Form["remember_me"],"true",true) == 0)
+                    {
+                        var loginkey = GetUniqKey();
+                        NebulaUserViewModels.UpdateLoginKey(loginid, loginkey);
+                        ck.Add("loginkey", loginkey);
+                    }
+
                     ck.Add("logonuser", loginid);
                     CookieUtility.SetCookie(this, ck);
 
@@ -56,8 +103,15 @@ namespace Nebula.Controllers
 
             if (string.Compare(loginpwd, dbret.Password, true) == 0)
             {
-
                 var ck = new Dictionary<string, string>();
+                if (!string.IsNullOrEmpty(Request.Form["remember_me"])
+                    && string.Compare(Request.Form["remember_me"], "true", true) == 0)
+                {
+                    var loginkey = GetUniqKey();
+                    NebulaUserViewModels.UpdateLoginKey(loginid, loginkey);
+                    ck.Add("loginkey", loginkey);
+                }
+                
                 ck.Add("logonuser", loginid);
                 CookieUtility.SetCookie(this, ck);
 
@@ -117,6 +171,10 @@ namespace Nebula.Controllers
                 var bs = Convert.FromBase64String(resetstr);
                 var val = UTF8Encoding.UTF8.GetString(bs);
                 ViewBag.UserName = val.Split(new string[] { "||" }, StringSplitOptions.None)[0];
+            }
+            else
+            {
+                UserAuth();
             }
             return View();
         }

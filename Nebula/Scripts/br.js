@@ -69,7 +69,9 @@ var BR = function(){
         })
     }
 
-    var brlist = function(){
+    var brlist = function () {
+        //$(".label-panel").attr( "data-simplebar","data-simplebar");
+        //$(".label-panel").attr("data-simplebar-autohide","false");
         //tr click event
         $('body').on('click', '.cus-table > tbody > tr', function(){
             $('.cus-table > tbody > tr').each(function(){

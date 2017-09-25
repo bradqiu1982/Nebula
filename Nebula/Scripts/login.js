@@ -13,13 +13,15 @@ var Login = function () {
         var login_submit = function () {
             var loginid = $('#login_id').val();
             var loginpwd = $('#login_pwd').val();
+            var remeberme = $("#remember_me").prop('checked');
             if (loginid && loginpwd) {
                 loginid = loginid.toUpperCase();
                 if (loginid.indexOf("@FINISAR.COM") !== -1) {
                     $.post('/NebulaUser/UserLoginPost',
                     {
                         loginid: loginid,
-                        loginpwd: loginpwd
+                        loginpwd: loginpwd,
+                        remember_me: remeberme
                     },
                     function (output) {
                         if (output.success) {

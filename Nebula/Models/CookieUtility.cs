@@ -36,7 +36,12 @@ namespace Nebula.Models
                     {
                         ck.Values[item.Key] = Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes(item.Value));
                     }
-                    //ck.Expires = DateTime.Now.AddDays(1);
+
+                    if (values.ContainsKey("loginkey"))
+                    {
+                        ck.Expires = DateTime.Now.AddDays(7);
+                    }
+
                     if (ctrl.Response.Cookies["activenpiNebula"] != null)
                     {
                         ctrl.Response.SetCookie(ck);
@@ -53,6 +58,12 @@ namespace Nebula.Models
                     {
                         ck.Values[item.Key] = Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes(item.Value));
                     }
+
+                    if (values.ContainsKey("loginkey"))
+                    {
+                        ck.Expires = DateTime.Now.AddDays(7);
+                    }
+
                     if (ctrl.Response.Cookies["activenpiNebula"] != null)
                     {
                         ctrl.Response.SetCookie(ck);

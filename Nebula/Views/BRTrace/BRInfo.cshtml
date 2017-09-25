@@ -1,7 +1,6 @@
 ﻿
 @{
     ViewBag.Title = "BR Detail";
-    ViewBag.UserName = "Yan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var labelarray = new List<string>();
@@ -67,7 +66,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="label-panel" data-simplebar data-simplebar-autohide="false">
+                <div class="label-panel">
                     @foreach (var item in ViewBag.currentsearchlist)
                     {
                         <div class="label-color @(labelarray[bridx%labelarray.Count])">@item.BRNumber</div>

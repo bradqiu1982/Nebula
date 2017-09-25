@@ -10,6 +10,16 @@ namespace Nebula.Controllers
 {
     public class BRTraceController : Controller
     {
+        private void UserAuth()
+        {
+            var ckdict = CookieUtility.UnpackCookie(this);
+            if (ckdict.ContainsKey("logonuser"))
+            {
+                ViewBag.EmailAddr = ckdict["logonuser"];
+                ViewBag.UserName = ckdict["logonuser"].Replace("@FINISAR.COM", "");
+            }
+        }
+
         public ActionResult Home()
         {
             var ckdict = CookieUtility.UnpackCookie(this);
@@ -17,7 +27,8 @@ namespace Nebula.Controllers
             {
                 return RedirectToAction("UserLogin", "NebulaUser");
             }
-            var loginer = ckdict["logonuser"];
+
+            UserAuth();
 
             ViewBag.brlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
             ViewBag.jolist = JOBaseInfo.RetrieveActiveJoInfo(null);
@@ -27,6 +38,8 @@ namespace Nebula.Controllers
 
         public ActionResult DefaultBRList()
         {
+            UserAuth();
+
             var brlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
             ViewBag.searchkeyword = "";
             return View("BRList", brlist);
@@ -34,12 +47,16 @@ namespace Nebula.Controllers
 
         public ActionResult DefaultJOList()
         {
+            UserAuth();
+
             var jolist = JOBaseInfo.RetrieveActiveJoInfo(null);
             return View("JOList", jolist);
         }
 
         public ActionResult SearchKeyWord(string Keywords)
         {
+            UserAuth();
+
             var brlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(Keywords);
             if (brlist.Count > 0)
             {
@@ -116,6 +133,8 @@ namespace Nebula.Controllers
 
         public ActionResult BRInfo(string BRNum, string SearchWords)
         {
+            UserAuth();
+
             ViewBag.currentbr = BRAgileBaseInfo.RetrieveBRAgileInfo(BRNum)[0];
             ViewBag.currentbrjolist = JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
 
@@ -135,6 +154,8 @@ namespace Nebula.Controllers
 
         public ActionResult JOInfo(string JONum)
         {
+            UserAuth();
+
             var jolist = JOBaseInfo.RetrieveJoInfo(JONum);
             return View(jolist[0]);
         }
@@ -188,6 +209,8 @@ namespace Nebula.Controllers
 
         public ActionResult HeartBeat()
         {
+            UserAuth();
+
             //UpdateExistBR();
             //LoadNewBR();
             //ERPVM.LoadJOBaseInfo(this);
@@ -216,6 +239,8 @@ namespace Nebula.Controllers
 
         public ActionResult NewBR(string BRLIST)
         {
+            UserAuth();
+
             BRAgileVM.LoadNewBR(BRLIST, this);
             CreateAgileDir("agilenewqueried");
             return View();
@@ -223,6 +248,8 @@ namespace Nebula.Controllers
 
         public ActionResult UpdateBR()
         {
+            UserAuth();
+
             BRAgileVM.UpdateBR(this);
             CreateAgileDir("agileupdated");
             return View();

@@ -29,6 +29,8 @@ namespace Nebula.Models
 
         public string ConfirmPassword { get; set; }
 
+        public string LoginKey { set; get; }
+
         public static bool CheckUserExist(string username)
         {
             var dbret = RetrieveUser(username);
@@ -69,6 +71,26 @@ namespace Nebula.Models
             var sql = "update UserTable set PassWD = '<PassWD>' where UserName = '<UserName>'";
             sql = sql.Replace("<UserName>", username.ToUpper()).Replace("<PassWD>", pwd);
             DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static void UpdateLoginKey(string username, string loginkey)
+        {
+            var sql = "update  UserTable set APVal1 = '<APVal1>' where UserName = '<UserName>'";
+            sql = sql.Replace("<UserName>", username.ToUpper()).Replace("<APVal1>", loginkey);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static string RetrieveUserByKey(string loginkey)
+        {
+            var ret = string.Empty;
+            var sql = "select UserName from UserTable where APVal1 = '<APVal1>'";
+            sql = sql.Replace("<APVal1>", loginkey);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            if (dbret.Count > 0)
+            {
+                ret = Convert.ToString(dbret[0][0]);
+            }
+            return ret;
         }
 
     }
