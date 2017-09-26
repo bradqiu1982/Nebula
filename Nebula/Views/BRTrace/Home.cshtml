@@ -9,7 +9,6 @@
     labelarray.Add("label-yellow");
     labelarray.Add("label-rosered");
     var bridx = 0;
-    var joidx = 0;
 }
 
 <script src="~/Scripts/br.js" type="text/javascript"></script>
@@ -42,30 +41,26 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="info">
-                        <span class="info-count">@(ViewBag.brlist.Count)</span>
+                        <span class="info-count">@(ViewBag.brlist_count)</span>
                         <span class="info-description">BRs OPEN</span>
                     </div>
                     <div class="info">
-                        <span class="info-count">@(ViewBag.jolist.Count)</span>
+                        <span class="info-count">@(ViewBag.jolist_count)</span>
                         <span class="info-description">JOs OPEN</span>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="label-panel br_panel" data-simplebar data-simplebar-autohide="true">
+                    <div class="label-panel br_panel">
                         @foreach (var item in ViewBag.brlist)
                         {
                             <div class="label-color @(labelarray[bridx%labelarray.Count])">@item.BRNumber</div>
                             bridx = bridx + 1;
                         }
                     </div>
-
-                    @*<div class="label-panel jo_panel hide">
-                        @foreach (var item in ViewBag.jolist)
-                        {
-                            <div class="label-color @(labelarray[joidx%labelarray.Count])">@item.JONumber</div>
-                            joidx = joidx + 1;
-                        }
-                    </div>*@
+                    @if (ViewBag.total_pages > 1)
+                    {
+                        @Html.Partial("~/Views/Shared/_pagination.cshtml")
+                    }
                 </div>
             </div>
         </div>
