@@ -10,6 +10,11 @@
         BR.jodetail();
     })
 </script>
+<style type="text/css">
+    td {
+        padding:2px!important;
+    }
+</style>
 <div class="nav-breadcrumb">
     <span class="bc-jo current-breadcrumb">Current JO</span>
     <span class="bc-br br-breadcrumb">@Model.BRNumber</span>
@@ -37,6 +42,7 @@
                 <div class="col-md-5 col-md-offset-1">
                     <table class="table table-bordered des-table">
                         <tr><td class="col-md-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc)</td></tr>
+                        <tr><td class="col-md-4">PN Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
                         <tr><td class="col-md-4">JO Type</td><td id="jo_type">@(Model.Category)-@(Model.JOType)</td></tr>
                         <tr><td class="col-md-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
                         <tr><td class="col-md-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd hh:mm:ss"))</td></tr>

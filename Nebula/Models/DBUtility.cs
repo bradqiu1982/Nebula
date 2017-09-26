@@ -409,12 +409,12 @@ namespace Nebula.Models
             }
         }
 
-        private static SqlConnection GetPRLConnector()
+        private static SqlConnection GetTraceConnector()
         {
             var conn = new SqlConnection();
             try
             {
-                conn.ConnectionString = "Data Source=cn-csrpt;Initial Catalog=SummaryDB;Integrated Security=True;Connection Timeout=30;";
+                conn.ConnectionString = "Server=wuxinpi;User ID=NPI;Password=NPI@NPI;Database=NPITrace;Connection Timeout=120;";
                 conn.Open();
                 return conn;
             }
@@ -430,9 +430,9 @@ namespace Nebula.Models
             }
         }
 
-        public static bool ExePRLSqlNoRes(string sql)
+        public static bool ExeTraceSqlNoRes(string sql)
         {
-            var conn = GetPRLConnector();
+            var conn = GetTraceConnector();
             if (conn == null)
                 return false;
 
@@ -460,10 +460,10 @@ namespace Nebula.Models
             }
         }
 
-        public static List<List<object>> ExePRLSqlWithRes(string sql)
+        public static List<List<object>> ExeTraceSqlWithRes(string sql)
         {
             var ret = new List<List<object>>();
-            var conn = GetPRLConnector();
+            var conn = GetTraceConnector();
             try
             {
                 if (conn == null)

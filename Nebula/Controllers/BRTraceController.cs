@@ -139,6 +139,7 @@ namespace Nebula.Controllers
                 {
                     success = true,
                     pn = jolist[0].PN + "-" + jolist[0].PNDesc,
+                    pnyd = jolist[0].PNYieldStr,
                     jotype = jolist[0].Category+"-"+jolist[0].JOType,
                     jostat = jolist[0].JOStatus,
                     jodate = jolist[0].DateReleased.ToString("yyyy-MM-dd hh:mm:ss"),

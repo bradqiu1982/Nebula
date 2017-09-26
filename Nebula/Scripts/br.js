@@ -110,6 +110,7 @@ var BR = function(){
             }, function (output) {
                 if (output.success) {
                     $('#jo_pn').html(output.pn);
+                    $('#jo_yd').html(output.pnyd);
                     $('#jo_type').html(output.jotype);
                     $('#jo_stat').html(output.jostat);
                     $('#jo_date').html(output.jodate);
@@ -155,6 +156,7 @@ var BR = function(){
             }, function (output) {
                 if (output.success) {
                     $('#jo_pn').html(output.pn);
+                    $('#jo_yd').html(output.pnyd);
                     $('#jo_type').html(output.jotype);
                     $('#jo_stat').html(output.jostat);
                     $('#jo_date').html(output.jodate);
