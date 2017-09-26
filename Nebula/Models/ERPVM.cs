@@ -7,6 +7,62 @@ using System.Web.Mvc;
 
 namespace Nebula.Models
 {
+    public class ProjectTestData
+    {
+        public ProjectTestData()
+        {
+            ModuleSerialNum = "";
+            WhichTest = "";
+            ErrAbbr = "";
+        }
+
+        public string ModuleSerialNum { set; get; }
+        public string WhichTest { set; get; }
+        public string ErrAbbr { set; get; }
+    }
+
+    public class TestYield
+    {
+        public string WhichTest { set; get; }
+        public int InputCount { set; get; }
+        public int OutputCount { set; get; }
+        public double Yield
+        {
+            get
+            {
+                try
+                {
+                    return OutputCount / (double)(InputCount);
+                }
+                catch (Exception)
+                { return 0.0; }
+            }
+        }
+
+        public int CorrectOutputCount { set; get; }
+        public double CorrectYield
+        {
+            get
+            {
+                try
+                {
+                    return CorrectOutputCount / (double)(InputCount);
+                }
+                catch (Exception)
+                { return 0.0; }
+            }
+        }
+
+        private Dictionary<string, bool> allsndict = new Dictionary<string, bool>();
+        public Dictionary<string, bool> AllSNDict { get { return allsndict; } }
+
+
+        private Dictionary<string, bool> errsndict = new Dictionary<string, bool>();
+        public Dictionary<string, bool> ErrSNDict { get { return errsndict; } }
+
+        private Dictionary<string, bool> corsndict = new Dictionary<string, bool>();
+        public Dictionary<string, bool> CorSNDict { get { return errsndict; } }
+    }
 
     public class JOBaseInfo
     {
@@ -31,6 +87,7 @@ namespace Nebula.Models
             CreatedBy  = "";
             ExistQty = 0;
             Originator = "";
+            PNYield = "";
     }
 
         public static JOBaseInfo CreateItem(List<string> line)
@@ -56,16 +113,18 @@ namespace Nebula.Models
 
         public void StoreInfo()
         {
+            PNYield = RetrivePNYield(PN);
+
             var sql = "delete from JOBaseInfo where JONumber = '<JONumber>'";
             sql = sql.Replace("<JONumber>", JONumber);
             DBUtility.ExeLocalSqlNoRes(sql);
 
-            sql = "insert into JOBaseInfo(BRKey,BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted,WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty) "
-                + " values('<BRKey>','<BRNumber>','<JONumber>','<JOType>','<JOStatus>','<DateReleased>','<PN>','<PNDesc>','<Category>',<StartQuantity>,<MRPNetQuantity>,<QuantityCompleted>,<WIP>,<IncurredSum>,<IncurredMaterialSum>,'<Planner>','<CreatedBy>',<ExistQty>)";
+            sql = "insert into JOBaseInfo(BRKey,BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted,WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,APVal1) "
+                + " values('<BRKey>','<BRNumber>','<JONumber>','<JOType>','<JOStatus>','<DateReleased>','<PN>','<PNDesc>','<Category>',<StartQuantity>,<MRPNetQuantity>,<QuantityCompleted>,<WIP>,<IncurredSum>,<IncurredMaterialSum>,'<Planner>','<CreatedBy>',<ExistQty>,'<APVal1>')";
             sql = sql.Replace("<BRKey>", BRKey).Replace("<BRNumber>", BRNumber).Replace("<JONumber>", JONumber).Replace("<JOType>", JOType).Replace("<JOStatus>", JOStatus)
                 .Replace("<DateReleased>", DateReleased.ToString()).Replace("<PN>", PN).Replace("<PNDesc>", PNDesc).Replace("<Category>", Category).Replace("<StartQuantity>", StartQuantity.ToString())
                 .Replace("<MRPNetQuantity>", MRPNetQuantity.ToString()).Replace("<QuantityCompleted>", QuantityCompleted.ToString()).Replace("<WIP>", WIP.ToString()).Replace("<IncurredSum>", IncurredSum.ToString("0.00"))
-                .Replace("<IncurredMaterialSum>", IncurredMaterialSum.ToString("0.00")).Replace("<Planner>", Planner).Replace("<CreatedBy>", CreatedBy).Replace("<ExistQty>", ExistQty.ToString());
+                .Replace("<IncurredMaterialSum>", IncurredMaterialSum.ToString("0.00")).Replace("<Planner>", Planner).Replace("<CreatedBy>", CreatedBy).Replace("<ExistQty>", ExistQty.ToString()).Replace("<APVal1>",PNYield);
             DBUtility.ExeLocalSqlNoRes(sql);
         }
 
@@ -102,14 +161,14 @@ namespace Nebula.Models
             if (reviewer == null)
             {
                 sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty from JOBaseInfo j (nolock) "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1 from JOBaseInfo j (nolock) "
                       + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey order by JONumber";
             }
             else
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
                 sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty from JOBaseInfo j (nolock) "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1 from JOBaseInfo j (nolock) "
                       + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where a.Originator = '<Originator>' order by JONumber";
                 sql = sql.Replace("<Originator>", reviewer);
             }
@@ -135,6 +194,13 @@ namespace Nebula.Models
                 temp.Planner = Convert.ToString(line[15]);
                 temp.CreatedBy = Convert.ToString(line[16]);
                 temp.ExistQty = ERPVM.Convert2Int(line[17]);
+                temp.PNYield = Convert.ToString(line[18]);
+
+                if (string.IsNullOrEmpty(temp.PNYield))
+                {
+                    temp.PNYield = RetrivePNYield(temp.PN);
+                    UpdatePNYield(temp.PN, temp.PNYield);
+                }
 
                 ret.Add(temp);
             }
@@ -147,7 +213,7 @@ namespace Nebula.Models
             var ret = new List<JOBaseInfo>();
 
             var sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty from  JOBaseInfo j (nolock) "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1  from  JOBaseInfo j (nolock) "
                       + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where j.JONumber like '%<JONumber>%' ";
             sql = sql.Replace("<JONumber>", JoNum);
 
@@ -173,6 +239,7 @@ namespace Nebula.Models
                 temp.Planner = Convert.ToString(line[15]);
                 temp.CreatedBy = Convert.ToString(line[16]);
                 temp.ExistQty = ERPVM.Convert2Int(line[17]);
+                temp.PNYield = Convert.ToString(line[18]);
 
                 ret.Add(temp);
             }
@@ -185,7 +252,7 @@ namespace Nebula.Models
             var ret = new List<JOBaseInfo>();
 
             var sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty from  JOBaseInfo j (nolock) "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1 from  JOBaseInfo j (nolock) "
                       + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where j.BRNumber = '<BRNumber>' ";
             sql = sql.Replace("<BRNumber>", BRNum);
 
@@ -211,11 +278,83 @@ namespace Nebula.Models
                 temp.Planner = Convert.ToString(line[15]);
                 temp.CreatedBy = Convert.ToString(line[16]);
                 temp.ExistQty = ERPVM.Convert2Int(line[17]);
+                temp.PNYield = Convert.ToString(line[18]);
 
                 ret.Add(temp);
             }
 
             return ret;
+        }
+
+        private static string RetrieveCummYield(List<ProjectTestData> plist)
+        {
+            var yielddict = new Dictionary<string, TestYield>();
+            var sndict = new Dictionary<string, bool>();
+            foreach (var p in plist)
+            {
+                if (!sndict.ContainsKey(p.WhichTest + ":" + p.ModuleSerialNum))
+                {
+                    sndict.Add(p.WhichTest + ":" + p.ModuleSerialNum, true);
+                    if (yielddict.ContainsKey(p.WhichTest))
+                    {
+                        yielddict[p.WhichTest].InputCount = yielddict[p.WhichTest].InputCount + 1;
+                        if (string.Compare(p.ErrAbbr, "PASS", true) == 0)
+                            yielddict[p.WhichTest].OutputCount = yielddict[p.WhichTest].OutputCount + 1;
+                    }
+                    else
+                    {
+                        var tempyield = new TestYield();
+                        tempyield.InputCount = 1;
+                        if (string.Compare(p.ErrAbbr, "PASS", true) == 0)
+                            tempyield.OutputCount = 1;
+                        else
+                            tempyield.OutputCount = 0;
+                        tempyield.WhichTest = p.WhichTest;
+
+                        yielddict.Add(p.WhichTest, tempyield);
+                    }
+                }
+            }
+
+            var retyield = 1.0;
+            foreach (var y in yielddict)
+            {
+                retyield = retyield * y.Value.Yield;
+            }
+            return retyield.ToString("0.000");
+        }
+
+
+        public static string RetrivePNYield(string PN)
+        {
+            var pjdatalist = new List<ProjectTestData>();
+            var sql = "select ModuleSerialNum,WhichTest,ErrAbbr,TestTimeStamp from ProjectTestData where PN = '<PN>'  order by ModuleSerialNum,TestTimeStamp DESC";
+            sql = sql.Replace("<PN>", PN);
+            var dbret = DBUtility.ExeTraceSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var tempdata = new ProjectTestData();
+                tempdata.ModuleSerialNum = Convert.ToString(line[0]);
+                tempdata.WhichTest = Convert.ToString(line[1]);
+                tempdata.ErrAbbr = Convert.ToString(line[2]);
+                pjdatalist.Add(tempdata);
+            }
+
+            if (pjdatalist.Count == 0)
+            {
+                return "";
+            }
+            else
+            {
+                return RetrieveCummYield(pjdatalist);
+            }
+        }
+
+        public static void UpdatePNYield(string PN, string yield)
+        {
+            var sql = "Update JOBaseInfo set APVal1 = '<APVal1>' where PN = '<PN>'";
+            sql = sql.Replace("<APVal1>", yield).Replace("<PN>", PN);
+            DBUtility.ExeLocalSqlWithRes(sql);
         }
 
         public string BRKey { set; get; }
@@ -237,6 +376,17 @@ namespace Nebula.Models
         public string CreatedBy { set; get; }
         public int ExistQty { set; get; }
         public string Originator { set; get; }
+        public string PNYield { set; get; }
+        public string PNYieldStr { get {
+                if (string.IsNullOrEmpty(PNYield))
+                {
+                    return PNYield;
+                }
+                else
+                {
+                    return (Convert.ToDouble(PNYield)*100.0).ToString("0.0") + " %";
+                }
+            } }
     }
 
     public class JOComponentInfo
