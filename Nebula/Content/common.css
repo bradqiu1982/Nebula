@@ -576,3 +576,80 @@ html,body{
 .br-breadcrumb{
     cursor: pointer;
 }
+
+/*JO Detail*/
+.current-page{
+    position: fixed;
+    left: 0;
+    top: 120px;
+    border-radius: 4px;
+    writing-mode: tb-rl;
+    width: 45px;
+    text-align: center;
+    height: 200px;
+    padding: 5px 10px;
+    color: #001D2E;
+    font-size: 16px;
+}
+.schedule-page{
+    background-color: #FFC000;
+}
+.pro-line-page{
+    background-color: #FF0066;
+}
+.pqe-oqc-page{
+    background-color: #33CCFF;
+}
+.warehouse-page{
+    background-color: #BEF50C;
+}
+.jo-op-tag{
+    position: fixed;
+    height: 200px;
+    width: 50px;
+    right: 0;
+    bottom: 20px;
+}
+
+.op-tag{
+    float: right;
+    height: 200px;
+    width: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+}
+.op-tag-schedule{
+    background-image: url(./images/jo-tag-schedule.png);
+}
+
+.op-tag-pro-line{
+    background-image: url(./images/jo-tag-product-line.png);
+}
+
+.op-tag-pqe-oqc{
+    background-image: url(./images/jo-tag-pqe-oqc.png);
+}
+
+.op-tag-warehouse{
+    background-image: url(./images/jo-tag-warehouse.png);
+}
+
+.schedule, .pro-line, .pqe-oqc, .warehouse{
+    height: 45px;
+    width: 40px;
+    margin: 5px;
+    display: block;
+    cursor: pointer;
+}
+
+.jo-schedule, .jo-pro-line, .jo-pqe-oqc, .jo-warehouse{
+    height: 500px;
+    background-color: #fff;
+    border-color: #FF0066;
+    margin: 1% 10%;
+    width: 80%;
+}
