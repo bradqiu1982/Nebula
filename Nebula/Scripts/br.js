@@ -44,7 +44,7 @@ var BR = function(){
             var keyword = $('#keywords').val();
             keyword = keyword.replace("'", "");
             if (keyword) {
-                window.location.href = '/BRTrace/SearchKeyWord?Keywords=' + keyword;
+                window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + keyword;
             }
         })
 
@@ -52,7 +52,7 @@ var BR = function(){
             var keyword = $('#keywords').val();
             keyword = keyword.replace("'", "");
             if (e.keyCode === 13 && keyword) {
-                window.location.href = '/BRTrace/SearchKeyWord?Keywords=' + keyword;
+                window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + keyword;
             }
         })
 
@@ -70,8 +70,6 @@ var BR = function(){
     }
 
     var brlist = function () {
-        //$(".label-panel").attr( "data-simplebar","data-simplebar");
-        //$(".label-panel").attr("data-simplebar-autohide","false");
         //tr click event
         $('body').on('click', '.cus-table > tbody > tr', function(){
             $('.cus-table > tbody > tr').each(function(){
@@ -87,7 +85,7 @@ var BR = function(){
                      $('#br_date').html(output.OriginalDate);
                      $('#br_desc').html(output.Description);
                      $('#br_stat').html(output.Status);
-                     $('#br_detail').attr('href', '/BRTrace/BRInfo?BRNum=' + br_no + '&SearchWords=' + $('#h-searchkeyword').val());
+                     $('#br_detail').attr('href', '/BRTrace/BRInfo?BRNum=' + br_no + '&SearchWords=' + $('#keywords').val());
                     $('.br-list-right').attr('style', 'display: block;');
                  }
              })
@@ -95,7 +93,7 @@ var BR = function(){
 
         $('body').on('click', '.pages', function () {
             var page = $(this).attr("data-data");
-            window.location.href = '/BRTrace/DefaultBRList?p=' + page;
+            window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + $('#keywords').val() + '&p=' + page;
         })
     }
 
@@ -126,21 +124,21 @@ var BR = function(){
         $('body').on('click', '.label-color', function () {
             var page = $(".current-page").html();
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html()
-                + '&SearchWords=' + $('#h-searchkeyword').val() + '&p=' + page;
+                + '&SearchWords=' + $('#keywords').val() + '&p=' + page;
         })
         
         $('body').on('click', '.pages', function () {
             var page = $(this).attr("data-data");
-            var sub_page = $(".sub-current-page").html();
+            var sub_page = ($(".sub-current-page").html() == undefined) ? 1 : $(".sub-current-page").html();
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $("#br_num").html() + '&SearchWords='
-                + $('#h-searchkeyword').val() + '&p=' + page + '&sp=' + sub_page;
+                + $('#keywords').val() + '&p=' + page + '&sp=' + sub_page;
         })
 
         $('body').on('click', '.sub-pages', function () {
             var sub_page = $(this).attr("data-data");
-            var page = $(".current-page").html();
+            var page = ($(".current-page").html() == undefined) ? 1 : $(".current-page").html();
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $("#br_num").html() + '&SearchWords='
-                + $('#h-searchkeyword').val() + '&p=' + page + '&sp=' + sub_page;
+                + $('#keywords').val() + '&p=' + page + '&sp=' + sub_page;
         })
     }
 
@@ -170,12 +168,14 @@ var BR = function(){
 
         $('body').on('click', '.pages', function () {
             var page = $(this).attr("data-data");
-            window.location.href = '/BRTrace/DefaultJOList?p=' + page;
+            window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + $('#keywords').val() + '&p=' + page;
         })
     }
 
     var jodetail = function () {
-
+        $('body').on('click', '.br-breadcrumb', function () {
+            window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html();
+        })
     }
     return {
         init: function () {

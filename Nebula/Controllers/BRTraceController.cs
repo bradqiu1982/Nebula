@@ -46,14 +46,14 @@ namespace Nebula.Controllers
         {
 
             UserAuth();
-
             var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+            
             var page_size = 10;
             ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
             ViewBag.page = p;
             ViewBag.total_pages = allBrlist.Count / page_size + 1;
-
             ViewBag.searchkeyword = "";
+
             return View("BRList");
         }
 
@@ -61,24 +61,24 @@ namespace Nebula.Controllers
         {
             UserAuth();
 
-
-            var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null); 
+            var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null);
             var page_size = 10;
             ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
             ViewBag.page = p;
             ViewBag.total_pages = allJolist.Count / page_size + 1;
             ViewBag.searchkeyword = "";
+
             return View("JOList");
         }
 
-        public ActionResult SearchKeyWord(string Keywords, int p = 1)
+        public ActionResult SearchKeyWord(string SearchWords, int p = 1)
         {
             UserAuth();
 
             var page_size = 10;
             ViewBag.page = p;
-            ViewBag.searchkeyword = Keywords;
-            var allBrlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(Keywords);
+            ViewBag.searchkeyword = SearchWords;
+            var allBrlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(SearchWords);
             if (allBrlist.Count > 0)
             {
                 ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
@@ -87,7 +87,7 @@ namespace Nebula.Controllers
             }
             else
             {
-                var allJolist = JOBaseInfo.RetrieveJoInfo(Keywords);
+                var allJolist = JOBaseInfo.RetrieveJoInfo(SearchWords);
                 if (allJolist.Count > 0)
                 {
                     ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
@@ -167,7 +167,6 @@ namespace Nebula.Controllers
             ViewBag.currentsearchlist = allsearchlist.Skip((p - 1) * page_size).Take(page_size);
             ViewBag.page = p;
             ViewBag.total_pages = allsearchlist.Count / page_size + 1;
-            ViewBag.searchkeyword = SearchWords;
 
             //jo pagination
             var sub_page_size = 5;

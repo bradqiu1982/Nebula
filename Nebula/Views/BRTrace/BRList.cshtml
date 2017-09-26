@@ -18,7 +18,7 @@
         <div class="row row-search">
             <span class="search"></span>
             <div class="input-group search-div hide">
-                <input type="text" class="search-input" id="keywords" placeholder="Search for...">
+                <input type="text" class="search-input" id="keywords" placeholder="Search for..." value="@ViewBag.searchkeyword">
                 <span class="input-group-btn search-icon"></span>
             </div>
         </div>
@@ -56,10 +56,6 @@
             </div>
         </div>
     </div>
-    @if (ViewBag.searchkeyword != null)
-    {
-        <input id="h-searchkeyword" name="h-searchkeyword" value="@ViewBag.searchkeyword" type="hidden" />
-    }
 </div>
 <footer>
     <span class="col-md-5"></span>

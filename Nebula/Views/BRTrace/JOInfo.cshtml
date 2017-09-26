@@ -4,22 +4,16 @@
     ViewBag.Title = "JOInfo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <script src="~/Scripts/br.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function(){
         BR.jodetail();
     })
 </script>
-
-<header>
-    <span class="col-md-3 logo"></span>
-    <div class="nav-breadcrumb">
-        <span class="bc-jo">Current JO</span>
-        <span class="bc-br">@Model.BRNumber</span>
-    </div>
-</header>
+<div class="nav-breadcrumb">
+    <span class="bc-jo current-breadcrumb">Current JO</span>
+    <span class="bc-br br-breadcrumb">@Model.BRNumber</span>
+</div>
 <div class="content">
     <div class="container">
         <div class="row row-search">

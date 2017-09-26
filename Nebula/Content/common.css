@@ -255,7 +255,6 @@ html,body{
     margin-top: 3%;
     margin-right: 0;
     height: 400px; 
-    overflow-y: scroll;
 }
 
 .label-color{
@@ -426,12 +425,13 @@ html,body{
     min-height: 100%;
 }
 .nav-breadcrumb{
-    float: right;
+    position: absolute;
+    right: 10%;
     text-align: right;
-    padding-right: 2%;
-    color: #fff;
-    width: 50%;
     margin-top: 2%;
+    width: 30%;
+    color: #fff;
+    z-index: 1004;
 }
 
 .bc-jo{
@@ -567,4 +567,12 @@ html,body{
 .current-page, .sub-current-page{
     padding: 2%;
     color: #fff;
+}
+
+.current-breadcrumb{
+    color: #ababab;
+}
+
+.br-breadcrumb{
+    cursor: pointer;
 }
