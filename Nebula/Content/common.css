@@ -428,7 +428,7 @@ html,body{
     position: absolute;
     right: 10%;
     text-align: right;
-    margin-top: 2%;
+    /*margin-top: 2%;*/
     width: 30%;
     color: #fff;
     z-index: 1004;
@@ -449,7 +449,7 @@ html,body{
 
 .bc-br{
     font-size: 14px;
-    padding: 5%;
+    padding: 5.5%;
     background-image: url(./images/label_white.png);
     background-color: transparent;
     background-repeat: no-repeat;
