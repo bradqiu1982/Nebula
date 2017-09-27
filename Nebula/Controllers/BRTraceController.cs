@@ -425,6 +425,21 @@ namespace Nebula.Controllers
             return res;
         }
 
+        public ActionResult JoDistribution()
+        {
+            return View();
+        }
+
+        public JsonResult JoDistributionData()
+        {
+            var jonum = Request.Form["JONum"];
+            var josnstatlist = JOSNStatus.RetrieveJOSNStatus(jonum);
+            var list = JOSNonStation.RetrieveJOSNStation(josnstatlist);
+
+            var res = new JsonResult();
+            res.Data = list;
+            return res;
+        }
 
     }
 }
