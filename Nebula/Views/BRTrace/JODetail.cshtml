@@ -27,6 +27,7 @@
             </div>
         </div>
         <input type="hidden" id="jo_step" name="jo_step" value="@ViewBag.Step" />
+        <input type="hidden" id="jo_num" name="jo_num" value="@ViewBag.JONum" />
         <div class="jo-current-page schedule-page">Schedule</div>
         <div class="jo-op-tag">
             <span class="op-tag op-tag-schedule">
@@ -38,12 +39,12 @@
             </span>
         </div>
         @{
-            step_id = 1;
-            foreach (var step in jo_step_class)
-            {
-                <div class="@((step_id <= ViewBag.Step?"jo-content":"")) jo-@step"></div>
-                step_id++;
-            }
+            <div class="jo-content jo-schedule">
+                @Html.Partial("~/Views/BRTrace/_JoSchedule.cshtml")
+            </div>
+            <div class="@((2 <= ViewBag.Step?"jo-content":"")) jo-@jo_step_class[1]"></div>
+            <div class="@((3 <= ViewBag.Step?"jo-content":"")) jo-@jo_step_class[2]"></div>
+            <div class="@((4 <= ViewBag.Step?"jo-content":"")) jo-@jo_step_class[3]"></div>
         }
     </div>
 </div>

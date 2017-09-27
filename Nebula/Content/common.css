@@ -652,7 +652,28 @@ html,body{
     width: 80%;
 }
 .jo-content{
-    height: 500px;
-    background-color: #fff;
-    border-color: #FF0066;
+    height: 800px;
+}
+/* JO Schedule */
+.panel-cus{
+    background-color:  transparent !important;
+    color: #ababab !important;
+}
+.fc-toolbar .fc-button{
+    background-color: transparent !important;
+    border-color: #ababab !important;
+}
+
+.fc-today{
+    background-color: #656565 !important;
+    border-color: #ababab !important;
+}
+
+.fc-rigid{
+    height: 80px !important;
+}
+
+.fc-day-grid-event {
+    padding: 2px 7px !important;
+    border-radius: 4px !important;
 }

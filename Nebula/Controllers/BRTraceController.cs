@@ -287,7 +287,18 @@ namespace Nebula.Controllers
             ViewBag.BRNum = BRNum;
             ViewBag.JONum = JONum;
             ViewBag.Step = Step;
-            
+
+            var titlelist = new List<string>();
+            titlelist.Add("Please select workflow");
+            titlelist.Add("Die Attach");
+            titlelist.Add("Wire Bonding");
+            titlelist.Add("Lens Alignment");
+            titlelist.Add("HotBar");
+            var titlectrl = CreateSelectList(titlelist, "");
+            titlectrl[0].Selected = true;
+            titlectrl[0].Disabled = true;
+            ViewBag.titlelist = titlectrl;
+
             return View();
         }
 

@@ -1,0 +1,89 @@
+﻿
+<script type="text/javascript" src="~/Scripts/lobi/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="~/Scripts/lobi/moment.min.js"></script>
+<script type="text/javascript" src="~/Scripts/lobi/daterangepicker.js"></script>
+<script type="text/javascript" src="~/Scripts/lobi/fullcalendar.js"></script>
+<script type="text/javascript" src="~/Scripts/schedule.js"></script>
+<link href="@Url.Content("~/Scripts/lobi/lobiadmin-with-plugins.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Scripts/lobi/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+<script>
+    $(function () {
+        Schedule.init("calendar-demo", "jo_num");
+    })
+</script>
+
+<div id="event-calendar">
+    <div class="panel panel-light panel-cus">
+        <div class="panel-body">
+            <div id="calendar-demo"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addEventModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add event</h4>
+            </div>
+            <div class="modal-body">
+                <form action>
+                    <div class="form-group">
+                        <label class="control-label">Event style</label>
+                        <div class="btn-group btn-group-justified btn-group-event-style" data-toggle="buttons">
+                            <label class="btn btn-primary active">
+                                <input type="radio" name="style" value="bg-primary" checked> <i class="fa fa-check"></i>
+                            </label>
+                            <label class="btn bg-success text-white">
+                                <input type="radio" name="style" value="bg-success"> <i class="fa fa-check"></i>
+                            </label>
+                            <label class="btn bg-danger text-white">
+                                <input type="radio" name="style" value="bg-danger"> <i class="fa fa-check"></i>
+                            </label>
+                            <label class="btn bg-info text-white">
+                                <input type="radio" name="style" value="bg-info"> <i class="fa fa-check"></i>
+                            </label>
+                            <label class="btn bg-warning text-white">
+                                <input type="radio" name="style" value="bg-warning"> <i class="fa fa-check"></i>
+                            </label>
+                            <label class="btn bg-gray text-white">
+                                <input type="radio" name="style" value="bg-gray"> <i class="fa fa-check"></i>
+                            </label>
+                            <label class="btn bg-cyan text-white">
+                                <input type="radio" name="style" value="bg-cyan"> <i class="fa fa-check"></i>
+                            </label>
+                            <label class="btn bg-purple text-white">
+                                <input type="radio" name="style" value="bg-purple"> <i class="fa fa-check"></i>
+                            </label>
+                            <label class="btn bg-pink text-white">
+                                <input type="radio" name="style" value="bg-pink"> <i class="fa fa-check"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.DropDownList("title", (IEnumerable<SelectListItem>)ViewBag.titlelist, new { @id = "title", @class = "form-control" })
+                        @*<label class="control-label">Event title</label>
+                            <input type="text" class="form-control" name="title" placeholder="Event title" />*@
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="date-period" class="form-control" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label">Event description</label>
+                        <textarea rows="3" class="form-control" name="desc"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-add">Add event</button>
+                <button type="button" class="btn btn-primary btn-danger">Remove event</button>
+            </div>
+        </div>
+    </div>
+</div>

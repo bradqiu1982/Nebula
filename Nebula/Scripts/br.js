@@ -195,6 +195,7 @@ var BR = function(){
         })
 
         var jo_step_skip = function (step) {
+            $('#jo_step').val(step);
             var jo_class = jo_step_class[step - 1];
             if ( ! $('.jo-' + jo_class).hasClass()) {
                 $('.jo-' + jo_class).addClass("jo-content");
@@ -209,9 +210,12 @@ var BR = function(){
         }
         //loading more
         $(window).scroll(function () {
-            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                //alert($(document).height() - $(window).height());
-            }
+            //if (parseInt($(window).scrollTop() + 1) == ($(document).height() - $(window).height())) {
+            //    var step = parseInt($('#jo_step').val());
+            //    if (step < jo_step_class.length) {
+            //        jo_step_skip(step + 1);
+            //    }
+            //}
         });
     }
     return {
