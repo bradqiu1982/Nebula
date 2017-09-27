@@ -41,6 +41,42 @@ namespace Nebula.Models
         public int Sequence { set; get; }
     }
 
+    public class JOSNonStation
+    {
+        public JOSNonStation(string stat, int num)
+        {
+            Station = stat;
+            Amount = num;
+        }
+
+        public static List<JOSNonStation> RetrieveJOSNStation(List<JOSNStatus> josnlist)
+        {
+            var dict = new Dictionary<string, int>();
+            foreach (var item in josnlist)
+            {
+                if (dict.ContainsKey(item.WorkflowStepName))
+                {
+                    dict[item.WorkflowStepName] = dict[item.WorkflowStepName] + 1;
+                }
+                else
+                {
+                    dict[item.WorkflowStepName] = 1;
+                }
+            }
+
+            var ret = new List<JOSNonStation>();
+            foreach (var kv in dict)
+            {
+                var tempval = new JOSNonStation(kv.Key,kv.Value);
+                ret.Add(tempval);
+            }
+            return ret;
+        }
+
+        public string Station { set; get; }
+        public int Amount { set; get; }
+    }
+
     public class JOSNStatus
     {
         public JOSNStatus()
@@ -61,6 +97,24 @@ namespace Nebula.Models
             sql = sql.Replace("<JONumber>", JONumber).Replace("<ModuleSN>", ModuleSN)
                 .Replace("<WorkflowStepName>", WorkflowStepName).Replace("<LastMoveDate>", LastMoveDate.ToString());
             DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static List<JOSNStatus> RetrieveJOSNStatus(string jonum)
+        {
+            var ret = new List<JOSNStatus>();
+            var sql = "select JONumber,ModuleSN,WorkflowStepName,LastMoveDate from JOSNStatus where JONumber = '<JONumber>'";
+            sql = sql.Replace("<JONumber>", jonum);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var tempstat = new JOSNStatus();
+                tempstat.JONumber = Convert.ToString(line[0]);
+                tempstat.ModuleSN = Convert.ToString(line[1]);
+                tempstat.WorkflowStepName = Convert.ToString(line[2]);
+                tempstat.LastMoveDate = Convert.ToDateTime(line[3]);
+                ret.Add(tempstat);
+            }
+            return ret;
         }
 
         public string JONumber { set; get; }
