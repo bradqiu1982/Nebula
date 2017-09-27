@@ -281,12 +281,13 @@ namespace Nebula.Controllers
             return View();
         }
 
-        public ActionResult JODetail(string BRNum, string JONum)
+        public ActionResult JODetail(string BRNum, string JONum, int Step)
         {
             UserAuth();
             ViewBag.BRNum = BRNum;
             ViewBag.JONum = JONum;
-
+            ViewBag.Step = Step;
+            
             return View();
         }
         

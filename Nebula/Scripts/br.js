@@ -175,36 +175,35 @@ var BR = function(){
     }
 
     var jodetail = function () {
+        var jo_step_class = ['schedule', 'pro-line', 'pqe-oqc', 'warehouse'];
+        var jo_step_html = ['Schedule', 'Product Line', 'PQE/OQC', 'Ware House'];
+
+        $(function () {
+            jo_step_skip($('#jo_step').val());
+        })
+
         $('body').on('click', '.br-breadcrumb', function () {
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html();
         })
-        $('body').on('click', '.jo-blue-tranparent', function () {
-            window.location.href = '/BRTrace/JODetail?BRNum=' + $('#br_num').html() + '&JONum=' + $('#jo_num').html();
+        $('body').on('click', '.jo-tranparent', function () {
+            //if (this.id.split('-')[1] == (jo_step_class.length - 1)) {
+            //    return false;
+            //}
+            window.location.href = '/BRTrace/JODetail?BRNum=' + $('#br_num').html() + '&JONum=' + $('#jo_num').html() + '&Step=' + this.id.split('-')[1];
         })
         $('body').on('click', '.schedule, .pro-line, .pqe-oqc, .warehouse', function () {
-            var sch_id = this.id.split('-')[1];
-            if (sch_id == 1) {
-                $('.current-page').html('Schedule');
-            }
-            else if (sch_id == 2) {
-                $('.current-page').html('Product Line');
-            }
-            else if (sch_id == 3) {
-                $('.current-page').html('PQE/OQC');
-            }
-            else if (sch_id == 4) {
-                $('.current-page').html('Ware House');
-            }
-            $('.current-page').removeClass().addClass('current-page ' + $(this).attr('class') + '-page');
-            $('.op-tag').removeClass().addClass('op-tag op-tag-' + $(this).attr('class'));
-
-            var container = $('body');
-            var scrollTo = $('.jo-' + $(this).attr('class'));
-            //alert(scrollTo.offset().top - container.offset().top + container.scrollTop());
-            container.animate({
-                scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
-            });
+            jo_step_skip(this.id.split('-')[1]);
         })
+
+        var jo_step_skip = function (step) {
+            var jo_class = jo_step_class[step - 1];
+            $('.current-page').html(jo_step_html[step - 1]);
+            $('.current-page').removeClass().addClass('current-page ' + jo_class + '-page');
+            $('.op-tag').removeClass().addClass('op-tag op-tag-' + jo_class);
+            $('html,body').animate({
+                scrollTop: $('.jo-' + jo_class).offset().top
+            });
+        }
     }
     return {
         init: function () {
