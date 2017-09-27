@@ -37,10 +37,13 @@
                 }
             </span>
         </div>
-        @foreach (var step in jo_step_class)
-        {
-            <div class="jo-@step">
-            </div>
+        @{
+            step_id = 1;
+            foreach (var step in jo_step_class)
+            {
+                <div class="@((step_id <= ViewBag.Step?"jo-content":"")) jo-@step"></div>
+                step_id++;
+            }
         }
     </div>
 </div>

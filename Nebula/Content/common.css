@@ -648,9 +648,11 @@ html,body{
 }
 
 .jo-schedule, .jo-pro-line, .jo-pqe-oqc, .jo-warehouse{
+    margin: 1% 10%;
+    width: 80%;
+}
+.jo-content{
     height: 500px;
     background-color: #fff;
     border-color: #FF0066;
-    margin: 1% 10%;
-    width: 80%;
 }
