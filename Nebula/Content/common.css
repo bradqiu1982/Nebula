@@ -622,6 +622,7 @@ html,body{
     -webkit-background-size: contain;
     -moz-background-size: contain;
 }
+
 .op-tag-schedule{
     background-image: url(./images/jo-tag-schedule.png);
 }
