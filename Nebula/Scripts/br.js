@@ -178,6 +178,33 @@ var BR = function(){
         $('body').on('click', '.br-breadcrumb', function () {
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html();
         })
+        $('body').on('click', '.jo-blue-tranparent', function () {
+            window.location.href = '/BRTrace/JODetail?BRNum=' + $('#br_num').html() + '&JONum=' + $('#jo_num').html();
+        })
+        $('body').on('click', '.schedule, .pro-line, .pqe-oqc, .warehouse', function () {
+            var sch_id = this.id.split('-')[1];
+            if (sch_id == 1) {
+                $('.current-page').html('Schedule');
+            }
+            else if (sch_id == 2) {
+                $('.current-page').html('Product Line');
+            }
+            else if (sch_id == 3) {
+                $('.current-page').html('PQE/OQC');
+            }
+            else if (sch_id == 4) {
+                $('.current-page').html('Ware House');
+            }
+            $('.current-page').removeClass().addClass('current-page ' + $(this).attr('class') + '-page');
+            $('.op-tag').removeClass().addClass('op-tag op-tag-' + $(this).attr('class'));
+
+            var container = $('body');
+            var scrollTo = $('.jo-' + $(this).attr('class'));
+            //alert(scrollTo.offset().top - container.offset().top + container.scrollTop());
+            container.animate({
+                scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+            });
+        })
     }
     return {
         init: function () {

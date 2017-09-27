@@ -17,7 +17,7 @@
 </style>
 <div class="nav-breadcrumb">
     <span class="bc-jo current-breadcrumb">Current JO</span>
-    <span class="bc-br br-breadcrumb">@Model.BRNumber</span>
+    <span class="bc-br br-breadcrumb" id="br_num">@Model.BRNumber</span>
 </div>
 <div class="content">
     <div class="container">
@@ -36,7 +36,7 @@
         <div class="jo-detail">
             <div class="row">
                 <div class="col-md-4 col-md-offset-2">
-                    <div id="jo-title"><span>@Model.JONumber</span></div>
+                    <div id="jo-title"><span id="jo_num">@Model.JONumber</span></div>
                     <div id="jo-status"><span>OPEN</span></div>
                 </div>
                 <div class="col-md-5 col-md-offset-1">
