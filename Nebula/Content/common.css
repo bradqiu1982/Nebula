@@ -578,7 +578,7 @@ html,body{
 }
 
 /*JO Detail*/
-.current-page{
+.jo-current-page{
     position: fixed;
     left: 0;
     top: 120px;
