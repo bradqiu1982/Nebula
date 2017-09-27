@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "JODetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] jo_step = { "schedule", "pro-line", "pqe-oqc", "warehouse" };
+    var jo_step_class = new List<String>(jo_step) ;
+    var step_id = 1;
 }
 <script src="~/Scripts/br.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -27,19 +30,17 @@
         <div class="current-page schedule-page">Schedule</div>
         <div class="jo-op-tag">
             <span class="op-tag op-tag-schedule">
-                <span class="schedule" id="sch-1"></span>
-                <span class="pro-line" id="sch-2"></span>
-                <span class="pqe-oqc" id="sch-3"></span>
-                <span class="warehouse" id="sch-4"></span>
+                @foreach (var step in jo_step_class)
+                {
+                    <span class="@step" id="sch-@step_id"></span>
+                    step_id++;
+                }
             </span>
         </div>
-        <div class="jo-schedule">
-        </div>
-        <div class="jo-pro-line">
-        </div>
-        <div class="jo-pqe-oqc">
-        </div>
-        <div class="jo-warehouse">
-        </div>
+        @foreach (var step in jo_step_class)
+        {
+            <div class="jo-@step">
+            </div>
+        }
     </div>
 </div>
