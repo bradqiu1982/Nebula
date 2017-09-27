@@ -196,12 +196,16 @@ var BR = function(){
 
         var jo_step_skip = function (step) {
             var jo_class = jo_step_class[step - 1];
-            $('.current-page').html(jo_step_html[step - 1]);
-            $('.current-page').removeClass().addClass('current-page ' + jo_class + '-page');
+            if ( ! $('.jo-' + jo_class).hasClass()) {
+                $('.jo-' + jo_class).addClass("jo-content");
+            }
+            $('.jo-current-page').html(jo_step_html[step - 1]);
+            $('.jo-current-page').removeClass().addClass('jo-current-page ' + jo_class + '-page');
             $('.op-tag').removeClass().addClass('op-tag op-tag-' + jo_class);
             $('html,body').animate({
                 scrollTop: $('.jo-' + jo_class).offset().top
             });
+            window.history.pushState(null, null, window.location.href.split('Step')[0] + 'Step=' + step);
         }
         //loading more
         $(window).scroll(function () {
