@@ -290,7 +290,141 @@ namespace Nebula.Controllers
             
             return View();
         }
-        
+
+
+        private List<SelectListItem> CreateSelectList(List<string> valist, string defVal)
+        {
+            bool selected = false;
+            var pslist = new List<SelectListItem>();
+            foreach (var p in valist)
+            {
+                var pitem = new SelectListItem();
+                pitem.Text = p;
+                pitem.Value = p;
+                if (!string.IsNullOrEmpty(defVal) && string.Compare(defVal, p, true) == 0)
+                {
+                    pitem.Selected = true;
+                    selected = true;
+                }
+                pslist.Add(pitem);
+            }
+
+            if (!selected && pslist.Count > 0)
+            {
+                pslist[0].Selected = true;
+            }
+
+            return pslist;
+        }
+
+        public ActionResult JoSchedule()
+        {
+            var titlelist = new List<string>();
+            titlelist.Add("Please select workflow");
+            titlelist.Add("Die Attach");
+            titlelist.Add("Wire Bonding");
+            titlelist.Add("Lens Alignment");
+            titlelist.Add("HotBar");
+            var titlectrl = CreateSelectList(titlelist, "");
+            titlectrl[0].Selected = true;
+            titlectrl[0].Disabled = true;
+            ViewBag.titlelist = titlectrl;
+
+            ViewBag.evenstrs = "{id:'abcd',title:'All Day Event',start:'2017-08-01'},{id:'efgh',title:'Long Event',start:'2017-08-07',end:'2015-09-10',className:'bg-success border-transparent'}";
+            ViewBag.today = DateTime.Now.ToString("yyyy-MM-dd");
+            return View();
+        }
+
+        public JsonResult JOSchedules()
+        {
+            var jonum = Request.Form["JoNum"];
+            var list = new List<EventDataVM>();
+            list.Add(new EventDataVM("abcd", "Hello world 1", "bg-success border-transparent", string.Empty, "2017-09-01", "2017-09-04"));
+            list.Add(new EventDataVM("efgh", "my world", "bg-success border-transparent", string.Empty, "2017-09-05", "2017-09-10"));
+            var res = new JsonResult();
+            res.Data = list;
+            return res;
+        }
+
+        private static string GetUniqKey()
+        {
+            return Guid.NewGuid().ToString("N");
+        }
+
+        private EventDataVM ParseEventJason()
+        {
+            var ret = new EventDataVM();
+
+            if (Request.Form["id"] != null)
+            {
+                ret.id = Request.Form["id"];
+            }
+            if (Request.Form["title"] != null)
+            {
+                ret.title = Request.Form["title"];
+            }
+            if (Request.Form["className[]"] != null)
+            {
+                ret.className = Request.Form["className[]"];
+            }
+            if (Request.Form["description"] != null)
+            {
+                ret.desc = Request.Form["description"];
+            }
+
+            if (Request.Form["start"] != null)
+            {
+                ret.start = Request.Form["start"];
+            }
+
+            if (Request.Form["end"] != null)
+            {
+                ret.end = Request.Form["end"];
+            }
+
+            return ret;
+        }
+
+
+
+        [HttpPost]
+        public JsonResult AddEvent()
+        {
+            var vm = ParseEventJason();
+            var eventid = GetUniqKey();
+
+            var res = new JsonResult();
+            res.Data = new { success = true, id = eventid };
+            return res;
+        }
+
+        public JsonResult UpdateEvent()
+        {
+            var vm = ParseEventJason();
+
+            var res = new JsonResult();
+            res.Data = new { success = true };
+            return res;
+        }
+
+        public JsonResult RemoveEvent()
+        {
+            var vm = ParseEventJason();
+
+            var res = new JsonResult();
+            res.Data = new { success = true };
+            return res;
+        }
+
+        public JsonResult MoveEvent()
+        {
+            var vm = ParseEventJason();
+
+            var res = new JsonResult();
+            res.Data = new { success = true };
+            return res;
+        }
+
 
     }
 }
