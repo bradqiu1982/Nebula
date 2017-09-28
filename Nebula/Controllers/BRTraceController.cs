@@ -290,10 +290,16 @@ namespace Nebula.Controllers
 
             var titlelist = new List<string>();
             titlelist.Add("Please select workflow");
-            titlelist.Add("Die Attach");
-            titlelist.Add("Wire Bonding");
-            titlelist.Add("Lens Alignment");
-            titlelist.Add("HotBar");
+            var jobaseinfo = JOBaseInfo.RetrieveJoInfo(JONum);
+            if (jobaseinfo.Count > 0 && !string.IsNullOrEmpty(jobaseinfo[0].PN))
+            {
+                var flowlist = PNWorkflow.RetrievePNWorkflow(jobaseinfo[0].PN);
+                foreach (var flow in flowlist)
+                {
+                    titlelist.Add(flow.WorkflowStepName);
+                }
+            }
+
             var titlectrl = CreateSelectList(titlelist, "");
             titlectrl[0].Selected = true;
             titlectrl[0].Disabled = true;
@@ -349,9 +355,9 @@ namespace Nebula.Controllers
         public JsonResult JOSchedules()
         {
             var jonum = Request.Form["JoNum"];
-            var list = new List<EventDataVM>();
-            list.Add(new EventDataVM("abcd", "Hello world 1", "bg-success border-transparent", string.Empty, "2017-09-01", "2017-09-04"));
-            list.Add(new EventDataVM("efgh", "my world", "bg-success border-transparent", string.Empty, "2017-09-05", "2017-09-10"));
+            var list = new List<JOScheduleEventDataVM>();
+            list.Add(new JOScheduleEventDataVM("","abcd", "Hello world 1", "bg-success border-transparent", string.Empty, "2017-09-01", "2017-09-04"));
+            list.Add(new JOScheduleEventDataVM("","efgh", "my world", "bg-success border-transparent", string.Empty, "2017-09-05", "2017-09-10"));
             var res = new JsonResult();
             res.Data = list;
             return res;
@@ -362,9 +368,9 @@ namespace Nebula.Controllers
             return Guid.NewGuid().ToString("N");
         }
 
-        private EventDataVM ParseEventJason()
+        private JOScheduleEventDataVM ParseEventJason()
         {
-            var ret = new EventDataVM();
+            var ret = new JOScheduleEventDataVM();
 
             if (Request.Form["id"] != null)
             {
@@ -372,7 +378,7 @@ namespace Nebula.Controllers
             }
             if (Request.Form["title"] != null)
             {
-                ret.title = Request.Form["title"];
+                ret.workflow = Request.Form["title"];
             }
             if (Request.Form["className[]"] != null)
             {
@@ -393,6 +399,11 @@ namespace Nebula.Controllers
                 ret.end = Request.Form["end"];
             }
 
+            if (Request.Form["jonum"] != null)
+            {
+                ret.jonum = Request.Form["jonum"];
+            }
+            
             return ret;
         }
 

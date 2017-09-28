@@ -168,3 +168,18 @@ CREATE TABLE [dbo].[UserTable] (
     [APVal4]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
 );
 
+
+CREATE TABLE [dbo].[JOScheduleEventDataVM] (
+	[jonum]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[id]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[workflow]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[className]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[desc]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[start]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[end]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal1]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [APVal2]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal3]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal4]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+    [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
+);

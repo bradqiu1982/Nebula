@@ -73,6 +73,7 @@
                 event.end = endDate;
 
                 var myevent = {
+                    jonum:jo_num,
                     title: title,
                     className: [style, style.replace('bg', 'border') + '-dark'],
                     description: desc,
@@ -103,6 +104,7 @@
                 CALENDAR.fullCalendar('updateEvent', eventToUpdate);
 
                 var myevent = {
+                    jonum: jo_num,
                     id: eventToUpdate.id,
                     title: title,
                     className: [style, style.replace('bg', 'border') + '-dark'],

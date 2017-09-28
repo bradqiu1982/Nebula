@@ -36,6 +36,25 @@ namespace Nebula.Models
             DBUtility.ExeLocalSqlNoRes(sql);
         }
 
+
+        public static List<PNWorkflow> RetrievePNWorkflow(string pn)
+        {
+            var sql = "select PN,WorkflowStepName,Sequence from PNWorkflow where PN = '<PN>' order by Sequence ASC";
+            sql = sql.Replace("<PN>", pn);
+            var ret = new List<PNWorkflow>();
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var tempflow = new PNWorkflow();
+                tempflow.PN = Convert.ToString(line[0]);
+                tempflow.WorkflowStepName = Convert.ToString(line[1]);
+                tempflow.Sequence = Convert.ToInt32(line[2]);
+                ret.Add(tempflow);
+            }
+
+            return ret;
+        }
+
         public string PN { set; get; }
         public string WorkflowStepName { set; get; }
         public int Sequence { set; get; }
