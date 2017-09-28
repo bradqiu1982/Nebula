@@ -399,7 +399,7 @@ namespace Nebula.Controllers
 
 
         [HttpPost]
-        public JsonResult AddEvent()
+        public JsonResult AddScheduleEvent()
         {
             var vm = ParseEventJason();
             var eventid = GetUniqKey();
@@ -409,7 +409,7 @@ namespace Nebula.Controllers
             return res;
         }
 
-        public JsonResult UpdateEvent()
+        public JsonResult UpdateScheduleEvent()
         {
             var vm = ParseEventJason();
 
@@ -418,7 +418,7 @@ namespace Nebula.Controllers
             return res;
         }
 
-        public JsonResult RemoveEvent()
+        public JsonResult RemoveScheduleEvent()
         {
             var vm = ParseEventJason();
 
@@ -427,7 +427,7 @@ namespace Nebula.Controllers
             return res;
         }
 
-        public JsonResult MoveEvent()
+        public JsonResult MoveScheduleEvent()
         {
             var vm = ParseEventJason();
 
