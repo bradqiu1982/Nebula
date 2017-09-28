@@ -79,7 +79,7 @@
                     start: startDate.format('YYYY-MM-DD'),
                     end: endDate.format('YYYY-MM-DD')
                 };
-                $.ajax('/BRTrace/AddEvent', {
+                $.ajax('/BRTrace/AddScheduleEvent', {
                     data: myevent,
                     method: 'POST',
                     cache: false
@@ -111,7 +111,7 @@
                     end: endDate.format('YYYY-MM-DD')
                 };
 
-                $.ajax('/BRTrace/UpdateEvent', {
+                $.ajax('/BRTrace/UpdateScheduleEvent', {
                     data: myevent,
                     method: 'POST',
                     cache: false
@@ -135,7 +135,7 @@
                     id: eventToUpdate.id
                 }
 
-                $.ajax('/BRTrace/RemoveEvent', {
+                $.ajax('/BRTrace/RemoveScheduleEvent', {
                     data: myevent,
                     method: 'POST',
                     cache: false
@@ -230,7 +230,7 @@
                     end: calEvent.end.format('YYYY-MM-DD')
                 };
 
-                $.ajax('/BRTrace/MoveEvent', {
+                $.ajax('/BRTrace/MoveScheduleEvent', {
                     data: myevent,
                     method: 'POST',
                     cache: false
@@ -243,7 +243,7 @@
                     end: calEvent.end.format('YYYY-MM-DD')
                 };
 
-                $.ajax('/BRTrace/MoveEvent', {
+                $.ajax('/BRTrace/MoveScheduleEvent', {
                     data: myevent,
                     method: 'POST',
                     cache: false
