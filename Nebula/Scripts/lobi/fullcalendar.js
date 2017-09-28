@@ -54,14 +54,14 @@ var defaults = {
 	// locale
 	isRTL: false,
 	defaultButtonText: {
-		prev: "prev",
-		next: "next",
-		prevYear: "prev year",
-		nextYear: "next year",
-		today: 'today',
-		month: 'month',
-		week: 'week',
-		day: 'day'
+		prev: "Prev",
+		next: "Next",
+		prevYear: "Prev Year",
+		nextYear: "Next Year",
+		today: 'Today',
+		month: 'Month',
+		week: 'Week',
+		day: 'Day'
 	},
 
 	buttonIcons: {
@@ -7879,7 +7879,7 @@ function Header(calendar, options) {
 	
 	
 	function updateTitle(text) {
-		el.find('h2').text(text);
+		el.find('h2').text('JO Schedule - ' + text);
 	}
 	
 	

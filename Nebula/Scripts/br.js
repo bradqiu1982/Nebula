@@ -175,11 +175,13 @@ var BR = function(){
             window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + $('#keywords').val() + '&p=' + page;
         })
     }
+
     var joinfo = function () {
         $('body').on('click', '.jo-tranparent', function () {
             window.location.href = '/BRTrace/JODetail?BRNum=' + $('#br_num').html() + '&JONum=' + $('#jo_num').html() + '&Step=' + this.id.split('-')[1];
         })
     }
+
     var jodetail = function () {
         var jo_step_class = ['schedule', 'pro-line', 'pqe-oqc', 'warehouse'];
         var jo_step_html = ['Schedule', 'Product Line', 'PQE/OQC', 'Ware House'];
@@ -216,6 +218,7 @@ var BR = function(){
             }
         });
     }
+
     return {
         init: function () {
             show();

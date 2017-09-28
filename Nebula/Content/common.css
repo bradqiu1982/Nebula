@@ -658,10 +658,24 @@ html,body{
 .panel-cus{
     background-color:  transparent !important;
     color: #ababab !important;
+    border-color: transparent !important;
 }
+
+.fc-left{
+    padding: 0 15px !important;
+    border: #ababab 1px solid !important;
+    border-radius: 4px !important;
+}
+
+.fc-center{
+    margin-left: 10% !important;
+}
+
 .fc-toolbar .fc-button{
     background-color: transparent !important;
-    border-color: #ababab !important;
+    border-color: transparent !important;
+    margin: auto 2px !important;
+    padding: 0 !important;
 }
 
 .fc-today{
@@ -676,4 +690,19 @@ html,body{
 .fc-day-grid-event {
     padding: 2px 7px !important;
     border-radius: 4px !important;
+}
+
+.jo-schedule-op{
+    float: right; 
+    padding: 15px 15px 15px 5px;
+}
+
+.jo-import{
+    margin: auto 5px;
+    cursor: pointer;
+}
+
+.jo-export{
+    margin: auto 5px;
+    cursor: pointer;
 }
