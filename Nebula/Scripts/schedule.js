@@ -167,7 +167,7 @@
                 $addEventModal.find('[name=date-period]').data('daterangepicker').setEndDate(date);
             },
             header: {
-                left: '',
+                left: 'today',
                 center: 'title',
                 right: 'prev,next'
             },

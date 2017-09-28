@@ -40,6 +40,10 @@
         </div>
         @{
             <div class="jo-content jo-schedule">
+                <div class="jo-schedule-op">
+                    <img class="jo-import" src="~/Content/images/import.png" height="25" width="25"/>
+                    <img class="jo-export" src="~/Content/images/export.png" height="25" width="25"/>
+                </div>
                 @Html.Partial("~/Views/BRTrace/_JoSchedule.cshtml")
             </div>
             <div class="@((2 <= ViewBag.Step?"jo-content":"")) jo-@jo_step_class[1]">

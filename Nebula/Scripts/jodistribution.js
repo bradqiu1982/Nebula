@@ -9,7 +9,7 @@
             colors: [
                 '#FFC000', '#FF0000', '#0070C0',
                 '#FF3399', '#FA9604', '#00B050',
-                '#7030A0',
+                '#6E28BC',
             ],
             title: {
                 text: 'JO Distribution',
