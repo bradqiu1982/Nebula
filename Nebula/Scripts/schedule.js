@@ -77,8 +77,8 @@
                     title: title,
                     className: [style, style.replace('bg', 'border') + '-dark'],
                     description: desc,
-                    start: startDate.format('YYYY-MM-DD'),
-                    end: endDate.format('YYYY-MM-DD')
+                    start: startDate.format('YYYY-MM-DD HH:mm:ss'),
+                    end: endDate.format('YYYY-MM-DD HH:mm:ss')
                 };
                 $.ajax('/BRTrace/AddScheduleEvent', {
                     data: myevent,
@@ -109,8 +109,8 @@
                     title: title,
                     className: [style, style.replace('bg', 'border') + '-dark'],
                     description: desc,
-                    start: startDate.format('YYYY-MM-DD'),
-                    end: endDate.format('YYYY-MM-DD')
+                    start: startDate.format('YYYY-MM-DD HH:mm:ss'),
+                    end: endDate.format('YYYY-MM-DD HH:mm:ss')
                 };
 
                 $.ajax('/BRTrace/UpdateScheduleEvent', {
@@ -228,8 +228,8 @@
             eventDrop: function (calEvent, jsEvent, view) {
                 var myevent = {
                     id: calEvent.id,
-                    start: calEvent.start.format('YYYY-MM-DD'),
-                    end: calEvent.end.format('YYYY-MM-DD')
+                    start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'),
+                    end: calEvent.end.format('YYYY-MM-DD HH:mm:ss')
                 };
 
                 $.ajax('/BRTrace/MoveScheduleEvent', {
@@ -241,8 +241,8 @@
             eventResize: function (calEvent, jsEvent, view) {
                 var myevent = {
                     id: calEvent.id,
-                    start: calEvent.start.format('YYYY-MM-DD'),
-                    end: calEvent.end.format('YYYY-MM-DD')
+                    start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'),
+                    end: calEvent.end.format('YYYY-MM-DD HH:mm:ss')
                 };
 
                 $.ajax('/BRTrace/MoveScheduleEvent', {
