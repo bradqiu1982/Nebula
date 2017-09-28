@@ -334,23 +334,6 @@ namespace Nebula.Controllers
             return pslist;
         }
 
-        public ActionResult JoSchedule()
-        {
-            var titlelist = new List<string>();
-            titlelist.Add("Please select workflow");
-            titlelist.Add("Die Attach");
-            titlelist.Add("Wire Bonding");
-            titlelist.Add("Lens Alignment");
-            titlelist.Add("HotBar");
-            var titlectrl = CreateSelectList(titlelist, "");
-            titlectrl[0].Selected = true;
-            titlectrl[0].Disabled = true;
-            ViewBag.titlelist = titlectrl;
-
-            ViewBag.evenstrs = "{id:'abcd',title:'All Day Event',start:'2017-08-01'},{id:'efgh',title:'Long Event',start:'2017-08-07',end:'2015-09-10',className:'bg-success border-transparent'}";
-            ViewBag.today = DateTime.Now.ToString("yyyy-MM-dd");
-            return View();
-        }
 
         public JsonResult JOSchedules()
         {
@@ -448,10 +431,6 @@ namespace Nebula.Controllers
             return res;
         }
 
-        public ActionResult JoDistribution()
-        {
-            return View();
-        }
 
         public JsonResult JoDistributionData()
         {
