@@ -355,9 +355,7 @@ namespace Nebula.Controllers
         public JsonResult JOSchedules()
         {
             var jonum = Request.Form["JoNum"];
-            var list = new List<JOScheduleEventDataVM>();
-            list.Add(new JOScheduleEventDataVM("","abcd", "Hello world 1", "bg-success border-transparent", string.Empty, "2017-09-01", "2017-09-04"));
-            list.Add(new JOScheduleEventDataVM("","efgh", "my world", "bg-success border-transparent", string.Empty, "2017-09-05", "2017-09-10"));
+            var list = JOScheduleEventDataVM.RetrieveScheduleByJoNum(jonum);
             var res = new JsonResult();
             res.Data = list;
             return res;
@@ -378,7 +376,7 @@ namespace Nebula.Controllers
             }
             if (Request.Form["title"] != null)
             {
-                ret.workflow = Request.Form["title"];
+                ret.title = Request.Form["title"];
             }
             if (Request.Form["className[]"] != null)
             {

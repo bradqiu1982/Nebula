@@ -10,7 +10,7 @@ namespace Nebula.Models
         public JOScheduleEventDataVM()
         {
             id = string.Empty;
-            workflow = string.Empty;
+            title = string.Empty;
             className = string.Empty;
             desc = string.Empty;
             start = string.Empty;
@@ -22,7 +22,7 @@ namespace Nebula.Models
         {
             jonum = _jonum;
             id = _id;
-            workflow = _title;
+            title = _title;
             className = _className;
             desc = _desc;
             start = _start;
@@ -31,13 +31,13 @@ namespace Nebula.Models
 
         public bool AddSchedule()
         {
-            var exist = RetrieveSchedule(jonum, workflow);
+            var exist = RetrieveSchedule(jonum, title);
             if (exist.Count == 0)
             {
                 var sql = "insert into JOScheduleEventDataVM(jonum,id,workflow,className,desc,start,end) "
                     + " values('<jonum>','<id>','<workflow>','<className>','<desc>','<start>','<end>')";
                 sql = sql.Replace("<jonum>", jonum).Replace("<id>", id)
-                    .Replace("<workflow>", workflow).Replace("<className>", className)
+                    .Replace("<workflow>", title).Replace("<className>", className)
                     .Replace("<desc>", desc).Replace("<start>", start).Replace("<end>", end);
                 DBUtility.ExeLocalSqlNoRes(sql);
                 return true;
@@ -54,13 +54,13 @@ namespace Nebula.Models
             var exist = RetrieveSchedule(id);
             if (exist.Count > 0)
             {
-                if (string.Compare(exist[0].workflow, workflow, true) == 0)
+                if (string.Compare(exist[0].title, title, true) == 0)
                 {
                     ret = true;
                 }
                 else
                 {
-                    var exist1 = RetrieveSchedule(exist[0].jonum, workflow);
+                    var exist1 = RetrieveSchedule(exist[0].jonum, title);
                     if (exist1.Count == 0)
                     {
                         ret = true;
@@ -79,7 +79,7 @@ namespace Nebula.Models
             if (ret)
             {
                 var sql = "update JOScheduleEventDataVM set workflow = '<workflow>',className = '<className>',desc = '<desc>',start = '<start>',end = '<end>' where id = '<id>'";
-                sql = sql.Replace("<workflow>", workflow).Replace("<className>", className)
+                sql = sql.Replace("<workflow>", title).Replace("<className>", className)
                     .Replace("<desc>", desc).Replace("<start>", start)
                     .Replace("<end>", end).Replace("<id>", id);
                 DBUtility.ExeLocalSqlNoRes(sql);
@@ -99,7 +99,7 @@ namespace Nebula.Models
                 var temp = new JOScheduleEventDataVM();
                 temp.jonum = Convert.ToString(line[0]);
                 temp.id = Convert.ToString(line[1]);
-                temp.workflow = Convert.ToString(line[2]);
+                temp.title = Convert.ToString(line[2]);
                 temp.className = Convert.ToString(line[3]);
                 temp.desc = Convert.ToString(line[4]);
                 temp.start = Convert.ToString(line[5]);
@@ -120,7 +120,28 @@ namespace Nebula.Models
                 var temp = new JOScheduleEventDataVM();
                 temp.jonum = Convert.ToString(line[0]);
                 temp.id = Convert.ToString(line[1]);
-                temp.workflow = Convert.ToString(line[2]);
+                temp.title = Convert.ToString(line[2]);
+                temp.className = Convert.ToString(line[3]);
+                temp.desc = Convert.ToString(line[4]);
+                temp.start = Convert.ToString(line[5]);
+                temp.end = Convert.ToString(line[6]);
+                ret.Add(temp);
+            }
+            return ret;
+        }
+
+        public static List<JOScheduleEventDataVM> RetrieveScheduleByJoNum(string jonum)
+        {
+            var ret = new List<JOScheduleEventDataVM>();
+            var sql = "select jonum,id,workflow,className,desc,start,end from JOScheduleEventDataVM where jonum = '<jonum>'";
+            sql = sql.Replace("<jonum>", jonum);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new JOScheduleEventDataVM();
+                temp.jonum = Convert.ToString(line[0]);
+                temp.id = Convert.ToString(line[1]);
+                temp.title = Convert.ToString(line[2]);
                 temp.className = Convert.ToString(line[3]);
                 temp.desc = Convert.ToString(line[4]);
                 temp.start = Convert.ToString(line[5]);
@@ -132,7 +153,7 @@ namespace Nebula.Models
 
         public string jonum { set; get; }
         public string id { set; get; }
-        public string workflow { set; get; }
+        public string title { set; get; }
         public string className { set; get; }
         public string desc { set; get; }
         public string start { set; get; }
