@@ -11,11 +11,9 @@ var BR = function(){
             window.location.href = '/BRTrace/Home?p=' + page;
         })
 
-
         $('body').on('click', '.label-color', function () {
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html() + '&SearchWords=';
         })
-
     }
 
     var pic_timeout = function(){
@@ -204,18 +202,18 @@ var BR = function(){
             $('.jo-current-page').removeClass().addClass('jo-current-page ' + jo_class + '-page');
             $('.op-tag').removeClass().addClass('op-tag op-tag-' + jo_class);
             $('html,body').animate({
-                scrollTop: $('.jo-' + jo_class).offset().top
+                scrollTop: $('.jo-' + jo_class).offset().top - 20
             });
             window.history.pushState(null, null, window.location.href.split('Step')[0] + 'Step=' + step);
         }
         //loading more
         $(window).scroll(function () {
-            //if (parseInt($(window).scrollTop() + 1) == ($(document).height() - $(window).height())) {
-            //    var step = parseInt($('#jo_step').val());
-            //    if (step < jo_step_class.length) {
-            //        jo_step_skip(step + 1);
-            //    }
-            //}
+            if ((parseInt($(window).scrollTop()) + 1) == ($(document).height() - $(window).height())) {
+                var step = parseInt($('#jo_step').val());
+                if (step < jo_step_class.length) {
+                    jo_step_skip(step + 1);
+                }
+            }
         });
     }
     return {

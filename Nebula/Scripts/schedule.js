@@ -1,5 +1,5 @@
 ﻿var Schedule = function () {
-    var show = function initPage(container, id) {
+    var show = function (container, id) {
         moment().zone('-08:00');
 
         var $addEventModal = $('#addEventModal');
