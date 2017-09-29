@@ -98,3 +98,10 @@
     color: #fff;
     background-color: transparent;
 }
+
+.popup-result{
+    height: 200px;
+    border: #fff 2px solid;
+    border-radius: 6px;
+    margin-left: 21%;
+}

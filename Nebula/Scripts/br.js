@@ -222,7 +222,7 @@ var BR = function(){
         });
 
         $('body').on('click', '.jo-import', function () {
-            $('.popup').attr('style', 'height:' + parseInt($('.jo-schedule').height() + 5) + 'px');
+            $('.popup').attr('style', 'height:' + parseInt($('.jo-schedule').height() + 40) + 'px');
             $('#popup-import').removeClass("hide");
         })
 

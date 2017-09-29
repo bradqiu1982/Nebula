@@ -1,9 +1,10 @@
 ﻿var Schedule = function () {
-    var show = function (container, id) {
+    var show = function (container, id, default_date) {
         moment().zone('-08:00');
 
         var CALENDAR = $('#' + container);
         var jo_num = $("#" + id).val();
+        var default_date = $("#" + default_date).val();
 
         var $addEventModal = $('#addEventModal');
         $addEventModal.appendTo('body');
@@ -143,7 +144,6 @@
         });
 
         var myDate = new Date();
-        var mydatestr = myDate.getUTCFullYear() + '-' + ("0" + (myDate.getUTCMonth() + 1)).slice(-2) + '-' + ("0" + myDate.getUTCDate()).slice(-2);
 
         CALENDAR.fullCalendar({
             dayClick: function (date, jsEvent, view) {
@@ -165,7 +165,7 @@
                 center: 'title',
                 right: 'prev,next'
             },
-            defaultDate: mydatestr,
+            defaultDate: default_date,
             editable: true,
             droppable: true,
             eventLimit: true,
@@ -247,8 +247,8 @@
     }
 
     return {
-        init: function (container, jo_num) {
-            show(container, jo_num);
+        init: function (container, jo_num, default_date) {
+            show(container, jo_num, default_date);
         }
     };
 }();
