@@ -305,6 +305,8 @@ namespace Nebula.Controllers
             titlectrl[0].Disabled = true;
             ViewBag.titlelist = titlectrl;
 
+            ViewBag.CurrentDay = JOScheduleEventDataVM.RetriveLatestScheduleDate(JONum);
+
             return View();
         }
 

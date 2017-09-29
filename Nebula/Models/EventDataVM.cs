@@ -181,6 +181,20 @@ namespace Nebula.Models
             return ret;
         }
 
+        public static string RetriveLatestScheduleDate(string jonum)
+        {
+            var sql = "select top 1 endtime from JOScheduleEventDataVM where jonum = '<jonum>' order by endtime desc";
+            sql = sql.Replace("<jonum>", jonum);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            if (dbret.Count > 0)
+            {
+                return Convert.ToString(dbret[0][0]);
+            }
+            else
+            {
+                return DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            }
+        }
 
         public string jonum { set; get; }
         public string id { set; get; }
