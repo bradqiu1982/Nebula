@@ -145,8 +145,6 @@
             $addEventModal.modal('hide');
         });
 
-        var myDate = new Date();
-
         CALENDAR.fullCalendar({
             dayClick: function (date, jsEvent, view) {
                 $addEventModal.modal('show');
