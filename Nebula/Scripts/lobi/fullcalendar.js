@@ -4266,7 +4266,6 @@ var DayGrid = Grid.extend({
 			}
 			date.add(1, 'days');
 		}
-		console.log(dates);
 
 		this.cellDates = dates;
 		this.dayToCellOffsets = offsets;
@@ -5398,7 +5397,6 @@ var TimeGrid = Grid.extend({
 			date = view.skipHiddenDays(date);
 		}
 
-		console.log(colData);
 		if (this.isRTL) {
 			colData.reverse();
 		}
