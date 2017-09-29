@@ -34,11 +34,11 @@ namespace Nebula.Models
             var exist = RetrieveSchedule(jonum, title);
             if (exist.Count == 0)
             {
-                var sql = "insert into JOScheduleEventDataVM(jonum,id,workflow,className,desc,start,end) "
-                    + " values('<jonum>','<id>','<workflow>','<className>','<desc>','<start>','<end>')";
+                var sql = "insert into JOScheduleEventDataVM(jonum,id,workflow,className,description,starttime,endtime) "
+                    + " values('<jonum>','<id>','<workflow>','<className>','<description>','<starttime>','<endtime>')";
                 sql = sql.Replace("<jonum>", jonum).Replace("<id>", id)
                     .Replace("<workflow>", title).Replace("<className>", className)
-                    .Replace("<desc>", desc).Replace("<start>", start).Replace("<end>", end);
+                    .Replace("<description>", desc).Replace("<starttime>", start).Replace("<endtime>", end);
                 DBUtility.ExeLocalSqlNoRes(sql);
                 return true;
             }
@@ -78,10 +78,10 @@ namespace Nebula.Models
 
             if (ret)
             {
-                var sql = "update JOScheduleEventDataVM set workflow = '<workflow>',className = '<className>',desc = '<desc>',start = '<start>',end = '<end>' where id = '<id>'";
+                var sql = "update JOScheduleEventDataVM set workflow = '<workflow>',className = '<className>',description = '<description>',starttime = '<starttime>',endtime = '<endtime>' where id = '<id>'";
                 sql = sql.Replace("<workflow>", title).Replace("<className>", className)
-                    .Replace("<desc>", desc).Replace("<start>", start)
-                    .Replace("<end>", end).Replace("<id>", id);
+                    .Replace("<description>", desc).Replace("<starttime>", start)
+                    .Replace("<endtime>", end).Replace("<id>", id);
                 DBUtility.ExeLocalSqlNoRes(sql);
             }
 
@@ -91,7 +91,7 @@ namespace Nebula.Models
         public static List<JOScheduleEventDataVM> RetrieveSchedule(string id)
         {
             var ret = new List<JOScheduleEventDataVM>();
-            var sql = "select jonum,id,workflow,className,desc,start,end from JOScheduleEventDataVM where id = '<id>'";
+            var sql = "select jonum,id,workflow,className,description,starttime,endtime from JOScheduleEventDataVM where id = '<id>'";
             sql = sql.Replace("<id>", id);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             foreach (var line in dbret)
@@ -112,7 +112,7 @@ namespace Nebula.Models
         public static List<JOScheduleEventDataVM> RetrieveSchedule(string jonum,string workflow)
         {
             var ret = new List<JOScheduleEventDataVM>();
-            var sql = "select jonum,id,workflow,className,desc,start,end from JOScheduleEventDataVM where jonum = '<jonum>' and workflow = '<workflow>'";
+            var sql = "select jonum,id,workflow,className,description,starttime,endtime from JOScheduleEventDataVM where jonum = '<jonum>' and workflow = '<workflow>'";
             sql = sql.Replace("<jonum>", jonum).Replace("<workflow>", workflow);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             foreach (var line in dbret)
@@ -133,7 +133,7 @@ namespace Nebula.Models
         public static List<JOScheduleEventDataVM> RetrieveScheduleByJoNum(string jonum)
         {
             var ret = new List<JOScheduleEventDataVM>();
-            var sql = "select jonum,id,workflow,className,desc,start,end from JOScheduleEventDataVM where jonum = '<jonum>'";
+            var sql = "select jonum,id,workflow,className,description,starttime,endtime from JOScheduleEventDataVM where jonum = '<jonum>'";
             sql = sql.Replace("<jonum>", jonum);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             foreach (var line in dbret)
@@ -150,6 +150,37 @@ namespace Nebula.Models
             }
             return ret;
         }
+
+        public void RemoveSchedule(string eid)
+        {
+            var sql = "delete from JOScheduleEventDataVM where id = '<id>'";
+            sql = sql.Replace("<id>", eid);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public bool MoveSchedule()
+        {
+            var ret = false;
+            var exist = RetrieveSchedule(id);
+            if (exist.Count > 0)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+
+            if (ret)
+            {
+                var sql = "update JOScheduleEventDataVM set starttime = '<starttime>',endtime = '<endtime>' where id = '<id>'";
+                sql = sql.Replace("<starttime>", start).Replace("<endtime>", end).Replace("<id>", id);
+                DBUtility.ExeLocalSqlNoRes(sql);
+            }
+
+            return ret;
+        }
+
 
         public string jonum { set; get; }
         public string id { set; get; }

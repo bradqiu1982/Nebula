@@ -366,7 +366,7 @@ namespace Nebula.Controllers
             }
             if (Request.Form["className[]"] != null)
             {
-                ret.className = Request.Form["className[]"];
+                ret.className = Request.Form["className[]"].Replace(",", " ");
             }
             if (Request.Form["description"] != null)
             {
@@ -398,37 +398,112 @@ namespace Nebula.Controllers
         {
             var vm = ParseEventJason();
             var eventid = GetUniqKey();
+            if (!string.IsNullOrEmpty(vm.title)
+                && !string.IsNullOrEmpty(vm.jonum)
+                && !string.IsNullOrEmpty(vm.start)
+                && !string.IsNullOrEmpty(vm.end))
+            {
+                vm.id = eventid;
+                var ret = vm.AddSchedule();
 
-            var res = new JsonResult();
-            res.Data = new { success = true, id = eventid };
-            return res;
+                if (ret)
+                {
+                    var res = new JsonResult();
+                    res.Data = new { success = true, id = eventid };
+                    return res;
+                }
+                else
+                {
+                    var res = new JsonResult();
+                    res.Data = new { success = false, msg = "same workflow schedule has already been added" };
+                    return res;
+                }
+            }
+            else
+            {
+                var res = new JsonResult();
+                res.Data = new { success = false, msg = "uploaded schedule data is empty" };
+                return res;
+            }
         }
 
         public JsonResult UpdateScheduleEvent()
         {
             var vm = ParseEventJason();
+            if (!string.IsNullOrEmpty(vm.title)
+                && !string.IsNullOrEmpty(vm.id)
+                && !string.IsNullOrEmpty(vm.start)
+                && !string.IsNullOrEmpty(vm.end))
+            {
+                var ret = vm.UpdateSchedule();
+                if (ret)
+                {
+                    var res = new JsonResult();
+                    res.Data = new { success = true };
+                    return res;
+                }
+                else
+                {
+                    var res = new JsonResult();
+                    res.Data = new { success = false, msg = "same workflow schedule has already existed or no such schedule" };
+                    return res;
+                }
+            }
+            else
+            {
+                var res = new JsonResult();
+                res.Data = new { success = false, msg = "uploaded schedule data is empty" };
+                return res;
+            }
 
-            var res = new JsonResult();
-            res.Data = new { success = true };
-            return res;
         }
 
         public JsonResult RemoveScheduleEvent()
         {
             var vm = ParseEventJason();
+            if (!string.IsNullOrEmpty(vm.id))
+            {
+                vm.RemoveSchedule(vm.id);
+                var res = new JsonResult();
+                res.Data = new { success = true };
+                return res;
+            }
+            else
+            {
+                var res = new JsonResult();
+                res.Data = new { success = false, msg = "uploaded schedule data is empty" };
+                return res;
+            }
 
-            var res = new JsonResult();
-            res.Data = new { success = true };
-            return res;
         }
 
         public JsonResult MoveScheduleEvent()
         {
             var vm = ParseEventJason();
-
-            var res = new JsonResult();
-            res.Data = new { success = true };
-            return res;
+            if (!string.IsNullOrEmpty(vm.id)
+                && !string.IsNullOrEmpty(vm.start)
+                && !string.IsNullOrEmpty(vm.end))
+            {
+                var ret = vm.MoveSchedule();
+                if (ret)
+                {
+                    var res = new JsonResult();
+                    res.Data = new { success = true };
+                    return res;
+                }
+                else
+                {
+                    var res = new JsonResult();
+                    res.Data = new { success = false, msg = "such schedule does not exist" };
+                    return res;
+                }
+            }
+            else
+            {
+                var res = new JsonResult();
+                res.Data = new { success = false, msg = "uploaded schedule data is empty" };
+                return res;
+            }
         }
 
 

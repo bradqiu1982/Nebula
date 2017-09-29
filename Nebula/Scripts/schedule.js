@@ -80,10 +80,10 @@
                         event.id = res.id;
                         CALENDAR.fullCalendar('renderEvent', event, true);
                     } else {
-
+                        alert(res.msg);
+                        window.location.reload();
                     }
                 });
-
             } else {
 
                 eventToUpdate.title = title;
@@ -92,7 +92,7 @@
                 eventToUpdate.start = startDate;
                 eventToUpdate.end = endDate;
 
-                CALENDAR.fullCalendar('updateEvent', eventToUpdate);
+                var updateevent = eventToUpdate;
 
                 var myevent = {
                     jonum: jo_num,
@@ -110,9 +110,10 @@
                     cache: false
                 }).done(function (res) {
                     if (res.success) {
-
+                        CALENDAR.fullCalendar('updateEvent', updateevent);
                     } else {
-
+                        alert(res.msg);
+                        window.location.reload();
                     }
                 });
             }
@@ -136,7 +137,8 @@
                     if (res.success) {
                         CALENDAR.fullCalendar('removeEvents', myevent.id);
                     } else {
-
+                        alert(res.msg);
+                        window.location.reload();
                     }
                 });
             }
@@ -219,6 +221,12 @@
                     data: myevent,
                     method: 'POST',
                     cache: false
+                }).done(function (res) {
+                    if (res.success) {
+                    } else {
+                        alert(res.msg);
+                        window.location.reload();
+                    }
                 });
             },
             eventResize: function (calEvent, jsEvent, view) {
