@@ -334,30 +334,14 @@ namespace Nebula.Controllers
             return pslist;
         }
 
-        public ActionResult JoSchedule()
-        {
-            var titlelist = new List<string>();
-            titlelist.Add("Please select workflow");
-            titlelist.Add("Die Attach");
-            titlelist.Add("Wire Bonding");
-            titlelist.Add("Lens Alignment");
-            titlelist.Add("HotBar");
-            var titlectrl = CreateSelectList(titlelist, "");
-            titlectrl[0].Selected = true;
-            titlectrl[0].Disabled = true;
-            ViewBag.titlelist = titlectrl;
-
-            ViewBag.evenstrs = "{id:'abcd',title:'All Day Event',start:'2017-08-01'},{id:'efgh',title:'Long Event',start:'2017-08-07',end:'2015-09-10',className:'bg-success border-transparent'}";
-            ViewBag.today = DateTime.Now.ToString("yyyy-MM-dd");
-            return View();
-        }
 
         public JsonResult JOSchedules()
         {
             var jonum = Request.Form["JoNum"];
-            var list = new List<JOScheduleEventDataVM>();
-            list.Add(new JOScheduleEventDataVM("","abcd", "Hello world 1", "bg-success border-transparent", string.Empty, "2017-09-01", "2017-09-04"));
-            list.Add(new JOScheduleEventDataVM("","efgh", "my world", "bg-success border-transparent", string.Empty, "2017-09-05", "2017-09-10"));
+            var list = JOScheduleEventDataVM.RetrieveScheduleByJoNum(jonum);
+            //var list = new List<JOScheduleEventDataVM>();
+            //list.Add(new JOScheduleEventDataVM("","abc","hello world", "bg-success border-transparent","","2017-09-11 11:00:00", "2017-09-13 11:00:00"));
+            //list.Add(new JOScheduleEventDataVM("", "efg", "hello world 2", "bg-primary,border-primary-dark", "", "2017-09-15 11:00:00", "2017-09-19 11:00:00"));
             var res = new JsonResult();
             res.Data = list;
             return res;
@@ -378,7 +362,7 @@ namespace Nebula.Controllers
             }
             if (Request.Form["title"] != null)
             {
-                ret.workflow = Request.Form["title"];
+                ret.title = Request.Form["title"];
             }
             if (Request.Form["className[]"] != null)
             {
@@ -447,10 +431,6 @@ namespace Nebula.Controllers
             return res;
         }
 
-        public ActionResult JoDistribution()
-        {
-            return View();
-        }
 
         public JsonResult JoDistributionData()
         {

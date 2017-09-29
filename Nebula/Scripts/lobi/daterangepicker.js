@@ -139,7 +139,7 @@
             this.timePicker = false;
             this.timePickerSeconds = false;
             this.timePickerIncrement = 30;
-            this.timePicker12Hour = true;
+            this.timePicker12Hour = false;
             this.singleDatePicker = false;
             this.ranges = {};
 
