@@ -210,13 +210,21 @@ var BR = function(){
         }
         //loading more
         $(window).scroll(function () {
-            if ((parseInt($(window).scrollTop()) + 1) == ($(document).height() - $(window).height())) {
+            if (parseInt($(window).scrollTop() + 0.5) == ($(document).height() - $(window).height())) {
                 var step = parseInt($('#jo_step').val());
                 if (step < jo_step_class.length) {
                     jo_step_skip(step + 1);
                 }
             }
         });
+
+        $('body').on('click', '.jo-import', function () {
+            $('#popup-import').removeClass("hide");
+        })
+
+        $('body').on('click', '#popup_cancel', function () {
+            $('#popup-import').addClass('hide');
+        })
     }
 
     return {

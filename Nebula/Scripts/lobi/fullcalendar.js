@@ -23,7 +23,7 @@ var defaults = {
 	defaultTimedEventDuration: '02:00:00',
 	defaultAllDayEventDuration: { days: 1 },
 	forceEventDuration: false,
-	nextDayThreshold: '09:00:00', // 9am
+	nextDayThreshold: '00:00:00', // 9am
 
 	// display
 	defaultView: 'month',
@@ -4266,6 +4266,7 @@ var DayGrid = Grid.extend({
 			}
 			date.add(1, 'days');
 		}
+		console.log(dates);
 
 		this.cellDates = dates;
 		this.dayToCellOffsets = offsets;
@@ -5397,6 +5398,7 @@ var TimeGrid = Grid.extend({
 			date = view.skipHiddenDays(date);
 		}
 
+		console.log(colData);
 		if (this.isRTL) {
 			colData.reverse();
 		}

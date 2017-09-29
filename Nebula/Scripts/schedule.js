@@ -2,6 +2,9 @@
     var show = function (container, id) {
         moment().zone('-08:00');
 
+        var CALENDAR = $('#' + container);
+        var jo_num = $("#" + id).val();
+
         var $addEventModal = $('#addEventModal');
         $addEventModal.appendTo('body');
         $addEventModal.on('show.bs.modal', function () {
@@ -11,33 +14,23 @@
             eventToUpdate = null;
         });
 
-        $addEventModal.find('[name=date-period]').daterangepicker({
-            singleDatePicker: false
-        },
-            function (start, end) {
-                startDate = start;
-                endDate = end;
-            }
-        );
         var startDate, endDate, eventToUpdate;
 
         var $input = $addEventModal.find('[name=date-period]');
+
         $input.daterangepicker({
-            timePicker: true,
-            timePickerIncrement: 10,
-            format: 'YYYY-MM-DD'
+            "timePicker": true,
+            "timePicker12Hour": false,
+            "timePickerIncrement": 10,
+            "format": 'YYYY-MM-DD'
+        }, function (start, end) {
+            startDate = start;
+            endDate = end;
         });
 
-
-        $addEventModal.find('[name=title]').click(function () {
+        $addEventModal.find('[name=title]').change(function () {
             var $check = $(this);
             var stDate = $input.data('daterangepicker').startDate;
-
-            $input.daterangepicker({
-                timePicker: true,
-                timePickerIncrement: 10,
-                format: 'YYYY-MM-DD'
-            });
             if (!eventToUpdate || !eventToUpdate.end) {
                 $input.data('daterangepicker').setStartDate(stDate);
                 var enDate = stDate.add(2, 'hours');
@@ -49,9 +42,6 @@
                 }
             }
         });
-
-        var CALENDAR = $('#' + container);
-        var jo_num = $("#" + id).val();
 
         $addEventModal.find('.btn-add').click(function () {
             var $body = $(this).closest('.modal-content');
@@ -73,7 +63,7 @@
                 event.end = endDate;
 
                 var myevent = {
-                    jonum:jo_num,
+                    jonum: jo_num,
                     title: title,
                     className: [style, style.replace('bg', 'border') + '-dark'],
                     description: desc,
@@ -151,6 +141,7 @@
             }
             $addEventModal.modal('hide');
         });
+
         var myDate = new Date();
         var mydatestr = myDate.getUTCFullYear() + '-' + ("0" + (myDate.getUTCMonth() + 1)).slice(-2) + '-' + ("0" + myDate.getUTCDate()).slice(-2);
 
@@ -158,7 +149,10 @@
             dayClick: function (date, jsEvent, view) {
                 $addEventModal.modal('show');
                 $input.data('daterangepicker').setOptions({
-                    singleDatePicker: true
+                    "timePicker": true,
+                    "timePicker12Hour": false,
+                    "timePickerIncrement": 10,
+                    "format": 'YYYY-MM-DD'
                 });
                 $addEventModal.find('[name=title]')[0].selectedIndex = 0;
                 $addEventModal.find('.btn-add').html('Add event');
@@ -199,21 +193,10 @@
                     }
                 }
 
-                //Initialize date range picker
-                $addEventModal.find('[name=date-period]').daterangepicker({
-                    timePicker: true,
-                    timePickerIncrement: 10,
-                    format: 'YYYY-MM-DD'
-                },
-                    function (start, end) {
-                        startDate = start;
-                        endDate = end;
-                    }
-                );
-
                 if (!calEvent.end) {
                     calEvent.end = moment();
                 }
+
                 $addEventModal.find('[name=date-period]').data('daterangepicker').setStartDate(calEvent.start);
                 $addEventModal.find('[name=date-period]').data('daterangepicker').setEndDate(calEvent.end);
 

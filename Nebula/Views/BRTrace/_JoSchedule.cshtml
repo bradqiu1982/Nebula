@@ -4,8 +4,12 @@
 <script type="text/javascript" src="~/Scripts/lobi/daterangepicker.js"></script>
 <script type="text/javascript" src="~/Scripts/lobi/fullcalendar.js"></script>
 <script type="text/javascript" src="~/Scripts/schedule.js"></script>
-<link href="@Url.Content("~/Scripts/lobi/lobiadmin-with-plugins.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Scripts/lobi/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="~/Scripts/ajaxfileupload.js"></script>
+<link href="~/Scripts/lobi/lobiadmin-with-plugins.css" rel="stylesheet" type="text/css" />
+<link href="~/Scripts/lobi/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/popup.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrapfileinput.css" rel="stylesheet" type="text/css" />
+
 <script>
     $(function () {
         Schedule.init("calendar-demo", "jo_num");
@@ -83,6 +87,33 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary btn-add">Add event</button>
                 <button type="button" class="btn btn-primary btn-danger">Remove event</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup hide" id="popup-import" tabindex="-1">
+    <div class="popup-dialog">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h1 class="popup-title">JO Schedule Import</h1>
+            </div>
+            <div class="popup-body">
+                <div class="popup-row">
+                    <div class="popup-input col-md-6">
+                        <input type="text" class="input-placeholder" id="filename">
+                    </div>
+                    <div class="col-md-2">
+                        <span class="btn-file" id="choosefile">
+                            <span class="popup-choose-file">Choose file</span>
+                            <input type="file" name="files" id="file1" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <button type="button" class="btn btn-popup" id="popup-btn-import">Import</button>
+                <button type="button" class="btn btn-popup" id="popup_cancel">Close</button>
             </div>
         </div>
     </div>
