@@ -54,6 +54,7 @@
     },
 
     ajaxFileUpload: function (s) {
+        alert("1");
         // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout
         s = jQuery.extend({}, jQuery.ajaxSettings, s);
         var id = new Date().getTime()
@@ -62,6 +63,9 @@
         var io = jQuery.createUploadIframe(id, s.secureuri);
         var frameId = 'jUploadFrame' + id;
         var formId = 'jUploadForm' + id;
+
+        alert("2");
+
         // Watch for a new set of requests
         if (s.global && !jQuery.active++) {
             jQuery.event.trigger("ajaxStart");
@@ -71,6 +75,9 @@
         var xml = {}
         if (s.global)
             jQuery.event.trigger("ajaxSend", [xml, s]);
+
+        alert("3");
+
         // Wait for a response to come back
         var uploadCallback = function (isTimeout) {
             var io = document.getElementById(frameId);
@@ -84,6 +91,7 @@
                     xml.responseXML = io.contentDocument.document.XMLDocument ? io.contentDocument.document.XMLDocument : io.contentDocument.document;
                 }
             } catch (e) {
+                alert('0');
                 jQuery.handleError(s, xml, null, e);
             }
             if (xml || isTimeout == "timeout") {
@@ -91,6 +99,7 @@
                 var status;
                 try {
                     status = isTimeout != "timeout" ? "success" : "error";
+                    alert('a');
                     // Make sure that the request was successful or notmodified
                     if (status != "error") {
                         // process the data (runs the xml through httpData regardless of callback)
@@ -105,6 +114,7 @@
                     } else
                         jQuery.handleError(s, xml, status);
                 } catch (e) {
+                    alert("9");
                     if (s.error)
                         s.error(e.message);
                     //status = "error";
@@ -131,6 +141,7 @@
                         $(form).remove();
 
                     } catch (e) {
+                        alert("4");
                         jQuery.handleError(s, xml, null, e);
                     }
 
@@ -162,6 +173,7 @@
             $(form).submit();
 
         } catch (e) {
+            alert("c");
             jQuery.handleError(s, xml, null, e);
         }
         if (window.attachEvent) {
@@ -170,6 +182,7 @@
         else {
             document.getElementById(frameId).addEventListener('load', uploadCallback, false);
         }
+        alert("5");
         return { abort: function () { } };
 
     },

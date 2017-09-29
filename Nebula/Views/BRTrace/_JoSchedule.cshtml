@@ -14,6 +14,26 @@
     $(function () {
         Schedule.init("calendar-demo", "jo_num");
     })
+    function ShowFileNames(oFile) {
+        $("#popup-btn-import").attr('disabled', 'disabled');
+        $.ajaxFileUpload
+        (
+            {
+                url: '/userfiles/ImageUpload.ashx',
+                secureuri: false,
+                fileElementId: 'file1',
+                dataType: 'HTML',
+                success: function (data) {
+                    $("#popup-btn-import").removeAttr('disabled');
+                },
+                error: function (e) {
+                    $("#popup-btn-import").removeAttr('disabled');
+                    window.alert("fail to upload file");
+                }
+            }
+        );
+        $('#filename').val(oFile.value);
+    }
 </script>
 
 <div id="event-calendar">
@@ -92,7 +112,7 @@
     </div>
 </div>
 
-<div class="popup hide" id="popup-import" tabindex="-1">
+<div class="popup hide popup-height" id="popup-import" tabindex="-1" style="height: 600px;">
     <div class="popup-dialog">
         <div class="popup-content">
             <div class="popup-header">
@@ -100,15 +120,13 @@
             </div>
             <div class="popup-body">
                 <div class="popup-row">
-                    <div class="popup-input col-md-6">
-                        <input type="text" class="input-placeholder" id="filename">
+                    <div class="popup-input col-md-9">
+                        <input class="input-placeholder" id="filename" type="text">
                     </div>
-                    <div class="col-md-2">
-                        <span class="btn-file" id="choosefile">
-                            <span class="popup-choose-file">Choose file</span>
-                            <input type="file" name="files" id="file1" />
-                        </span>
-                    </div>
+                    <span id="choosefile" class="btn-file col-md-3">
+                        <span>Choose file</span>
+                        <input name="files" id="file1" type="file" runat="server" onchange="ShowFileNames(this)" />
+                    </span>
                 </div>
             </div>
             <div class="popup-footer">

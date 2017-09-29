@@ -192,6 +192,9 @@ var BR = function(){
 
         $('body').on('click', '.schedule, .pro-line, .pqe-oqc, .warehouse', function () {
             jo_step_skip(this.id.split('-')[1]);
+            if (!$('#popup-import').hasClass('hide')) {
+                $('#popup-import').addClass('hide');
+            }
         })
 
         var jo_step_skip = function (step) {
@@ -204,7 +207,7 @@ var BR = function(){
             $('.jo-current-page').removeClass().addClass('jo-current-page ' + jo_class + '-page');
             $('.op-tag').removeClass().addClass('op-tag op-tag-' + jo_class);
             $('html,body').animate({
-                scrollTop: $('.jo-' + jo_class).offset().top - 20
+                scrollTop: (step == 1) ? 0 : ($('.jo-' + jo_class).offset().top - 20)
             });
             window.history.pushState(null, null, window.location.href.split('Step')[0] + 'Step=' + step);
         }
@@ -219,6 +222,7 @@ var BR = function(){
         });
 
         $('body').on('click', '.jo-import', function () {
+            $('.popup').attr('style', 'height:' + parseInt($('.jo-schedule').height() + 5) + 'px');
             $('#popup-import').removeClass("hide");
         })
 
