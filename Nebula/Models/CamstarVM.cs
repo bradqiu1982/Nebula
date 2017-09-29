@@ -39,6 +39,8 @@ namespace Nebula.Models
 
         public static List<PNWorkflow> RetrievePNWorkflow(string pn)
         {
+            var workflowdict = new Dictionary<string, bool>();
+
             var sql = "select PN,WorkflowStepName,Sequence from PNWorkflow where PN = '<PN>' order by Sequence ASC";
             sql = sql.Replace("<PN>", pn);
             var ret = new List<PNWorkflow>();
@@ -49,7 +51,12 @@ namespace Nebula.Models
                 tempflow.PN = Convert.ToString(line[0]);
                 tempflow.WorkflowStepName = Convert.ToString(line[1]);
                 tempflow.Sequence = Convert.ToInt32(line[2]);
-                ret.Add(tempflow);
+                var tempkey = tempflow.WorkflowStepName.ToUpper().Replace("_","").Replace(" ","");
+                if (!workflowdict.ContainsKey(tempkey))
+                {
+                    workflowdict.Add(tempkey, true);
+                    ret.Add(tempflow);
+                }
             }
 
             return ret;
