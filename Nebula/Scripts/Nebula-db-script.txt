@@ -183,3 +183,14 @@ CREATE TABLE [dbo].[JOScheduleEventDataVM] (
 	[APVal4]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
     [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
 );
+
+CREATE TABLE [dbo].[PNErrorDistribute] (
+    [PN]   NVARCHAR (200) NOT NULL,
+    [ErrAttr]     NVARCHAR (200) NOT NULL,
+    [AMount]     INT DEFAULT (0) NOT NULL,
+    [APVal1]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+    [APVal2]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+	[APVal3]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+    [APVal4]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
+);
+

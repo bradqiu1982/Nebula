@@ -7,6 +7,28 @@ using System.Web.Mvc;
 
 namespace Nebula.Models
 {
+    public class PNErrorDistribute
+    {
+        public PNErrorDistribute()
+        {
+            PN = "";
+            ErrAttr = "";
+            Amount = 0;
+        }
+
+        public string PN { set; get;}
+        public string ErrAttr { set; get; }
+        public int Amount { set; get; }
+    }
+
+    public class PNErrorPareto
+    {
+        public string Failure { set; get; }
+        public int Amount { set; get; }
+        public double ABPercent { set; get; }
+        public double PPercent { set; get; }
+    }
+
     public class ProjectTestData
     {
         public ProjectTestData()
@@ -286,8 +308,38 @@ namespace Nebula.Models
             return ret;
         }
 
-        private static string RetrieveCummYield(List<ProjectTestData> plist)
+        private static void StorePNErrorSum(string pn, string errattr, string amount)
         {
+            var sql = "delete from PNErrorDistribute where PN = '<PN>' and ErrAttr = '<ErrAttr>'";
+            sql = sql.Replace("<PN>",pn).Replace("<ErrAttr>",errattr);
+            DBUtility.ExeLocalSqlNoRes(sql);
+
+            sql = "insert into PNErrorDistribute(PN,ErrAttr,AMount) values('<PN>','<ErrAttr>',<AMount>)";
+            sql = sql.Replace("<PN>", pn).Replace("<ErrAttr>", errattr).Replace("<AMount>", amount);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static List<PNErrorDistribute> RetrievePNErrorSum(string pn)
+        {
+            var ret = new List<PNErrorDistribute>();
+            var sql = "select PN,ErrAttr,AMount from PNErrorDistribute where PN = '<PN>'";
+            sql = sql.Replace("<PN>", pn);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new PNErrorDistribute();
+                temp.PN = Convert.ToString(line[0]);
+                temp.ErrAttr = Convert.ToString(line[1]);
+                temp.Amount = Convert.ToInt32(line[2]);
+                ret.Add(temp);
+            }
+            return ret;
+        }
+
+        private static string RetrieveCummYield(List<ProjectTestData> plist,string PN)
+        {
+            var perrdict = new Dictionary<string, int>();
+
             var yielddict = new Dictionary<string, TestYield>();
             var sndict = new Dictionary<string, bool>();
             foreach (var p in plist)
@@ -295,6 +347,19 @@ namespace Nebula.Models
                 if (!sndict.ContainsKey(p.WhichTest + ":" + p.ModuleSerialNum))
                 {
                     sndict.Add(p.WhichTest + ":" + p.ModuleSerialNum, true);
+
+                    if (string.Compare(p.ErrAbbr, "PASS", true) != 0)
+                    {
+                        if (perrdict.ContainsKey(p.ErrAbbr))
+                        {
+                            perrdict[p.ErrAbbr] = perrdict[p.ErrAbbr] + 1;
+                        }
+                        else
+                        {
+                            perrdict.Add(p.ErrAbbr, 1);
+                        }
+                    }
+
                     if (yielddict.ContainsKey(p.WhichTest))
                     {
                         yielddict[p.WhichTest].InputCount = yielddict[p.WhichTest].InputCount + 1;
@@ -314,6 +379,11 @@ namespace Nebula.Models
                         yielddict.Add(p.WhichTest, tempyield);
                     }
                 }
+            }
+
+            foreach (var kv in perrdict)
+            {
+                StorePNErrorSum(PN, kv.Key, kv.Value.ToString());
             }
 
             var retyield = 1.0;
@@ -346,7 +416,7 @@ namespace Nebula.Models
             }
             else
             {
-                return RetrieveCummYield(pjdatalist);
+                return RetrieveCummYield(pjdatalist,PN);
             }
         }
 
