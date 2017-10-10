@@ -200,15 +200,24 @@ var BR = function(){
         var jo_step_skip = function (step) {
             $('#jo_step').val(step);
             var jo_class = jo_step_class[step - 1];
-            if ( ! $('.jo-' + jo_class).hasClass()) {
-                $('.jo-' + jo_class).addClass("jo-content");
-            }
             $('.jo-current-page').html(jo_step_html[step - 1]);
             $('.jo-current-page').removeClass().addClass('jo-current-page ' + jo_class + '-page');
             $('.op-tag').removeClass().addClass('op-tag op-tag-' + jo_class);
             $('html,body').animate({
-                scrollTop: (step == 1) ? 0 : ($('.jo-' + jo_class).offset().top - 20)
+                scrollTop: (step == 1) ? 0 : ($('.jo-' + jo_class).offset().top - 150)
             });
+            if (step >= 2) {
+                if ($('#jodistribute').html() == false) {
+                    $("#jodistribute").attr('style', 'height: 600px');
+                    JoDistribution.init('jodistribute', 'jo_num');
+                }
+            }
+            if (step >= 3) {
+                if ($('#pnerrdistribute').html() == false) {
+                    $("#pnerrdistribute").attr('style', 'height: 600px');
+                    pnerrordistribution.init('pnerrdistribute', 'jo_num');
+                }
+            }
             window.history.pushState(null, null, window.location.href.split('Step')[0] + 'Step=' + step);
         }
         //loading more

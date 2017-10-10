@@ -2,15 +2,29 @@
     var show = function (container, id) {
         var mychart = new Highcharts.chart(container, {
             title: {
-                text: 'PN Failure Pareto'
+                text: 'PN Failure Pareto',
+                style: {
+                    color: '#afafaf',
+                    fontSize: '28px'
+                }
             },
             chart:
             {
-                alignTicks: false
+                alignTicks: false,
+                backgroundColor: "#001D2E",
+                borderColor: "#001D2E"
             },
             xAxis: {
                 type: 'category',
-                crosshair: true
+                crosshair: true,
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '12px'
+                    }
+                },
+                gridLineWidth: 0,
+                tickWidth: 0
             },
             plotOptions: {
                 column: {
@@ -22,7 +36,11 @@
                 title: {
                     text: 'Amount'
                 },
-                min: 0
+                min: 0,
+                style: {
+                    fontSize: '12px'
+                },
+                gridLineWidth: 0
             }, {
                 title: {
                     text: 'Percent'
@@ -33,6 +51,9 @@
                 tickPixelInterval: 36,
                 opposite: true
             }],
+            exporting: {
+                enabled: false
+            },
             series: [{
                 type: 'column',
                 name: 'Amount',
@@ -45,7 +66,7 @@
                 yAxis:1,
                 tooltip: {
                     headerFormat: '<b>{point.key}</b><br/>',
-                    pointFormat: '{point.y} %'
+                    pointFormat: '{point.y:.2f} %'
                 }
             },
             {
@@ -56,7 +77,11 @@
                     lineColor: Highcharts.getOptions().colors[3],
                     fillColor: 'green'
                 },
-                yAxis:1
+                yAxis:1,
+                tooltip: {
+                    headerFormat: '<b>{point.key}</b><br/>',
+                    pointFormat: '{point.y:.2f} %'
+                }
             }]
         });
 

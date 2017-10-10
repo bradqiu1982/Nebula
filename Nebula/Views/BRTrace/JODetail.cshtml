@@ -8,6 +8,10 @@
     var step_id = 1;
 }
 <script src="~/Scripts/br.js" type="text/javascript"></script>
+<script src="~/Scripts/highcharts.js"></script>
+<script src="~/Scripts/exporting.js"></script>
+<script src="~/Scripts/jodistribution.js"></script>
+<script src="~/Scripts/pnerrordistribution.js"></script>
 <script type="text/javascript">
     $(function(){
         BR.jodetail();
@@ -48,11 +52,28 @@
                 </div>
                 @Html.Partial("~/Views/BRTrace/_JoSchedule.cshtml")
             </div>
-            <div class="@((2 <= ViewBag.Step?"jo-content":"")) jo-@jo_step_class[1]">
-                @Html.Partial("~/Views/BRTrace/_JoDistribution.cshtml")
+            <div class="jo-@jo_step_class[1]">
+                <div id="jodistribute" style="@((2 <= ViewBag.Step) ? "height: 600px":"")">
+                    @if (2 <= ViewBag.Step)
+                    {
+                        @Html.Partial("~/Views/BRTrace/_JoDistribution.cshtml")
+                    }
+                </div>
             </div>
-            <div class="@((3 <= ViewBag.Step?"jo-content":"")) jo-@jo_step_class[2]"></div>
-            <div class="@((4 <= ViewBag.Step?"jo-content":"")) jo-@jo_step_class[3]"></div>
+            <div class="jo-@jo_step_class[2]" style="@((3 <= ViewBag.Step) ? "height: 600px":"")">
+                <div id="pnerrdistribute">
+                    @if (3 <= ViewBag.Step)
+                    {
+                        @Html.Partial("~/Views/BRTrace/_JoPnErrDistribution.cshtml")
+                    }
+                </div>
+            </div>
+            <div class="jo-@jo_step_class[3]">
+                @if (4 <= ViewBag.Step)
+                {
+
+                }
+            </div>
         }
     </div>
 </div>
