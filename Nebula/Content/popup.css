@@ -11,6 +11,10 @@
     z-index: 1004;
 }
 
+.popup-open{
+    overflow: hidden;
+}
+
 .popup-header{
     color: #fff;
     text-align: center;

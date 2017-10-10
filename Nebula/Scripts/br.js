@@ -224,10 +224,12 @@ var BR = function(){
         $('body').on('click', '.jo-import', function () {
             $('.popup').attr('style', 'height:' + parseInt($('.jo-schedule').height() + 40) + 'px');
             $('#popup-import').removeClass("hide");
+            $('body').addClass("popup-open");
         })
 
         $('body').on('click', '#popup_cancel', function () {
             $('#popup-import').addClass('hide');
+            $('body').removeClass("popup-open");
         })
     }
 
