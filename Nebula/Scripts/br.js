@@ -203,9 +203,6 @@ var BR = function(){
             $('.jo-current-page').html(jo_step_html[step - 1]);
             $('.jo-current-page').removeClass().addClass('jo-current-page ' + jo_class + '-page');
             $('.op-tag').removeClass().addClass('op-tag op-tag-' + jo_class);
-            $('html,body').animate({
-                scrollTop: (step == 1) ? 0 : ($('.jo-' + jo_class).offset().top - 150)
-            });
             if (step >= 2) {
                 if ($('#jodistribute').html() == false) {
                     $("#jodistribute").attr('style', 'height: 600px');
@@ -218,6 +215,9 @@ var BR = function(){
                     pnerrordistribution.init('pnerrdistribute', 'jo_num');
                 }
             }
+            $('html,body').animate({
+                scrollTop: (step == 1) ? 0 : ($('.jo-' + jo_class).offset().top - 150)
+            });
             window.history.pushState(null, null, window.location.href.split('Step')[0] + 'Step=' + step);
         }
         //loading more
