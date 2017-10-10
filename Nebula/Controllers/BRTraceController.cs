@@ -242,7 +242,10 @@ namespace Nebula.Controllers
             //ERPVM.LoadJOBaseInfo(this);
             //ERPVM.LoadJOComponentInfo(this);
             //CamstarVM.UpdatePNWorkflow();
-            CamstarVM.UpdateJoStatus();
+            //CamstarVM.UpdateJoStatus();
+
+            var list = RetrievePNPareto("1242365");
+
             return View();
         }
 
@@ -514,6 +517,77 @@ namespace Nebula.Controllers
             var jonum = Request.Form["JONum"];
             var josnstatlist = JOSNStatus.RetrieveJOSNStatus(jonum);
             var list = JOSNonStation.RetrieveJOSNStation(josnstatlist);
+
+            var res = new JsonResult();
+            res.Data = list;
+            return res;
+        }
+
+        private List<PNErrorPareto> RetrievePNPareto(string PN)
+        {
+                var pnerrdist = JOBaseInfo.RetrievePNErrorSum(PN);
+                pnerrdist.Sort(delegate (PNErrorDistribute pair1, PNErrorDistribute pair2)
+                {
+                    return pair2.Amount.CompareTo(pair1.Amount);
+                });
+
+                var sum = 0;
+                for (var i = 0; i < pnerrdist.Count; i++)
+                {
+                    sum = sum + pnerrdist[i].Amount;
+                }
+
+                var peralist = new List<PNErrorPareto>();
+                var otherpercent = 0.0;
+
+                for (var i = 0; i < pnerrdist.Count; i++)
+                {
+                    if (pnerrdist.Count > 5 && peralist.Count > 0 && Convert.ToDouble(peralist[peralist.Count - 1].PPercent) > 95.0)
+                    {
+                        otherpercent = otherpercent + pnerrdist[i].Amount / (double)sum;
+                        if (i == (pnerrdist.Count - 1))
+                        {
+                            var tempperato = new PNErrorPareto();
+                            tempperato.Failure = "Other";
+                            tempperato.Amount = (int)(otherpercent * sum);
+                            tempperato.ABPercent = otherpercent * 100.0;
+                            tempperato.PPercent = 100.0;
+                            peralist.Add(tempperato);
+                        }
+                    }
+                    else
+                    {
+                        var tempperato = new PNErrorPareto();
+                        tempperato.Failure = pnerrdist[i].ErrAttr;
+                        if (i == 0)
+                        {
+                            tempperato.Amount = pnerrdist[i].Amount;
+                            tempperato.ABPercent = (pnerrdist[i].Amount / (double)sum) * 100.0;
+                            tempperato.PPercent = tempperato.ABPercent;
+                            peralist.Add(tempperato);
+                        }
+                        else
+                        {
+                            tempperato.Amount = pnerrdist[i].Amount;
+                            tempperato.ABPercent = (pnerrdist[i].Amount / (double)sum) * 100.0;
+                            tempperato.PPercent = Convert.ToDouble(peralist[peralist.Count - 1].PPercent) + Convert.ToDouble(tempperato.ABPercent);
+                            peralist.Add(tempperato);
+                        }
+                    }
+                }
+            return peralist;
+        }
+
+        public JsonResult PNErrorDistribution()
+        {
+            var jonum = Request.Form["JONum"];
+            var joinfo = JOBaseInfo.RetrieveJoInfo(jonum);
+            var list = new List<PNErrorPareto>();
+
+            if (joinfo.Count > 0)
+            {
+                list = RetrievePNPareto(joinfo[0].PN);
+            }
 
             var res = new JsonResult();
             res.Data = list;
