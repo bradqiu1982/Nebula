@@ -8,6 +8,11 @@
                     fontSize: '28px'
                 }
             },
+            colors: [
+                '#33CCFF', '#FF0000', '#0070C0',
+                '#FF3399', '#FA9604', '#00B050',
+                '#6E28BC',
+            ],
             chart:
             {
                 alignTicks: false,
@@ -62,7 +67,7 @@
             {
                 type: 'scatter',
                 name: 'Percent',
-                color: 'rgba(223, 83, 83, .5)',
+                color: '#FF0066',
                 yAxis:1,
                 tooltip: {
                     headerFormat: '<b>{point.key}</b><br/>',
