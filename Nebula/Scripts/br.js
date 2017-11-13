@@ -66,6 +66,14 @@ var BR = function(){
             window.location.href = '/BRTrace/DefaultJOList';
         })
 
+        $('body').on('click', '#brclosenav', function () {
+            window.location.href = '/BRTrace/DefaultBRList?p=1&Status=CLOSED';
+        })
+
+        $('body').on('click', '#joclosenav', function () {
+            window.location.href = '/BRTrace/DefaultJOList?p=1&Status=CLOSED';
+        })
+
         $('body').on('click', '.br-breadcrumb', function () {
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html();
         })
@@ -95,7 +103,24 @@ var BR = function(){
 
         $('body').on('click', '.pages', function () {
             var page = $(this).attr("data-data");
-            window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + $('#keywords').val() + '&p=' + page;
+            if ($('#keywords').val()) {
+                window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + $('#keywords').val() + '&p=' + page;
+            }
+            else {
+                var withstatus = $('#withstatus').val();
+                if (withstatus) {
+                    if (withstatus === "TRUE") {
+                        window.location.href = '/BRTrace/DefaultBRList?p=' + page + "&Status=CLOSED";
+                    }
+                    else {
+                        window.location.href = '/BRTrace/DefaultBRList?p=' + page;
+                    }
+                }
+                else {
+                    window.location.href = '/BRTrace/DefaultBRList';
+                }
+            }
+
         })
     }
 
@@ -172,7 +197,23 @@ var BR = function(){
 
         $('body').on('click', '.pages', function () {
             var page = $(this).attr("data-data");
-            window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + $('#keywords').val() + '&p=' + page;
+            if ($('#keywords').val()) {
+                window.location.href = '/BRTrace/SearchKeyWord?SearchWords=' + $('#keywords').val() + '&p=' + page;
+            }
+            else {
+                var withstatus = $('#withstatus').val();
+                if (withstatus) {
+                    if (withstatus === "TRUE") {
+                        window.location.href = '/BRTrace/DefaultJOList?p=' + page + "&Status=CLOSED";
+                    }
+                    else {
+                        window.location.href = '/BRTrace/DefaultJOList?p=' + page;
+                    }
+                }
+                else {
+                    window.location.href = '/BRTrace/DefaultJOList';
+                }
+            }
         })
     }
 

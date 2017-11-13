@@ -24,7 +24,9 @@
         </div>
         <div class="nav-type">
             <div class="nav-link" id="brnav">BR</div>
-            <div class="nav-link nav-active" id="jonav">JO</div>
+            <div class="nav-link" id="jonav">JO</div>
+            <div class="nav-link" id="brclosenav">BR (closed)</div>
+            <div class="nav-link" id="joclosenav">JO (closed)</div>
             <div class="nav-line"></div>
         </div>
         <div class="br-list">
@@ -36,7 +38,7 @@
                     <table class="table table-bordered table-hover cus-table">
                         @foreach (var item in ViewBag.jolist)
                         {
-                            <tr><td>@item.JONumber</td><td>OPEN</td></tr>
+                            <tr><td>@item.JONumber</td><td>@item.JORealStatus</td></tr>
                         }
                     </table>
                     @if (ViewBag.total_pages > 1)
@@ -58,6 +60,7 @@
                 </div>
             </div>
         </div>
+        <input id="withstatus" name="withstatus" value="@( ViewBag.withstatus)" type="hidden">
     </div>
 </div>
 <footer>

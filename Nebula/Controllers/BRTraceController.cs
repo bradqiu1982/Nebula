@@ -30,8 +30,10 @@ namespace Nebula.Controllers
 
             UserAuth();
 
-            var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
-            var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null);
+            //var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+            //var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null);
+            var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN);
+            var allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null,BRJOSYSTEMSTATUS.OPEN);
             var page_size = 10;
             ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
             ViewBag.page = p;
@@ -42,11 +44,22 @@ namespace Nebula.Controllers
             return View();
         }
 
-        public ActionResult DefaultBRList(int p = 1)
+        public ActionResult DefaultBRList(int p = 1,string Status = null)
         {
-
             UserAuth();
-            var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
+
+            var allBrlist = new List<BRAgileBaseInfo>();
+
+            if (string.IsNullOrEmpty(Status))
+            {
+                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN);
+                ViewBag.withstatus = "FALSE";
+            }
+            else
+            {
+                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.CLOSE);
+                ViewBag.withstatus = "TRUE";
+            }
             
             var page_size = 10;
             ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
@@ -57,11 +70,23 @@ namespace Nebula.Controllers
             return View("BRList");
         }
 
-        public ActionResult DefaultJOList(int p = 1)
+        public ActionResult DefaultJOList(int p = 1, string Status = null)
         {
             UserAuth();
+            var allJolist = new List<JOBaseInfo>();
 
-            var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null);
+            if (string.IsNullOrEmpty(Status))
+            {
+                allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN);
+                ViewBag.withstatus = "FALSE";
+            }
+            else
+            {
+                allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.CLOSE);
+                ViewBag.withstatus = "TRUE";
+            }
+            
+
             var page_size = 10;
             ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
             ViewBag.page = p;
@@ -83,6 +108,7 @@ namespace Nebula.Controllers
             {
                 ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
                 ViewBag.total_pages = allBrlist.Count / page_size + 1;
+                ViewBag.withstatus = "";
                 return View("BRList");
             }
             else
@@ -92,6 +118,7 @@ namespace Nebula.Controllers
                 {
                     ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
                     ViewBag.total_pages = allJolist.Count / page_size + 1;
+                    ViewBag.withstatus = "";
                     return View("JOList");
                 }
                 else
@@ -161,19 +188,20 @@ namespace Nebula.Controllers
             UserAuth();
 
             ViewBag.currentbr = BRAgileBaseInfo.RetrieveBRAgileInfo(BRNum)[0];
-            var allcurrentbrjolist = JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
-            var allsearchlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo((!string.IsNullOrEmpty(SearchWords))? SearchWords : null);
+            var allcurrentbrjolist = (IEnumerable<JOBaseInfo>)JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
+            var allsearchlist = (IEnumerable<BRAgileBaseInfo>)BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, ViewBag.currentbr.BRStatus);//BRAgileBaseInfo.RetrieveActiveBRAgileInfo((!string.IsNullOrEmpty(SearchWords))? SearchWords : null);
             //br pagination
             var page_size = 10;
             ViewBag.currentsearchlist = allsearchlist.Skip((p - 1) * page_size).Take(page_size);
             ViewBag.page = p;
-            ViewBag.total_pages = allsearchlist.Count / page_size + 1;
+            ViewBag.total_pages = allsearchlist.Count() / page_size + 1;
+
 
             //jo pagination
             var sub_page_size = 5;
             ViewBag.currentbrjolist = allcurrentbrjolist.Skip((sp - 1) * sub_page_size).Take(sub_page_size);
             ViewBag.sub_page = sp;
-            ViewBag.sub_total_pages = allcurrentbrjolist.Count / sub_page_size + 1;
+            ViewBag.sub_total_pages = allcurrentbrjolist.Count() / sub_page_size + 1;
 
             return View();
         }

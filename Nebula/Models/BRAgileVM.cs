@@ -8,6 +8,13 @@ using System.Globalization;
 
 namespace Nebula.Models
 {
+    public class BRJOSYSTEMSTATUS
+    {
+        public static string OPEN = "OPEN";
+        public static string CLOSE = "CLOSE";
+        public static string KICKOFF = "KICKOFF";
+    }
+
     public class AGILEBRSTATUS
     {
         public static string APPROVE2BUILE = "Approved To Build";
@@ -421,6 +428,7 @@ namespace Nebula.Models
             affectitem = new List<AgileAffectItem>();
             history = new List<AgileHistory>();
             attach = new List<AgileAttach>();
+            BRStatus = "";
         }
 
         public static BRAgileBaseInfo ParseItem(string line)
@@ -465,11 +473,11 @@ namespace Nebula.Models
         public void AddBRAgileInfo()
         {
             var brkey = GetUniqKey();
-            var sql = "insert into BRAgileBaseInfo(BRKey,BRNumber,Description,Status,Workflow,Originator,ChangeType,OriginalDate) "
-                + " values('<BRKey>','<BRNumber>',N'<Description>','<Status>','<Workflow>','<Originator>','<ChangeType>','<OriginalDate>')";
+            var sql = "insert into BRAgileBaseInfo(BRKey,BRNumber,Description,Status,Workflow,Originator,ChangeType,OriginalDate,BRStatus) "
+                + " values('<BRKey>','<BRNumber>',N'<Description>','<Status>','<Workflow>','<Originator>','<ChangeType>','<OriginalDate>','<BRStatus>')";
             sql = sql.Replace("<BRKey>",brkey).Replace("<BRNumber>", BRNumber).Replace("<Description>", Description)
                 .Replace("<Status>", Status).Replace("<Workflow>", Workflow).Replace("<Originator>", Originator)
-                .Replace("<ChangeType>", ChangeType).Replace("<OriginalDate>", OriginalDate.ToString("yyyy-MM-dd hh:mm:ss"));
+                .Replace("<ChangeType>", ChangeType).Replace("<OriginalDate>", OriginalDate.ToString("yyyy-MM-dd hh:mm:ss")).Replace("<BRStatus>",BRJOSYSTEMSTATUS.KICKOFF);
             DBUtility.ExeLocalSqlNoRes(sql);
 
             foreach (var item in brworkflowlist)
@@ -550,12 +558,12 @@ namespace Nebula.Models
             var sql = string.Empty;
             if (reviewer == null)
             {
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate from BRAgileBaseInfo order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo order by OriginalDate Desc";
             }
             else
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate from BRAgileBaseInfo where Originator = '<Originator>'  order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo where Originator = '<Originator>'  order by OriginalDate Desc";
                 sql = sql.Replace("<Originator>", reviewer);
             }
 
@@ -569,6 +577,41 @@ namespace Nebula.Models
                 temp.Status = Convert.ToString(line[3]);
                 temp.Originator = Convert.ToString(line[4]);
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
+                temp.BRStatus = Convert.ToString(line[6]);
+                ret.Add(temp);
+            }
+
+            return ret;
+        }
+
+        public static List<BRAgileBaseInfo> RetrieveActiveBRAgileInfoWithStatus(string reviewer,string BRStatus)
+        {
+            var ret = new List<BRAgileBaseInfo>();
+
+            var sql = string.Empty;
+            if (reviewer == null)
+            {
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo where BRStatus = '<BRStatus>' order by OriginalDate Desc";
+                sql = sql.Replace("<BRStatus>",BRStatus);
+            }
+            else
+            {
+                reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo where Originator = '<Originator>' and BRStatus = '<BRStatus>' order by OriginalDate Desc";
+                sql = sql.Replace("<Originator>", reviewer).Replace("<BRStatus>", BRStatus);
+            }
+
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new BRAgileBaseInfo();
+                temp.BRKey = Convert.ToString(line[0]);
+                temp.BRNumber = Convert.ToString(line[1]);
+                temp.Description = Convert.ToString(line[2]);
+                temp.Status = Convert.ToString(line[3]);
+                temp.Originator = Convert.ToString(line[4]);
+                temp.OriginalDate = Convert.ToDateTime(line[5]);
+                temp.BRStatus = Convert.ToString(line[6]);
                 ret.Add(temp);
             }
 
@@ -579,7 +622,7 @@ namespace Nebula.Models
         {
             var ret = new List<BRAgileBaseInfo>();
 
-            var sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate from BRAgileBaseInfo where BRNumber like '%<BRNumber>%'";
+            var sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo where BRNumber like '%<BRNumber>%'";
             sql = sql.Replace("<BRNumber>", BRNum);
 
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
@@ -592,6 +635,7 @@ namespace Nebula.Models
                 temp.Status = Convert.ToString(line[3]);
                 temp.Originator = Convert.ToString(line[4]);
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
+                temp.BRStatus = Convert.ToString(line[6]);
                 ret.Add(temp);
             }
 
@@ -606,6 +650,7 @@ namespace Nebula.Models
         public string Originator{set;get;}
         public DateTime OriginalDate{ set; get; }
         public string BRKey { set; get; }
+        public string BRStatus { set; get; }
 
         public List<AgileWorkFlow> brworkflowlist{set;get;}
         public List<AgileAffectItem> affectitem{set;get;}

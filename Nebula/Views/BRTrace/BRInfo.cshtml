@@ -39,14 +39,14 @@
             <div class="col-md-9">
                 <div class="content-title">
                     <span class="col-md-6" id="br_num">@ViewBag.currentbr.BRNumber</span>
-                    <span class="col-md-6">OPEN</span>
+                    <span class="col-md-6">@ViewBag.currentbr.BRStatus</span>
                 </div>
                 <div class="br-info-content">
                     <table class="table table-bordered des-table">
                         <tr><td class="col-md-4">Originator</td><td>@ViewBag.currentbr.Originator</td></tr>
                         <tr><td class="col-md-4">Original Date</td><td>@ViewBag.currentbr.OriginalDate.ToString("yyyy-MM-dd hh:mm:ss")</td></tr>
                         <tr><td class="col-md-4">Description</td><td>@ViewBag.currentbr.Description</td></tr>
-                        <tr><td class="col-md-4">Status</td><td>@ViewBag.currentbr.Status</td></tr>
+                        <tr><td class="col-md-4">Agile Status</td><td>@ViewBag.currentbr.Status</td></tr>
                     </table>
                 </div>
                 <div class="row">
@@ -54,7 +54,7 @@
                         <table class="table table-bordered table-hover cus-table">
                             @foreach (var item in ViewBag.currentbrjolist)
                             {
-                                <tr><td>@item.JONumber</td><td>OPEN</td></tr>
+                                <tr><td>@item.JONumber</td><td>@item.JORealStatus</td></tr>
                             }
                         </table>
                         @if (ViewBag.sub_total_pages > 1)
