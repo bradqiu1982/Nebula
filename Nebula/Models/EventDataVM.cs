@@ -29,6 +29,33 @@ namespace Nebula.Models
             end = _end;
         }
 
+        private static string GetUniqKey()
+        {
+            return Guid.NewGuid().ToString("N");
+        }
+
+        public static void AddUpdateSchedule(string jonum, string workflow, DateTime date)
+        {
+            var exist = RetrieveSchedule(jonum, workflow);
+            if (exist.Count == 0)
+            {
+                var sql = "insert into JOScheduleEventDataVM(jonum,id,workflow,className,description,starttime,endtime) "
+                    + " values('<jonum>','<id>','<workflow>','<className>','<description>','<starttime>','<endtime>')";
+                sql = sql.Replace("<jonum>", jonum).Replace("<id>", GetUniqKey())
+                    .Replace("<workflow>", workflow).Replace("<className>", "")
+                    .Replace("<description>", "").Replace("<starttime>", date.ToString("yyyy-MM-dd HH:mm:ss")).Replace("<endtime>", date.ToString("yyyy-MM-dd HH:mm:ss"));
+                DBUtility.ExeLocalSqlNoRes(sql);
+            }
+            else
+            {
+                if (date > Convert.ToDateTime(exist[0].end))
+                {
+                    var sql = "update JOScheduleEventDataVM set endtime = '<endtime>' where id = '<id>'";
+                    sql = sql.Replace("id", exist[0].id).Replace("<endtime>", date.ToString("yyyy-MM-dd HH:mm:ss"));
+                }
+            }
+        }
+
         public bool AddSchedule()
         {
             var exist = RetrieveSchedule(jonum, title);
@@ -192,7 +219,7 @@ namespace Nebula.Models
             }
             else
             {
-                return DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
         }
 

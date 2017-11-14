@@ -462,7 +462,7 @@ namespace Nebula.Models
         public static bool BRExist(string brnum, DateTime originaltime)
         {
             var sql = "select BRNumber from BRAgileBaseInfo where BRNumber = '<BRNumber>' and OriginalDate = '<OriginalDate>'";
-            sql = sql.Replace("<BRNumber>",brnum).Replace("<OriginalDate>", originaltime.ToString("yyyy-MM-dd hh:mm:ss"));
+            sql = sql.Replace("<BRNumber>",brnum).Replace("<OriginalDate>", originaltime.ToString("yyyy-MM-dd HH:mm:ss"));
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             if (dbret.Count > 0)
                 return true;
@@ -477,7 +477,7 @@ namespace Nebula.Models
                 + " values('<BRKey>','<BRNumber>',N'<Description>','<Status>','<Workflow>','<Originator>','<ChangeType>','<OriginalDate>','<BRStatus>')";
             sql = sql.Replace("<BRKey>",brkey).Replace("<BRNumber>", BRNumber).Replace("<Description>", Description)
                 .Replace("<Status>", Status).Replace("<Workflow>", Workflow).Replace("<Originator>", Originator)
-                .Replace("<ChangeType>", ChangeType).Replace("<OriginalDate>", OriginalDate.ToString("yyyy-MM-dd hh:mm:ss")).Replace("<BRStatus>",BRJOSYSTEMSTATUS.KICKOFF);
+                .Replace("<ChangeType>", ChangeType).Replace("<OriginalDate>", OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")).Replace("<BRStatus>",BRJOSYSTEMSTATUS.KICKOFF);
             DBUtility.ExeLocalSqlNoRes(sql);
 
             foreach (var item in brworkflowlist)
@@ -488,6 +488,13 @@ namespace Nebula.Models
             { item.AddBRAgileInfo(brkey, BRNumber); }
             foreach (var item in attach)
             { item.AddBRAgileInfo(brkey, BRNumber); }
+        }
+
+        public static void UpdateBRStatus(string brkey, string status)
+        {
+            var sql = "update BRAgileBaseInfo set BRStatus = '<BRStatus>' where BRKey = '<BRKey>'";
+            sql = sql.Replace("<BRKey>", brkey).Replace("<BRStatus>", status);
+            DBUtility.ExeLocalSqlNoRes(sql);
         }
 
         public void UpdateBRAgileInfo()

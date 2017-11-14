@@ -116,7 +116,7 @@ namespace Nebula.Models
         public static JOBaseInfo CreateItem(List<string> line)
         {
             var ret = new JOBaseInfo();
-            ret.JONumber = line[11];
+            ret.JONumber = line[11].ToUpper().Trim();
             ret.JOType = line[13];
             ret.JOStatus = line[14];
             ret.DateReleased = DateTime.Parse(line[17]);
@@ -152,6 +152,43 @@ namespace Nebula.Models
             DBUtility.ExeLocalSqlNoRes(sql);
         }
 
+        public static void CloseJO(string jonum)
+        {
+            var sql = "update JOBaseInfo set JORealStatus = '<JORealStatus>' where JONumber = '<JONumber>'";
+            sql = sql.Replace("<JORealStatus>", BRJOSYSTEMSTATUS.CLOSE).Replace("<JONumber>", jonum);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static void CloseBR(string jonum)
+        {
+            var sql = "select BRKey from JOBaseInfo where JONumber = '<JONumber>'";
+            sql = sql.Replace("<JONumber>", jonum);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            if (dbret.Count > 0)
+            {
+                var brkey = Convert.ToString(dbret[0][0]);
+                sql = "select BRKey from JOBaseInfo where BRKey = '<BRKey>' and JORealStatus = '<JORealStatus>'";
+                sql = sql.Replace("<BRKey>", brkey).Replace("<JORealStatus>", BRJOSYSTEMSTATUS.OPEN);
+                dbret = DBUtility.ExeLocalSqlWithRes(sql);
+                if (dbret.Count == 0)
+                {
+                    BRAgileBaseInfo.UpdateBRStatus(brkey, BRJOSYSTEMSTATUS.CLOSE);
+                }//no jo is open under current BR
+            }//get brkey
+        }
+
+        public static void OpenBR(string jonum)
+        {
+            var sql = "select BRKey from JOBaseInfo where JONumber = '<JONumber>'";
+            sql = sql.Replace("<JONumber>", jonum);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            if (dbret.Count > 0)
+            {
+                var brkey = Convert.ToString(dbret[0][0]);
+                BRAgileBaseInfo.UpdateBRStatus(brkey, BRJOSYSTEMSTATUS.OPEN);
+            }//get brkey
+        }
+
         public static List<string> RetrieveJOin3Month()
         {
             var ret = new List<string>();
@@ -177,61 +214,86 @@ namespace Nebula.Models
             return ret;
         }
 
-        public static List<JOBaseInfo> RetrieveActiveJoInfo(string reviewer)
+        public static List<string> RetrieveJOin3MonthWithStatus(string status)
         {
-            var ret = new List<JOBaseInfo>();
-
-            var sql = string.Empty;
-            if (reviewer == null)
+            var ret = new List<string>();
+            var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
+            var brkeylist = brdict.Values.ToList();
+            if (brkeylist.Count > 0)
             {
-                sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from JOBaseInfo j (nolock) "
-                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey order by JONumber";
-            }
-            else
-            {
-                reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-                sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from JOBaseInfo j (nolock) "
-                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where a.Originator = '<Originator>' order by JONumber";
-                sql = sql.Replace("<Originator>", reviewer);
-            }
-            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
-            foreach (var line in dbret)
-            {
-                var temp = new JOBaseInfo();
-                temp.Originator = Convert.ToString(line[0]);
-                temp.BRNumber = Convert.ToString(line[1]);
-                temp.JONumber = Convert.ToString(line[2]);
-                temp.JOType = Convert.ToString(line[3]);
-                temp.JOStatus = Convert.ToString(line[4]);
-                temp.DateReleased = Convert.ToDateTime(line[5]);
-                temp.PN = Convert.ToString(line[6]);
-                temp.PNDesc = Convert.ToString(line[7]);
-                temp.Category = Convert.ToString(line[8]);
-                temp.StartQuantity = ERPVM.Convert2Int(line[9]);
-                temp.MRPNetQuantity = ERPVM.Convert2Int(line[10]);
-                temp.QuantityCompleted = ERPVM.Convert2Int(line[11]);
-                temp.WIP = ERPVM.Convert2Int(line[12]);
-                temp.IncurredSum = ERPVM.Convert2Double(line[13]);
-                temp.IncurredMaterialSum = ERPVM.Convert2Double(line[14]);
-                temp.Planner = Convert.ToString(line[15]);
-                temp.CreatedBy = Convert.ToString(line[16]);
-                temp.ExistQty = ERPVM.Convert2Int(line[17]);
-                temp.PNYield = Convert.ToString(line[18]);
-                temp.JORealStatus = Convert.ToString(line[19]);
-
-                if (string.IsNullOrEmpty(temp.PNYield))
+                var brcond = "'";
+                foreach (var k in brkeylist)
                 {
-                    temp.PNYield = RetrivePNYield(temp.PN);
-                    UpdatePNYield(temp.PN, temp.PNYield);
+                    brcond = brcond + k + "','";
                 }
+                brcond = brcond.Substring(0, brcond.Length - 2);
 
-                ret.Add(temp);
+                var sql = "select distinct JONumber from JOBaseInfo where BRKey in (<BRCOND>) and JORealStatus = '<JORealStatus>'";
+                sql = sql.Replace("<BRCOND>", brcond).Replace("<JORealStatus>",status);
+                var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+                foreach (var line in dbret)
+                {
+                    ret.Add(Convert.ToString(line[0]));
+                }
             }
-
             return ret;
         }
+
+        //public static List<JOBaseInfo> RetrieveActiveJoInfo(string reviewer)
+        //{
+        //    var ret = new List<JOBaseInfo>();
+
+        //    var sql = string.Empty;
+        //    if (reviewer == null)
+        //    {
+        //        sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
+        //              + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from JOBaseInfo j (nolock) "
+        //              + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey order by JONumber";
+        //    }
+        //    else
+        //    {
+        //        reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
+        //        sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
+        //              + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from JOBaseInfo j (nolock) "
+        //              + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where a.Originator = '<Originator>' order by JONumber";
+        //        sql = sql.Replace("<Originator>", reviewer);
+        //    }
+        //    var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+        //    foreach (var line in dbret)
+        //    {
+        //        var temp = new JOBaseInfo();
+        //        temp.Originator = Convert.ToString(line[0]);
+        //        temp.BRNumber = Convert.ToString(line[1]);
+        //        temp.JONumber = Convert.ToString(line[2]);
+        //        temp.JOType = Convert.ToString(line[3]);
+        //        temp.JOStatus = Convert.ToString(line[4]);
+        //        temp.DateReleased = Convert.ToDateTime(line[5]);
+        //        temp.PN = Convert.ToString(line[6]);
+        //        temp.PNDesc = Convert.ToString(line[7]);
+        //        temp.Category = Convert.ToString(line[8]);
+        //        temp.StartQuantity = ERPVM.Convert2Int(line[9]);
+        //        temp.MRPNetQuantity = ERPVM.Convert2Int(line[10]);
+        //        temp.QuantityCompleted = ERPVM.Convert2Int(line[11]);
+        //        temp.WIP = ERPVM.Convert2Int(line[12]);
+        //        temp.IncurredSum = ERPVM.Convert2Double(line[13]);
+        //        temp.IncurredMaterialSum = ERPVM.Convert2Double(line[14]);
+        //        temp.Planner = Convert.ToString(line[15]);
+        //        temp.CreatedBy = Convert.ToString(line[16]);
+        //        temp.ExistQty = ERPVM.Convert2Int(line[17]);
+        //        temp.PNYield = Convert.ToString(line[18]);
+        //        temp.JORealStatus = Convert.ToString(line[19]);
+
+        //        if (string.IsNullOrEmpty(temp.PNYield))
+        //        {
+        //            temp.PNYield = RetrivePNYield(temp.PN);
+        //            UpdatePNYield(temp.PN, temp.PNYield);
+        //        }
+
+        //        ret.Add(temp);
+        //    }
+
+        //    return ret;
+        //}
 
         public static List<JOBaseInfo> RetrieveActiveJoInfoWithStatus(string reviewer,string jostatus)
         {
@@ -686,6 +748,7 @@ namespace Nebula.Models
             }
         }
 
+
         public static void LoadJOBaseInfo(Controller ctrl)
         {
             var joexistmainstore = LoadJOExistMainstore(ctrl);
@@ -698,6 +761,41 @@ namespace Nebula.Models
                 var data = ExcelReader.RetrieveDataFromExcel(descfile, null);
                 if (data.Count > 0)
                 {
+
+                    //retrieve jo from database with open status
+                    var dbopeningjo = JOBaseInfo.RetrieveJOin3MonthWithStatus(BRJOSYSTEMSTATUS.OPEN);
+
+                    //retrieve wip jo from excel data
+                    var wipjodict = new Dictionary<string, bool>();
+                    foreach (var line in data)
+                    {
+                        var jobnum = line[11].ToUpper().Trim();
+                        if (!string.IsNullOrEmpty(jobnum) && !wipjodict.ContainsKey(jobnum))
+                        {
+                            wipjodict.Add(jobnum, true);
+                        }
+                    }
+                    //retrieve jo which not exist in wip jo dictionary, close this jo
+                    var jo2beclose = new List<string>();
+                    foreach (var openjo in dbopeningjo)
+                    {
+                        if (!wipjodict.ContainsKey(openjo))
+                        {
+                            jo2beclose.Add(openjo);
+                        }
+                    }
+                    //close the jo which not in wip list
+                    foreach (var jo2close in jo2beclose)
+                    {
+                        JOBaseInfo.CloseJO(jo2close);
+                    }
+                    //close the br
+                    foreach (var jo2close in jo2beclose)
+                    {
+                        JOBaseInfo.CloseBR(jo2close);
+                    }
+
+
                     var jobaseinfolist = new List<JOBaseInfo>();
 
                     var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
@@ -718,6 +816,7 @@ namespace Nebula.Models
                                     tempinfo.ExistQty = joexistmainstore[jopnkey];
                                 }
                                 jobaseinfolist.Add(tempinfo);
+                                break;
                             }
                         }//end foreach
                     }//end foreach
@@ -725,6 +824,11 @@ namespace Nebula.Models
                     foreach (var item in jobaseinfolist)
                     {
                         item.StoreInfo();
+                    }
+
+                    foreach (var item in jobaseinfolist)
+                    {
+                        JOBaseInfo.OpenBR(item.JONumber);
                     }
                 }//end if
             }//end if
@@ -742,21 +846,31 @@ namespace Nebula.Models
                 {
                     var jocomponentlist = new List<JOComponentInfo>();
 
-                    var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
-                    var brlist = brdict.Keys.ToList();
+                    var jolist = JOBaseInfo.RetrieveJOin3MonthWithStatus(BRJOSYSTEMSTATUS.OPEN);
+                    var jodict = new Dictionary<string, bool>();
+                    foreach (var jo in jolist)
+                    {
+                        if (!jodict.ContainsKey(jo))
+                        {
+                            jodict.Add(jo, true);
+                        }
+                    }
+
+                    //var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
+                    //var brlist = brdict.Keys.ToList();
                     foreach (var line in data)
                     {
-                        var jobnum = line[0];
-                        foreach (var br in brlist)
-                        {
-                            if (jobnum.ToUpper().Contains(br.ToUpper() + "-"))
+                        var jobnum = line[0].ToUpper().Trim();
+
+                            if (jodict.ContainsKey(jobnum))
                             {
                                 var tempinfo = JOComponentInfo.CreateItem(line);
-                                tempinfo.BRKey = brdict[br];
-                                tempinfo.BRNumber = br;
+                                //tempinfo.BRKey = brdict[br];
+                                //tempinfo.BRNumber = br;
                                 jocomponentlist.Add(tempinfo);
+                                break;
                             }
-                        }//end foreach
+
                     }//end foreach
                     foreach (var item in jocomponentlist)
                     {

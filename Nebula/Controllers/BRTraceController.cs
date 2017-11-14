@@ -140,7 +140,7 @@ namespace Nebula.Controllers
                 var res = new JsonResult();
                 res.Data = new { success = true
                     , Originator = brinfolist[0].Originator
-                    , OriginalDate = brinfolist[0].OriginalDate.ToString("yyyy-MM-dd hh:mm:ss")
+                    , OriginalDate = brinfolist[0].OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")
                     , Description = brinfolist[0].Description
                     , Status = brinfolist[0].Status
                 };
@@ -169,7 +169,7 @@ namespace Nebula.Controllers
                     pnyd = jolist[0].PNYieldStr,
                     jotype = jolist[0].Category+"-"+jolist[0].JOType,
                     jostat = jolist[0].JOStatus,
-                    jodate = jolist[0].DateReleased.ToString("yyyy-MM-dd hh:mm:ss"),
+                    jodate = jolist[0].DateReleased.ToString("yyyy-MM-dd HH:mm:ss"),
                     jowip = jolist[0].WIP.ToString(),
                     joplanner = jolist[0].Planner
                 };
@@ -264,15 +264,12 @@ namespace Nebula.Controllers
         public ActionResult HeartBeat()
         {
             UserAuth();
-
-            //UpdateExistBR();
-            //LoadNewBR();
-            //ERPVM.LoadJOBaseInfo(this);
-            //ERPVM.LoadJOComponentInfo(this);
-            //CamstarVM.UpdatePNWorkflow();
-            //CamstarVM.UpdateJoStatus();
-
-            var list = RetrievePNPareto("1242365");
+            UpdateExistBR();
+            LoadNewBR();
+            ERPVM.LoadJOBaseInfo(this);
+            ERPVM.LoadJOComponentInfo(this);
+            CamstarVM.UpdatePNWorkflow();
+            CamstarVM.UpdateJoMESStatus();
 
             return View();
         }

@@ -1,7 +1,7 @@
 ﻿AGILEURL:::http://sny-agile9app-p64:7001/Agile
-LOCALSITEPORT:::80
-TRACEPM:::Rose Wang;Chris Bao;
-FIRSTTRACETIME:::2017-07-01 10:00:00
+LOCALSITEPORT:::8082
+TRACEPM:::Rose Wang;Chris Bao;Albert Cui;Stone Fang
+FIRSTTRACETIME:::2017-10-01 10:00:00
 
 APPEMAILADRESS:::WXNPI.Trace@finisar.com
 APPEMAILPWD:::abc@12345
@@ -9,7 +9,7 @@ EMAILSERVER:::wmail.finisar.com
 
 SHAREFOLDERUSER:::brad.qiu
 SHAREFOLDERDOMIN:::china
-SHAREFOLDERPWD:::wangle@5323
+SHAREFOLDERPWD:::wangle@12345
 ERPJOBASEINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\WXI Finisar WIP Value Report.xls
 ERPJOCOMPONENTINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\Jobs_WXI.CSV
 ERPJOEXISTMAINSTORE:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WXI.csv

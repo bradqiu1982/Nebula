@@ -151,8 +151,13 @@ var BR = function(){
 
         $('body').on('click', '.label-color', function () {
             var page = $(".current-page").html();
+            if (page) {
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html()
                 + '&SearchWords=' + $('#keywords').val() + '&p=' + page;
+            } else {
+                window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html()
+                    + '&SearchWords=' + $('#keywords').val() + '&p=1';
+            }
         })
         
         $('body').on('click', '.pages', function () {

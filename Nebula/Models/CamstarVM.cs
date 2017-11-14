@@ -214,9 +214,9 @@ namespace Nebula.Models
         }
 
 
-        public static void UpdateJoStatus()
+        public static void UpdateJoMESStatus()
         {
-            var jolist = JOBaseInfo.RetrieveJOin3Month();
+            var jolist = JOBaseInfo.RetrieveJOin3MonthWithStatus(BRJOSYSTEMSTATUS.OPEN);
             foreach (var jo in jolist)
             {
                 var sql = " select c.ContainerName,w.WorkflowStepName,cs.LastMoveDate from [InsiteDB].[insite].[Container] c (nolock) "
@@ -237,6 +237,8 @@ namespace Nebula.Models
                         temp.WorkflowStepName = Convert.ToString(line[1]);
                         temp.LastMoveDate = Convert.ToDateTime(line[2]);
                         jostatuslist.Add(temp);
+
+                        JOScheduleEventDataVM.AddUpdateSchedule(temp.JONumber, temp.WorkflowStepName, temp.LastMoveDate);
                     }
                     catch (Exception ex) { }
                     

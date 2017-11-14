@@ -19,7 +19,7 @@ namespace Nebula.Models
                 var dbret = DBUtility.ExeLocalSqlWithRes(sql);
                 if (dbret.Count > 0)
                 {
-                    ret = Convert.ToDateTime(dbret[0][0]).ToString("yyyy-MM-dd hh:mm:ss");
+                    ret = Convert.ToDateTime(dbret[0][0]).ToString("yyyy-MM-dd HH:mm:ss");
                 }
             }
             catch (Exception ex)
