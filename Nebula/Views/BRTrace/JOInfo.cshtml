@@ -31,6 +31,8 @@
         <div class="nav-type">
             <div class="nav-link" id="brnav">BR</div>
             <div class="nav-link nav-active" id="jonav">JO</div>
+            <div class="nav-link" id="brclosenav">BR (closed)</div>
+            <div class="nav-link" id="joclosenav">JO (closed)</div>
             <div class="nav-line"></div>
         </div>
         <div class="jo-detail">
@@ -46,7 +48,7 @@
                         <tr><td class="col-md-4">JO Type</td><td id="jo_type">@(Model.Category)-@(Model.JOType)</td></tr>
                         <tr><td class="col-md-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
                         <tr><td class="col-md-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td></tr>
-                        <tr><td class="col-md-4">WIP</td><td id="jo_wip">@(Model.WIP)</td></tr>
+                        <tr><td class="col-md-4">MRP Net QTY</td><td id="jo_wip">@(Model.MRPNetQuantity)</td></tr>
                         <tr><td class="col-md-4">Planer</td><td id="jo_planner">@(Model.Planner)</td></tr>
                     </table>
                 </div>

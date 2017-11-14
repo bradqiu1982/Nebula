@@ -61,6 +61,17 @@ namespace Nebula.Models
             {}
         }
 
+        private static bool IsDebug()
+        {
+            bool debugging = false;
+#if DEBUG
+            debugging = true;
+#else
+            debugging = false;
+#endif
+            return debugging;
+        }
+
         public static void RetrieveNewBR(string AGILEURL,string LOCALSITEPORT,string SAVELOCATION,string PMNames,string FirstTraceTime)
         {
             var args = "NEWBRQUERY " + AGILEURL + " " + LOCALSITEPORT + " " + SAVELOCATION;
@@ -77,7 +88,14 @@ namespace Nebula.Models
             {
                 myprocess.StartInfo.FileName = Path.Combine(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, @"Scripts\agiledownloadwraper\BRAgileDownload.exe").Replace("\\", "/");
                 myprocess.StartInfo.Arguments = args;
-                myprocess.StartInfo.CreateNoWindow = true;
+                if (IsDebug())
+                {
+                    myprocess.StartInfo.CreateNoWindow = false;
+                }
+                else
+                {
+                    myprocess.StartInfo.CreateNoWindow = true;
+                }
                 myprocess.Start();
             }
         }
@@ -95,7 +113,14 @@ namespace Nebula.Models
             {
                 myprocess.StartInfo.FileName = Path.Combine(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, @"Scripts\agiledownloadwraper\BRAgileDownload.exe").Replace("\\", "/");
                 myprocess.StartInfo.Arguments = args;
-                myprocess.StartInfo.CreateNoWindow = true;
+                if (IsDebug())
+                {
+                    myprocess.StartInfo.CreateNoWindow = false;
+                }
+                else
+                {
+                    myprocess.StartInfo.CreateNoWindow = true;
+                }
                 myprocess.Start();
             }
         }

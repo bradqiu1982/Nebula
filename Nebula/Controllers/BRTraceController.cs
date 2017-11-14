@@ -170,7 +170,7 @@ namespace Nebula.Controllers
                     jotype = jolist[0].Category+"-"+jolist[0].JOType,
                     jostat = jolist[0].JOStatus,
                     jodate = jolist[0].DateReleased.ToString("yyyy-MM-dd HH:mm:ss"),
-                    jowip = jolist[0].WIP.ToString(),
+                    jowip = jolist[0].MRPNetQuantity.ToString(),
                     joplanner = jolist[0].Planner
                 };
                 return res;
@@ -264,12 +264,21 @@ namespace Nebula.Controllers
         public ActionResult HeartBeat()
         {
             UserAuth();
+
             UpdateExistBR();
             LoadNewBR();
-            ERPVM.LoadJOBaseInfo(this);
-            ERPVM.LoadJOComponentInfo(this);
-            CamstarVM.UpdatePNWorkflow();
-            CamstarVM.UpdateJoMESStatus();
+
+            string datestring = DateTime.Now.ToString("yyyyMMdd");
+            string datefolder = Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
+            string newbrloaded = datefolder + "agilenewqueried";
+            if (Directory.Exists(newbrloaded))
+            {
+                ERPVM.LoadJOBaseInfo(this);
+                ERPVM.LoadJOComponentInfo(this);
+                CamstarVM.UpdatePNWorkflow();
+                CamstarVM.UpdateJoMESStatus();
+            }
+
 
             return View();
         }

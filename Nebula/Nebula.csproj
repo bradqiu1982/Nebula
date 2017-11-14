@@ -1061,9 +1061,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64289</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:80/</IISUrl>
+          <IISUrl>http://localhost:8082/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:80/Nebula</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:8082</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

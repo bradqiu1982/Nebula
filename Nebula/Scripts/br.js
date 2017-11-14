@@ -230,7 +230,7 @@ var BR = function(){
 
     var jodetail = function () {
         var jo_step_class = ['schedule', 'pro-line', 'pqe-oqc', 'warehouse'];
-        var jo_step_html = ['Schedule', 'Product Line', 'PQE/OQC', 'Ware House'];
+        var jo_step_html = ['Schedule', 'Product Line', 'Failure Distribution', 'TO BE'];
 
         $(function () {
             jo_step_skip($('#jo_step').val());

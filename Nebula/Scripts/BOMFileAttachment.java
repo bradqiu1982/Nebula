@@ -528,9 +528,9 @@ public class BOMFileAttachment {
 			
 			try
 			{
-				goLogger.info( "try to query: "+"http://localhost:"+LocalSitePort+"/Nebula/BRTrace/NewBR?BRLIST="+brstr);
+				goLogger.info( "try to query: "+"http://localhost:"+LocalSitePort+"/BRTrace/NewBR?BRLIST="+brstr);
 				
-				URL url = new URL("http://localhost:"+LocalSitePort+"/Nebula/BRTrace/NewBR?BRLIST="+brstr);
+				URL url = new URL("http://localhost:"+LocalSitePort+"/BRTrace/NewBR?BRLIST="+brstr);
 		        URLConnection URLconnection = url.openConnection();  
 		        HttpURLConnection httpConnection = (HttpURLConnection)URLconnection;  
 		        int responseCode = httpConnection.getResponseCode();
@@ -546,7 +546,7 @@ public class BOMFileAttachment {
 		        }
 		        else
 		        {
-		        	goLogger.error("Fail to access url:"+"http://localhost:"+LocalSitePort+"/Nebula/BRTrace/NewBR?BRLIST="+brstr);
+		        	goLogger.error("Fail to access url:"+"http://localhost:"+LocalSitePort+"/BRTrace/NewBR?BRLIST="+brstr);
 		        }
 			}catch(Exception ex)
 			{
@@ -558,9 +558,9 @@ public class BOMFileAttachment {
 	{
 			try
 			{
-				goLogger.info( "try to query: "+"http://localhost:"+LocalSitePort+"/Nebula/BRTrace/UpdateBR");
+				goLogger.info( "try to query: "+"http://localhost:"+LocalSitePort+"/BRTrace/UpdateBR");
 				
-				URL url = new URL("http://localhost:"+LocalSitePort+"/Nebula/BRTrace/UpdateBR");
+				URL url = new URL("http://localhost:"+LocalSitePort+"/BRTrace/UpdateBR");
 		        URLConnection URLconnection = url.openConnection();  
 		        HttpURLConnection httpConnection = (HttpURLConnection)URLconnection;  
 		        int responseCode = httpConnection.getResponseCode();
@@ -576,7 +576,7 @@ public class BOMFileAttachment {
 		        }
 		        else
 		        {
-		        	goLogger.error("Fail to access url:"+"http://localhost:"+LocalSitePort+"/Nebula/BRTrace/UpdateBR");
+		        	goLogger.error("Fail to access url:"+"http://localhost:"+LocalSitePort+"/BRTrace/UpdateBR");
 		        }
 			}catch(Exception ex)
 			{
