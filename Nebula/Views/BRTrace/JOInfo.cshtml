@@ -30,8 +30,9 @@
         </div>
         <div class="nav-type">
             <div class="nav-link" id="brnav">BR</div>
-            <div class="nav-link nav-active" id="jonav">JO</div>
+            <div class="nav-link" id="jonav">JO</div>
             <div class="nav-link" id="brclosenav">BR (closed)</div>
+            <div class="nav-link" id="brkickoffnav">BR (kickoff)</div>
             <div class="nav-link" id="joclosenav">JO (closed)</div>
             <div class="nav-line"></div>
         </div>
@@ -44,7 +45,7 @@
                 <div class="col-md-5 col-md-offset-1">
                     <table class="table table-bordered des-table">
                         <tr><td class="col-md-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc)</td></tr>
-                        <tr><td class="col-md-4">PN Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
+                        <tr><td class="col-md-4">PN Test Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
                         <tr><td class="col-md-4">JO Type</td><td id="jo_type">@(Model.Category)-@(Model.JOType)</td></tr>
                         <tr><td class="col-md-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
                         <tr><td class="col-md-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td></tr>

@@ -62,6 +62,18 @@ namespace Nebula.Models
             return ret;
         }
 
+        public static Dictionary<string,bool> RetrievePNFromJoInfo()
+        {
+            var ret = new Dictionary<string, bool>();
+            var sql = "select distinct PN from PNWorkflow";
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                ret.Add(Convert.ToString(line[0]),true);
+            }
+            return ret;
+        }
+
         public string PN { set; get; }
         public string WorkflowStepName { set; get; }
         public int Sequence { set; get; }
@@ -153,24 +165,21 @@ namespace Nebula.Models
     {
         public static void UpdatePNWorkflow()
         {
-            var pnlist = AgileAffectItem.BRPNIn3Month();
+            var existpn = PNWorkflow.RetrievePNFromJoInfo();
+            var pnlist = JOBaseInfo.RetrievePNFromJoInfoWithStatus(BRJOSYSTEMSTATUS.OPEN);
+
             var pnnoworkflow = new List<string>();
             foreach (var p in pnlist)
             {
-                if (!PNWorkflow.PNWorkflowExist(p))
+                if(!existpn.ContainsKey(p))
                 {
                     pnnoworkflow.Add(p);
                 }
             }//end foreach
 
-            if (pnnoworkflow.Count > 0)
+            foreach (var p in pnnoworkflow)
             {
-                var pncond = "'";
-                foreach (var p in pnnoworkflow)
-                {
-                    pncond = pncond + p + "','";
-                }
-                pncond = pncond.Substring(0, pncond.Length - 2);
+                var pncond = "'"+p+"'";
 
                 var sql = "select pb.ProductName,s.WorkflowStepName,s.Sequence from InsiteDB.insite.WorkflowStep s (nolock)"
                  + " left join InsiteDB.insite.Workflow w (nolock)on s.WorkflowID = w.WorkflowID"
@@ -210,13 +219,13 @@ namespace Nebula.Models
                 {
                     item.StoreWorkflow();
                 }
-            }//end if
+            }//end for
         }
 
 
         public static void UpdateJoMESStatus()
         {
-            var jolist = JOBaseInfo.RetrieveJOin3MonthWithStatus(BRJOSYSTEMSTATUS.OPEN);
+            var jolist = JOBaseInfo.RetrieveJOWithStatus(BRJOSYSTEMSTATUS.OPEN);
             foreach (var jo in jolist)
             {
                 var sql = " select c.ContainerName,w.WorkflowStepName,cs.LastMoveDate from [InsiteDB].[insite].[Container] c (nolock) "

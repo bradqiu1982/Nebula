@@ -53,12 +53,12 @@ namespace Nebula.Controllers
             if (string.IsNullOrEmpty(Status))
             {
                 allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN);
-                ViewBag.withstatus = "FALSE";
+                ViewBag.withstatus = BRJOSYSTEMSTATUS.OPEN;
             }
             else
             {
-                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.CLOSE);
-                ViewBag.withstatus = "TRUE";
+                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, Status);
+                ViewBag.withstatus = Status;
             }
             
             var page_size = 10;
@@ -78,12 +78,12 @@ namespace Nebula.Controllers
             if (string.IsNullOrEmpty(Status))
             {
                 allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN);
-                ViewBag.withstatus = "FALSE";
+                ViewBag.withstatus = BRJOSYSTEMSTATUS.OPEN;
             }
             else
             {
                 allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.CLOSE);
-                ViewBag.withstatus = "TRUE";
+                ViewBag.withstatus = BRJOSYSTEMSTATUS.CLOSE;
             }
             
 
@@ -325,6 +325,8 @@ namespace Nebula.Controllers
             ViewBag.JONum = JONum;
             ViewBag.Step = Step;
 
+            ViewBag.ProjectKey = "";
+
             var titlelist = new List<string>();
             titlelist.Add("Please select workflow");
             var jobaseinfo = JOBaseInfo.RetrieveJoInfo(JONum);
@@ -335,6 +337,8 @@ namespace Nebula.Controllers
                 {
                     titlelist.Add(flow.WorkflowStepName);
                 }
+
+                ViewBag.ProjectKey = jobaseinfo[0].ProjectKey;
             }
 
             var titlectrl = CreateSelectList(titlelist, "");

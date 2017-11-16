@@ -24,6 +24,7 @@ CREATE TABLE [dbo].[BRAgileBaseInfo] (
 );
 
 ALTER TABLE  [NebulaTrace].[dbo].[BRAgileBaseInfo] Add BRStatus NVARCHAR (200) DEFAULT ('CLOSE') NOT NULL;
+ALTER TABLE  [NebulaTrace].[dbo].[BRAgileBaseInfo] Add ProjectKey NVARCHAR (200) DEFAULT ('') NOT NULL;
 
 CREATE TABLE [dbo].[AgileAttach] (
 	[BRKey] NVARCHAR (200) DEFAULT ('') NOT NULL,
@@ -120,6 +121,9 @@ CREATE TABLE [dbo].[JOBaseInfo] (
 );
 
 ALTER TABLE  [NebulaTrace].[dbo].[JOBaseInfo] Add JORealStatus NVARCHAR (200) DEFAULT ('OPEN') NOT NULL;
+ALTER TABLE  [NebulaTrace].[dbo].[JOBaseInfo] Add PNTestYield NVARCHAR (200) DEFAULT ('') NOT NULL;
+ALTER TABLE  [NebulaTrace].[dbo].[JOBaseInfo] Add ProjectKey NVARCHAR (200) DEFAULT ('') NOT NULL;
+
 
 CREATE TABLE [dbo].[JOComponentInfo] (
 	[BRKey] NVARCHAR (200) DEFAULT ('') NOT NULL,
@@ -200,3 +204,4 @@ CREATE TABLE [dbo].[PNErrorDistribute] (
     [APVal4]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
 );
 
+ ALTER TABLE  [NebulaTrace].[dbo].[PNErrorDistribute] Add ProjectKey NVARCHAR (200) DEFAULT ('') NOT NULL;

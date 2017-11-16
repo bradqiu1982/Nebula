@@ -1,5 +1,6 @@
 ﻿var pnerrordistribution = function () {
-    var show = function (container, id) {
+    var show = function (container, id, pjkey) {
+        var temppjkey = $('#' + pjkey).val();
         var mychart = new Highcharts.chart(container, {
             title: {
                 text: 'PN Failure Pareto',
@@ -35,6 +36,30 @@
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0
+                },
+                series: {
+                    allowPointSelect: true,
+                    point:{
+                            events: {
+                            click: function (event) {
+                                if (temppjkey)
+                                {
+                                    var myurl = 'http://wuxinpi.china.ads.finisar.com/Project/UpdateProjectError2?ProjectKey=' + temppjkey + '&ErrorCode=' + this.category;
+                                    window.open(myurl, '_blank');
+                                }
+                            }
+                        }
+                    }
+
+                    //events: {
+                    //    click: function (event) {
+                    //        if (temppjkey)
+                    //        {
+                    //            var myurl = 'http://wuxinpi.china.ads.finisar.com/Project/UpdateProjectError2?ProjectKey=' + temppjkey + '&ErrorCode=' + event.point.name;
+                    //            window.open(myurl, '_blank');
+                    //        }
+                    //    }
+                    //}
                 }
             },
             yAxis: [{
@@ -103,8 +128,8 @@
     }
 
     return {
-        init: function (container, id) {
-            show(container, id);
+        init: function (container, id, pjkey) {
+            show(container, id, pjkey);
         }
     };
 }();

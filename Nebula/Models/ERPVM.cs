@@ -14,11 +14,13 @@ namespace Nebula.Models
             PN = "";
             ErrAttr = "";
             Amount = 0;
+            ProjectKey = "";
         }
 
         public string PN { set; get;}
         public string ErrAttr { set; get; }
         public int Amount { set; get; }
+        public string ProjectKey { set; get; }
     }
 
     public class PNErrorPareto
@@ -36,11 +38,13 @@ namespace Nebula.Models
             ModuleSerialNum = "";
             WhichTest = "";
             ErrAbbr = "";
+            ProjectKey = "";
         }
 
         public string ModuleSerialNum { set; get; }
         public string WhichTest { set; get; }
         public string ErrAbbr { set; get; }
+        public string ProjectKey { set; get; }
     }
 
     public class TestYield
@@ -110,6 +114,7 @@ namespace Nebula.Models
             ExistQty = 0;
             Originator = "";
             PNYield = "";
+            ProjectKey = "";
             JORealStatus = "";
     }
 
@@ -136,20 +141,28 @@ namespace Nebula.Models
 
         public void StoreInfo()
         {
-            PNYield = RetrivePNYield(PN);
+            var pjkey = "";
+            PNYield = RetrivePNYield(PN,out pjkey);
+            ProjectKey = pjkey;
 
             var sql = "delete from JOBaseInfo where JONumber = '<JONumber>'";
             sql = sql.Replace("<JONumber>", JONumber);
             DBUtility.ExeLocalSqlNoRes(sql);
 
-            sql = "insert into JOBaseInfo(BRKey,BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted,WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,APVal1,JORealStatus) "
-                + " values('<BRKey>','<BRNumber>','<JONumber>','<JOType>','<JOStatus>','<DateReleased>','<PN>','<PNDesc>','<Category>',<StartQuantity>,<MRPNetQuantity>,<QuantityCompleted>,<WIP>,<IncurredSum>,<IncurredMaterialSum>,'<Planner>','<CreatedBy>',<ExistQty>,'<APVal1>','<JORealStatus>')";
+            sql = "insert into JOBaseInfo(BRKey,BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted,WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,PNTestYield,JORealStatus,ProjectKey) "
+                + " values('<BRKey>','<BRNumber>','<JONumber>','<JOType>','<JOStatus>','<DateReleased>','<PN>','<PNDesc>','<Category>',<StartQuantity>,<MRPNetQuantity>,<QuantityCompleted>,<WIP>,<IncurredSum>,<IncurredMaterialSum>,'<Planner>','<CreatedBy>',<ExistQty>,'<PNTestYield>','<JORealStatus>','<ProjectKey>')";
             sql = sql.Replace("<BRKey>", BRKey).Replace("<BRNumber>", BRNumber).Replace("<JONumber>", JONumber).Replace("<JOType>", JOType).Replace("<JOStatus>", JOStatus)
                 .Replace("<DateReleased>", DateReleased.ToString()).Replace("<PN>", PN).Replace("<PNDesc>", PNDesc).Replace("<Category>", Category).Replace("<StartQuantity>", StartQuantity.ToString())
                 .Replace("<MRPNetQuantity>", MRPNetQuantity.ToString()).Replace("<QuantityCompleted>", QuantityCompleted.ToString()).Replace("<WIP>", WIP.ToString()).Replace("<IncurredSum>", IncurredSum.ToString("0.00"))
                 .Replace("<IncurredMaterialSum>", IncurredMaterialSum.ToString("0.00")).Replace("<Planner>", Planner).Replace("<CreatedBy>", CreatedBy)
-                .Replace("<ExistQty>", ExistQty.ToString()).Replace("<APVal1>",PNYield).Replace("<JORealStatus>",BRJOSYSTEMSTATUS.OPEN);
+                .Replace("<ExistQty>", ExistQty.ToString()).Replace("<PNTestYield>", PNYield).Replace("<JORealStatus>",BRJOSYSTEMSTATUS.OPEN).Replace("<ProjectKey>",pjkey);
             DBUtility.ExeLocalSqlNoRes(sql);
+
+            if (!string.IsNullOrEmpty(pjkey))
+            {
+                BRAgileBaseInfo.UpdateBRProjectkey(BRNumber, pjkey);
+            }
+
         }
 
         public static void CloseJO(string jonum)
@@ -189,111 +202,31 @@ namespace Nebula.Models
             }//get brkey
         }
 
-        public static List<string> RetrieveJOin3Month()
+        public static List<string> RetrieveJO()
         {
             var ret = new List<string>();
-            var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
-            var brkeylist = brdict.Values.ToList();
-            if (brkeylist.Count > 0)
-            {
-                var brcond = "'";
-                foreach (var k in brkeylist)
-                {
-                    brcond = brcond + k + "','";
-                }
-                brcond = brcond.Substring(0, brcond.Length - 2);
-
-                var sql = "select distinct JONumber from JOBaseInfo where BRKey in (<BRCOND>)";
-                sql = sql.Replace("<BRCOND>", brcond);
+                var sql = "select distinct JONumber from JOBaseInfo";
                 var dbret = DBUtility.ExeLocalSqlWithRes(sql);
                 foreach (var line in dbret)
                 {
                     ret.Add(Convert.ToString(line[0]));
                 }
-            }
             return ret;
         }
 
-        public static List<string> RetrieveJOin3MonthWithStatus(string status)
+        public static List<string> RetrieveJOWithStatus(string status)
         {
             var ret = new List<string>();
-            var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
-            var brkeylist = brdict.Values.ToList();
-            if (brkeylist.Count > 0)
-            {
-                var brcond = "'";
-                foreach (var k in brkeylist)
-                {
-                    brcond = brcond + k + "','";
-                }
-                brcond = brcond.Substring(0, brcond.Length - 2);
 
-                var sql = "select distinct JONumber from JOBaseInfo where BRKey in (<BRCOND>) and JORealStatus = '<JORealStatus>'";
-                sql = sql.Replace("<BRCOND>", brcond).Replace("<JORealStatus>",status);
+                var sql = "select distinct JONumber from JOBaseInfo where JORealStatus = '<JORealStatus>'";
+                sql = sql.Replace("<JORealStatus>",status);
                 var dbret = DBUtility.ExeLocalSqlWithRes(sql);
                 foreach (var line in dbret)
                 {
                     ret.Add(Convert.ToString(line[0]));
                 }
-            }
             return ret;
         }
-
-        //public static List<JOBaseInfo> RetrieveActiveJoInfo(string reviewer)
-        //{
-        //    var ret = new List<JOBaseInfo>();
-
-        //    var sql = string.Empty;
-        //    if (reviewer == null)
-        //    {
-        //        sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-        //              + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from JOBaseInfo j (nolock) "
-        //              + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey order by JONumber";
-        //    }
-        //    else
-        //    {
-        //        reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-        //        sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-        //              + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from JOBaseInfo j (nolock) "
-        //              + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where a.Originator = '<Originator>' order by JONumber";
-        //        sql = sql.Replace("<Originator>", reviewer);
-        //    }
-        //    var dbret = DBUtility.ExeLocalSqlWithRes(sql);
-        //    foreach (var line in dbret)
-        //    {
-        //        var temp = new JOBaseInfo();
-        //        temp.Originator = Convert.ToString(line[0]);
-        //        temp.BRNumber = Convert.ToString(line[1]);
-        //        temp.JONumber = Convert.ToString(line[2]);
-        //        temp.JOType = Convert.ToString(line[3]);
-        //        temp.JOStatus = Convert.ToString(line[4]);
-        //        temp.DateReleased = Convert.ToDateTime(line[5]);
-        //        temp.PN = Convert.ToString(line[6]);
-        //        temp.PNDesc = Convert.ToString(line[7]);
-        //        temp.Category = Convert.ToString(line[8]);
-        //        temp.StartQuantity = ERPVM.Convert2Int(line[9]);
-        //        temp.MRPNetQuantity = ERPVM.Convert2Int(line[10]);
-        //        temp.QuantityCompleted = ERPVM.Convert2Int(line[11]);
-        //        temp.WIP = ERPVM.Convert2Int(line[12]);
-        //        temp.IncurredSum = ERPVM.Convert2Double(line[13]);
-        //        temp.IncurredMaterialSum = ERPVM.Convert2Double(line[14]);
-        //        temp.Planner = Convert.ToString(line[15]);
-        //        temp.CreatedBy = Convert.ToString(line[16]);
-        //        temp.ExistQty = ERPVM.Convert2Int(line[17]);
-        //        temp.PNYield = Convert.ToString(line[18]);
-        //        temp.JORealStatus = Convert.ToString(line[19]);
-
-        //        if (string.IsNullOrEmpty(temp.PNYield))
-        //        {
-        //            temp.PNYield = RetrivePNYield(temp.PN);
-        //            UpdatePNYield(temp.PN, temp.PNYield);
-        //        }
-
-        //        ret.Add(temp);
-        //    }
-
-        //    return ret;
-        //}
 
         public static List<JOBaseInfo> RetrieveActiveJoInfoWithStatus(string reviewer,string jostatus)
         {
@@ -303,7 +236,7 @@ namespace Nebula.Models
             if (reviewer == null)
             {
                 sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from JOBaseInfo j (nolock) "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.PNTestYield,JORealStatus,j.ProjectKey from JOBaseInfo j (nolock) "
                       + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey  where JORealStatus = '<JORealStatus>'  order by JONumber";
                 sql = sql.Replace("<JORealStatus>", jostatus);
             }
@@ -311,7 +244,7 @@ namespace Nebula.Models
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
                 sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from JOBaseInfo j (nolock) "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.PNTestYield,JORealStatus,j.ProjectKey from JOBaseInfo j (nolock) "
                       + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where a.Originator = '<Originator>' and JORealStatus = '<JORealStatus>' order by JONumber";
                 sql = sql.Replace("<Originator>", reviewer).Replace("<JORealStatus>", jostatus);
             }
@@ -339,11 +272,20 @@ namespace Nebula.Models
                 temp.ExistQty = ERPVM.Convert2Int(line[17]);
                 temp.PNYield = Convert.ToString(line[18]);
                 temp.JORealStatus = Convert.ToString(line[19]);
+                temp.ProjectKey = Convert.ToString(line[20]);
 
                 if (string.IsNullOrEmpty(temp.PNYield))
                 {
-                    temp.PNYield = RetrivePNYield(temp.PN);
-                    UpdatePNYield(temp.PN, temp.PNYield);
+                    var pjkey = "";
+                    temp.PNYield = RetrivePNYield(temp.PN,out pjkey);
+                    temp.ProjectKey = pjkey;
+
+                    if (!string.IsNullOrEmpty(pjkey))
+                    {
+                        UpdatePNYield(temp.PN, temp.PNYield);
+                        UpdatePNProjectKey(temp.BRNumber, pjkey);
+                        BRAgileBaseInfo.UpdateBRProjectkey(temp.BRNumber, pjkey);
+                    }
                 }
 
                 ret.Add(temp);
@@ -359,7 +301,7 @@ namespace Nebula.Models
             var ret = new List<JOBaseInfo>();
 
             var sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus  from  JOBaseInfo j (nolock) "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.PNTestYield,JORealStatus,j.ProjectKey  from  JOBaseInfo j (nolock) "
                       + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where j.JONumber like '%<JONumber>%' ";
             sql = sql.Replace("<JONumber>", JoNum);
 
@@ -387,7 +329,7 @@ namespace Nebula.Models
                 temp.ExistQty = ERPVM.Convert2Int(line[17]);
                 temp.PNYield = Convert.ToString(line[18]);
                 temp.JORealStatus = Convert.ToString(line[19]);
-
+                temp.ProjectKey = Convert.ToString(line[20]);
                 ret.Add(temp);
             }
 
@@ -399,7 +341,7 @@ namespace Nebula.Models
             var ret = new List<JOBaseInfo>();
 
             var sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.APVal1,JORealStatus from  JOBaseInfo j (nolock) "
+                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.PNTestYield,JORealStatus,j.ProjectKey from  JOBaseInfo j (nolock) "
                       + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where j.BRNumber = '<BRNumber>' ";
             sql = sql.Replace("<BRNumber>", BRNum);
 
@@ -427,6 +369,7 @@ namespace Nebula.Models
                 temp.ExistQty = ERPVM.Convert2Int(line[17]);
                 temp.PNYield = Convert.ToString(line[18]);
                 temp.JORealStatus = Convert.ToString(line[19]);
+                temp.ProjectKey = Convert.ToString(line[20]);
 
                 ret.Add(temp);
             }
@@ -434,21 +377,21 @@ namespace Nebula.Models
             return ret;
         }
 
-        private static void StorePNErrorSum(string pn, string errattr, string amount)
+        private static void StorePNErrorSum(string pn, string errattr, string amount,string pjkey)
         {
             var sql = "delete from PNErrorDistribute where PN = '<PN>' and ErrAttr = '<ErrAttr>'";
             sql = sql.Replace("<PN>",pn).Replace("<ErrAttr>",errattr);
             DBUtility.ExeLocalSqlNoRes(sql);
 
-            sql = "insert into PNErrorDistribute(PN,ErrAttr,AMount) values('<PN>','<ErrAttr>',<AMount>)";
-            sql = sql.Replace("<PN>", pn).Replace("<ErrAttr>", errattr).Replace("<AMount>", amount);
+            sql = "insert into PNErrorDistribute(PN,ErrAttr,AMount,ProjectKey) values('<PN>','<ErrAttr>',<AMount>,'<ProjectKey>')";
+            sql = sql.Replace("<PN>", pn).Replace("<ErrAttr>", errattr).Replace("<AMount>", amount).Replace("<ProjectKey>",pjkey);
             DBUtility.ExeLocalSqlNoRes(sql);
         }
 
         public static List<PNErrorDistribute> RetrievePNErrorSum(string pn)
         {
             var ret = new List<PNErrorDistribute>();
-            var sql = "select PN,ErrAttr,AMount from PNErrorDistribute where PN = '<PN>'";
+            var sql = "select PN,ErrAttr,AMount,ProjectKey from PNErrorDistribute where PN = '<PN>'";
             sql = sql.Replace("<PN>", pn);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             foreach (var line in dbret)
@@ -457,6 +400,7 @@ namespace Nebula.Models
                 temp.PN = Convert.ToString(line[0]);
                 temp.ErrAttr = Convert.ToString(line[1]);
                 temp.Amount = Convert.ToInt32(line[2]);
+                temp.ProjectKey = Convert.ToString(line[3]);
                 ret.Add(temp);
             }
             return ret;
@@ -509,7 +453,7 @@ namespace Nebula.Models
 
             foreach (var kv in perrdict)
             {
-                StorePNErrorSum(PN, kv.Key, kv.Value.ToString());
+                StorePNErrorSum(PN, kv.Key, kv.Value.ToString(), plist[0].ProjectKey);
             }
 
             var retyield = 1.0;
@@ -521,10 +465,10 @@ namespace Nebula.Models
         }
 
 
-        public static string RetrivePNYield(string PN)
+        public static string RetrivePNYield(string PN,out string pjkey)
         {
             var pjdatalist = new List<ProjectTestData>();
-            var sql = "select ModuleSerialNum,WhichTest,ErrAbbr,TestTimeStamp from ProjectTestData where PN = '<PN>'  order by ModuleSerialNum,TestTimeStamp DESC";
+            var sql = "select ModuleSerialNum,WhichTest,ErrAbbr,ProjectKey from ProjectTestData where PN = '<PN>'  order by ModuleSerialNum,TestTimeStamp DESC";
             sql = sql.Replace("<PN>", PN);
             var dbret = DBUtility.ExeTraceSqlWithRes(sql);
             foreach (var line in dbret)
@@ -533,24 +477,47 @@ namespace Nebula.Models
                 tempdata.ModuleSerialNum = Convert.ToString(line[0]);
                 tempdata.WhichTest = Convert.ToString(line[1]);
                 tempdata.ErrAbbr = Convert.ToString(line[2]);
+                tempdata.ProjectKey = Convert.ToString(line[3]);
                 pjdatalist.Add(tempdata);
             }
 
             if (pjdatalist.Count == 0)
             {
+                pjkey = "";
                 return "";
             }
             else
             {
+                pjkey = pjdatalist[0].ProjectKey;
                 return RetrieveCummYield(pjdatalist,PN);
             }
         }
 
         public static void UpdatePNYield(string PN, string yield)
         {
-            var sql = "Update JOBaseInfo set APVal1 = '<APVal1>' where PN = '<PN>'";
-            sql = sql.Replace("<APVal1>", yield).Replace("<PN>", PN);
+            var sql = "Update JOBaseInfo set PNTestYield = '<PNTestYield>' where PN = '<PN>'";
+            sql = sql.Replace("<PNTestYield>", yield).Replace("<PN>", PN);
             DBUtility.ExeLocalSqlWithRes(sql);
+        }
+
+        public static void UpdatePNProjectKey(string BRNUM, string pjkey)
+        {
+            var sql = "Update JOBaseInfo set ProjectKey = '<ProjectKey>' where BRNumber like '%<BRNumber>%'";
+            sql = sql.Replace("<ProjectKey>", pjkey).Replace("<BRNumber>", BRNUM+"-");
+            DBUtility.ExeLocalSqlWithRes(sql);
+        }
+
+        public static List<string> RetrievePNFromJoInfoWithStatus(string status)
+        {
+            var ret = new List<string>();
+            var sql = "select distinct PN from JOBaseInfo where JORealStatus = '<JORealStatus>'";
+            sql = sql.Replace("<JORealStatus>", status);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                ret.Add(Convert.ToString(line[0]));
+            }
+            return ret;
         }
 
         public string BRKey { set; get; }
@@ -575,6 +542,7 @@ namespace Nebula.Models
 
         public string JORealStatus { set; get; }
 
+        public string ProjectKey { set; get; }
         public string PNYield { set; get; }
         public string PNYieldStr { get {
                 if (string.IsNullOrEmpty(PNYield))
@@ -763,7 +731,7 @@ namespace Nebula.Models
                 {
 
                     //retrieve jo from database with open status
-                    var dbopeningjo = JOBaseInfo.RetrieveJOin3MonthWithStatus(BRJOSYSTEMSTATUS.OPEN);
+                    var dbopeningjo = JOBaseInfo.RetrieveJOWithStatus(BRJOSYSTEMSTATUS.OPEN);
 
                     //retrieve wip jo from excel data
                     var wipjodict = new Dictionary<string, bool>();
@@ -796,6 +764,7 @@ namespace Nebula.Models
                     }
 
 
+                    //load new jo
                     var jobaseinfolist = new List<JOBaseInfo>();
 
                     var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
@@ -846,7 +815,7 @@ namespace Nebula.Models
                 {
                     var jocomponentlist = new List<JOComponentInfo>();
 
-                    var jolist = JOBaseInfo.RetrieveJOin3MonthWithStatus(BRJOSYSTEMSTATUS.OPEN);
+                    var jolist = JOBaseInfo.RetrieveJOWithStatus(BRJOSYSTEMSTATUS.OPEN);
                     var jodict = new Dictionary<string, bool>();
                     foreach (var jo in jolist)
                     {

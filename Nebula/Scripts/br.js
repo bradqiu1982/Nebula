@@ -70,6 +70,10 @@ var BR = function(){
             window.location.href = '/BRTrace/DefaultBRList?p=1&Status=CLOSED';
         })
 
+        $('body').on('click', '#brkickoffnav', function () {
+            window.location.href = '/BRTrace/DefaultBRList?p=1&Status=KICKOFF';
+        })
+
         $('body').on('click', '#joclosenav', function () {
             window.location.href = '/BRTrace/DefaultJOList?p=1&Status=CLOSED';
         })
@@ -109,8 +113,8 @@ var BR = function(){
             else {
                 var withstatus = $('#withstatus').val();
                 if (withstatus) {
-                    if (withstatus === "TRUE") {
-                        window.location.href = '/BRTrace/DefaultBRList?p=' + page + "&Status=CLOSED";
+                    if (withstatus === "CLOSE" || withstatus === "KICKOFF") {
+                        window.location.href = '/BRTrace/DefaultBRList?p=' + page + '&Status=' + withstatus;
                     }
                     else {
                         window.location.href = '/BRTrace/DefaultBRList?p=' + page;
@@ -208,12 +212,7 @@ var BR = function(){
             else {
                 var withstatus = $('#withstatus').val();
                 if (withstatus) {
-                    if (withstatus === "TRUE") {
-                        window.location.href = '/BRTrace/DefaultJOList?p=' + page + "&Status=CLOSED";
-                    }
-                    else {
-                        window.location.href = '/BRTrace/DefaultJOList?p=' + page;
-                    }
+                    window.location.href = '/BRTrace/DefaultJOList?p=' + page + '&Status=' + withstatus;
                 }
                 else {
                     window.location.href = '/BRTrace/DefaultJOList';
@@ -258,7 +257,7 @@ var BR = function(){
             if (step >= 3) {
                 if ($('#pnerrdistribute').html() == false) {
                     $("#pnerrdistribute").attr('style', 'height: 600px');
-                    pnerrordistribution.init('pnerrdistribute', 'jo_num');
+                    pnerrordistribution.init('pnerrdistribute', 'jo_num','pjkey');
                 }
             }
             $('html,body').animate({

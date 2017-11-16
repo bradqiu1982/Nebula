@@ -146,28 +146,28 @@
         });
 
         CALENDAR.fullCalendar({
-            dayClick: function (date, jsEvent, view) {
-                $addEventModal.modal('show');
-                $input.data('daterangepicker').setOptions({
-                    "timePicker": true,
-                    "timePicker12Hour": false,
-                    "timePickerIncrement": 10,
-                    "format": 'YYYY-MM-DD'
-                });
-                $addEventModal.find('[name=title]')[0].selectedIndex = 0;
-                $addEventModal.find('.btn-add').html('Add event');
-                $addEventModal.find('.btn-danger').hide();
-                $addEventModal.find('[name=date-period]').data('daterangepicker').setStartDate(date);
-                $addEventModal.find('[name=date-period]').data('daterangepicker').setEndDate(date);
-            },
+            //dayClick: function (date, jsEvent, view) {
+            //    $addEventModal.modal('show');
+            //    $input.data('daterangepicker').setOptions({
+            //        "timePicker": true,
+            //        "timePicker12Hour": false,
+            //        "timePickerIncrement": 10,
+            //        "format": 'YYYY-MM-DD'
+            //    });
+            //    $addEventModal.find('[name=title]')[0].selectedIndex = 0;
+            //    $addEventModal.find('.btn-add').html('Add event');
+            //    $addEventModal.find('.btn-danger').hide();
+            //    $addEventModal.find('[name=date-period]').data('daterangepicker').setStartDate(date);
+            //    $addEventModal.find('[name=date-period]').data('daterangepicker').setEndDate(date);
+            //},
             header: {
                 left: 'today',
                 center: 'title',
                 right: 'prev,next'
             },
             defaultDate: default_date,
-            editable: true,
-            droppable: true,
+            editable: false,
+            droppable: false,
             eventLimit: true,
             businessHours: true,
             buttons: false,
@@ -176,70 +176,70 @@
                 //    element.append('<span class="fc-description">' + event.description + '</span>');
                 //}
             },
-            eventClick: function (calEvent, jsEvent, view) {
-                eventToUpdate = calEvent;
-                $addEventModal.modal('show');
-                $addEventModal.find('.btn-add').html('Update event');
-                $addEventModal.find('.btn-danger').show();
-                var className = calEvent.className;
-                if (className && typeof className === 'string') {
-                    $addEventModal.find('[name="style"][value="' + className + '"]').prop('checked', true);
-                } else if (className && className.length > 0) {
-                    for (var i = 0; i < className.length; i++) {
-                        if (className[i].indexOf('bg') === 0) {
-                            $addEventModal.find('[name="style"][value="' + className[i] + '"]').prop('checked', true);
-                            break;
-                        }
-                    }
-                }
+            //eventClick: function (calEvent, jsEvent, view) {
+            //    eventToUpdate = calEvent;
+            //    $addEventModal.modal('show');
+            //    $addEventModal.find('.btn-add').html('Update event');
+            //    $addEventModal.find('.btn-danger').show();
+            //    var className = calEvent.className;
+            //    if (className && typeof className === 'string') {
+            //        $addEventModal.find('[name="style"][value="' + className + '"]').prop('checked', true);
+            //    } else if (className && className.length > 0) {
+            //        for (var i = 0; i < className.length; i++) {
+            //            if (className[i].indexOf('bg') === 0) {
+            //                $addEventModal.find('[name="style"][value="' + className[i] + '"]').prop('checked', true);
+            //                break;
+            //            }
+            //        }
+            //    }
 
-                if (!calEvent.end) {
-                    calEvent.end = moment();
-                }
+            //    if (!calEvent.end) {
+            //        calEvent.end = moment();
+            //    }
 
-                $addEventModal.find('[name=date-period]').data('daterangepicker').setStartDate(calEvent.start);
-                $addEventModal.find('[name=date-period]').data('daterangepicker').setEndDate(calEvent.end);
+            //    $addEventModal.find('[name=date-period]').data('daterangepicker').setStartDate(calEvent.start);
+            //    $addEventModal.find('[name=date-period]').data('daterangepicker').setEndDate(calEvent.end);
 
-                $addEventModal.find('[name=title]').val(calEvent.title);
-                $addEventModal.find('[name=desc]').val(calEvent.description || '');
-                CALENDAR.fullCalendar('updateEvent', calEvent);
+            //    $addEventModal.find('[name=title]').val(calEvent.title);
+            //    $addEventModal.find('[name=desc]').val(calEvent.description || '');
+            //    CALENDAR.fullCalendar('updateEvent', calEvent);
 
-                // change the border color just for fun
-                $(this).css('border-color', 'red');
+            //    // change the border color just for fun
+            //    $(this).css('border-color', 'red');
 
-            },
-            eventDrop: function (calEvent, jsEvent, view) {
-                var myevent = {
-                    id: calEvent.id,
-                    start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'),
-                    end: calEvent.end.format('YYYY-MM-DD HH:mm:ss')
-                };
+            //},
+            //eventDrop: function (calEvent, jsEvent, view) {
+            //    var myevent = {
+            //        id: calEvent.id,
+            //        start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'),
+            //        end: calEvent.end.format('YYYY-MM-DD HH:mm:ss')
+            //    };
 
-                $.ajax('/BRTrace/MoveScheduleEvent', {
-                    data: myevent,
-                    method: 'POST',
-                    cache: false
-                }).done(function (res) {
-                    if (res.success) {
-                    } else {
-                        alert(res.msg);
-                        window.location.reload();
-                    }
-                });
-            },
-            eventResize: function (calEvent, jsEvent, view) {
-                var myevent = {
-                    id: calEvent.id,
-                    start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'),
-                    end: calEvent.end.format('YYYY-MM-DD HH:mm:ss')
-                };
+            //    $.ajax('/BRTrace/MoveScheduleEvent', {
+            //        data: myevent,
+            //        method: 'POST',
+            //        cache: false
+            //    }).done(function (res) {
+            //        if (res.success) {
+            //        } else {
+            //            alert(res.msg);
+            //            window.location.reload();
+            //        }
+            //    });
+            //},
+            //eventResize: function (calEvent, jsEvent, view) {
+            //    var myevent = {
+            //        id: calEvent.id,
+            //        start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'),
+            //        end: calEvent.end.format('YYYY-MM-DD HH:mm:ss')
+            //    };
 
-                $.ajax('/BRTrace/MoveScheduleEvent', {
-                    data: myevent,
-                    method: 'POST',
-                    cache: false
-                });
-            },
+            //    $.ajax('/BRTrace/MoveScheduleEvent', {
+            //        data: myevent,
+            //        method: 'POST',
+            //        cache: false
+            //    });
+            //},
             events: {
                 url: '/BRTrace/JOSchedules',
                 type: 'POST',

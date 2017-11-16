@@ -42,7 +42,7 @@ namespace Nebula.Models
                 var sql = "insert into JOScheduleEventDataVM(jonum,id,workflow,className,description,starttime,endtime) "
                     + " values('<jonum>','<id>','<workflow>','<className>','<description>','<starttime>','<endtime>')";
                 sql = sql.Replace("<jonum>", jonum).Replace("<id>", GetUniqKey())
-                    .Replace("<workflow>", workflow).Replace("<className>", "")
+                    .Replace("<workflow>", workflow).Replace("<className>", "bg-primary border-primary-dark")
                     .Replace("<description>", "").Replace("<starttime>", date.ToString("yyyy-MM-dd HH:mm:ss")).Replace("<endtime>", date.ToString("yyyy-MM-dd HH:mm:ss"));
                 DBUtility.ExeLocalSqlNoRes(sql);
             }
