@@ -38,28 +38,27 @@
                     borderWidth: 0
                 },
                 series: {
-                    allowPointSelect: true,
-                    point:{
-                            events: {
-                            click: function (event) {
-                                if (temppjkey)
-                                {
-                                    var myurl = 'http://wuxinpi.china.ads.finisar.com/Project/UpdateProjectError2?ProjectKey=' + temppjkey + '&ErrorCode=' + this.category;
-                                    window.open(myurl, '_blank');
-                                }
-                            }
-                        }
-                    }
-
-                    //events: {
-                    //    click: function (event) {
-                    //        if (temppjkey)
-                    //        {
-                    //            var myurl = 'http://wuxinpi.china.ads.finisar.com/Project/UpdateProjectError2?ProjectKey=' + temppjkey + '&ErrorCode=' + event.point.name;
-                    //            window.open(myurl, '_blank');
+                    cursor: 'pointer',
+                    //point:{
+                    //        events: {
+                    //        click: function (event) {
+                    //            if (temppjkey)
+                    //            {
+                    //                var myurl = 'http://wuxinpi.china.ads.finisar.com/Project/UpdateProjectError2?ProjectKey=' + temppjkey + '&ErrorCode=' + this.category;
+                    //                window.open(myurl, '_blank');
+                    //            }
                     //        }
                     //    }
                     //}
+                    events: {
+                        click: function (event) {
+                            if (temppjkey)
+                            {
+                                var myurl = 'http://wuxinpi.china.ads.finisar.com/Project/UpdateProjectError2?ProjectKey=' + temppjkey + '&ErrorCode=' + event.point.name;
+                                window.open(myurl, '_blank');
+                            }
+                        }
+                    }
                 }
             },
             yAxis: [{

@@ -141,7 +141,14 @@ var BR = function(){
             }, function (output) {
                 if (output.success) {
                     $('#jo_pn').html(output.pn);
-                    $('#jo_yd').html(output.pnyd);
+
+                    if (output.jopjkey) {
+                        $('#jo_yd').html(output.pnyd + '&nbsp;' + "<a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=" + output.jopjkey + "' target='_blank'>" + "<img src='../Content/images/loading.png' height='6' width='24'/>" + "</a>");
+                    }
+                    else {
+                        $('#jo_yd').html(output.pnyd);
+                    }
+
                     $('#jo_type').html(output.jotype);
                     $('#jo_stat').html(output.jostat);
                     $('#jo_date').html(output.jodate);
@@ -192,7 +199,15 @@ var BR = function(){
             }, function (output) {
                 if (output.success) {
                     $('#jo_pn').html(output.pn);
-                    $('#jo_yd').html(output.pnyd);
+                    if (output.jopjkey)
+                    {
+                        $('#jo_yd').html(output.pnyd + '&nbsp;' + "<a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=" + output.jopjkey + "' target='_blank'>" + "<img src='../Content/images/loading.png' height='6' width='24'/>" + "</a>");
+                    }
+                    else
+                    {
+                        $('#jo_yd').html(output.pnyd);
+                    }
+
                     $('#jo_type').html(output.jotype);
                     $('#jo_stat').html(output.jostat);
                     $('#jo_date').html(output.jodate);

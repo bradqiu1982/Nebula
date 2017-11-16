@@ -45,7 +45,15 @@
                 <div class="col-md-5 col-md-offset-1">
                     <table class="table table-bordered des-table">
                         <tr><td class="col-md-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc)</td></tr>
-                        <tr><td class="col-md-4">PN Test Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
+                        @if (string.IsNullOrEmpty(Model.ProjectKey))
+                        {
+                            <tr><td class="col-md-4">PN Test Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
+                        }
+                        else
+                        {
+                            <tr><td class="col-md-4">PN Test Yield</td><td id="jo_yd"><span>@(Model.PNYieldStr)&nbsp;</span><a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=@(Model.ProjectKey)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24'/></a></td></tr>
+                        }
+
                         <tr><td class="col-md-4">JO Type</td><td id="jo_type">@(Model.Category)-@(Model.JOType)</td></tr>
                         <tr><td class="col-md-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
                         <tr><td class="col-md-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td></tr>
