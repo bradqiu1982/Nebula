@@ -81,6 +81,11 @@ var BR = function(){
         $('body').on('click', '.br-breadcrumb', function () {
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html();
         })
+
+        $('body').on('click', '.current-breadcrumb', function () {
+            window.location.href = '/BRTrace/JOInfo?JONum=' + $('#jo_num1').val();
+        })
+        
     }
 
     var brlist = function () {
