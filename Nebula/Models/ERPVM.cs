@@ -603,6 +603,32 @@ namespace Nebula.Models
             DBUtility.ExeLocalSqlNoRes(sql);
         }
 
+        public static List<JOComponentInfo> RetrieveInfo(string jonum)
+        {
+            var ret = new List<JOComponentInfo>();
+            try
+            {
+                var sql = "select MPN,MPNDesc,ReqdSum,ItemCost,QtyIssuedSum,QtyOpen,CostSum from JOComponentInfo where JONumber = '<JONumber>'";
+                sql = sql.Replace("<JONumber>", jonum);
+                var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+                foreach (var line in dbret)
+                {
+                    var tempitem = new JOComponentInfo();
+                    tempitem.JONumber = jonum;
+                    tempitem.MPN = Convert.ToString(line[0]);
+                    tempitem.MPNDesc = Convert.ToString(line[1]);
+                    tempitem.ReqdSum = Convert.ToDouble(line[2]);
+                    tempitem.ItemCost = Convert.ToDouble(line[3]);
+                    tempitem.QtyIssuedSum = Convert.ToDouble(line[4]);
+                    tempitem.QtyOpen = Convert.ToDouble(line[5]);
+                    tempitem.CostSum = Convert.ToDouble(line[6]);
+                    ret.Add(tempitem);
+                }
+            }
+            catch (Exception ex) { return ret; }
+            return ret;
+        }
+
         public string BRKey { set; get; }
         public string BRNumber { set; get; }
         public string JONumber { set; get; }

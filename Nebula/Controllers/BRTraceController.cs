@@ -716,5 +716,11 @@ namespace Nebula.Controllers
             return res;
         }
 
+        public ActionResult JOComponent(string JONum)
+        {
+            var jocomps = JOComponentInfo.RetrieveInfo(JONum);
+            return View(jocomps);
+        }
+
     }
 }

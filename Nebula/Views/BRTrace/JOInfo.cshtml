@@ -59,6 +59,7 @@
                         <tr><td class="col-md-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
                         <tr><td class="col-md-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td></tr>
                         <tr><td class="col-md-4">MRP Net QTY</td><td id="jo_wip">@(Model.MRPNetQuantity)</td></tr>
+                        <tr><td class="col-md-4">JO Component</td><td id="jo_wip"><a href='/BRTrace/JOComponent?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
                         <tr><td class="col-md-4">Planer</td><td id="jo_planner">@(Model.Planner)</td></tr>
                     </table>
                 </div>

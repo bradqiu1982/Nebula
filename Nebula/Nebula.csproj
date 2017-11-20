@@ -565,6 +565,7 @@
     <Content Include="Content\images\label_rosered.png" />
     <Content Include="Content\images\label_white.png" />
     <Content Include="Content\images\label_yellow.png" />
+    <Content Include="Content\images\loading.png" />
     <Content Include="Content\images\login.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\loupe.png" />
@@ -578,6 +579,7 @@
     <Content Include="Content\images\search_stretch.ng.png" />
     <Content Include="Content\images\search_stretch.png" />
     <Content Include="Content\images\setting.png" />
+    <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\Nebula.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\popup.css" />
@@ -969,6 +971,8 @@
     <Content Include="Views\BRTrace\_JoSchedule.cshtml" />
     <Content Include="Views\BRTrace\_JoDistribution.cshtml" />
     <Content Include="Views\BRTrace\_JoPnErrDistribution.cshtml" />
+    <Content Include="Scripts\npidepartmentmachine.cfg" />
+    <Content Include="Views\BRTrace\JOComponent.cshtml" />
     <None Include="Views\Shared\_layout0.cshtml" />
     <None Include="Views\Shared\_layout1.cshtml" />
     <None Include="Views\Shared\_layout2.cshtml" />
