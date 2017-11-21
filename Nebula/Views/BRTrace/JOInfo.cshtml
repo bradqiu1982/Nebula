@@ -45,7 +45,8 @@
                 </div>
                 <div class="col-md-5 col-md-offset-1">
                     <table class="table table-bordered des-table">
-                        <tr><td class="col-md-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc)</td></tr>
+                        <tr><td class="col-md-4">Project</td><td id="jo_pjkey">@(Model.ProjectKey)</td></tr>
+                        <tr><td class="col-md-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc.Substring(0,(Model.PNDesc.Length > 23)?23:Model.PNDesc.Length))</td></tr>
                         @if (string.IsNullOrEmpty(Model.ProjectKey))
                         {
                             <tr><td class="col-md-4">PN Test Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
@@ -59,7 +60,8 @@
                         <tr><td class="col-md-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
                         <tr><td class="col-md-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td></tr>
                         <tr><td class="col-md-4">MRP Net QTY</td><td id="jo_wip">@(Model.MRPNetQuantity)</td></tr>
-                        <tr><td class="col-md-4">JO Component</td><td id="jo_wip"><a href='/BRTrace/JOComponent?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
+                        <tr><td class="col-md-4">MainStore QTY</td><td id="jo_store">@(Model.ExistQty)</td></tr>
+                        <tr><td class="col-md-4">JO Component</td><td id="jo_compo"><a href='/BRTrace/JOComponent?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
                         <tr><td class="col-md-4">Planer</td><td id="jo_planner">@(Model.Planner)</td></tr>
                     </table>
                 </div>

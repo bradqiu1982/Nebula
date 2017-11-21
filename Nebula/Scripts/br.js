@@ -100,6 +100,7 @@ var BR = function(){
                  br_no: br_no
              }, function (output) {
                  if (output.success) {
+                     $('#br_pjkey').html(output.PJKey);
                      $('#br_orignator').html(output.Originator);
                      $('#br_date').html(output.OriginalDate);
                      $('#br_desc').html(output.Description);
@@ -145,8 +146,8 @@ var BR = function(){
                 jo_no: jo_no
             }, function (output) {
                 if (output.success) {
-                    $('#jo_pn').html(output.pn);
-
+                    $('#jo_pjkey').html(output.jopjkey);
+                    $('#jo_pn').html(output.pn.substring(0, 31));
                     if (output.jopjkey) {
                         $('#jo_yd').html(output.pnyd + '&nbsp;' + "<a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=" + output.jopjkey + "' target='_blank'>" + "<img src='../Content/images/loading.png' height='6' width='24'/>" + "</a>");
                     }
@@ -158,6 +159,7 @@ var BR = function(){
                     $('#jo_stat').html(output.jostat);
                     $('#jo_date').html(output.jodate);
                     $('#jo_wip').html(output.jowip);
+                    $('#jo_store').html(output.jostore);
                     $('#jo_planner').html(output.joplanner);
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
                     $('.jo-info-right').attr('style', 'display: block;');
@@ -203,7 +205,8 @@ var BR = function(){
                 jo_no: jo_no
             }, function (output) {
                 if (output.success) {
-                    $('#jo_pn').html(output.pn);
+                    $('#jo_pjkey').html(output.jopjkey);
+                    $('#jo_pn').html(output.pn.substring(0, 31));
                     if (output.jopjkey)
                     {
                         $('#jo_yd').html(output.pnyd + '&nbsp;' + "<a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=" + output.jopjkey + "' target='_blank'>" + "<img src='../Content/images/loading.png' height='6' width='24'/>" + "</a>");
@@ -217,6 +220,7 @@ var BR = function(){
                     $('#jo_stat').html(output.jostat);
                     $('#jo_date').html(output.jodate);
                     $('#jo_wip').html(output.jowip);
+                    $('#jo_store').html(output.jostore);
                     $('#jo_planner').html(output.joplanner);
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
                     $('.jo-list-right').attr('style', 'display: block;');

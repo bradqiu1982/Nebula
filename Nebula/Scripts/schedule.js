@@ -172,6 +172,8 @@
             businessHours: true,
             buttons: false,
             eventRender: function (event, element, view) {
+                element.attr('title', event.title);
+
                 //if (event.description) {
                 //    element.append('<span class="fc-description">' + event.description + '</span>');
                 //}

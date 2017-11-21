@@ -404,6 +404,7 @@ namespace Nebula.Models
             history = new List<AgileHistory>();
             attach = new List<AgileAttach>();
             BRStatus = "";
+            ProjectKey = "";
         }
 
         public static BRAgileBaseInfo ParseItem(string line)
@@ -540,12 +541,12 @@ namespace Nebula.Models
             var sql = string.Empty;
             if (reviewer == null)
             {
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo order by OriginalDate Desc";
             }
             else
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo where Originator = '<Originator>'  order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo where Originator = '<Originator>'  order by OriginalDate Desc";
                 sql = sql.Replace("<Originator>", reviewer);
             }
 
@@ -560,6 +561,7 @@ namespace Nebula.Models
                 temp.Originator = Convert.ToString(line[4]);
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
+                temp.ProjectKey = Convert.ToString(line[7]);
                 ret.Add(temp);
             }
 
@@ -573,13 +575,13 @@ namespace Nebula.Models
             var sql = string.Empty;
             if (reviewer == null)
             {
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo where BRStatus = '<BRStatus>' order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo where BRStatus = '<BRStatus>' order by OriginalDate Desc";
                 sql = sql.Replace("<BRStatus>",BRStatus);
             }
             else
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo where Originator = '<Originator>' and BRStatus = '<BRStatus>' order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo where Originator = '<Originator>' and BRStatus = '<BRStatus>' order by OriginalDate Desc";
                 sql = sql.Replace("<Originator>", reviewer).Replace("<BRStatus>", BRStatus);
             }
 
@@ -594,6 +596,7 @@ namespace Nebula.Models
                 temp.Originator = Convert.ToString(line[4]);
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
+                temp.ProjectKey = Convert.ToString(line[7]);
                 ret.Add(temp);
             }
 
@@ -604,7 +607,7 @@ namespace Nebula.Models
         {
             var ret = new List<BRAgileBaseInfo>();
 
-            var sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus from BRAgileBaseInfo where BRNumber like '%<BRNumber>%'";
+            var sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo where BRNumber like '%<BRNumber>%'";
             sql = sql.Replace("<BRNumber>", BRNum);
 
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
@@ -618,6 +621,7 @@ namespace Nebula.Models
                 temp.Originator = Convert.ToString(line[4]);
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
+                temp.ProjectKey = Convert.ToString(line[7]);
                 ret.Add(temp);
             }
 
@@ -640,6 +644,7 @@ namespace Nebula.Models
         public DateTime OriginalDate{ set; get; }
         public string BRKey { set; get; }
         public string BRStatus { set; get; }
+        public string ProjectKey { set; get; }
 
         public List<AgileWorkFlow> brworkflowlist{set;get;}
         public List<AgileAffectItem> affectitem{set;get;}

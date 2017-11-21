@@ -222,6 +222,7 @@ namespace Nebula.Controllers
             {
                 var res = new JsonResult();
                 res.Data = new { success = true
+                    , PJKey = brinfolist[0].ProjectKey
                     , Originator = brinfolist[0].Originator
                     , OriginalDate = brinfolist[0].OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")
                     , Description = brinfolist[0].Description
@@ -250,10 +251,11 @@ namespace Nebula.Controllers
                     success = true,
                     pn = jolist[0].PN + "-" + jolist[0].PNDesc,
                     pnyd = jolist[0].PNYieldStr,
-                    jotype = jolist[0].Category+"-"+jolist[0].JOType,
+                    jotype = jolist[0].Category + "-" + jolist[0].JOType,
                     jostat = jolist[0].JOStatus,
                     jodate = jolist[0].DateReleased.ToString("yyyy-MM-dd HH:mm:ss"),
                     jowip = jolist[0].MRPNetQuantity.ToString(),
+                    jostore = jolist[0].ExistQty.ToString(),
                     joplanner = jolist[0].Planner,
                     jopjkey = jolist[0].ProjectKey
                 };
