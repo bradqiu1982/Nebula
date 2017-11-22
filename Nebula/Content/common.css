@@ -502,7 +502,7 @@ html,body{
     position: absolute;
     cursor: pointer;
     bottom: 20%;
-    height: 70%;
+    height: 60%;
     width: 80%;
     margin-left: 10%;
 }
@@ -511,7 +511,7 @@ html,body{
     position: absolute;
     cursor: pointer;
     bottom: 20%;
-    height: 40%;
+    height: 30%;
     width: 80%;
     margin-left: 10%;
 }
@@ -520,7 +520,7 @@ html,body{
     position: absolute;
     cursor: pointer;
     bottom: 20%;
-    height: 40%;
+    height: 30%;
     width: 35%;
     margin-left: 8%;
 }
@@ -528,8 +528,8 @@ html,body{
 .jo-darkblue-up-tranparent{
     position: absolute;
     cursor: pointer;
-    bottom: 40%;
-    height: 60%;
+    bottom: 60%;
+    height: 30%;
     width: 80%;
     margin-left: 10%;
 }
@@ -654,15 +654,15 @@ html,body{
 }
 
 /* JO Schedule */
-.panel-cus{
-    background-color:  transparent !important;
-    color: #ababab !important;
+.panel-cus {
+    background-color: transparent !important;
+    color: #efefef !important;
     border-color: transparent !important;
 }
 
-.fc-left{
+.fc-left {
     padding: 0 15px !important;
-    border: #ababab 1px solid !important;
+    border: #efefef 1px solid !important;
     border-radius: 4px !important;
 }
 

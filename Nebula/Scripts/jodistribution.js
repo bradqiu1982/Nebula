@@ -14,7 +14,7 @@
             title: {
                 text: 'JO Distribution',
                 style: {
-                    color: '#afafaf',
+                    color: '#efefef',
                     fontSize: '28px'
                 }
             },
@@ -23,6 +23,7 @@
                 labels: {
                     rotation: -45,
                     style: {
+                        color: '#efefef',
                         fontSize: '12px'
                     }
                 },
@@ -32,10 +33,17 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Module Amount'
+                    text: 'Module Amount',
+                    style: {
+                        color: '#efefef',
+                        fontSize: '12px'
+                    }
                 },
-                style: {
-                    fontSize: '12px'
+                labels: {
+                    style: {
+                        color: '#efefef',
+                        fontSize: '12px'
+                    }
                 },
                 gridLineWidth: 0
             },

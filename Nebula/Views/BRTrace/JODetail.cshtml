@@ -35,10 +35,8 @@
         <input type="hidden" id="jo_num1" name="jo_num1" value="@ViewBag.JONum" />
         <input type="hidden" id="pjkey" name="pjkey" value="@ViewBag.ProjectKey"/>
         <input type="hidden" id="current_day" name="current_day" value="@ViewBag.CurrentDay" />
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-4"><h3 style="color:#ABABAB">@ViewBag.JONum Detail</h3></div>
-            <div class="col-sm-7"></div>
+        <div style="padding-left: 10%;">
+            <h3 style="color: #efefef;">@ViewBag.JONum Detail</h3>
         </div>
         <div class="jo-current-page schedule-page">Schedule</div>
         <div class="jo-op-tag">
@@ -66,8 +64,8 @@
                     }
                 </div>
             </div>
-            <div class="jo-@jo_step_class[2]" style="@((3 <= ViewBag.Step) ? "height: 600px":"")">
-                <div id="pnerrdistribute">
+            <div class="jo-@jo_step_class[2]">
+                <div id="pnerrdistribute" style="@((3 <= ViewBag.Step) ? "height: 600px":"")">
                     @if (3 <= ViewBag.Step)
                     {
                         @Html.Partial("~/Views/BRTrace/_JoPnErrDistribution.cshtml")
