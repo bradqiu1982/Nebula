@@ -534,7 +534,7 @@ namespace Nebula.Models
             return ret;
         }
 
-        public static List<BRAgileBaseInfo> RetrieveActiveBRAgileInfo(string reviewer)
+        public static List<BRAgileBaseInfo> RetrieveActiveBRAgileInfo(string reviewer, Controller ctrl)
         {
             var ret = new List<BRAgileBaseInfo>();
 
@@ -562,13 +562,14 @@ namespace Nebula.Models
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
+                temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
                 ret.Add(temp);
             }
 
             return ret;
         }
 
-        public static List<BRAgileBaseInfo> RetrieveActiveBRAgileInfoWithStatus(string reviewer,string BRStatus)
+        public static List<BRAgileBaseInfo> RetrieveActiveBRAgileInfoWithStatus(string reviewer,string BRStatus, Controller ctrl)
         {
             var ret = new List<BRAgileBaseInfo>();
 
@@ -597,13 +598,14 @@ namespace Nebula.Models
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
+                temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
                 ret.Add(temp);
             }
 
             return ret;
         }
 
-        public static List<BRAgileBaseInfo> RetrieveBRAgileInfo(string BRNum)
+        public static List<BRAgileBaseInfo> RetrieveBRAgileInfo(string BRNum, Controller ctrl)
         {
             var ret = new List<BRAgileBaseInfo>();
 
@@ -622,6 +624,7 @@ namespace Nebula.Models
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
+                temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
                 ret.Add(temp);
             }
 
@@ -633,6 +636,182 @@ namespace Nebula.Models
             var sql = "update BRAgileBaseInfo set ProjectKey = '<ProjectKey>' where BRNumber = '<BRNumber>'";
             sql = sql.Replace("<BRNumber>", BRNum).Replace("<ProjectKey>", pjkey);
             DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+
+        public List<BRComment> GeneralCommentList
+        { get { return generalcommentlist; } }
+
+        public List<BRComment> ConclusionCommentList
+        { get { return conclusioncommentlist; } }
+
+        private List<BRComment> generalcommentlist = new List<BRComment>();
+        private List<BRComment> conclusioncommentlist = new List<BRComment>();
+
+        private List<BRComment> cemlist = new List<BRComment>();
+        public List<BRComment> CommentList
+        {
+            set
+            {
+                cemlist.Clear();
+                cemlist.AddRange(value);
+                generalcommentlist.Clear();
+                conclusioncommentlist.Clear();
+
+                foreach (var item in cemlist)
+                {
+                    if (string.Compare(item.CommentType, BRCOMMENTTP.COMMENT) == 0
+                        || string.IsNullOrEmpty(item.CommentType))
+                    {
+                        generalcommentlist.Add(item);
+                    }
+                    if (string.Compare(item.CommentType, BRCOMMENTTP.CONCLUSION) == 0)
+                    {
+                        conclusioncommentlist.Add(item);
+                    }
+                }
+            }
+
+            get
+            {
+                return cemlist;
+            }
+        }
+
+        public static void StoreBRComment(string BRNum, string dbComment, string CommentType, string Reporter)
+        {
+            var sql = "insert into BRComment(BRNum,CommentKey,Comment,Reporter,CommentDate,CommentType) values('<BRNum>','<CommentKey>','<Comment>','<Reporter>','<CommentDate>','<CommentType>')";
+            sql = sql.Replace("<BRNum>", BRNum).Replace("<CommentKey>", GetUniqKey()).Replace("<Comment>", dbComment)
+                .Replace("<Reporter>", Reporter).Replace("<CommentDate>", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")).Replace("<CommentType>", CommentType);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static List<BRComment> RetriveBRComment(string BRNum, Controller ctrl)
+        {
+            var ret = new List<BRComment>();
+            var sql = "select BRNum,CommentKey,Comment,Reporter,CommentDate,CommentType from BRComment where BRNum = '<BRNum>' and Removed <> 'TRUE'";
+            sql = sql.Replace("<BRNum>", BRNum);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var tempcom = new BRComment();
+                tempcom.BRNum = Convert.ToString(line[0]);
+                tempcom.CommentKey = Convert.ToString(line[1]);
+                tempcom.dbComment = Convert.ToString(line[2]);
+                tempcom.Reporter = Convert.ToString(line[3]);
+                tempcom.CommentDate = Convert.ToDateTime(line[4]);
+                tempcom.CommentType = Convert.ToString(line[5]);
+                ret.Add(tempcom);
+            }
+            return RepairBase64Image4IE(ret,ctrl);
+        }
+
+        private static string WriteBase64ImgFile(string commentcontent, Controller ctrl)
+        {
+            try
+            {
+                var idx = commentcontent.IndexOf("<img alt=\"\" src=\"data:image/png;base64");
+                var base64idx = commentcontent.IndexOf("data:image/png;base64,", idx) + 22;
+                var base64end = commentcontent.IndexOf("\"", base64idx);
+                var imgstrend = commentcontent.IndexOf("/>", base64end) + 2;
+                var base64img = commentcontent.Substring(base64idx, base64end - base64idx);
+                var imgbytes = Convert.FromBase64String(base64img);
+
+                var imgkey = Guid.NewGuid().ToString("N");
+                string datestring = DateTime.Now.ToString("yyyyMMdd");
+                string imgdir = ctrl.Server.MapPath("~/userfiles") + "\\images\\" + datestring + "\\";
+
+                if (!Directory.Exists(imgdir))
+                {
+                    Directory.CreateDirectory(imgdir);
+                }
+                var realpath = imgdir + imgkey + ".jpg";
+
+                var fs = File.Create(realpath);
+                fs.Write(imgbytes, 0, imgbytes.Length);
+                fs.Close();
+
+
+                var url = "/userfiles/images/" + datestring + "/" + imgkey + ".jpg";
+                var ret = commentcontent;
+                ret = ret.Remove(idx, imgstrend - idx);
+                ret = ret.Insert(idx, "<img src='" + url + "'/>");
+
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+
+        }
+
+
+        private static string ReplaceBase64data2File(string commentcontent, Controller ctrl)
+        {
+            var ret = commentcontent;
+            if (commentcontent.Contains("<img alt=\"\" src=\"data:image/png;base64"))
+            {
+                while (ret.Contains("<img alt=\"\" src=\"data:image/png;base64"))
+                {
+                    ret = WriteBase64ImgFile(ret, ctrl);
+                    if (string.IsNullOrEmpty(ret))
+                    {
+                        ret = commentcontent;
+                        break;
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public static List<BRComment> RepairBase64Image4IE(List<BRComment> coments, Controller ctrl)
+        {
+            foreach (var com in coments)
+            {
+                var newcomment = ReplaceBase64data2File(com.Comment, ctrl);
+                if (newcomment.Length != com.Comment.Length)
+                {
+                    com.Comment = newcomment;
+                    UpdateBRComment(com.CommentKey, com.dbComment);
+                }
+            }
+            return coments;
+        }
+
+        public static List<BRComment> RetriveBRCommentByKey(string CommentKey)
+        {
+            var ret = new List<BRComment>();
+            var sql = "select BRNum,CommentKey,Comment,Reporter,CommentDate,CommentType from BRComment where CommentKey = '<CommentKey>' and Removed <> 'TRUE'";
+            sql = sql.Replace("<CommentKey>", CommentKey);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var tempcom = new BRComment();
+                tempcom.BRNum = Convert.ToString(line[0]);
+                tempcom.CommentKey = Convert.ToString(line[1]);
+                tempcom.dbComment = Convert.ToString(line[2]);
+                tempcom.Reporter = Convert.ToString(line[3]);
+                tempcom.CommentDate = Convert.ToDateTime(line[4]);
+                tempcom.CommentType = Convert.ToString(line[5]);
+                ret.Add(tempcom);
+            }
+            return ret;
+        }
+
+        public static void DeleteBRComment(string CommentKey)
+        {
+            var sql = "update BRComment set Removed = 'TRUE' where CommentKey='<CommentKey>'";
+            sql = sql.Replace("<CommentKey>", CommentKey);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static void UpdateBRComment(string CommentKey, string dbcomment)
+        {
+            var csql = "update BRComment set Comment = '<Comment>'  where CommentKey='<CommentKey>'";
+            csql = csql.Replace("<CommentKey>", CommentKey).Replace("<Comment>", dbcomment);
+            DBUtility.ExeLocalSqlNoRes(csql);
         }
 
         public string ChangeType{set;get;}

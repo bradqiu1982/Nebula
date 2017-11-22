@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Nebula.Controllers
 {
@@ -115,7 +116,7 @@ namespace Nebula.Controllers
 
             //var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
             //var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null);
-            var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN);
+            var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN,this);
             var allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null,BRJOSYSTEMSTATUS.OPEN);
             var page_size = 10;
             ViewBag.brlist = allBrlist.Skip((intp - 1) * page_size).Take(page_size);
@@ -135,12 +136,12 @@ namespace Nebula.Controllers
 
             if (string.IsNullOrEmpty(Status))
             {
-                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN);
+                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN,this);
                 ViewBag.withstatus = BRJOSYSTEMSTATUS.OPEN;
             }
             else
             {
-                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, Status);
+                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, Status,this);
                 ViewBag.withstatus = Status;
             }
             
@@ -186,7 +187,7 @@ namespace Nebula.Controllers
             var page_size = 10;
             ViewBag.page = p;
             ViewBag.searchkeyword = SearchWords;
-            var allBrlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(SearchWords);
+            var allBrlist  = BRAgileBaseInfo.RetrieveBRAgileInfo(SearchWords,this);
             if (allBrlist.Count > 0)
             {
                 ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
@@ -217,7 +218,7 @@ namespace Nebula.Controllers
         {
             var brnum = Request.Form["br_no"];
 
-            var brinfolist = BRAgileBaseInfo.RetrieveBRAgileInfo(brnum);
+            var brinfolist = BRAgileBaseInfo.RetrieveBRAgileInfo(brnum,this);
             if (brinfolist.Count > 0)
             {
                 var res = new JsonResult();
@@ -273,9 +274,9 @@ namespace Nebula.Controllers
         {
             UserAuth();
 
-            ViewBag.currentbr = BRAgileBaseInfo.RetrieveBRAgileInfo(BRNum)[0];
+            ViewBag.currentbr = BRAgileBaseInfo.RetrieveBRAgileInfo(BRNum,this)[0];
             var allcurrentbrjolist = (IEnumerable<JOBaseInfo>)JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
-            var allsearchlist = (IEnumerable<BRAgileBaseInfo>)BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, ViewBag.currentbr.BRStatus);//BRAgileBaseInfo.RetrieveActiveBRAgileInfo((!string.IsNullOrEmpty(SearchWords))? SearchWords : null);
+            var allsearchlist = (IEnumerable<BRAgileBaseInfo>)BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, ViewBag.currentbr.BRStatus,this);//BRAgileBaseInfo.RetrieveActiveBRAgileInfo((!string.IsNullOrEmpty(SearchWords))? SearchWords : null);
             //br pagination
             var page_size = 10;
             ViewBag.currentsearchlist = allsearchlist.Skip((p - 1) * page_size).Take(page_size);
@@ -724,5 +725,46 @@ namespace Nebula.Controllers
             return View(jocomps);
         }
 
+        [HttpPost]
+        public ActionResult AddBRComment()
+        {
+            UserAuth();
+            if (string.IsNullOrEmpty(ViewBag.UserName))
+            {
+                return RedirectToAction("Home", "BRTrace");
+            }
+
+            var brnum = Request.Form["HBRNUM"];
+            if (!string.IsNullOrEmpty(brnum))
+            {
+                if (!string.IsNullOrEmpty(Request.Form["commenteditor"]))
+                {
+                    var generalcomment = SeverHtmlDecode.Decode(this, Request.Form["commenteditor"]);
+                    var brcomment = new BRComment();
+                    brcomment.Comment = generalcomment;
+                    BRAgileBaseInfo.StoreBRComment(brnum, brcomment.dbComment, BRCOMMENTTP.COMMENT, ViewBag.UserName);
+                }
+
+                if (!string.IsNullOrEmpty(Request.Form["conclusioneditor"]))
+                {
+                    var conclusioncomment = SeverHtmlDecode.Decode(this, Request.Form["conclusioneditor"]);
+                    var brcomment = new BRComment();
+                    brcomment.Comment = conclusioncomment;
+                    BRAgileBaseInfo.StoreBRComment(brnum, brcomment.dbComment, BRCOMMENTTP.CONCLUSION, ViewBag.UserName);
+                }
+
+                var dict1 = new RouteValueDictionary();
+                dict1.Add("BRNum", brnum);
+                dict1.Add("SearchWords", "");
+                return RedirectToAction("BRInfo", "BRTrace", dict1);
+            }
+            else
+            {
+                return RedirectToAction("Home", "BRTrace");
+            }
+        }
+
     }
+
+
 }

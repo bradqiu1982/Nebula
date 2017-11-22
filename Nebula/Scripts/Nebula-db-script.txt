@@ -205,3 +205,17 @@ CREATE TABLE [dbo].[PNErrorDistribute] (
 );
 
  ALTER TABLE  [NebulaTrace].[dbo].[PNErrorDistribute] Add ProjectKey NVARCHAR (200) DEFAULT ('') NOT NULL;
+
+
+ CREATE TABLE [dbo].[BRComment] (
+    [BRNum]    NVARCHAR (200) DEFAULT ('')  NOT NULL,
+	[CommentKey]    NVARCHAR (200) DEFAULT ('')  NOT NULL,
+    [Comment]     NVARCHAR (MAX) DEFAULT ('')  NOT NULL,
+    [Reporter]    NVARCHAR (200) DEFAULT ('')  NOT NULL,
+    [CommentDate] DATETIME       DEFAULT ('1982-05-06 10:00:00')    NOT NULL,
+    [CommentType] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Removed] NVARCHAR (64) DEFAULT ('') NOT NULL,
+    [APVal1]      NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [APVal2]      NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [APVal3]      DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
+);
