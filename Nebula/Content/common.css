@@ -707,20 +707,25 @@ html,body{
 }
 
 /* theme setting*/
-.theme-setting{
+.theme-setting {
     position: absolute;
     bottom: 5px;
     right: 5px;
+    width: 120px;
+    z-index: 1003;
 }
 .login-theme-setting {
     position: absolute;
     top: 5px;
     right: 5px;
+    width: 120px;
+    z-index: 1003;
 }
 .span-theme-setting {
     cursor: pointer;
     font-size: 16px;
     color: #efefef;
     margin-right: 5%;
-    z-index: 1003;
+    text-decoration: underline;
+    font-style: italic;
 }
