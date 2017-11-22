@@ -165,8 +165,8 @@ namespace Nebula.Controllers
             }
             else
             {
-                allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.CLOSE);
-                ViewBag.withstatus = BRJOSYSTEMSTATUS.CLOSE;
+                allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, Status);
+                ViewBag.withstatus = Status;
             }
             
 
