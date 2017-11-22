@@ -1,18 +1,20 @@
-html,body{
-    margin:0px;
-    height:auto;
+html, body {
+    margin: 0px;
+    height: auto;
     background-color: #001D2E;
 }
-.container{
-    position:absolute;
+
+.container {
+    position: absolute;
     margin: 0;
     width: 100% !important;
-    z-index: 1001;
     padding: 0 !important;
+    top: 100px;
+    z-index: 1001;
 }
 
 /* rewrite row, col-md-8, col-md-4 */
-.row{
+.row {
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
@@ -23,7 +25,7 @@ html,body{
 }
 
 /* header */
-.logo{
+.logo {
     position: absolute;
     margin-top: 3%;
     height: 50px;
@@ -33,23 +35,23 @@ html,body{
     background-size: contain;
     -webkit-background-size: contain;
     -moz-background-size: contain;
-    cursor:pointer;
+    cursor: pointer;
     z-index: 1003;
 }
 
-.user-info{
+.user-info {
     float: right;
     color: #f0f0f0;
     margin-top: 2%;
     margin-right: 2%;
 }
 
-.header-user{
+.header-user {
     font-size: 12px;
     padding-right: 5px;
 }
 
-.logout{
+.logout {
     padding-left: 5px;
     font-size: 14px;
     cursor: pointer;
@@ -58,7 +60,7 @@ html,body{
 
 
 /* Login */
-#login-body{
+#login-body {
     position: absolute;
     top: 0;
     left: 0;
@@ -77,7 +79,7 @@ html,body{
     z-index: 1000;
 }
 
-.login-welcome{
+.login-welcome {
     margin-top: 15%;
     margin-left: 25%;
     text-align: left;
@@ -85,12 +87,12 @@ html,body{
     color: #fff;
 }
 
-.login-form{
+.login-form {
     margin-top: 8% !important;
     margin-left: 35% !important;
 }
 
-.login-input{
+.login-input {
     opacity: 1;
     border: #33CCFF 2px solid;
     width: 100%;
@@ -103,7 +105,7 @@ html,body{
     margin-bottom: 5%;
 }
 
-.login-btn{
+.login-btn {
     opacity: 1;
     border: #33CCFF 2px solid;
     width: 100%;
@@ -115,40 +117,39 @@ html,body{
     margin-top: 5%;
 }
 
-.login-checkbox{
+.login-checkbox {
     margin-left: 2% !important;
 }
 
-.remember-me{
+.remember-me {
     font-size: 10px;
     margin-left: 2%;
     color: #fff;
 }
 
-.div-forget-pwd{
+.div-forget-pwd {
     text-align: center;
     margin-top: 2%;
     width: 60%;
 }
 
-.forget-pwd{
+.forget-pwd {
     font-size: 10px;
     margin-left: 2%;
     color: #fff;
     text-decoration: underline;
 }
 
-.forget-pwd:hover{
-    color: #33CCFF;
-}
+    .forget-pwd:hover {
+        color: #33CCFF;
+    }
 
 /* search */
-.search{
+.search {
     position: relative;
     float: right;
-    padding-top: 30px;
-    padding-right: 30px;
-    margin-top: 8%;
+    height: 30px;
+    width: 30px;
     background-image: url(./images/search.png);
     background-color: transparent;
     background-repeat: no-repeat;
@@ -158,10 +159,9 @@ html,body{
     -moz-background-size: contain;
 }
 
-.search-div{
+.search-div {
     position: relative;
     float: right;
-    margin-top: 8%;
     width: 20%;
     background-image: url(./images/search_stretch.png);
     background-repeat: no-repeat;
@@ -171,7 +171,7 @@ html,body{
     -moz-background-size: cover;
 }
 
-.search-input{
+.search-input {
     float: right;
     width: 80%;
     padding-right: 5%;
@@ -181,7 +181,7 @@ html,body{
     background-color: transparent;
 }
 
-.search-icon{
+.search-icon {
     width: 10%;
     color: #fff;
     background-image: url(./images/search_icon.png);
@@ -193,7 +193,7 @@ html,body{
 }
 
 /* Home */
-.welcome{
+.welcome {
     position: relative;
     float: left;
     color: #f0f0f0;
@@ -202,7 +202,7 @@ html,body{
     margin-top: 2%;
 }
 
-.nav-type{
+.nav-type {
     float: right;
     color: #f0f0f0;
     font-size: 14px;
@@ -210,54 +210,54 @@ html,body{
     margin-right: 2%;
 }
 
-.nav-link{
+.nav-link {
     margin: 5px;
     text-align: right;
     padding-right: 4px;
     cursor: pointer;
 }
 
-.nav-link:hover{
+    .nav-link:hover {
+        background-color: #ababab;
+        color: #fff;
+    }
+
+.nav-active {
     background-color: #ababab;
     color: #fff;
 }
 
-.nav-active{
-    background-color: #ababab;
-    color: #fff;
-}
-
-.nav-line{
+.nav-line {
     width: 80px;
     padding-top: 10px;
     border-bottom: gray 2px solid;
 }
 
-.info{
+.info {
     margin-left: 50%;
     margin-top: 2%;
 }
 
-.info-count{
+.info-count {
     color: #f0f0f0;
     font-size: 96px;
     text-align: center;
     padding-right: 5%;
 }
 
-.info-description{
+.info-description {
     color: #f0f0f0;
     font-size: 40px;
     text-align: center;
 }
 
-.label-panel{
+.label-panel {
     margin-top: 3%;
     margin-right: 0;
-    height: 400px; 
+    height: 400px;
 }
 
-.label-color{
+.label-color {
     float: right;
     width: 80%;
     font-size: 20px;
@@ -274,27 +274,27 @@ html,body{
     cursor: pointer;
 }
 
-.label-green{
+.label-green {
     background-image: url(./images/label_green.png);
 }
 
-.label-blue{
+.label-blue {
     background-image: url(./images/label_blue.png);
 }
 
-.label-purple{
+.label-purple {
     background-image: url(./images/label_purple.png);
 }
 
-.label-yellow{
+.label-yellow {
     background-image: url(./images/label_yellow.png);
 }
 
-.label-rosered{
+.label-rosered {
     background-image: url(./images/label_rosered.png);
 }
 
-.f-picture{
+.f-picture {
     position: fixed;
     bottom: 0;
     height: 360px;
@@ -307,7 +307,7 @@ html,body{
     -moz-background-size: cover;
 }
 
-.f-picture-hide{
+.f-picture-hide {
     position: fixed;
     bottom: 0;
     height: 20px;
@@ -323,7 +323,7 @@ html,body{
 }
 
 /* BR list */
-.br-list{
+.br-list {
     position: absolute;
     margin: 0;
     width: 85% !important;
@@ -331,13 +331,13 @@ html,body{
     font-size: 14px;
 }
 
-.content-title{
+.content-title {
     width: 100%;
     font-size: 36px;
     text-align: center;
 }
 
-.br-list-left, .jo-list-left{
+.br-list-left, .jo-list-left {
     margin-top: 5%;
     border: #24323B 1px solid;
     -moz-border-radius: 6px;
@@ -345,7 +345,7 @@ html,body{
     border-radius: 6px;
 }
 
-.br-list-right, .jo-list-right{
+.br-list-right, .jo-list-right {
     display: none;
     margin-top: 5%;
     border: #24323B 1px solid;
@@ -355,32 +355,32 @@ html,body{
     background-color: #07151E;
 }
 
-.cus-table{
+.cus-table {
     border: transparent;
 }
 
-.cus-table > tbody > tr{
-    cursor: pointer;
-}
+    .cus-table > tbody > tr {
+        cursor: pointer;
+    }
 
-.cus-table > tbody > tr > td{
+        .cus-table > tbody > tr > td {
+            border: transparent;
+        }
+
+        .cus-table > tbody > tr:hover {
+            background-color: #07151E;
+        }
+
+.des-table {
     border: transparent;
 }
 
-.cus-table > tbody > tr:hover {
-    background-color: #07151E;
-}
-
-.des-table{
-    border: transparent;
-}
-
-.des-table > tbody > tr > td{
-    border: transparent;
-}
+    .des-table > tbody > tr > td {
+        border: transparent;
+    }
 
 /* BR INFO */
-.br-info{
+.br-info {
     position: absolute;
     margin-top: 2%;
     width: 100% !important;
@@ -388,12 +388,12 @@ html,body{
     font-size: 14px;
 }
 
-.br-info-content{
+.br-info-content {
     margin-top: 8%;
     margin-left: 15%;
 }
 
-.jo-info-left{
+.jo-info-left {
     margin-top: 2%;
     margin-left: 5%;
     border: #24323B 1px solid;
@@ -402,7 +402,7 @@ html,body{
     border-radius: 6px;
 }
 
-.jo-info-right{
+.jo-info-right {
     display: none;
     margin-top: 2%;
     margin-left: 5%;
@@ -415,16 +415,16 @@ html,body{
 
 /* JO */
 
-.bg-image{
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-
+.bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
     /* Preserve aspet ratio */
     min-width: 100%;
     min-height: 100%;
 }
-.nav-breadcrumb{
+
+.nav-breadcrumb {
     position: absolute;
     right: 10%;
     text-align: right;
@@ -434,7 +434,7 @@ html,body{
     z-index: 1004;
 }
 
-.bc-jo{
+.bc-jo {
     font-size: 14px;
     padding: 4%;
     margin-right: -4%;
@@ -447,7 +447,7 @@ html,body{
     -moz-background-size: contain;
 }
 
-.bc-br{
+.bc-br {
     font-size: 14px;
     padding: 5.5%;
     background-image: url(./images/label_white.png);
@@ -459,24 +459,24 @@ html,body{
     -moz-background-size: contain;
 }
 
-.jo-detail{
+.jo-detail {
     width: 85% !important;
     color: #fff;
     font-size: 14px;
 }
 
-#jo-title{
+#jo-title {
     font-size: 24px;
     margin-top: 15%;
 }
 
-#jo-status{
+#jo-status {
     font-size: 56px;
     margin-top: 5%;
     margin-left: 10%;
 }
 
-.jo-operation{
+.jo-operation {
     position: fixed;
     bottom: 0;
     height: 40%;
@@ -486,7 +486,7 @@ html,body{
     z-index: 1002;
 }
 
-.jo-op{
+.jo-op {
     position: relative;
     width: 25%;
     height: 100%;
@@ -498,7 +498,7 @@ html,body{
     -moz-background-size: contain;
 }
 
-.jo-blue-tranparent, .jo-yellow-tranparent{
+.jo-blue-tranparent, .jo-yellow-tranparent {
     position: absolute;
     cursor: pointer;
     bottom: 20%;
@@ -507,7 +507,7 @@ html,body{
     margin-left: 10%;
 }
 
-.jo-green-tranparent{
+.jo-green-tranparent {
     position: absolute;
     cursor: pointer;
     bottom: 20%;
@@ -516,7 +516,7 @@ html,body{
     margin-left: 10%;
 }
 
-.jo-darkblue-down-tranparent{
+.jo-darkblue-down-tranparent {
     position: absolute;
     cursor: pointer;
     bottom: 20%;
@@ -525,7 +525,7 @@ html,body{
     margin-left: 8%;
 }
 
-.jo-darkblue-up-tranparent{
+.jo-darkblue-up-tranparent {
     position: absolute;
     cursor: pointer;
     bottom: 60%;
@@ -534,24 +534,24 @@ html,body{
     margin-left: 10%;
 }
 
-.jo-blue{
+.jo-blue {
     background-image: url(./images/jo_blue.png);
 }
 
-.jo-green{
+.jo-green {
     background-image: url(./images/jo_green.png);
 }
 
-.jo-yellow{
+.jo-yellow {
     background-image: url(./images/jo_yellow.png);
 }
 
-.jo-darkblue{
+.jo-darkblue {
     background-image: url(./images/jo_darkblue.png);
 }
 
 /*pagination*/
-.pagination{
+.pagination {
     float: right;
     text-align: right;
     margin: 0 5% 2% 0;
@@ -560,26 +560,26 @@ html,body{
     color: #ababab;
 }
 
-.pages, .sub-pages{
+.pages, .sub-pages {
     padding: 2%;
     cursor: pointer;
 }
 
-.current-page, .sub-current-page{
+.current-page, .sub-current-page {
     padding: 2%;
     color: #fff;
 }
 
-.current-breadcrumb{
+.current-breadcrumb {
     color: #ababab;
 }
 
-.br-breadcrumb{
+.br-breadcrumb {
     cursor: pointer;
 }
 
 /*JO Detail*/
-.jo-current-page{
+.jo-current-page {
     position: fixed;
     left: 0;
     top: 120px;
@@ -592,19 +592,24 @@ html,body{
     color: #001D2E;
     font-size: 16px;
 }
-.schedule-page{
+
+.schedule-page {
     background-color: #FFC000;
 }
-.pro-line-page{
+
+.pro-line-page {
     background-color: #FF0066;
 }
-.pqe-oqc-page{
+
+.pqe-oqc-page {
     background-color: #33CCFF;
 }
-.warehouse-page{
+
+.warehouse-page {
     background-color: #BEF50C;
 }
-.jo-op-tag{
+
+.jo-op-tag {
     position: fixed;
     height: 200px;
     width: 50px;
@@ -612,7 +617,7 @@ html,body{
     bottom: 20px;
 }
 
-.op-tag{
+.op-tag {
     float: right;
     height: 200px;
     width: 100%;
@@ -624,23 +629,23 @@ html,body{
     -moz-background-size: contain;
 }
 
-.op-tag-schedule{
+.op-tag-schedule {
     background-image: url(./images/jo-tag-schedule.png);
 }
 
-.op-tag-pro-line{
+.op-tag-pro-line {
     background-image: url(./images/jo-tag-product-line.png);
 }
 
-.op-tag-pqe-oqc{
+.op-tag-pqe-oqc {
     background-image: url(./images/jo-tag-pqe-oqc.png);
 }
 
-.op-tag-warehouse{
+.op-tag-warehouse {
     background-image: url(./images/jo-tag-warehouse.png);
 }
 
-.schedule, .pro-line, .pqe-oqc, .warehouse{
+.schedule, .pro-line, .pqe-oqc, .warehouse {
     height: 45px;
     width: 40px;
     margin: 5px;
@@ -648,7 +653,7 @@ html,body{
     cursor: pointer;
 }
 
-.jo-schedule, .jo-pro-line, .jo-pqe-oqc, .jo-warehouse{
+.jo-schedule, .jo-pro-line, .jo-pqe-oqc, .jo-warehouse {
     margin: 1% 10%;
     width: 80%;
 }
@@ -666,23 +671,23 @@ html,body{
     border-radius: 4px !important;
 }
 
-.fc-center{
+.fc-center {
     margin-left: 10% !important;
 }
 
-.fc-toolbar .fc-button{
+.fc-toolbar .fc-button {
     background-color: transparent !important;
     border-color: transparent !important;
     margin: auto 2px !important;
     padding: 0 !important;
 }
 
-.fc-today{
+.fc-today {
     background-color: #656565 !important;
     border-color: #ababab !important;
 }
 
-.fc-rigid{
+.fc-rigid {
     height: 80px !important;
 }
 
@@ -691,29 +696,30 @@ html,body{
     border-radius: 4px !important;
 }
 
-.jo-schedule-op{
-    float: right; 
+.jo-schedule-op {
+    float: right;
     padding: 15px 15px 15px 5px;
 }
 
-.jo-import{
+.jo-import {
     margin: auto 5px;
     cursor: pointer;
 }
 
-.jo-export{
+.jo-export {
     margin: auto 5px;
     cursor: pointer;
 }
 
 /* theme setting*/
 .theme-setting {
-    position: absolute;
+    position: fixed;
     bottom: 5px;
     right: 5px;
     width: 120px;
     z-index: 1003;
 }
+
 .login-theme-setting {
     position: absolute;
     top: 5px;
@@ -721,9 +727,10 @@ html,body{
     width: 120px;
     z-index: 1003;
 }
+
 .span-theme-setting {
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     color: #efefef;
     margin-right: 5%;
     text-decoration: underline;

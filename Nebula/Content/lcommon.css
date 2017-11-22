@@ -8,8 +8,9 @@
     position: absolute;
     margin: 0;
     width: 100% !important;
-    z-index: 1001;
     padding: 0 !important;
+    top: 100px;
+    z-index: 1001;
 }
 
 /* rewrite row, col-md-8, col-md-4 */
@@ -147,9 +148,8 @@
 .search {
     position: relative;
     float: right;
-    padding-top: 30px;
-    padding-right: 30px;
-    margin-top: 8%;
+    height: 30px;
+    width: 30px;
     background-image: url(./images/search.png);
     background-color: transparent;
     background-repeat: no-repeat;
@@ -162,7 +162,6 @@
 .search-div {
     position: relative;
     float: right;
-    margin-top: 8%;
     width: 20%;
     background-image: url(./images/search_stretch.png);
     background-repeat: no-repeat;
@@ -714,7 +713,7 @@
 
 /* theme setting*/
 .theme-setting {
-    position: absolute;
+    position: fixed;
     bottom: 5px;
     right: 5px;
     width: 120px;
@@ -731,7 +730,7 @@
 
 .span-theme-setting {
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     color: #efefef;
     margin-right: 5%;
     text-decoration: underline;

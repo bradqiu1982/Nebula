@@ -10,25 +10,34 @@
 
 <style type="text/css">
     label {
-        color:white;
+        color: #fff;
     }
     .dataTables_info {
-        color:white!important;
+        color: #fff !important;
     }
-    tr {
-           border-color:white!important;
-           border-width:3px!important;
-           background-color:#001d2e!important;
+    tr{
+        background-color: #001d2e !important;
+    }
+    .dataTables_filter input {
+        color: #000 !important;
+    }
+    .dataTables_length select {
+        color: #000 !important;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button{
+        color: #fff !important;
     }
 </style>
 
 <div class="content">
     <div class="container">
-        <div style="color: white; margin-top: 10%; margin-right: 10%; margin-left: 10%;">
+        <div style="color: #fff; margin-top: 2%; margin-right: 10%; margin-left: 10%;">
             @if (Model != null && Model.Count() > 0)
             {
-                <table id="pndatatable" class="display" cellspacing="0" >
-                    <caption style="color: white">@Model.ElementAt(0).JONumber</caption>
+                <div style="color: #fff;text-align: center;margin-bottom: 4%;">
+                    <h3>@Model.ElementAt(0).JONumber</h3>
+                </div>
+                <table id="pndatatable" class="table table-bordered" cellspacing="0" >
                     <thead>
                         <tr>
                             <th>PN</th>
@@ -44,13 +53,13 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <th>@item.MPN</th>
-                                <th>@item.MPNDesc</th>
-                                <th>@item.ReqdSum</th>
-                                <th>@item.ItemCost</th>
-                                <th>@item.QtyIssuedSum</th>
-                                <th>@item.QtyOpen</th>
-                                <th>@item.CostSum</th>
+                                <td>@item.MPN</td>
+                                <td>@item.MPNDesc</td>
+                                <td>@item.ReqdSum</td>
+                                <td>@item.ItemCost</td>
+                                <td>@item.QtyIssuedSum</td>
+                                <td>@item.QtyOpen</td>
+                                <td>@item.CostSum</td>
                             </tr>
                         }
                     </tbody>
@@ -64,7 +73,7 @@
                                             [10, 20, 30, "All"]],
                             "bAutoWidth": false,
                             "aaSorting": [],
-                            "order": []
+                            "order": false
                         });
                     });
                 </script>
