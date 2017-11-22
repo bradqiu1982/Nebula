@@ -105,8 +105,7 @@ var Login = function () {
                 alert("UserName and Password need to be input !");
             }
             return false;
-                });
-
+        });
     }
 
     return {

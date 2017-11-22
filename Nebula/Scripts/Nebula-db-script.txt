@@ -205,3 +205,30 @@ CREATE TABLE [dbo].[PNErrorDistribute] (
 );
 
  ALTER TABLE  [NebulaTrace].[dbo].[PNErrorDistribute] Add ProjectKey NVARCHAR (200) DEFAULT ('') NOT NULL;
+
+
+/****** Object:  Table [dbo].[UserCustomizeTheme]    Script Date: 11/22/2017 10:44:07 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserCustomizeTheme](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MachineName] [nvarchar](50) NOT NULL,
+	[Theme] [tinyint] NOT NULL,
+	[CreateTime] [datetime] NOT NULL,
+	[UpdateTime] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[UserCustomizeTheme] ADD  CONSTRAINT [DF_UserCustomizeTheme_MachineName]  DEFAULT ('') FOR [MachineName]
+GO
+
+ALTER TABLE [dbo].[UserCustomizeTheme] ADD  CONSTRAINT [DF_UserCustomizeTheme_Theme]  DEFAULT ((1)) FOR [Theme]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'1: Dark 2: Llight' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserCustomizeTheme', @level2type=N'COLUMN',@level2name=N'Theme'
+GO

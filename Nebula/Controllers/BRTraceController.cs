@@ -724,5 +724,28 @@ namespace Nebula.Controllers
             return View(jocomps);
         }
 
+        public JsonResult ChangeTheme()
+        {
+            string IP = Request.UserHostName;
+            string machine = DetermineCompName(IP).ToUpper();
+            int theme = Theme.Dark;
+            if (Session["utheme"] == null || Convert.ToInt32(Session["utheme"]) == Theme.Dark)
+            {
+                theme = Theme.Light;
+            }
+            var ctheme = new UserCustomizeThemeVM(
+                0,
+                machine,
+                Convert.ToInt32(theme),
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+            );
+            UserCustomizeThemeVM.UpdateTheme(ctheme);
+            //Session.Remove("utheme");
+            Session.Add("utheme", theme.ToString());
+            var res = new JsonResult();
+            res.Data = new { success = true };
+            return res;
+        }
     }
 }
