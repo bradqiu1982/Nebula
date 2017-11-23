@@ -202,6 +202,7 @@
     </Compile>
     <Compile Include="Models\AgileDownloadVM.cs" />
     <Compile Include="Models\BRAgileVM.cs" />
+    <Compile Include="Models\BRComment.cs" />
     <Compile Include="Models\CamstarVM.cs" />
     <Compile Include="Models\CfgUtility.cs" />
     <Compile Include="Models\CookieUtility.cs" />
@@ -546,7 +547,10 @@
     <Content Include="Content\common.css" />
     <Content Include="Content\images\box.png" />
     <Content Include="Content\images\close.png" />
+    <Content Include="Content\images\delete2.png" />
+    <Content Include="Content\images\edit2.png" />
     <Content Include="Content\images\export.png" />
+    <Content Include="Content\images\extend.png" />
     <Content Include="Content\images\fpic.png" />
     <Content Include="Content\images\fpic_hide.png" />
     <Content Include="Content\images\import.png" />

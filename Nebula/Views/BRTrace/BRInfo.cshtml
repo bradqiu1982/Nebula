@@ -67,9 +67,11 @@
                         </div>
                         <div class="row" style="margin-left:10px">
                             <div class="collapse in" id="analyseinput">
-                                @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data",id = "",name ="" }))
                                 {
                                     <input id="HBRNUM" name="HBRNUM" value="@ViewBag.currentbr.BRNumber" type="hidden" />
+                                    <input id="conclusionid" name="conclusionid" value="" type="hidden" />
+                                    <input id="commentid" name="commentid" value="" type="hidden" />
 
                                     if (ViewBag.currentbr.ConclusionCommentList != null && ViewBag.currentbr.ConclusionCommentList.Count > 0)
                                     {
@@ -86,12 +88,10 @@
                                                                 <div class="col-md-8">
                                                                     <div class="col-md-10"><a href="/User/UserCenter?username=@item.Reporter">@item.Reporter.Split(new char[] { '@' })[0]</a>&nbsp;&nbsp;@item.CommentDate.ToString("yyyy-MM-dd HH:mm:ss")</div>
                                                                     <div class="col-md-1">
-                                                                        <a href="/Issue/ModifyIssueComment?IssueKey=@(item.CommentKey)">
-                                                                            <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:34px; width:24px">
-                                                                        </a>
+                                                                        <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:34px; width:24px;cursor:pointer" onclick="editconclusion('@(item.CommentKey)','@item.Comment.Replace("\r","").Replace("\n","")')">
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        <a href="/Issue/DeleteSPIssueComment?IssueKey=@(item.CommentKey)">
+                                                                        <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)">
                                                                             <img src="~/Content/images/delete2.png" MYTP="HOVER" style="height:34px; width:24px">
                                                                         </a>
                                                                     </div>
@@ -108,37 +108,43 @@
                                             </div>
                                             <div class="col-md-1">
                                             </div>
+                                            <script type="text/javascript">
+                                                function editconclusion(cid,cmt){
+                                                    $('#conclusionid').val(cid);
+                                                    CKEDITOR.instances.conclusioneditor.setData(cmt);
+                                                    $('#conclusioninput').removeClass('hidden');
+                                                }
+                                            </script>
                                         </div>
                                     }
-                                    else
-                                    {
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <label>Conclusion</label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <div class="form-group">
-                                                        <div>
-                                                            <textarea name="conclusioneditor" id="conclusioneditor" rows="10" cols="80"></textarea>
-                                                            <script>
+
+                                    <div id="conclusioninput" name="conclusioninput" class="row @((ViewBag.currentbr.ConclusionCommentList != null && ViewBag.currentbr.ConclusionCommentList.Count > 0)?"hidden":"")">
+                                        <div class="col-md-1">
+                                            <label>Conclusion</label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <div>
+                                                    <textarea name="conclusioneditor" id="conclusioneditor" rows="10" cols="80"></textarea>
+                                                    <script>
                                                             CKEDITOR.replace('conclusioneditor', { htmlEncodeOutput: true, filebrowserUploadUrl: '/userfiles/Upload.ashx', skin: 'moono-lisa' });
-                                                            </script>
+                                                    </script>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-4">
+                                                            <span class="btn btn-default btn-file" id="choosefile1">
+                                                                Editor Attachment <input class="btn-available" type="file" name="file1" id="file1" runat="server" onchange="ShowFileNames1(this)" />
+                                                            </span>
                                                         </div>
+                                                        <div class="col-md-1"></div>
+                                                        <div class="col-md-1"><input class="btn-success" type="submit" value="Submit" /></div>
+                                                        <div class="col-md-1"></div>
+                                                        <div class="col-md-5"></div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="col-md-4">
-                                                                    <span class="btn btn-default btn-file" id="choosefile1">
-                                                                        Editor Attachment <input class="btn-available" type="file" name="file1" id="file1" runat="server" onchange="ShowFileNames1(this)" />
-                                                                    </span>
-                                                                </div>
-                                                                <div class="col-md-1"></div>
-                                                                <div class="col-md-1"><input class="btn-success" type="submit" value="Submit" /></div>
-                                                                <div class="col-md-1"></div>
-                                                                <div class="col-md-5"></div>
-                                                            </div>
-                                                            <script type="text/javascript">
+                                                    <script type="text/javascript">
                                                     function ShowFileNames1(oFile) {
                                                         ajaxFileUpload1();
                                                     }
@@ -163,14 +169,12 @@
                                                         )
                                                         return false;
                                                     }
-                                                            </script>
-                                                        </div>
-                                                    </div>
+                                                   </script>
                                                 </div>
-                                                <div class="col-md-1"></div>
                                             </div>
-                                            
-                                    }
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                    </div>
 
                                     if (ViewBag.currentbr.GeneralCommentList != null && ViewBag.currentbr.GeneralCommentList.Count > 0)
                                     {
@@ -187,12 +191,10 @@
                                                                 <div class="col-md-8">
                                                                     <div class="col-md-10"><a href="/User/UserCenter?username=@item.Reporter">@item.Reporter.Split(new char[] { '@' })[0]</a>&nbsp;&nbsp;@item.CommentDate.ToString("yyyy-MM-dd HH:mm:ss")</div>
                                                                     <div class="col-md-1">
-                                                                        <a href="/Issue/ModifyIssueComment?IssueKey=@(item.CommentKey)">
-                                                                            <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:34px; width:24px">
-                                                                        </a>
+                                                                            <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:34px; width:24px;cursor:pointer" onclick="editcomment('@(item.CommentKey)','@item.Comment.Replace("\r","").Replace("\n","")')">
                                                                     </div>
                                                                     <div class="col-md-1">
-                                                                        <a href="/Issue/DeleteSPIssueComment?IssueKey=@(item.CommentKey)">
+                                                                        <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)">
                                                                             <img src="~/Content/images/delete2.png" MYTP="HOVER" style="height:34px; width:24px">
                                                                         </a>
                                                                     </div>
@@ -240,6 +242,12 @@
                                                         <div class="col-md-5"></div>
                                                     </div>
                                                     <script type="text/javascript">
+
+                                                        function editcomment(cid,cmt){
+                                                            $('#commentid').val(cid);
+                                                            CKEDITOR.instances.commenteditor.setData(cmt);
+                                                        }
+
                                                     function ShowFileNames2(oFile) {
                                                         ajaxFileUpload2();
                                                     }

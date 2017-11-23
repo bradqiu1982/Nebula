@@ -742,7 +742,15 @@ namespace Nebula.Controllers
                     var generalcomment = SeverHtmlDecode.Decode(this, Request.Form["commenteditor"]);
                     var brcomment = new BRComment();
                     brcomment.Comment = generalcomment;
-                    BRAgileBaseInfo.StoreBRComment(brnum, brcomment.dbComment, BRCOMMENTTP.COMMENT, ViewBag.UserName);
+                    var commentid = Request.Form["commentid"];
+                    if (string.IsNullOrEmpty(commentid))
+                    {
+                        BRAgileBaseInfo.StoreBRComment(brnum, brcomment.dbComment, BRCOMMENTTP.COMMENT, ViewBag.UserName);
+                    }
+                    else
+                    {
+                        BRAgileBaseInfo.UpdateBRComment(commentid, brcomment.dbComment);
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(Request.Form["conclusioneditor"]))
@@ -750,7 +758,17 @@ namespace Nebula.Controllers
                     var conclusioncomment = SeverHtmlDecode.Decode(this, Request.Form["conclusioneditor"]);
                     var brcomment = new BRComment();
                     brcomment.Comment = conclusioncomment;
-                    BRAgileBaseInfo.StoreBRComment(brnum, brcomment.dbComment, BRCOMMENTTP.CONCLUSION, ViewBag.UserName);
+
+                    var conclusionid = Request.Form["conclusionid"];
+                    if (string.IsNullOrEmpty(conclusionid))
+                    {
+                        BRAgileBaseInfo.StoreBRComment(brnum, brcomment.dbComment, BRCOMMENTTP.CONCLUSION, ViewBag.UserName);
+                    }
+                    else
+                    {
+                        BRAgileBaseInfo.UpdateBRComment(conclusionid, brcomment.dbComment);
+                    }
+                    
                 }
 
                 var dict1 = new RouteValueDictionary();
@@ -763,6 +781,16 @@ namespace Nebula.Controllers
                 return RedirectToAction("Home", "BRTrace");
             }
         }
+
+        public ActionResult DeleteBRComment(string CommentKey, string BRNum)
+        {
+            BRAgileBaseInfo.DeleteBRComment(CommentKey);
+            var dict1 = new RouteValueDictionary();
+            dict1.Add("BRNum", BRNum);
+            dict1.Add("SearchWords", "");
+            return RedirectToAction("BRInfo", "BRTrace", dict1);
+        }
+
 
     }
 
