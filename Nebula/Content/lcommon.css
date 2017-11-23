@@ -1,15 +1,11 @@
-html, body {
+﻿html, body {
     margin: 0px;
     height: auto;
     background-color: #001D2E;
 }
 
-div[MYTP="orange"] {
-    border-left-width:8px;border-left-style:solid;border-left-color:#FF7400;
-}
-
-.container{
-    position:absolute;
+.container {
+    position: absolute;
     margin: 0;
     width: 100% !important;
     padding: 0 !important;

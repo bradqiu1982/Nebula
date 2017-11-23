@@ -54,7 +54,26 @@ namespace Nebula.Controllers
                 return RedirectToAction("Home", "BRTrace");
             }
 
+            //get User Theme
+            string IP = Request.UserHostName;
+            string machine = DetermineCompName(IP).ToUpper();
+            var utheme = UserCustomizeThemeVM.GetUserTheme(machine);
+            Session.Add("utheme", utheme.Theme);
+
             return View();
+        }
+
+        public static string DetermineCompName(string IP)
+        {
+            try
+            {
+                IPAddress myIP = IPAddress.Parse(IP);
+                IPHostEntry GetIPHost = Dns.GetHostEntry(myIP);
+                List<string> compName = GetIPHost.HostName.ToString().Split('.').ToList();
+                return compName.First();
+            }
+            catch (Exception ex)
+            { return string.Empty; }
         }
 
         private string GetUniqKey()

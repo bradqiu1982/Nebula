@@ -215,6 +215,7 @@
     <Compile Include="Models\NebulaVM.cs" />
     <Compile Include="Models\EmailUtility.cs" />
     <Compile Include="Models\ExcelReader.cs" />
+    <Compile Include="Models\UserCustomizeThemeVM.cs" />
     <Compile Include="Models\WebPageVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -584,6 +585,7 @@
     <Content Include="Content\images\search_stretch.png" />
     <Content Include="Content\images\setting.png" />
     <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\lcommon.css" />
     <Content Include="Content\Nebula.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\popup.css" />
@@ -963,6 +965,7 @@
     <Content Include="Scripts\schedule.js" />
     <Content Include="Scripts\simplebar.js" />
     <Content Include="Scripts\SuperYield.xml" />
+    <Content Include="Scripts\theme.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Scripts\ColumnChart.xml" />
     <Content Include="Views\NebulaUser\UserLogin.cshtml" />

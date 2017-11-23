@@ -5,7 +5,7 @@
             title: {
                 text: 'PN Failure Pareto',
                 style: {
-                    color: '#afafaf',
+                    color: '#efefef',
                     fontSize: '28px'
                 }
             },
@@ -22,15 +22,27 @@
             },
             xAxis: {
                 type: 'category',
-                crosshair: true,
                 labels: {
-                    rotation: -45,
                     style: {
+                        color: '#efefef',
                         fontSize: '12px'
                     }
                 },
+                crosshair: true,
                 gridLineWidth: 0,
                 tickWidth: 0
+            },
+            legend: {
+                itemStyle: {
+                    color: '#cfcfcf',
+                    fontSize: '12px'
+                },
+                itemHoverStyle: {
+                    color: '#fff'
+                },
+                itemHiddenStyle: {
+                    color: '#999'
+                }
             },
             plotOptions: {
                 column: {
@@ -63,19 +75,35 @@
             },
             yAxis: [{
                 title: {
-                    text: 'Amount'
+                    text: 'Amount',
+                    style: {
+                        color: '#efefef',
+                        fontSize: '12px'
+                    }
+                },
+                labels: {
+                    style: {
+                        color: '#efefef',
+                        fontSize: '12px'
+                    }
                 },
                 min: 0,
-                style: {
-                    fontSize: '12px'
-                },
                 gridLineWidth: 0
             }, {
                 title: {
-                    text: 'Percent'
+                    text: 'Percent',
+                    style: {
+                        color: '#efefef'
+                    }
                 },
                 min: 0,
                 max: 100,
+                labels: {
+                    style: {
+                        color: '#efefef',
+                        fontSize: '12px'
+                    }
+                },
                 gridLineWidth: 0,
                 tickPixelInterval: 36,
                 opposite: true
