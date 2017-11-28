@@ -170,7 +170,9 @@ var BR = function(){
                     $('#jo_planner').html(output.joplanner);
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
                     $('#jo_compo').attr('href','/BRTrace/JOComponent?JONum='+jo_no);
-                    $('#jo_compo').attr('target','_blank');
+                    $('#jo_compo').attr('target', '_blank');
+                    $('#jo_ship').attr('href', '/BRTrace/JOShipping?JONum=' + jo_no);
+                    $('#jo_ship').attr('target','_blank');
                     $('.jo-info-right').attr('style', 'display: block;');
                 }
             })
@@ -234,6 +236,8 @@ var BR = function(){
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
                     $('#jo_compo').attr('href', '/BRTrace/JOComponent?JONum=' + jo_no);
                     $('#jo_compo').attr('target', '_blank');
+                    $('#jo_ship').attr('href', '/BRTrace/JOShipping?JONum=' + jo_no);
+                    $('#jo_ship').attr('target', '_blank');
                     $('.jo-list-right').attr('style', 'display: block;');
                 }
             })

@@ -62,6 +62,7 @@
                         <tr><td class="col-md-4">MRP Net QTY</td><td id="jo_wip">@(Model.MRPNetQuantity)</td></tr>
                         <tr><td class="col-md-4">MainStore QTY</td><td id="jo_store">@(Model.ExistQty)</td></tr>
                         <tr><td class="col-md-4">JO Component</td><td id="jo_compo"><a href='/BRTrace/JOComponent?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
+                        <tr><td class="col-md-4">JO Ship</td><td id="jo_ship"><a href='/BRTrace/JOShipping?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
                         <tr><td class="col-md-4">Planer</td><td id="jo_planner">@(Model.Planner)</td></tr>
                     </table>
                 </div>

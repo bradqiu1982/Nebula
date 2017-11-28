@@ -369,8 +369,8 @@ namespace Nebula.Controllers
                 ERPVM.LoadJOComponentInfo(this);
                 CamstarVM.UpdatePNWorkflow();
                 CamstarVM.UpdateJoMESStatus();
+                ERPVM.LoadJOShipTraceInfo(this);
             }
-
 
             return View();
         }
@@ -728,6 +728,12 @@ namespace Nebula.Controllers
         {
             var jocomps = JOComponentInfo.RetrieveInfo(JONum);
             return View(jocomps);
+        }
+
+        public ActionResult JOShipping(string JONum)
+        {
+            var joship = JOShipTrace.RetireTraceInfo(JONum);
+            return View(joship);
         }
 
 

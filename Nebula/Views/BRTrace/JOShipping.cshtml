@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Nebula.Models.JOComponentInfo>
+﻿@model IEnumerable<Nebula.Models.JOShipTrace>
 
 @{
-    ViewBag.Title = "JOComponent";
+    ViewBag.Title = "JOShipping";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,19 +12,24 @@
     label {
         color: #fff;
     }
+
     .dataTables_info {
         color: #fff !important;
     }
-    tr{
+
+    tr {
         background-color: #001d2e !important;
     }
+
     .dataTables_filter input {
         color: #000 !important;
     }
+
     .dataTables_length select {
         color: #000 !important;
     }
-    .dataTables_wrapper .dataTables_paginate .paginate_button{
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
         color: #fff !important;
     }
 </style>
@@ -35,31 +40,37 @@
             @if (Model != null && Model.Count() > 0)
             {
                 <div style="color: #fff;text-align: center;margin-bottom: 4%;">
-                    <h3>@Model.ElementAt(0).JONumber Component</h3>
+                    <h3>@Model.ElementAt(0).JO Shipping</h3>
                 </div>
-                <table id="pndatatable" class="table table-bordered" cellspacing="0" >
+                <table id="pndatatable" class="table table-bordered" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>PN</th>
-                            <th>PN Desc</th>
-                            <th>Reqd</th>
-                            <th>Item Cost</th>
-                            <th>QTY Issued</th>
-                            <th>QTY Open</th>
-                            <th>Cost Sum</th>
+                            <th>JO</th>
+                            <th>Trace Num</th>
+                            <th>SO Num</th>
+                            <th>Order QTY</th>
+                            <th>Shipped QTY</th>
+                            <th>Ship Date</th>
+                            <th>Lot Num</th>
+                            <th>Cust PO</th>
+                            <th>Ship Cust</th>
+                            <th>Real Cust</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.MPN</td>
-                                <td>@item.MPNDesc</td>
-                                <td>@item.ReqdSum</td>
-                                <td>@item.ItemCost</td>
-                                <td>@item.QtyIssuedSum</td>
-                                <td>@item.QtyOpen</td>
-                                <td>@item.CostSum</td>
+                                <td>@item.JO</td>
+                                <td>@item.TraceNum</td>
+                                <td>@item.SONum</td>
+                                <td>@item.OrderQTY</td>
+                                <td>@item.ShippedQTY</td>
+                                <td>@item.ShipDate</td>
+                                <td>@item.DateCode</td>
+                                <td>@item.CustPO</td>
+                                 <td>@item.ShipCust</td>
+                                <td>@item.RealCust</td>
                             </tr>
                         }
                     </tbody>
@@ -84,3 +95,5 @@
 <footer>
     <span class="col-md-5"></span>
 </footer>
+
+

@@ -209,6 +209,7 @@
     <Compile Include="Models\DBUtility.cs" />
     <Compile Include="Models\ERPVM.cs" />
     <Compile Include="Models\EventDataVM.cs" />
+    <Compile Include="Models\JOShipTrace.cs" />
     <Compile Include="Models\NebulaDataCollector.cs" />
     <Compile Include="Models\NebulaUserCacheVM.cs" />
     <Compile Include="Models\NebulaUserViewModels.cs" />
@@ -980,6 +981,7 @@
     <Content Include="Views\BRTrace\_JoPnErrDistribution.cshtml" />
     <Content Include="Scripts\npidepartmentmachine.cfg" />
     <Content Include="Views\BRTrace\JOComponent.cshtml" />
+    <Content Include="Views\BRTrace\JOShipping.cshtml" />
     <None Include="Views\Shared\_layout0.cshtml" />
     <None Include="Views\Shared\_layout1.cshtml" />
     <None Include="Views\Shared\_layout2.cshtml" />
