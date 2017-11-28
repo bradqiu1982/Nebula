@@ -47,6 +47,12 @@ namespace Nebula.Models
                             tempinfo = BRAgileBaseInfo.ParseItem(line.Replace("<<BASEINFO>>", "").Trim());
                         }
 
+                        if (line.Contains("<<PAGETHREE>>") && tempinfo != null)
+                        {
+                            var wf = AgilePageThree.ParseItem(line.Replace("<<PAGETHREE>>", "").Trim());
+                            tempinfo.pagethreelist.Add(wf);
+                        }
+
                         if (line.Contains("<<WORKFLOW>>") && tempinfo != null)
                         {
                             var wf = AgileWorkFlow.ParseItem(line.Replace("<<WORKFLOW>>", "").Trim());
@@ -126,6 +132,95 @@ namespace Nebula.Models
                 return DateTime.Parse("1982-05-06 10:00:00");
             }
         }
+    }
+
+    public class AgilePageThree
+    {
+        public AgilePageThree()
+        {
+            startqty = "";
+            totalcost = "";
+            scrapqty = "";
+            salerevenue = "";
+            reqdjostartdate = "";
+            buildlocation = "";
+            productphase = "";
+        }
+
+        public static AgilePageThree ParseItem(string line)
+        {
+            var item = new AgilePageThree();
+            var splitstrs = line.Split(new string[] { "###" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var sp in splitstrs)
+            {
+                var kv = sp.Split(new string[] { ":::" }, StringSplitOptions.RemoveEmptyEntries);
+                var value = string.Empty;
+                if (kv.Length > 1) value = kv[1].Replace("'", "");
+
+                if (string.Compare(kv[0], "startqty", true) == 0)
+                    item.startqty = value;
+                if (string.Compare(kv[0], "totalcost", true) == 0)
+                    item.totalcost = value;
+                if (string.Compare(kv[0], "scrapqty", true) == 0)
+                    item.scrapqty = value;
+                if (string.Compare(kv[0], "salerevenue", true) == 0)
+                    item.salerevenue = value;
+                if (string.Compare(kv[0], "reqdjostartdate", true) == 0)
+                    item.reqdjostartdate = value;
+                if (string.Compare(kv[0], "buildlocation", true) == 0)
+                    item.buildlocation = value;
+                if (string.Compare(kv[0], "productphase", true) == 0)
+                    item.productphase = value;
+            }
+            return item;
+        }
+
+        public void AddBRAgileInfo(string brkey, string BRNumber)
+        {
+            var sql = "insert into AgilePageThree(BRKey,BRNumber,startqty,totalcost,scrapqty,salerevenue,reqdjostartdate,buildlocation,productphase) "
+                + " values('<BRKey>','<BRNumber>','<startqty>','<totalcost>','<scrapqty>','<salerevenue>','<reqdjostartdate>','<buildlocation>','<productphase>')";
+            sql = sql.Replace("<BRKey>", brkey).Replace("<BRNumber>", BRNumber).Replace("<startqty>", startqty).Replace("<totalcost>", totalcost)
+                .Replace("<scrapqty>", scrapqty).Replace("<salerevenue>", salerevenue)
+                .Replace("<reqdjostartdate>", reqdjostartdate).Replace("<buildlocation>", buildlocation)
+                .Replace("<productphase>", productphase);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static void RemoveBRAgileInfo(string brkey)
+        {
+            var sql = "delete from AgilePageThree where BRKey = '<BRKey>'";
+            sql = sql.Replace("<BRKey>", brkey);
+            DBUtility.ExeLocalSqlNoRes(sql);
+        }
+
+        public static List<AgilePageThree> RetrieveAgileInfo(string brkey)
+        {
+            var ret = new List<AgilePageThree>();
+            var sql = "select startqty,totalcost,scrapqty,salerevenue,reqdjostartdate,buildlocation,productphase from AgilePageThree where BRKey = '<BRKey>'";
+            sql = sql.Replace("<BRKey>", brkey);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                var temp = new AgilePageThree();
+                temp.startqty = Convert.ToString(line[0]);
+                temp.totalcost = Convert.ToString(line[1]);
+                temp.scrapqty = Convert.ToString(line[2]);
+                temp.salerevenue = Convert.ToString(line[3]);
+                temp.reqdjostartdate = Convert.ToString(line[4]);
+                temp.buildlocation = Convert.ToString(line[5]);
+                temp.productphase = Convert.ToString(line[6]);
+                ret.Add(temp);
+            }
+            return ret;
+        }
+
+        public string startqty { set; get; }
+        public string totalcost { set; get; }
+        public string scrapqty { set; get; }
+        public string salerevenue { set; get; }
+        public string reqdjostartdate { set; get; }
+        public string buildlocation { set; get; }
+        public string productphase { set; get; }
     }
 
 
@@ -399,6 +494,7 @@ namespace Nebula.Models
             Originator = "";
             OriginalDate = DateTime.Parse("1982-05-06 10:00:00");
             BRKey = "";
+            pagethreelist = new List<AgilePageThree>();
             brworkflowlist = new List<AgileWorkFlow>();
             affectitem = new List<AgileAffectItem>();
             history = new List<AgileHistory>();
@@ -456,6 +552,8 @@ namespace Nebula.Models
                 .Replace("<ChangeType>", ChangeType).Replace("<OriginalDate>", OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")).Replace("<BRStatus>",BRJOSYSTEMSTATUS.KICKOFF);
             DBUtility.ExeLocalSqlNoRes(sql);
 
+            foreach (var item in pagethreelist)
+            { item.AddBRAgileInfo(brkey, BRNumber); }
             foreach (var item in brworkflowlist)
             { item.AddBRAgileInfo(brkey, BRNumber); }
             foreach (var item in affectitem)
@@ -488,11 +586,14 @@ namespace Nebula.Models
                 if (dbret.Count > 0)
                 {
                     var brkey = Convert.ToString(dbret[0][0]);
+                    AgilePageThree.RemoveBRAgileInfo(brkey);
                     AgileWorkFlow.RemoveBRAgileInfo(brkey);
                     AgileAffectItem.RemoveBRAgileInfo(brkey);
                     AgileHistory.RemoveBRAgileInfo(brkey);
                     AgileAttach.RemoveBRAgileInfo(brkey);
 
+                    foreach (var item in pagethreelist)
+                    { item.AddBRAgileInfo(brkey, BRNumber); }
                     foreach (var item in brworkflowlist)
                     { item.AddBRAgileInfo(brkey, BRNumber); }
                     foreach (var item in affectitem)
@@ -563,6 +664,7 @@ namespace Nebula.Models
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
                 temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
+                temp.pagethreelist.AddRange(AgilePageThree.RetrieveAgileInfo(temp.BRKey));
                 ret.Add(temp);
             }
 
@@ -599,6 +701,7 @@ namespace Nebula.Models
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
                 temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
+                temp.pagethreelist.AddRange(AgilePageThree.RetrieveAgileInfo(temp.BRKey));
                 ret.Add(temp);
             }
 
@@ -625,6 +728,7 @@ namespace Nebula.Models
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
                 temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
+                temp.pagethreelist.AddRange(AgilePageThree.RetrieveAgileInfo(temp.BRKey));
                 ret.Add(temp);
             }
 
@@ -825,6 +929,7 @@ namespace Nebula.Models
         public string BRStatus { set; get; }
         public string ProjectKey { set; get; }
 
+        public List<AgilePageThree> pagethreelist { set; get; }
         public List<AgileWorkFlow> brworkflowlist{set;get;}
         public List<AgileAffectItem> affectitem{set;get;}
         public List<AgileHistory> history{set;get;}

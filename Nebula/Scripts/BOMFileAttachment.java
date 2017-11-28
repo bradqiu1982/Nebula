@@ -113,6 +113,7 @@ class BRBaseInfo
 		affectitem = null;
 		history = null;
 		attach = null;
+		pagethree = null;
 	}
 	
 	public void SetValue(int key,String value)
@@ -142,6 +143,7 @@ class BRBaseInfo
 	List<BRAffectItem> affectitem;
 	List<BRHistory> history;
 	List<BRAttachment> attach;
+	List<BRPageThree> pagethree;
 	
 	private static boolean CreateDir(String dirstr)
 	{
@@ -183,6 +185,14 @@ class BRBaseInfo
 					out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(brfilename)));
 					out.writeBytes("<<BASEINFO>> Number:::"+Number+"###"+"ChangeType:::"+ChangeType+"###"+"Status:::"+Status
 							+"###"+"Workflow:::"+Workflow+"###"+"Originator:::"+Originator+"###"+"OriginalDate:::"+OriginalDate+"###"+"Description:::"+Description+"\r\n");
+					
+					if(pagethree != null && pagethree.size() > 0)
+					{
+						for(int idx = 0;idx < pagethree.size();idx++)
+						{
+							pagethree.get(idx).ExportBR(out);
+						}
+					}
 					if(brworkflowlist != null && brworkflowlist.size() > 0)
 					{
 						for(int idx = 0;idx < brworkflowlist.size();idx++)
@@ -211,6 +221,9 @@ class BRBaseInfo
 							attach.get(idx).ExportBR(out);
 						}
 					}
+
+					
+					
 					out.close();
 				}catch(Exception ex)
 				{
@@ -255,6 +268,49 @@ class BRAffectItem
 	public void ExportBR(DataOutputStream out) throws IOException
 	{
 		out.writeBytes("<<AFFECT>> itemnumber:::"+itemnumber+"###"+"itemsite:::"+itemsite+"###"+"itemdesc:::"+itemdesc+"###"+"lifecycle:::"+lifecycle+"###"+"commodity:::"+commodity+"\r\n");
+	}
+}
+
+class BRPageThree
+{
+	public BRPageThree()
+	{
+		startqty = "";
+		totalcost = "";
+		scrapqty = "";
+		salerevenue = "";
+		reqdjostartdate = "";
+		buildlocation = "";
+		productphase = "";
+	}
+	
+	public void SetValue(int key,String value)
+	{
+		if(value == null)
+			return;
+		
+		if(key == ItemConstants.ATT_PAGE_THREE_TEXT01) startqty = value;
+		if(key == ItemConstants.ATT_PAGE_THREE_TEXT02) totalcost = value;
+		if(key == ItemConstants.ATT_PAGE_THREE_TEXT03) scrapqty = value;
+		if(key == ItemConstants.ATT_PAGE_THREE_TEXT04) salerevenue = value;
+		if(key == ItemConstants.ATT_PAGE_THREE_DATE02) reqdjostartdate = value;
+		if(key == ItemConstants.ATT_PAGE_THREE_MULTILIST01) buildlocation = value;
+		if(key == ItemConstants.ATT_PAGE_THREE_LIST03) productphase = value;
+	}
+	
+	public String startqty;
+	public String totalcost;
+	public String scrapqty;
+	public String salerevenue;
+	public String reqdjostartdate;
+	public String buildlocation;
+	public String productphase;
+	
+	public void ExportBR(DataOutputStream out) throws IOException
+	{
+		out.writeBytes("<<PAGETHREE>> startqty:::"+startqty+"###"+"totalcost:::"+totalcost+"###"+"scrapqty:::"+scrapqty
+				+"###"+"salerevenue:::"+salerevenue+"###"+"reqdjostartdate:::"+reqdjostartdate
+				+"###"+"productphase:::"+productphase+"###"+"buildlocation:::"+buildlocation.replace("\r", "").replace("\n", "")+"\r\n");
 	}
 }
 
@@ -378,6 +434,7 @@ public class BOMFileAttachment {
 						IChange BR = (IChange)sess.getObject(IChange.OBJECT_TYPE, brinfo.Number);
 						if(BR != null)
 						{
+							brinfo.pagethree = gfa.RetrieveCovePage(BR);
 							brinfo.brworkflowlist = gfa.RetrieveBRWorkFlow(BR);
 							brinfo.affectitem =  gfa.RetrieveBRAffectItem(BR);
 							brinfo.history = gfa.RetrieveBRHistory(BR);
@@ -447,11 +504,11 @@ public class BOMFileAttachment {
 						IChange BR = (IChange)sess.getObject(IChange.OBJECT_TYPE, brstr);
 						if(BR != null)
 						{
+							brinfo.pagethree = gfa.RetrieveCovePage(BR);
 							brinfo.brworkflowlist = gfa.RetrieveBRWorkFlow(BR);
 							brinfo.affectitem =  gfa.RetrieveBRAffectItem(BR);
 							brinfo.history = gfa.RetrieveBRHistory(BR);
 							brinfo.attach = gfa.RetrieveBRAttachment(BR,AgileDir+brinfo.Number+"/");
-							
 							brlist.add(brinfo);
 						}
 					}
@@ -687,6 +744,7 @@ public class BOMFileAttachment {
 					,ChangeConstants.ATT_COVER_PAGE_DESCRIPTION
 					,ChangeConstants.ATT_COVER_PAGE_STATUS,ChangeConstants.ATT_COVER_PAGE_WORKFLOW
 					,ChangeConstants.ATT_COVER_PAGE_ORIGINATOR,ChangeConstants.ATT_COVER_PAGE_DATE_ORIGINATED};
+			
 			query.setResultAttributes(resatt);
 			
 			ITable tb = query.execute();
@@ -752,6 +810,43 @@ public class BOMFileAttachment {
 			ret.clear();
 		}
 		
+		return ret;
+	}
+	
+	public List<BRPageThree> RetrieveCovePage(IChange BR)
+	{
+		List<BRPageThree> ret = new ArrayList<BRPageThree>();
+		
+		try{
+			ITable pagethree = BR.getTable(ChangeConstants.TABLE_PAGETHREE);
+			if(pagethree != null)
+			{
+				Iterator ite=pagethree.iterator();
+				while(ite.hasNext()){
+					IRow row=(IRow) ite.next();
+					BRPageThree wtabrow = new BRPageThree();
+					Map<Integer,Object> mvalues = row.getValues();
+					
+					goLogger.debug(mvalues.toString());
+					
+					for(Entry<Integer,Object> e: mvalues.entrySet())
+					{
+						int key = e.getKey();
+						if(e.getValue() != null)
+						{
+							String value = e.getValue().toString();
+							wtabrow.SetValue(key, value.replace("'", "").replace(",", "").replace("\r", "").replace("\n", ""));
+						}
+					}
+					ret.add(wtabrow);
+				}//end while
+				
+			}
+		}
+		catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ret.clear();
+		}
 		return ret;
 	}
 	

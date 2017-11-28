@@ -67,7 +67,7 @@ var BR = function(){
         })
 
         $('body').on('click', '#brclosenav', function () {
-            window.location.href = '/BRTrace/DefaultBRList?p=1&Status=CLOSED';
+            window.location.href = '/BRTrace/DefaultBRList?p=1&Status=CLOSE';
         })
 
         $('body').on('click', '#brkickoffnav', function () {
@@ -75,7 +75,7 @@ var BR = function(){
         })
 
         $('body').on('click', '#joclosenav', function () {
-            window.location.href = '/BRTrace/DefaultJOList?p=1&Status=CLOSED';
+            window.location.href = '/BRTrace/DefaultJOList?p=1&Status=CLOSE';
         })
 
         $('body').on('click', '.br-breadcrumb', function () {
@@ -162,6 +162,8 @@ var BR = function(){
                     $('#jo_store').html(output.jostore);
                     $('#jo_planner').html(output.joplanner);
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
+                    $('#jo_compo').attr('href','/BRTrace/JOComponent?JONum='+jo_no);
+                    $('#jo_compo').attr('target','_blank');
                     $('.jo-info-right').attr('style', 'display: block;');
                 }
             })
@@ -223,6 +225,8 @@ var BR = function(){
                     $('#jo_store').html(output.jostore);
                     $('#jo_planner').html(output.joplanner);
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
+                    $('#jo_compo').attr('href', '/BRTrace/JOComponent?JONum=' + jo_no);
+                    $('#jo_compo').attr('target', '_blank');
                     $('.jo-list-right').attr('style', 'display: block;');
                 }
             })

@@ -579,8 +579,8 @@ namespace Nebula.Models
             ret.BRKey = "";
             ret.BRNumber = "";
             ret.JONumber = line[0];
-            ret.MPN = line[1];
-            ret.MPNDesc = line[4];
+            ret.MPN = line[12];
+            ret.MPNDesc = line[13];
             ret.ReqdSum = ERPVM.Convert2Double(line[17]);
             ret.ItemCost = ERPVM.Convert2Double(line[21]);
             ret.QtyIssuedSum = ERPVM.Convert2Double(line[20]);
@@ -845,9 +845,9 @@ namespace Nebula.Models
                     var jodict = new Dictionary<string, bool>();
                     foreach (var jo in jolist)
                     {
-                        if (!jodict.ContainsKey(jo))
+                        if (!jodict.ContainsKey(jo.ToUpper().Trim()))
                         {
-                            jodict.Add(jo, true);
+                            jodict.Add(jo.ToUpper().Trim(), true);
                         }
                     }
 
@@ -863,10 +863,9 @@ namespace Nebula.Models
                                 //tempinfo.BRKey = brdict[br];
                                 //tempinfo.BRNumber = br;
                                 jocomponentlist.Add(tempinfo);
-                                break;
                             }
-
                     }//end foreach
+
                     foreach (var item in jocomponentlist)
                     {
                         item.StoreInfo();

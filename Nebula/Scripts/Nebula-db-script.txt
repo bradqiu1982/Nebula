@@ -72,6 +72,23 @@ CREATE TABLE [dbo].[AgileAffectItem] (
     [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
 );
 
+CREATE TABLE [dbo].[AgilePageThree] (
+	[BRKey] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[BRNumber] NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [startqty] NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [totalcost] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[scrapqty] NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [salerevenue] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[reqdjostartdate] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[buildlocation] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[productphase] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal1]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [APVal2]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal3]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[APVal4]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+    [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
+);
+
 CREATE TABLE [dbo].[AgileWorkFlow] (
 	[BRKey] NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[BRNumber] NVARCHAR (200) DEFAULT ('') NOT NULL,
