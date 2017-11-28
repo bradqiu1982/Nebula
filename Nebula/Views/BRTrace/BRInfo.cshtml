@@ -53,6 +53,11 @@
                         <tr><td class="col-md-4">Original Date</td><td>@ViewBag.currentbr.OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")</td></tr>
                         <tr><td class="col-md-4">Description</td><td>@ViewBag.currentbr.Description</td></tr>
                         <tr><td class="col-md-4">Agile Status</td><td>@ViewBag.currentbr.Status</td></tr>
+                        <tr><td class="col-md-4">Start QTY</td><td>@((ViewBag.currentbr.pagethreelist.Count > 0)? ViewBag.currentbr.pagethreelist[0].startqty:"")</td></tr>
+                        <tr><td class="col-md-4">Total Cost</td><td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].totalcost : "")</td></tr>
+                        <tr><td class="col-md-4">Scrap QTY</td><td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].scrapqty : "")</td></tr>
+                        <tr><td class="col-md-4">Sale Revenue</td><td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].salerevenue : "")</td></tr>
+                        <tr><td class="col-md-4">Product Phase</td><td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].productphase : "")</td></tr>
                     </table>
                 </div>
                 <div class="row">

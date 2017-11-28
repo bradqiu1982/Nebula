@@ -105,6 +105,13 @@ var BR = function(){
                      $('#br_date').html(output.OriginalDate);
                      $('#br_desc').html(output.Description);
                      $('#br_stat').html(output.Status);
+
+                     $('#br_sqty').html(output.StartQTY);
+                     $('#br_tcost').html(output.TotalCost);
+                     $('#br_scrap').html(output.ScrapQTY);
+                     $('#br_revenue').html(output.SaleRevenue);
+                     $('#br_phase').html(output.ProductPhase);
+
                      $('#br_detail').attr('href', '/BRTrace/BRInfo?BRNum=' + br_no + '&SearchWords=' + $('#keywords').val());
                     $('.br-list-right').attr('style', 'display: block;');
                  }

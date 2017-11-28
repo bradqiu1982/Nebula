@@ -228,6 +228,11 @@ namespace Nebula.Controllers
                     , OriginalDate = brinfolist[0].OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")
                     , Description = brinfolist[0].Description
                     , Status = brinfolist[0].Status
+                    , StartQTY = (brinfolist[0].pagethreelist.Count > 0) ? brinfolist[0].pagethreelist[0].startqty : ""
+                    , TotalCost = (brinfolist[0].pagethreelist.Count > 0) ? brinfolist[0].pagethreelist[0].totalcost : ""
+                    , ScrapQTY = (brinfolist[0].pagethreelist.Count > 0) ? brinfolist[0].pagethreelist[0].scrapqty : ""
+                    , SaleRevenue = (brinfolist[0].pagethreelist.Count > 0) ? brinfolist[0].pagethreelist[0].salerevenue : ""
+                    , ProductPhase = (brinfolist[0].pagethreelist.Count > 0) ? brinfolist[0].pagethreelist[0].productphase : ""
                 };
                 return res;
             }
