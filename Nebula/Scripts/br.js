@@ -339,6 +339,9 @@ var BR = function(){
         joinfo: function () {
             joinfo();
             common();
+        },
+        common: function () {
+            common();
         }
     };
 }();

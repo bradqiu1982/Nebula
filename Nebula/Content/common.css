@@ -363,17 +363,17 @@ div[MYTP="orange"] {
     border: transparent;
 }
 
-    .cus-table > tbody > tr {
-        cursor: pointer;
-    }
+.cus-table > tbody > tr {
+    cursor: pointer;
+}
 
-        .cus-table > tbody > tr > td {
-            border: transparent;
-        }
+.cus-table > tbody > tr > td {
+    border: transparent;
+}
 
-        .cus-table > tbody > tr:hover {
-            background-color: #07151E;
-        }
+.cus-table > tbody > tr:hover {
+    background-color: #07151E;
+}
 
 .des-table {
     border: transparent;
@@ -399,7 +399,7 @@ div[MYTP="orange"] {
 
 .jo-info-left {
     margin-top: 2%;
-    margin-left: 5%;
+    margin-left: 10%;
     border: #24323B 1px solid;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -739,4 +739,51 @@ div[MYTP="orange"] {
     margin-right: 5%;
     text-decoration: underline;
     font-style: italic;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.br-panel {
+    margin-left: 15%;
+    border-color: transparent !important;
+    background-color: transparent !important;
+}
+.br-panel-title {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    border-left-style: solid;
+    border-left-color: #33CCFF !important;
+    border-left-width: 5px !important;
+}
+.br-panel-heading {
+    padding: 0;
+    color: #efefef !important;
+    border-color: transparent !important;
+    background-color: transparent !important;
+}
+
+.chevron-down {
+    color: #33CCFF;
+    padding: 2px 5px;
+}
+
+.con-op{
+    margin-top: 2%;
+}
+
+.con-border-color {
+    border-left-width: 2px;
+    border-left-style: solid;
+    border-left-color: #006DC0;
+}
+.ckedit-box{
+    margin-top: 2%;
+}
+
+.title-box{
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: bold;
 }

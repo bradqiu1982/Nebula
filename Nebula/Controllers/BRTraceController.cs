@@ -180,6 +180,21 @@ namespace Nebula.Controllers
             return View("JOList");
         }
 
+        public ActionResult JOList(string BR, int p = 1)
+        {
+            UserAuth();
+            var allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, null, BR);
+            ViewBag.withstatus = string.Empty;
+
+
+            var page_size = 10;
+            ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
+            ViewBag.page = p;
+            ViewBag.total_pages = allJolist.Count / page_size + 1;
+            ViewBag.searchkeyword = "";
+            return View("JOList");
+        }
+
         public ActionResult SearchKeyWord(string SearchWords, int p = 1)
         {
             UserAuth();
@@ -721,6 +736,7 @@ namespace Nebula.Controllers
 
         public ActionResult JOComponent(string JONum)
         {
+            UserAuth();
             var jocomps = JOComponentInfo.RetrieveInfo(JONum);
             return View(jocomps);
         }

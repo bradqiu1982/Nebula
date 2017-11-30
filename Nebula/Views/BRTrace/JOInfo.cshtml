@@ -38,31 +38,31 @@
         </div>
         <div class="jo-detail">
             <div class="row">
-                <div class="col-md-4 col-md-offset-2">
+                <div class="col-xs-4 col-xs-offset-2">
                     <div id="jo-title"><span id="jo_num">@Model.JONumber</span></div>
                     <div id="jo-status"><span>OPEN</span></div>
                     <input type="hidden" id="jo_num1" name="jo_num1" value="@Model.JONumber" />
                 </div>
-                <div class="col-md-5 col-md-offset-1">
+                <div class="col-xs-5 col-xs-offset-1">
                     <table class="table table-bordered des-table">
-                        <tr><td class="col-md-4">Project</td><td id="jo_pjkey">@(Model.ProjectKey)</td></tr>
-                        <tr><td class="col-md-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc.Substring(0,(Model.PNDesc.Length > 23)?23:Model.PNDesc.Length))</td></tr>
+                        <tr><td class="col-xs-4">Project</td><td id="jo_pjkey">@(Model.ProjectKey)</td></tr>
+                        <tr><td class="col-xs-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc.Substring(0,(Model.PNDesc.Length > 23)?23:Model.PNDesc.Length))</td></tr>
                         @if (string.IsNullOrEmpty(Model.ProjectKey))
                         {
-                            <tr><td class="col-md-4">PN Test Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
+                            <tr><td class="col-xs-4">PN Test Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
                         }
                         else
                         {
-                            <tr><td class="col-md-4">PN Test Yield</td><td id="jo_yd"><span>@(Model.PNYieldStr)&nbsp;</span><a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=@(Model.ProjectKey)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24'/></a></td></tr>
+                            <tr><td class="col-xs-4">PN Test Yield</td><td id="jo_yd"><span>@(Model.PNYieldStr)&nbsp;</span><a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=@(Model.ProjectKey)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24'/></a></td></tr>
                         }
 
-                        <tr><td class="col-md-4">JO Type</td><td id="jo_type">@(Model.Category)-@(Model.JOType)</td></tr>
-                        <tr><td class="col-md-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
-                        <tr><td class="col-md-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td></tr>
-                        <tr><td class="col-md-4">MRP Net QTY</td><td id="jo_wip">@(Model.MRPNetQuantity)</td></tr>
-                        <tr><td class="col-md-4">MainStore QTY</td><td id="jo_store">@(Model.ExistQty)</td></tr>
-                        <tr><td class="col-md-4">JO Component</td><td id="jo_compo"><a href='/BRTrace/JOComponent?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
-                        <tr><td class="col-md-4">Planer</td><td id="jo_planner">@(Model.Planner)</td></tr>
+                        <tr><td class="col-xs-4">JO Type</td><td id="jo_type">@(Model.Category)-@(Model.JOType)</td></tr>
+                        <tr><td class="col-xs-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
+                        <tr><td class="col-xs-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td></tr>
+                        <tr><td class="col-xs-4">MRP Net QTY</td><td id="jo_wip">@(Model.MRPNetQuantity)</td></tr>
+                        <tr><td class="col-xs-4">MainStore QTY</td><td id="jo_store">@(Model.ExistQty)</td></tr>
+                        <tr><td class="col-xs-4">JO Component</td><td id="jo_compo"><a href='/BRTrace/JOComponent?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
+                        <tr><td class="col-xs-4">Planer</td><td id="jo_planner">@(Model.Planner)</td></tr>
                     </table>
                 </div>
             </div>
@@ -70,16 +70,16 @@
     </div>
 </div>
 <div class="jo-operation">
-    <div class="col-md-3 jo-op jo-blue">
+    <div class="col-xs-3 jo-op jo-blue">
         <div class="jo-tranparent jo-blue-tranparent" id="sch-1"></div>
     </div>
-    <div class="col-md-3 jo-op jo-green">
+    <div class="col-xs-3 jo-op jo-green">
         <div class="jo-tranparent jo-green-tranparent" id="sch-2"></div>
     </div>
-    <div class="col-md-3 jo-op jo-yellow">
+    <div class="col-xs-3 jo-op jo-yellow">
         <div class="jo-tranparent jo-yellow-tranparent" id="sch-3"></div>
     </div>
-    <div class="col-md-3 jo-op jo-darkblue">
+    <div class="col-xs-3 jo-op jo-darkblue">
         <div class="jo-tranparent jo-darkblue-up-tranparent" id="sch-4"></div>
         <div class="jo-darkblue-down-tranparent"></div>
     </div>

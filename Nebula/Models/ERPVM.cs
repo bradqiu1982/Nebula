@@ -228,26 +228,32 @@ namespace Nebula.Models
             return ret;
         }
 
-        public static List<JOBaseInfo> RetrieveActiveJoInfoWithStatus(string reviewer,string jostatus)
+        public static List<JOBaseInfo> RetrieveActiveJoInfoWithStatus(string reviewer,string jostatus = null, string br = null)
         {
             var ret = new List<JOBaseInfo>();
 
             var sql = string.Empty;
-            if (reviewer == null)
-            {
-                sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
+            sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
                       + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.PNTestYield,JORealStatus,j.ProjectKey from JOBaseInfo j (nolock) "
-                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey  where JORealStatus = '<JORealStatus>'  order by JONumber";
-                sql = sql.Replace("<JORealStatus>", jostatus);
+                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey  where 1 = 1";
+            if(jostatus != null)
+            {
+                sql += "JORealStatus = '<JORealStatus>' ";
             }
-            else
+            if (reviewer != null)
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-                sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
-                      + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.PNTestYield,JORealStatus,j.ProjectKey from JOBaseInfo j (nolock) "
-                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey where a.Originator = '<Originator>' and JORealStatus = '<JORealStatus>' order by JONumber";
-                sql = sql.Replace("<Originator>", reviewer).Replace("<JORealStatus>", jostatus);
+                sql += "and JORealStatus = '<JORealStatus>' ";
             }
+            if(br != null)
+            {
+                sql += "and j.BRNumber = '<BRNumber>' ";
+            }
+            sql += "order by JONumber";
+
+            sql = sql.Replace("<Originator>", reviewer)
+                    .Replace("<JORealStatus>", jostatus)
+                    .Replace("<BRNumber>", br);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             foreach (var line in dbret)
             {

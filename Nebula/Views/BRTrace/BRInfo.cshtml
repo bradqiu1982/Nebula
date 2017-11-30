@@ -41,35 +41,69 @@
 
         </div>
         <div class="br-info">
-            <div class="col-md-9">
+            <div class="col-xs-9">
                 <div class="content-title">
-                    <span class="col-md-6" id="br_num">@ViewBag.currentbr.BRNumber</span>
-                    <span class="col-md-6">@ViewBag.currentbr.BRStatus</span>
+                    <span class="col-xs-6" id="br_num">@ViewBag.currentbr.BRNumber</span>
+                    <span class="col-xs-6">@ViewBag.currentbr.BRStatus</span>
                 </div>
                 <div class="br-info-content">
                     <table class="table table-bordered des-table">
-                        <tr><td class="col-md-4">Project</td><td>@ViewBag.currentbr.ProjectKey</td></tr>
-                        <tr><td class="col-md-4">Originator</td><td>@ViewBag.currentbr.Originator</td></tr>
-                        <tr><td class="col-md-4">Original Date</td><td>@ViewBag.currentbr.OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")</td></tr>
-                        <tr><td class="col-md-4">Description</td><td>@ViewBag.currentbr.Description</td></tr>
-                        <tr><td class="col-md-4">Agile Status</td><td>@ViewBag.currentbr.Status</td></tr>
+                        <tr>
+                            <td class="col-xs-4">Project</td>
+                            <td>@ViewBag.currentbr.ProjectKey</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Originator</td>
+                            <td>@ViewBag.currentbr.Originator</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Original Date</td>
+                            <td>@ViewBag.currentbr.OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Description</td>
+                            <td>@ViewBag.currentbr.Description</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Agile Status</td>
+                            <td>@ViewBag.currentbr.Status</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Agile Status</td>
+                            <td>@ViewBag.currentbr.Status</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Agile Status</td>
+                            <td>@ViewBag.currentbr.Status</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Agile Status</td>
+                            <td>@ViewBag.currentbr.Status</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Agile Status</td>
+                            <td>@ViewBag.currentbr.Status</td>
+                        <tr>
+                            <td class="col-xs-4">JO List</td>
+                            <td>
+                                <a href="/BRTrace/JOList?BR=@ViewBag.currentbr.BRNumber" target="_blank">
+                                    <img src="~/Content/images/loading.png" height="6" width="24" />
+                                </a>
+                            </td>
+                        </tr>
                     </table>
                 </div>
-                <div class="row">
-                    <div class="col-md-11 col-md-offset-1">
-                        <div MYTP="orange" class="row" style="margin-left:3px">
-                            <div class="col-md-12">
-                                <a data-toggle="collapse" href="#analyseinput" aria-expanded="false" aria-controls="collapseExample" style="font-size:18px;font-family:'Arial Narrow';">
-                                    <font color="white"><strong>&nbsp;&nbsp;BR Summary</strong></font>&nbsp;&nbsp;&nbsp;&nbsp;<img src="~/Content/images/extend.png" style="height:25px; width:14px">
-                                </a>
-                            </div>
+                <div>
+                    <div class="panel panel-success br-panel">
+                        <div class="panel-heading cursor-pointer br-panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title br-panel-title" data-toggle="collapse" data-target="#c_conclusion" aria-expanded="true">
+                                <span class="title-box">Conclusion</span>
+                                <span class="glyphicon glyphicon-chevron-down chevron-down"></span>
+                            </h4>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">&nbsp;</div>
-                        </div>
-                        <div class="row" style="margin-left:10px">
-                            <div class="collapse in" id="analyseinput">
-                                @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data",id = "",name ="" }))
+                        <div id="c_conclusion" class="panel-collapse collapse in" role="tabpanel">
+                            <div class="panel-body">
+                                @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data", id = "", name = "" }))
                                 {
                                     <input id="HBRNUM" name="HBRNUM" value="@ViewBag.currentbr.BRNumber" type="hidden" />
                                     <input id="conclusionid" name="conclusionid" value="" type="hidden" />
@@ -77,246 +111,177 @@
 
                                     if (ViewBag.currentbr.ConclusionCommentList != null && ViewBag.currentbr.ConclusionCommentList.Count > 0)
                                     {
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <label>Conclusion</label>
+                                        foreach (var item in ViewBag.currentbr.ConclusionCommentList)
+                                        {
+                                            <div class="row con-border-color">
+                                                <div class="col-xs-10">
+                                                    <a>@item.Reporter.Split(new char[] { '@' })[0]</a>
+                                                    <span>@item.CommentDate.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:25px; width:20px;cursor:pointer" onclick="editconclusion('@(item.CommentKey)','@item.Comment.Replace("\r", "").Replace("\n", "")')">
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)">
+                                                        <img src="~/Content/images/delete2.png" MYTP="HOVER" style="height:25px; width:20px">
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-offset-1">@Html.Raw(item.Comment)</div>
                                             </div>
-                                            <div class="col-md-10">
-                                                @foreach (var item in ViewBag.currentbr.ConclusionCommentList)
+                                        }
+                                        <script type="text/javascript">
+                                            function editconclusion(cid, cmt) {
+                                                $('#conclusionid').val(cid);
+                                                CKEDITOR.instances.conclusioneditor.setData(cmt);
+                                                $('#conclusioninput').removeClass('hidden');
+                                            }
+                                        </script>
+                                    }
+
+                                    <div id="conclusioninput" name="conclusioninput" class="row @((ViewBag.currentbr.ConclusionCommentList != null && ViewBag.currentbr.ConclusionCommentList.Count > 0) ? "hidden" : "")">
+                                        <div class="row ckedit-box">
+                                            <textarea name="conclusioneditor" id="conclusioneditor" rows="10" cols="80"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('conclusioneditor', { htmlEncodeOutput: true, filebrowserUploadUrl: '/userfiles/Upload.ashx', skin: 'moono-dark' });
+                                            </script>
+                                        </div>
+                                        <div class="row con-op">
+                                            <div class="col-xs-4">
+                                                <span class="btn btn-default btn-file" id="choosefile1">
+                                                    Editor Attachment <input class="btn-available" type="file" name="file1" id="file1" runat="server" onchange="ShowFileNames1(this)" />
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-offset-6">
+                                                <input class="btn btn-success" type="submit" value="Submit" />
+                                                @if (ViewBag.currentbr.ConclusionCommentList != null && ViewBag.currentbr.ConclusionCommentList.Count > 0)
                                                 {
-                                                    <div class="well" style="margin-bottom:2px;padding-bottom:2px;margin-top:2px;padding-top:2px;background-color:transparent !important;border-left-color:#006DC0;border-top-color:transparent !important;border-right-color:transparent !important;border-bottom-color:transparent !important;border-top-left-radius:0px;border-bottom-left-radius:0px;border-top-width:0px">
-                                                        <div class="row" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
-                                                            <div class="row" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
-                                                                <div class="col-md-8">
-                                                                    <div class="col-md-10"><a href="/User/UserCenter?username=@item.Reporter">@item.Reporter.Split(new char[] { '@' })[0]</a>&nbsp;&nbsp;@item.CommentDate.ToString("yyyy-MM-dd HH:mm:ss")</div>
-                                                                    <div class="col-md-1">
-                                                                        <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:34px; width:24px;cursor:pointer" onclick="editconclusion('@(item.CommentKey)','@item.Comment.Replace("\r","").Replace("\n","")')">
-                                                                    </div>
-                                                                    <div class="col-md-1">
-                                                                        <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)">
-                                                                            <img src="~/Content/images/delete2.png" MYTP="HOVER" style="height:34px; width:24px">
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4"></div>
-                                                            </div>
-                                                            <div class="row" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
-                                                                <div class="col-md-1"></div>
-                                                                <div class="col-md-11">@Html.Raw(item.Comment)</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <input class="btn btn-warning" type="button" id="btn_con_cancel" value="Cancel" />
                                                 }
                                             </div>
-                                            <div class="col-md-1">
-                                            </div>
                                             <script type="text/javascript">
-                                                function editconclusion(cid,cmt){
-                                                    $('#conclusionid').val(cid);
-                                                    CKEDITOR.instances.conclusioneditor.setData(cmt);
-                                                    $('#conclusioninput').removeClass('hidden');
+                                                $("body").on("click", "#btn_con_cancel", function () {
+                                                    $("#conclusioninput").addClass("hidden");
+                                                })
+                                                function ShowFileNames1(oFile) {
+                                                    ajaxFileUpload1();
+                                                }
+                                                function ajaxFileUpload1() {
+                                                    $.ajaxFileUpload
+                                                        (
+                                                        {
+                                                            url: '/userfiles/ImageUpload.ashx',
+                                                            secureuri: false,
+                                                            fileElementId: 'file1',
+                                                            dataType: 'HTML',
+                                                            success: function (data, status) {
+                                                                var wholeval = CKEDITOR.instances.conclusioneditor.getData() + data;
+                                                                CKEDITOR.instances.conclusioneditor.setData(wholeval);
+                                                            },
+                                                            error: function (e) {
+                                                                alert(e);
+                                                            }
+                                                        }
+                                                        )
+                                                    return false;
                                                 }
                                             </script>
                                         </div>
-                                    }
-
-                                    <div id="conclusioninput" name="conclusioninput" class="row @((ViewBag.currentbr.ConclusionCommentList != null && ViewBag.currentbr.ConclusionCommentList.Count > 0)?"hidden":"")">
-                                        <div class="col-md-1">
-                                            <label>Conclusion</label>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <div>
-                                                    <textarea name="conclusioneditor" id="conclusioneditor" rows="10" cols="80"></textarea>
-                                                    <script>
-                                                            CKEDITOR.replace('conclusioneditor', { htmlEncodeOutput: true, filebrowserUploadUrl: '/userfiles/Upload.ashx', skin: 'moono-lisa' });
-                                                    </script>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="col-md-4">
-                                                            <span class="btn btn-default btn-file" id="choosefile1">
-                                                                Editor Attachment <input class="btn-available" type="file" name="file1" id="file1" runat="server" onchange="ShowFileNames1(this)" />
-                                                            </span>
-                                                        </div>
-                                                        <div class="col-md-1"></div>
-                                                        <div class="col-md-1"><input class="btn-success" type="submit" value="Submit" /></div>
-                                                        <div class="col-md-1"></div>
-                                                        <div class="col-md-5"></div>
-                                                    </div>
-                                                    <script type="text/javascript">
-                                                    function ShowFileNames1(oFile) {
-                                                        ajaxFileUpload1();
-                                                    }
-                                                    function ajaxFileUpload1() {
-                                                        $.ajaxFileUpload
-                                                        (
-                                                            {
-                                                                url: '/userfiles/ImageUpload.ashx',
-                                                                secureuri: false,
-                                                                fileElementId: 'file1',
-                                                                dataType: 'HTML',
-                                                                success: function (data, status)
-                                                                {
-                                                                    var wholeval = CKEDITOR.instances.conclusioneditor.getData() + data;
-                                                                    CKEDITOR.instances.conclusioneditor.setData(wholeval);
-                                                                },
-                                                                error: function (e)
-                                                                {
-                                                                    alert(e);
-                                                                }
-                                                            }
-                                                        )
-                                                        return false;
-                                                    }
-                                                   </script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1"></div>
-                                    </div>
-
-                                    if (ViewBag.currentbr.GeneralCommentList != null && ViewBag.currentbr.GeneralCommentList.Count > 0)
-                                    {
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <label>Comments</label>
-                                            </div>
-                                            <div class="col-md-10">
-                                                @foreach (var item in ViewBag.currentbr.GeneralCommentList)
-                                                {
-                                                    <div class="well" style="margin-bottom:2px;padding-bottom:2px;margin-top:2px;padding-top:2px;background-color:transparent !important;border-left-color:#006DC0;border-top-color:transparent !important;border-right-color:transparent !important;border-bottom-color:transparent !important;border-top-left-radius:0px;border-bottom-left-radius:0px;border-top-width:0px">
-                                                        <div class="row" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
-                                                            <div class="row" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
-                                                                <div class="col-md-8">
-                                                                    <div class="col-md-10"><a href="/User/UserCenter?username=@item.Reporter">@item.Reporter.Split(new char[] { '@' })[0]</a>&nbsp;&nbsp;@item.CommentDate.ToString("yyyy-MM-dd HH:mm:ss")</div>
-                                                                    <div class="col-md-1">
-                                                                            <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:34px; width:24px;cursor:pointer" onclick="editcomment('@(item.CommentKey)','@item.Comment.Replace("\r","").Replace("\n","")')">
-                                                                    </div>
-                                                                    <div class="col-md-1">
-                                                                        <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)">
-                                                                            <img src="~/Content/images/delete2.png" MYTP="HOVER" style="height:34px; width:24px">
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4"></div>
-                                                            </div>
-                                                            <div class="row" style="margin-top:2px;margin-bottom:2px;padding-top:2px;padding-bottom:2px;">
-                                                                <div class="col-md-1"></div>
-                                                                <div class="col-md-11">@Html.Raw(item.Comment)</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            </div>
-                                            <div class="col-md-1">
-                                            </div>
-                                        </div>
-                                    }
-
-
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <label>Comment Input</label>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <div>
-                                                    <textarea name="commenteditor" id="commenteditor" rows="10" cols="80"></textarea>
-                                                    <script>
-                                                        CKEDITOR.replace('commenteditor', { htmlEncodeOutput: true, filebrowserUploadUrl: '/userfiles/Upload.ashx', skin: 'moono-lisa' });
-                                                    </script>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="col-md-4">
-                                                            <span class="btn btn-default btn-file" id="choosefile2">
-                                                                Editor Attachment <input class="btn-available" type="file" name="file2" id="file2" runat="server" onchange="ShowFileNames2(this)" />
-                                                            </span>
-                                                        </div>
-                                                        <div class="col-md-1"></div>
-                                                        <div class="col-md-1"><input class="btn-success" type="submit" value="Submit" /></div>
-                                                        <div class="col-md-1"></div>
-                                                        <div class="col-md-5"></div>
-                                                    </div>
-                                                    <script type="text/javascript">
-
-                                                        function editcomment(cid,cmt){
-                                                            $('#commentid').val(cid);
-                                                            CKEDITOR.instances.commenteditor.setData(cmt);
-                                                        }
-
-                                                    function ShowFileNames2(oFile) {
-                                                        ajaxFileUpload2();
-                                                    }
-                                                    function ajaxFileUpload2() {
-                                                        $.ajaxFileUpload
-                                                        (
-                                                            {
-                                                                url: '/userfiles/ImageUpload.ashx',
-                                                                secureuri: false,
-                                                                fileElementId: 'file2',
-                                                                dataType: 'HTML',
-                                                                success: function (data, status)
-                                                                {
-                                                                    var wholeval = CKEDITOR.instances.commenteditor.getData() + data;
-                                                                    CKEDITOR.instances.commenteditor.setData(wholeval);
-                                                                },
-                                                                error: function (e)
-                                                                {
-                                                                    alert(e);
-                                                                }
-                                                            }
-                                                        )
-                                                        return false;
-                                                    }
-                                                    </script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1"></div>
                                     </div>
                                 }
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-1 jo-info-left">
-                        <table class="table table-bordered table-hover cus-table">
-                            @foreach (var item in ViewBag.currentbrjolist)
-                            {
-                                <tr><td>@item.JONumber</td><td>@item.JORealStatus</td></tr>
-                            }
-                        </table>
-                        @if (ViewBag.sub_total_pages > 1)
-                        {
-                            @Html.Partial("~/Views/Shared/_sub_pagination.cshtml")
-                        }
-                    </div>
-                    <div class="col-md-6 col-md-offset-1 jo-info-right">
-                        <table class="table table-bordered des-table">
-                            <tr><td class="col-md-4">Project</td><td id="jo_pjkey">Test1</td></tr>
-                            <tr><td class="col-md-4">PN</td><td id="jo_pn">Test1</td></tr>
-                            <tr><td class="col-md-4">PN Test Yield</td><td id="jo_yd">Test1</td></tr>
-                            <tr><td class="col-md-4">JO Type</td><td id="jo_type">Test1</td></tr>
-                            <tr><td class="col-md-4">JO Status</td><td id="jo_stat">Test1</td></tr>
-                            <tr><td class="col-md-4">Date Released</td><td id="jo_date">Test1</td></tr>
-                            <tr><td class="col-md-4">MRP Net QTY</td><td id="jo_wip">Test1</td></tr>
-                            <tr><td class="col-md-4">Mainstore QTY</td><td id="jo_store">Test1</td></tr>
-                            <tr><td class="col-md-4">JO Component</td><td><a id="jo_compo" href='#'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
-                            <tr><td class="col-md-4">Planer</td><td id="jo_planner">Test1</td></tr>
-                            <tr><td class="col-md-4"><a id="jo_detail" href="#"><img src="~/Content/images/more.png" height="15" width="30" /></a></td><td></td></tr>
-                        </table>
+                <div>
+                    <div class="panel panel-success br-panel">
+                        <div class="panel-heading cursor-pointer br-panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title br-panel-title" data-toggle="collapse" data-target="#c_comment" aria-expanded="true">
+                                <span class="title-box">Comment</span>
+                                <span class="glyphicon glyphicon-chevron-down chevron-down"></span>
+                            </h4>
+                        </div>
+                        <div id="c_comment" class="panel-collapse collapse in" role="tabpanel">
+                            <div class="panel-body">
+                                @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data",id = "",name ="" }))
+                                {
+                                    <input id="HBRNUM" name="HBRNUM" value="@ViewBag.currentbr.BRNumber" type="hidden" />
+                                    <input id="conclusionid" name="conclusionid" value="" type="hidden" />
+                                    <input id="commentid" name="commentid" value="" type="hidden" />
+                                    if (ViewBag.currentbr.GeneralCommentList != null && ViewBag.currentbr.GeneralCommentList.Count > 0)
+                                    {
+                                        foreach (var item in ViewBag.currentbr.GeneralCommentList)
+                                        {
+                                            <div class="row con-border-color">
+                                                <div class="col-xs-10">
+                                                    <a>@item.Reporter.Split(new char[] { '@' })[0]</a>
+                                                    <span>@item.CommentDate.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:25px; width:20px;cursor:pointer" onclick="editcomment('@(item.CommentKey)','@item.Comment.Replace("\r","").Replace("\n","")')">
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)">
+                                                        <img src="~/Content/images/delete2.png" MYTP="HOVER" style="height:25px; width:20px">
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-offset-1">@Html.Raw(item.Comment)</div>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="row ckedit-box">
+                                        <textarea name="commenteditor" id="commenteditor" rows="10" cols="80"></textarea>
+                                        <script>
+                                                CKEDITOR.replace('commenteditor', { htmlEncodeOutput: true, filebrowserUploadUrl: '/userfiles/Upload.ashx', skin: 'moono-dark' });
+                                        </script>
+                                    </div>
+                                    <div class="row con-op">
+                                        <div class="col-xs-4">
+                                            <span class="btn btn-default btn-file" id="choosefile2">
+                                                Editor Attachment <input class="btn-available" type="file" name="file2" id="file2" runat="server" onchange="ShowFileNames2(this)" />
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-offset-6">
+                                            <input class="btn btn-success" type="submit" value="Submit" />
+                                        </div>
+                                        <script type="text/javascript">
+                                            function editcomment(cid,cmt){
+                                                $('#commentid').val(cid);
+                                                CKEDITOR.instances.commenteditor.setData(cmt);
+                                            }
+
+                                            function ShowFileNames2(oFile) {
+                                                ajaxFileUpload2();
+                                            }
+                                            function ajaxFileUpload2() {
+                                                $.ajaxFileUpload
+                                                (
+                                                    {
+                                                        url: '/userfiles/ImageUpload.ashx',
+                                                        secureuri: false,
+                                                        fileElementId: 'file2',
+                                                        dataType: 'HTML',
+                                                        success: function (data, status)
+                                                        {
+                                                            var wholeval = CKEDITOR.instances.commenteditor.getData() + data;
+                                                            CKEDITOR.instances.commenteditor.setData(wholeval);
+                                                        },
+                                                        error: function (e)
+                                                        {
+                                                            alert(e);
+                                                        }
+                                                    }
+                                                )
+                                                return false;
+                                            }
+                                        </script>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-xs-3">
                 <div class="label-panel">
                     @foreach (var item in ViewBag.currentsearchlist)
                     {
@@ -332,7 +297,3 @@
         </div>
     </div>
 </div>
-
-@*<footer>
-    <span class="col-md-5 f-picture-hide"></span>
-</footer>*@
