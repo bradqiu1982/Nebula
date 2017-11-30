@@ -608,8 +608,8 @@ namespace Nebula.Models
 
         public static List<string> RetrieveBRNumNeedToUpdate()
         {
-            var sql = "select BRNumber from BRAgileBaseInfo where Status <> '<Status>' and OriginalDate > '<threemonth>'";
-            sql = sql.Replace("<Status>", AGILEBRSTATUS.APPROVE2BUILE).Replace("<threemonth>", DateTime.Now.AddMonths(-3).ToString());
+            var sql = "select BRNumber from BRAgileBaseInfo where  BRStatus = '<BRStatus>' and OriginalDate > '<threemonth>'";
+            sql = sql.Replace("<BRStatus>", BRJOSYSTEMSTATUS.OPEN).Replace("<threemonth>", DateTime.Now.AddMonths(-3).ToString());
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             var ret = new List<string>();
             foreach (var line in dbret)

@@ -105,6 +105,13 @@ var BR = function(){
                      $('#br_date').html(output.OriginalDate);
                      $('#br_desc').html(output.Description);
                      $('#br_stat').html(output.Status);
+
+                     $('#br_sqty').html(output.StartQTY);
+                     $('#br_tcost').html(output.TotalCost);
+                     $('#br_scrap').html(output.ScrapQTY);
+                     $('#br_revenue').html(output.SaleRevenue);
+                     $('#br_phase').html(output.ProductPhase);
+
                      $('#br_detail').attr('href', '/BRTrace/BRInfo?BRNum=' + br_no + '&SearchWords=' + $('#keywords').val());
                     $('.br-list-right').attr('style', 'display: block;');
                  }
@@ -163,7 +170,9 @@ var BR = function(){
                     $('#jo_planner').html(output.joplanner);
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
                     $('#jo_compo').attr('href','/BRTrace/JOComponent?JONum='+jo_no);
-                    $('#jo_compo').attr('target','_blank');
+                    $('#jo_compo').attr('target', '_blank');
+                    $('#jo_ship').attr('href', '/BRTrace/JOShipping?JONum=' + jo_no);
+                    $('#jo_ship').attr('target','_blank');
                     $('.jo-info-right').attr('style', 'display: block;');
                 }
             })
@@ -227,6 +236,8 @@ var BR = function(){
                     $('#jo_detail').attr('href', '/BRTrace/JOInfo?JONum=' + jo_no);
                     $('#jo_compo').attr('href', '/BRTrace/JOComponent?JONum=' + jo_no);
                     $('#jo_compo').attr('target', '_blank');
+                    $('#jo_ship').attr('href', '/BRTrace/JOShipping?JONum=' + jo_no);
+                    $('#jo_ship').attr('target', '_blank');
                     $('.jo-list-right').attr('style', 'display: block;');
                 }
             })

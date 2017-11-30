@@ -342,6 +342,19 @@ namespace Nebula.Models
             return ret;
         }
 
+        public static List<string> RetrieveJoInfoInxMonth(int month)
+        {
+            var ret = new List<string>();
+            var sql = "select JONumber from  JOBaseInfo  where DateReleased > '<DateReleased>'";
+            sql = sql.Replace("<DateReleased>", DateTime.Now.AddMonths(0-month).ToString());
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                ret.Add(Convert.ToString(line[0]));
+            }
+            return ret;
+        }
+
         public static List<JOBaseInfo> RetrieveJoInfoByBRNum(string BRNum)
         {
             var ret = new List<JOBaseInfo>();
@@ -808,16 +821,20 @@ namespace Nebula.Models
                         {
                             if (jobnum.ToUpper().Contains(br.ToUpper()+"-"))
                             {
-                                var tempinfo = JOBaseInfo.CreateItem(line);
-                                tempinfo.BRKey = brdict[br];
-                                tempinfo.BRNumber = br;
-                                var jopnkey = tempinfo.JONumber + ":::" + tempinfo.PN;
-                                if (joexistmainstore.ContainsKey(jopnkey))
+                                try
                                 {
-                                    tempinfo.ExistQty = joexistmainstore[jopnkey];
+                                    var tempinfo = JOBaseInfo.CreateItem(line);
+                                    tempinfo.BRKey = brdict[br];
+                                    tempinfo.BRNumber = br;
+                                    var jopnkey = tempinfo.JONumber + ":::" + tempinfo.PN;
+                                    if (joexistmainstore.ContainsKey(jopnkey))
+                                    {
+                                        tempinfo.ExistQty = joexistmainstore[jopnkey];
+                                    }
+                                    jobaseinfolist.Add(tempinfo);
+                                    break;
                                 }
-                                jobaseinfolist.Add(tempinfo);
-                                break;
+                                catch (Exception ex) { }
                             }
                         }//end foreach
                     }//end foreach
@@ -935,6 +952,54 @@ namespace Nebula.Models
             return ret;
         }
 
+        public static void LoadJOShipTraceInfo(Controller ctrl)
+        {
+            var datecodejodict = JOShipTrace.LoadJODateCode();
+            var syscfg = CfgUtility.GetSysConfig(ctrl);
+            if (syscfg.ContainsKey("SHIPPINGORDERFOLDER"))
+            {
+                var shippingfolder = syscfg["SHIPPINGORDERFOLDER"];
+                var srcfiles = new List<string>();
+                srcfiles.AddRange(Directory.EnumerateFiles(shippingfolder));
+
+                var shipinfolist = new List<JOShipTrace>();
+
+                foreach (var fl in srcfiles)
+                {
+                    var sfn = Path.GetFileName(fl).ToUpper();
+                    if (sfn.Contains("SHIPPING") && sfn.Contains("WXI") && sfn.Contains("ORDERS"))
+                    {
+                        try
+                        {
+                            var dfl = DownloadERPFile(fl, ctrl);
+                            if (!string.IsNullOrEmpty(dfl))
+                            {
+                                var data = ExcelReader.RetrieveDataFromExcel(dfl, null);
+                                foreach (var line in data)
+                                {
+                                    try
+                                    {
+                                        var datecode = line[41].ToUpper();
+                                        if (datecodejodict.ContainsKey(datecode))
+                                        {
+                                            var jo = datecodejodict[datecode];
+                                            var temp = new JOShipTrace(line,jo);
+                                            shipinfolist.Add(temp);
+                                        }
+                                    } catch (Exception ex1) { }
+                                }
+                            }
+                        }
+                        catch (Exception ex) { }
+                    }//end if
+                }//end foreach
+
+                foreach (var info in shipinfolist)
+                {
+                    info.StoreTraceInfo();
+                }
+            }//end if
+        }
 
 
     }

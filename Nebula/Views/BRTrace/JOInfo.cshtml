@@ -49,20 +49,54 @@
                         <tr><td class="col-xs-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc.Substring(0,(Model.PNDesc.Length > 23)?23:Model.PNDesc.Length))</td></tr>
                         @if (string.IsNullOrEmpty(Model.ProjectKey))
                         {
-                            <tr><td class="col-xs-4">PN Test Yield</td><td id="jo_yd">@(Model.PNYieldStr)</td></tr>
+                            <tr>
+                                <td class="col-xs-4">PN Test Yield</td>
+                                <td id="jo_yd">@(Model.PNYieldStr)</td>
+                            </tr>
                         }
                         else
                         {
-                            <tr><td class="col-xs-4">PN Test Yield</td><td id="jo_yd"><span>@(Model.PNYieldStr)&nbsp;</span><a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=@(Model.ProjectKey)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24'/></a></td></tr>
+                            <tr>
+                                <td class="col-xs-4">PN Test Yield</td>
+                                <td id="jo_yd">
+                                    <span>@(Model.PNYieldStr)&nbsp;</span>
+                                    <a href='http://wuxinpi.china.ads.finisar.com/Project/ProjectYieldMain?ProjectKey=@(Model.ProjectKey)' target='_blank'>
+                                        <img src='~/Content/images/loading.png' height='6' width='24'/></a>
+                                </td>
+                            </tr>
                         }
-
-                        <tr><td class="col-xs-4">JO Type</td><td id="jo_type">@(Model.Category)-@(Model.JOType)</td></tr>
-                        <tr><td class="col-xs-4">JO Status</td><td id="jo_stat">@(Model.JOStatus)</td></tr>
-                        <tr><td class="col-xs-4">Date Released</td><td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td></tr>
-                        <tr><td class="col-xs-4">MRP Net QTY</td><td id="jo_wip">@(Model.MRPNetQuantity)</td></tr>
-                        <tr><td class="col-xs-4">MainStore QTY</td><td id="jo_store">@(Model.ExistQty)</td></tr>
-                        <tr><td class="col-xs-4">JO Component</td><td id="jo_compo"><a href='/BRTrace/JOComponent?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td></tr>
-                        <tr><td class="col-xs-4">Planer</td><td id="jo_planner">@(Model.Planner)</td></tr>
+                        <tr>
+                            <td class="col-xs-4">JO Type</td>
+                            <td id="jo_type">@(Model.Category)-@(Model.JOType)</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">JO Status</td>
+                            <td id="jo_stat">@(Model.JOStatus)</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Date Released</td>
+                            <td id="jo_date">@(Model.DateReleased.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">MRP Net QTY</td>
+                            <td id="jo_wip">@(Model.MRPNetQuantity)</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">MainStore QTY</td>
+                            <td id="jo_store">@(Model.ExistQty)</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">JO Component</td>
+                            <td id="jo_compo"><a href='/BRTrace/JOComponent?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">JO Ship</td>
+                            <td id="jo_ship"><a href='/BRTrace/JOShipping?JONum=@(Model.JONumber)' target='_blank'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Planer</td>
+                            <td id="jo_planner">@(Model.Planner)</td>
+                        </tr>
                     </table>
                 </div>
             </div>

@@ -25,7 +25,7 @@
 </style>
 
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         BR.brjolist();
     })
 </script>
@@ -69,20 +69,25 @@
                             <td>@ViewBag.currentbr.Status</td>
                         </tr>
                         <tr>
-                            <td class="col-xs-4">Agile Status</td>
-                            <td>@ViewBag.currentbr.Status</td>
+                            <td class="col-xs-4">Start QTY</td>
+                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].startqty : "")</td>
                         </tr>
                         <tr>
-                            <td class="col-xs-4">Agile Status</td>
-                            <td>@ViewBag.currentbr.Status</td>
+                            <td class="col-xs-4">Total Cost</td>
+                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].totalcost : "")</td>
                         </tr>
                         <tr>
-                            <td class="col-xs-4">Agile Status</td>
-                            <td>@ViewBag.currentbr.Status</td>
+                            <td class="col-xs-4">Scrap QTY</td>
+                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].scrapqty : "")</td>
                         </tr>
                         <tr>
-                            <td class="col-xs-4">Agile Status</td>
-                            <td>@ViewBag.currentbr.Status</td>
+                            <td class="col-xs-4">Sale Revenue</td>
+                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].salerevenue : "")</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Product Phase</td>
+                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].productphase : "")</td>
+                        </tr>
                         <tr>
                             <td class="col-xs-4">JO List</td>
                             <td>
@@ -202,7 +207,7 @@
                         </div>
                         <div id="c_comment" class="panel-collapse collapse in" role="tabpanel">
                             <div class="panel-body">
-                                @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data",id = "",name ="" }))
+                                @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data", id = "", name = "" }))
                                 {
                                     <input id="HBRNUM" name="HBRNUM" value="@ViewBag.currentbr.BRNumber" type="hidden" />
                                     <input id="conclusionid" name="conclusionid" value="" type="hidden" />
@@ -231,7 +236,7 @@
                                     <div class="row ckedit-box">
                                         <textarea name="commenteditor" id="commenteditor" rows="10" cols="80"></textarea>
                                         <script>
-                                                CKEDITOR.replace('commenteditor', { htmlEncodeOutput: true, filebrowserUploadUrl: '/userfiles/Upload.ashx', skin: 'moono-dark' });
+                                            CKEDITOR.replace('commenteditor', { htmlEncodeOutput: true, filebrowserUploadUrl: '/userfiles/Upload.ashx', skin: 'moono-dark' });
                                         </script>
                                     </div>
                                     <div class="row con-op">
@@ -244,7 +249,7 @@
                                             <input class="btn btn-success" type="submit" value="Submit" />
                                         </div>
                                         <script type="text/javascript">
-                                            function editcomment(cid,cmt){
+                                            function editcomment(cid, cmt) {
                                                 $('#commentid').val(cid);
                                                 CKEDITOR.instances.commenteditor.setData(cmt);
                                             }
@@ -254,23 +259,21 @@
                                             }
                                             function ajaxFileUpload2() {
                                                 $.ajaxFileUpload
-                                                (
+                                                    (
                                                     {
                                                         url: '/userfiles/ImageUpload.ashx',
                                                         secureuri: false,
                                                         fileElementId: 'file2',
                                                         dataType: 'HTML',
-                                                        success: function (data, status)
-                                                        {
+                                                        success: function (data, status) {
                                                             var wholeval = CKEDITOR.instances.commenteditor.getData() + data;
                                                             CKEDITOR.instances.commenteditor.setData(wholeval);
                                                         },
-                                                        error: function (e)
-                                                        {
+                                                        error: function (e) {
                                                             alert(e);
                                                         }
                                                     }
-                                                )
+                                                    )
                                                 return false;
                                             }
                                         </script>
