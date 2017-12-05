@@ -368,9 +368,32 @@ namespace Nebula.Controllers
             }
         }
 
+        private void logthdinfo(string info)
+        {
+            try
+            {
+                var fn = "log" + DateTime.Now.ToString("yyyy-MM-dd");
+                var filename = Server.MapPath("~/userfiles") + "\\" + fn;
+                if (System.IO.File.Exists(filename))
+                {
+                    var content = System.IO.File.ReadAllText(filename);
+                    content = content + "\r\n" + DateTime.Now.ToString() + " : " + info;
+                    System.IO.File.WriteAllText(filename, content);
+                }
+                else
+                {
+                    System.IO.File.WriteAllText(filename, DateTime.Now.ToString() + " : " + info);
+                }
+            }
+            catch (Exception ex)
+            { }
+        }
+
         public ActionResult HeartBeat()
         {
             UserAuth();
+
+            logthdinfo("heart beat start");
 
             UpdateExistBR();
             LoadNewBR();
@@ -380,12 +403,39 @@ namespace Nebula.Controllers
             string newbrloaded = datefolder + "agilenewqueried";
             if (Directory.Exists(newbrloaded))
             {
-                ERPVM.LoadJOBaseInfo(this);
-                ERPVM.LoadJOComponentInfo(this);
-                CamstarVM.UpdatePNWorkflow();
-                CamstarVM.UpdateJoMESStatus();
-                ERPVM.LoadJOShipTraceInfo(this);
+                try
+                {
+                    logthdinfo("ERPVM.LoadJOBaseInfo");
+                    ERPVM.LoadJOBaseInfo(this);
+                }
+                catch (Exception ex) { logthdinfo("load ERPVM.LoadJOBaseInfo exception:" + ex.Message); }
+                try
+                {
+                    logthdinfo("ERPVM.LoadJOComponentInfo");
+                    ERPVM.LoadJOComponentInfo(this);
+                }
+                catch (Exception ex) { logthdinfo("load ERPVM.LoadJOComponentInfo exception:" + ex.Message); }
+                try
+                {
+                    logthdinfo("CamstarVM.UpdatePNWorkflow");
+                    CamstarVM.UpdatePNWorkflow();
+                }
+                catch (Exception ex) { logthdinfo("load CamstarVM.UpdatePNWorkflow exception:" + ex.Message); }
+                try
+                {
+                    logthdinfo("CamstarVM.UpdateJoMESStatus");
+                    CamstarVM.UpdateJoMESStatus();
+                }
+                catch (Exception ex) { logthdinfo("load CamstarVM.UpdateJoMESStatus exception:" + ex.Message); }
+                try
+                {
+                    logthdinfo("ERPVM.LoadJOShipTraceInfo");
+                    ERPVM.LoadJOShipTraceInfo(this);
+                }
+                catch (Exception ex) { logthdinfo("load ERPVM.LoadJOShipTraceInfo exception:" + ex.Message); }
             }
+
+            logthdinfo("heart beat end");
 
             return View();
         }

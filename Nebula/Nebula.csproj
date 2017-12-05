@@ -493,6 +493,29 @@
     <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\neo.css" />
     <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.css" />
     <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.js" />
+    <Content Include="ckeditor\skins\moono-dark\dialog.css" />
+    <Content Include="ckeditor\skins\moono-dark\dialog_ie.css" />
+    <Content Include="ckeditor\skins\moono-dark\dialog_ie7.css" />
+    <Content Include="ckeditor\skins\moono-dark\dialog_ie8.css" />
+    <Content Include="ckeditor\skins\moono-dark\dialog_iequirks.css" />
+    <Content Include="ckeditor\skins\moono-dark\editor.css" />
+    <Content Include="ckeditor\skins\moono-dark\editor_gecko.css" />
+    <Content Include="ckeditor\skins\moono-dark\editor_ie.css" />
+    <Content Include="ckeditor\skins\moono-dark\editor_ie7.css" />
+    <Content Include="ckeditor\skins\moono-dark\editor_ie8.css" />
+    <Content Include="ckeditor\skins\moono-dark\editor_iequirks.css" />
+    <Content Include="ckeditor\skins\moono-dark\icons.png" />
+    <Content Include="ckeditor\skins\moono-dark\icons_hidpi.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\arrow.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\close.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\hidpi\close.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\hidpi\lock-open.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\hidpi\lock.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\hidpi\refresh.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\lock-open.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\lock.png" />
+    <Content Include="ckeditor\skins\moono-dark\images\refresh.png" />
+    <Content Include="ckeditor\skins\moono-dark\skin.js" />
     <Content Include="ckeditor\skins\moono-lisa\dev\icons16.png" />
     <Content Include="ckeditor\skins\moono-lisa\dev\icons16.svg" />
     <Content Include="ckeditor\skins\moono-lisa\dev\icons32.png" />
@@ -833,6 +856,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="ckeditor\skins\moono-dark\readme.md" />
     <None Include="Properties\PublishProfiles\Nebulatest.pubxml">
       <SubType>Designer</SubType>
     </None>

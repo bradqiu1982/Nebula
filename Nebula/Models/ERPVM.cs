@@ -235,10 +235,10 @@ namespace Nebula.Models
             var sql = string.Empty;
             sql = "select a.Originator,j.BRNumber,JONumber,JOType,JOStatus,DateReleased,PN,PNDesc,Category,StartQuantity,MRPNetQuantity,QuantityCompleted "
                       + ",WIP,IncurredSum,IncurredMaterialSum,Planner,CreatedBy,ExistQty,j.PNTestYield,JORealStatus,j.ProjectKey from JOBaseInfo j (nolock) "
-                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey  where 1 = 1";
+                      + "left join BRAgileBaseInfo a(nolock) on a.BRKey = j.BRKey  where 1 = 1 ";
             if(jostatus != null)
             {
-                sql += "JORealStatus = '<JORealStatus>' ";
+                sql += " and JORealStatus = '<JORealStatus>' ";
             }
             if (reviewer != null)
             {
