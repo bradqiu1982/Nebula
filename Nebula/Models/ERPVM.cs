@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -743,14 +742,14 @@ namespace Nebula.Models
         {
             try
             {
-                if (File.Exists(srcfile))
+                if (NebulaDataCollector.FileExist(ctrl,srcfile))
                 {
-                    var filename = Path.GetFileName(srcfile);
+                    var filename = System.IO.Path.GetFileName(srcfile);
                     var descfolder = ctrl.Server.MapPath("~/userfiles") + "\\docs\\ERP\\";
-                    if (!Directory.Exists(descfolder))
-                        Directory.CreateDirectory(descfolder);
-                    var descfile = descfolder + Path.GetFileNameWithoutExtension(srcfile)+DateTime.Now.ToString("yyyy-MM-dd")+Path.GetExtension(srcfile);
-                    File.Copy(srcfile, descfile, true);
+                    if (!NebulaDataCollector.DirectoryExists(ctrl,descfolder))
+                        NebulaDataCollector.CreateDirectory(ctrl,descfolder);
+                    var descfile = descfolder + System.IO.Path.GetFileNameWithoutExtension(srcfile)+DateTime.Now.ToString("yyyy-MM-dd")+ System.IO.Path.GetExtension(srcfile);
+                    NebulaDataCollector.FileCopy(ctrl,srcfile, descfile, true);
                     return descfile;
                 }
                 return null;
@@ -769,9 +768,9 @@ namespace Nebula.Models
             var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcfile = syscfgdict["ERPJOBASEINFO"];
             var descfile = DownloadERPFile(srcfile, ctrl);
-            if (descfile != null && File.Exists(descfile))
+            if (descfile != null && NebulaDataCollector.FileExist(ctrl,descfile))
             {
-                var data = ExcelReader.RetrieveDataFromExcel(descfile, null);
+                var data = NebulaDataCollector.RetrieveDataFromExcel(ctrl,descfile, null);
                 if (data.Count > 0)
                 {
 
@@ -857,9 +856,9 @@ namespace Nebula.Models
             var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcfile = syscfgdict["ERPJOCOMPONENTINFO"];
             var descfile = DownloadERPFile(srcfile, ctrl);
-            if (descfile != null && File.Exists(descfile))
+            if (descfile != null && NebulaDataCollector.FileExist(ctrl,descfile))
             {
-                var data = ExcelReader.RetrieveDataFromExcel(descfile, null);
+                var data = NebulaDataCollector.RetrieveDataFromExcel(ctrl,descfile, null);
                 if (data.Count > 0)
                 {
                     var jocomponentlist = new List<JOComponentInfo>();
@@ -903,9 +902,9 @@ namespace Nebula.Models
             var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcfile = syscfgdict["ERPJOEXISTMAINSTORE"];
             var descfile = DownloadERPFile(srcfile, ctrl);
-            if (descfile != null && File.Exists(descfile))
+            if (descfile != null && NebulaDataCollector.FileExist(ctrl, descfile))
             {
-                var data = ExcelReader.RetrieveDataFromExcel(descfile, null);
+                var data = NebulaDataCollector.RetrieveDataFromExcel(ctrl,descfile, null);
                 if (data.Count > 0)
                 {
                     var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
@@ -960,13 +959,13 @@ namespace Nebula.Models
             {
                 var shippingfolder = syscfg["SHIPPINGORDERFOLDER"];
                 var srcfiles = new List<string>();
-                srcfiles.AddRange(Directory.EnumerateFiles(shippingfolder));
+                srcfiles.AddRange(NebulaDataCollector.DirectoryEnumerateFiles(ctrl, shippingfolder));
 
                 var shipinfolist = new List<JOShipTrace>();
 
                 foreach (var fl in srcfiles)
                 {
-                    var sfn = Path.GetFileName(fl).ToUpper();
+                    var sfn = System.IO.Path.GetFileName(fl).ToUpper();
                     if (sfn.Contains("SHIPPING") && sfn.Contains("WXI") && sfn.Contains("ORDERS"))
                     {
                         try
@@ -974,7 +973,7 @@ namespace Nebula.Models
                             var dfl = DownloadERPFile(fl, ctrl);
                             if (!string.IsNullOrEmpty(dfl))
                             {
-                                var data = ExcelReader.RetrieveDataFromExcel(dfl, null);
+                                var data = NebulaDataCollector.RetrieveDataFromExcel(ctrl,dfl, null);
                                 foreach (var line in data)
                                 {
                                     try

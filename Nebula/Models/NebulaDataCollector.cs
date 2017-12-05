@@ -148,7 +148,7 @@ namespace Nebula.Models
     public class NebulaDataCollector
     {
 
-        private static bool FileExist(Controller ctrl,string filename)
+        public static bool FileExist(Controller ctrl,string filename)
         {
             try
             {
@@ -169,7 +169,26 @@ namespace Nebula.Models
 
         }
 
-        private static void FileCopy(Controller ctrl,string src, string des, bool overwrite,bool checklocal = false)
+        public static void CreateDirectory(Controller ctrl, string dirname)
+        {
+            try
+            {
+                var syscfgdict = CfgUtility.GetSysConfig(ctrl);
+                var folderuser = syscfgdict["SHAREFOLDERUSER"];
+                var folderdomin = syscfgdict["SHAREFOLDERDOMIN"];
+                var folderpwd = syscfgdict["SHAREFOLDERPWD"];
+
+                using (NativeMethods cv = new NativeMethods(folderuser, folderdomin, folderpwd))
+                {
+                    Directory.CreateDirectory(dirname);
+                }
+            }
+            catch (Exception ex)
+            {}
+
+        }
+
+        public static void FileCopy(Controller ctrl,string src, string des, bool overwrite,bool checklocal = false)
         {
             try
             {
@@ -198,7 +217,7 @@ namespace Nebula.Models
             }
         }
 
-        private static bool DirectoryExists(Controller ctrl, string dirname)
+        public static bool DirectoryExists(Controller ctrl, string dirname)
         {
             try
             {
@@ -219,7 +238,7 @@ namespace Nebula.Models
 
         }
 
-        private static List<string> DirectoryEnumerateFiles(Controller ctrl, string dirname)
+        public static List<string> DirectoryEnumerateFiles(Controller ctrl, string dirname)
         {
             try
             {
@@ -261,7 +280,7 @@ namespace Nebula.Models
             }
         }
 
-        private static List<string> DirectoryEnumerateDirs(Controller ctrl, string dirname)
+        public static List<string> DirectoryEnumerateDirs(Controller ctrl, string dirname)
         {
             try
             {
