@@ -110,6 +110,7 @@
                             <div class="panel-body">
                                 @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data", id = "", name = "" }))
                                 {
+                                    <input type="hidden" id="SearchWords" name="SearchWords" value="@ViewBag.SearchWords" />
                                     <input id="HBRNUM" name="HBRNUM" value="@ViewBag.currentbr.BRNumber" type="hidden" />
                                     <input id="conclusionid" name="conclusionid" value="" type="hidden" />
 
@@ -126,7 +127,7 @@
                                                     <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:25px; width:20px;cursor:pointer" onclick="editconclusion('@(item.CommentKey)','@item.Comment.Replace("\r", "").Replace("\n", "")')">
                                                 </div>
                                                 <div class="col-xs-1">
-                                                    <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)">
+                                                    <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)&SearchWords=@(ViewBag.SearchWords)">
                                                         <img src="~/Content/images/delete2.png" MYTP="HOVER" style="height:25px; width:20px">
                                                     </a>
                                                 </div>
@@ -208,6 +209,7 @@
                             <div class="panel-body">
                                 @using (Html.BeginForm("AddBRComment", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data", id = "", name = "" }))
                                 {
+                                    <input type="hidden" id="SearchWords" name="SearchWords" value="@ViewBag.SearchWords" />
                                     <input id="HBRNUM" name="HBRNUM" value="@ViewBag.currentbr.BRNumber" type="hidden" />
                                     <input id="commentid" name="commentid" value="" type="hidden" />
                                     if (ViewBag.currentbr.GeneralCommentList != null && ViewBag.currentbr.GeneralCommentList.Count > 0)
@@ -223,7 +225,7 @@
                                                     <img src="~/Content/images/edit2.png" MYTP="HOVER" style="height:25px; width:20px;cursor:pointer" onclick="editcomment('@(item.CommentKey)','@item.Comment.Replace("\r","").Replace("\n","")')">
                                                 </div>
                                                 <div class="col-xs-1">
-                                                    <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)">
+                                                    <a href="/BRTrace/DeleteBRComment?CommentKey=@(item.CommentKey)&BRNum=@(ViewBag.currentbr.BRNumber)&SearchWords=@(ViewBag.SearchWords)">
                                                         <img src="~/Content/images/delete2.png" MYTP="HOVER" style="height:25px; width:20px">
                                                     </a>
                                                 </div>

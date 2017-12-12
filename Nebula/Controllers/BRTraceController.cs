@@ -818,6 +818,7 @@ namespace Nebula.Controllers
             }
 
             var brnum = Request.Form["HBRNUM"];
+            var SearchWords = Request.Form["SearchWords"];
             if (!string.IsNullOrEmpty(brnum))
             {
                 if (!string.IsNullOrEmpty(Request.Form["commenteditor"]))
@@ -856,7 +857,7 @@ namespace Nebula.Controllers
 
                 var dict1 = new RouteValueDictionary();
                 dict1.Add("BRNum", brnum);
-                dict1.Add("SearchWords", "");
+                dict1.Add("SearchWords", SearchWords);
                 return RedirectToAction("BRInfo", "BRTrace", dict1);
             }
             else
@@ -865,12 +866,12 @@ namespace Nebula.Controllers
             }
         }
 
-        public ActionResult DeleteBRComment(string CommentKey, string BRNum)
+        public ActionResult DeleteBRComment(string CommentKey, string BRNum, string SearchWords)
         {
             BRAgileBaseInfo.DeleteBRComment(CommentKey);
             var dict1 = new RouteValueDictionary();
             dict1.Add("BRNum", BRNum);
-            dict1.Add("SearchWords", "");
+            dict1.Add("SearchWords", SearchWords);
             return RedirectToAction("BRInfo", "BRTrace", dict1);
         }
 
