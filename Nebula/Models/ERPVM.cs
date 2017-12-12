@@ -242,7 +242,7 @@ namespace Nebula.Models
             if (reviewer != null)
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-                sql += "and JORealStatus = '<JORealStatus>' ";
+                sql += "and Originator = '<Originator>' ";
             }
             if(br != null)
             {
