@@ -21,6 +21,17 @@ namespace Nebula.Controllers
             {
                 ViewBag.EmailAddr = ckdict["logonuser"];
                 ViewBag.UserName = ckdict["logonuser"].Replace("@FINISAR.COM", "");
+
+                //ViewBag.IsPM
+                ViewBag.IsPM = false;
+                var syscfgdict = CfgUtility.GetSysConfig(this);
+                var PMNames = syscfgdict["TRACEPM"];
+                
+                if(PMNames.ToUpper().Contains(ViewBag.UserName.ToUpper().Replace(".", " ")))
+                {
+                    ViewBag.IsPM = true;
+                }
+                
             }
         }
 
@@ -114,10 +125,9 @@ namespace Nebula.Controllers
                 intp = Convert.ToInt32(p);
             }
 
-            //var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfo(null);
-            //var allJolist = JOBaseInfo.RetrieveActiveJoInfo(null);
-            var allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN,this);
-            var allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null,BRJOSYSTEMSTATUS.OPEN);
+            var reviewer = (ViewBag.IsPM) ? ViewBag.UserName.Replace(".", " ") : null;
+            List<BRAgileBaseInfo> allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(reviewer, BRJOSYSTEMSTATUS.OPEN,this);
+            List<JOBaseInfo> allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(reviewer, BRJOSYSTEMSTATUS.OPEN);
             var page_size = 10;
             ViewBag.brlist = allBrlist.Skip((intp - 1) * page_size).Take(page_size);
             ViewBag.page = intp;
@@ -133,18 +143,12 @@ namespace Nebula.Controllers
             UserAuth();
 
             var allBrlist = new List<BRAgileBaseInfo>();
+            Status = string.IsNullOrEmpty(Status) ? BRJOSYSTEMSTATUS.OPEN : Status;
 
-            if (string.IsNullOrEmpty(Status))
-            {
-                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN,this);
-                ViewBag.withstatus = BRJOSYSTEMSTATUS.OPEN;
-            }
-            else
-            {
-                allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, Status,this);
-                ViewBag.withstatus = Status;
-            }
-            
+            var reviewer = (ViewBag.IsPM) ? ViewBag.UserName : null;
+            allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(reviewer, Status,this);
+            ViewBag.withstatus = Status;
+
             var page_size = 10;
             ViewBag.brlist = allBrlist.Skip((p - 1) * page_size).Take(page_size);
             ViewBag.page = p;
@@ -158,18 +162,11 @@ namespace Nebula.Controllers
         {
             UserAuth();
             var allJolist = new List<JOBaseInfo>();
+            Status = string.IsNullOrEmpty(Status) ? BRJOSYSTEMSTATUS.OPEN : Status;
 
-            if (string.IsNullOrEmpty(Status))
-            {
-                allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN);
-                ViewBag.withstatus = BRJOSYSTEMSTATUS.OPEN;
-            }
-            else
-            {
-                allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, Status);
-                ViewBag.withstatus = Status;
-            }
-            
+            var reviewer = (ViewBag.IsPM) ? ViewBag.UserName : null;
+            allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(reviewer, Status);
+            ViewBag.withstatus = Status;
 
             var page_size = 10;
             ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
@@ -183,9 +180,9 @@ namespace Nebula.Controllers
         public ActionResult JOList(string BR, int p = 1)
         {
             UserAuth();
-            var allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, null, BR);
+            
+            List<JOBaseInfo> allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, null, BR);
             ViewBag.withstatus = string.Empty;
-
 
             var page_size = 10;
             ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
@@ -293,10 +290,17 @@ namespace Nebula.Controllers
         public ActionResult BRInfo(string BRNum, string SearchWords, int p = 1, int sp = 1)
         {
             UserAuth();
-
+            var reviewer = (ViewBag.IsPM) ? ViewBag.UserName : null;
             ViewBag.currentbr = BRAgileBaseInfo.RetrieveBRAgileInfo(BRNum,this)[0];
-            var allcurrentbrjolist = (IEnumerable<JOBaseInfo>)JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
-            var allsearchlist = (IEnumerable<BRAgileBaseInfo>)BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(null, ViewBag.currentbr.BRStatus,this);//BRAgileBaseInfo.RetrieveActiveBRAgileInfo((!string.IsNullOrEmpty(SearchWords))? SearchWords : null);
+            List<JOBaseInfo> allcurrentbrjolist = JOBaseInfo.RetrieveJoInfoByBRNum(BRNum);
+            var allsearchlist = new List<BRAgileBaseInfo>();
+            if (SearchWords == "")
+            {
+                allsearchlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(reviewer, ViewBag.currentbr.BRStatus, this);
+            }
+            else {
+                allsearchlist = BRAgileBaseInfo.RetrieveBRAgileInfo(SearchWords, this);
+            }
             //br pagination
             var page_size = 10;
             ViewBag.currentsearchlist = allsearchlist.Skip((p - 1) * page_size).Take(page_size);
@@ -309,6 +313,7 @@ namespace Nebula.Controllers
             ViewBag.currentbrjolist = allcurrentbrjolist.Skip((sp - 1) * sub_page_size).Take(sub_page_size);
             ViewBag.sub_page = sp;
             ViewBag.sub_total_pages = allcurrentbrjolist.Count() / sub_page_size + 1;
+            ViewBag.SearchWords = SearchWords;
 
             return View();
         }
@@ -813,6 +818,7 @@ namespace Nebula.Controllers
             }
 
             var brnum = Request.Form["HBRNUM"];
+            var SearchWords = Request.Form["SearchWords"];
             if (!string.IsNullOrEmpty(brnum))
             {
                 if (!string.IsNullOrEmpty(Request.Form["commenteditor"]))
@@ -851,7 +857,7 @@ namespace Nebula.Controllers
 
                 var dict1 = new RouteValueDictionary();
                 dict1.Add("BRNum", brnum);
-                dict1.Add("SearchWords", "");
+                dict1.Add("SearchWords", SearchWords);
                 return RedirectToAction("BRInfo", "BRTrace", dict1);
             }
             else
@@ -860,12 +866,12 @@ namespace Nebula.Controllers
             }
         }
 
-        public ActionResult DeleteBRComment(string CommentKey, string BRNum)
+        public ActionResult DeleteBRComment(string CommentKey, string BRNum, string SearchWords)
         {
             BRAgileBaseInfo.DeleteBRComment(CommentKey);
             var dict1 = new RouteValueDictionary();
             dict1.Add("BRNum", BRNum);
-            dict1.Add("SearchWords", "");
+            dict1.Add("SearchWords", SearchWords);
             return RedirectToAction("BRInfo", "BRTrace", dict1);
         }
 
