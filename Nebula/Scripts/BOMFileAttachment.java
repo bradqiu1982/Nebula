@@ -279,6 +279,7 @@ class BRPageThree
 		totalcost = "";
 		scrapqty = "";
 		salerevenue = "";
+		pcshipdate = "";
 		reqdjostartdate = "";
 		buildlocation = "";
 		productphase = "";
@@ -293,6 +294,7 @@ class BRPageThree
 		if(key == ItemConstants.ATT_PAGE_THREE_TEXT02) totalcost = value;
 		if(key == ItemConstants.ATT_PAGE_THREE_TEXT03) scrapqty = value;
 		if(key == ItemConstants.ATT_PAGE_THREE_TEXT04) salerevenue = value;
+		if(key == ItemConstants.ATT_PAGE_THREE_DATE01) pcshipdate = value;
 		if(key == ItemConstants.ATT_PAGE_THREE_DATE02) reqdjostartdate = value;
 		if(key == ItemConstants.ATT_PAGE_THREE_MULTILIST01) buildlocation = value;
 		if(key == ItemConstants.ATT_PAGE_THREE_LIST03) productphase = value;
@@ -302,6 +304,7 @@ class BRPageThree
 	public String totalcost;
 	public String scrapqty;
 	public String salerevenue;
+	public String pcshipdate;
 	public String reqdjostartdate;
 	public String buildlocation;
 	public String productphase;
@@ -310,7 +313,8 @@ class BRPageThree
 	{
 		out.writeBytes("<<PAGETHREE>> startqty:::"+startqty+"###"+"totalcost:::"+totalcost+"###"+"scrapqty:::"+scrapqty
 				+"###"+"salerevenue:::"+salerevenue+"###"+"reqdjostartdate:::"+reqdjostartdate
-				+"###"+"productphase:::"+productphase+"###"+"buildlocation:::"+buildlocation.replace("\r", "").replace("\n", "")+"\r\n");
+				+"###"+"productphase:::"+productphase+"###"+"buildlocation:::"+buildlocation.replace("\r", "").replace("\n", "")
+				+"###"+"pcshipdate:::"+pcshipdate+"\r\n");
 	}
 }
 

@@ -142,6 +142,7 @@ namespace Nebula.Models
             totalcost = "";
             scrapqty = "";
             salerevenue = "";
+            pcshipdate = "";
             reqdjostartdate = "";
             buildlocation = "";
             productphase = "";
@@ -167,6 +168,8 @@ namespace Nebula.Models
                     item.salerevenue = value;
                 if (string.Compare(kv[0], "reqdjostartdate", true) == 0)
                     item.reqdjostartdate = value;
+                if (string.Compare(kv[0], "pcshipdate", true) == 0)
+                    item.pcshipdate = value;
                 if (string.Compare(kv[0], "buildlocation", true) == 0)
                     item.buildlocation = value;
                 if (string.Compare(kv[0], "productphase", true) == 0)
@@ -177,12 +180,12 @@ namespace Nebula.Models
 
         public void AddBRAgileInfo(string brkey, string BRNumber)
         {
-            var sql = "insert into AgilePageThree(BRKey,BRNumber,startqty,totalcost,scrapqty,salerevenue,reqdjostartdate,buildlocation,productphase) "
-                + " values('<BRKey>','<BRNumber>','<startqty>','<totalcost>','<scrapqty>','<salerevenue>','<reqdjostartdate>','<buildlocation>','<productphase>')";
+            var sql = "insert into AgilePageThree(BRKey,BRNumber,startqty,totalcost,scrapqty,salerevenue,reqdjostartdate,buildlocation,productphase,pcshipdate) "
+                + " values('<BRKey>','<BRNumber>','<startqty>','<totalcost>','<scrapqty>','<salerevenue>','<reqdjostartdate>','<buildlocation>','<productphase>','<pcshipdate>')";
             sql = sql.Replace("<BRKey>", brkey).Replace("<BRNumber>", BRNumber).Replace("<startqty>", startqty).Replace("<totalcost>", totalcost)
                 .Replace("<scrapqty>", scrapqty).Replace("<salerevenue>", salerevenue)
                 .Replace("<reqdjostartdate>", reqdjostartdate).Replace("<buildlocation>", buildlocation)
-                .Replace("<productphase>", productphase);
+                .Replace("<productphase>", productphase).Replace("<pcshipdate>", pcshipdate);
             DBUtility.ExeLocalSqlNoRes(sql);
         }
 
@@ -196,7 +199,7 @@ namespace Nebula.Models
         public static List<AgilePageThree> RetrieveAgileInfo(string brkey)
         {
             var ret = new List<AgilePageThree>();
-            var sql = "select startqty,totalcost,scrapqty,salerevenue,reqdjostartdate,buildlocation,productphase from AgilePageThree where BRKey = '<BRKey>'";
+            var sql = "select startqty,totalcost,scrapqty,salerevenue,reqdjostartdate,buildlocation,productphase,pcshipdate from AgilePageThree where BRKey = '<BRKey>'";
             sql = sql.Replace("<BRKey>", brkey);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             foreach (var line in dbret)
@@ -209,6 +212,7 @@ namespace Nebula.Models
                 temp.reqdjostartdate = Convert.ToString(line[4]);
                 temp.buildlocation = Convert.ToString(line[5]);
                 temp.productphase = Convert.ToString(line[6]);
+                temp.pcshipdate = Convert.ToString(line[7]);
                 ret.Add(temp);
             }
             return ret;
@@ -219,6 +223,7 @@ namespace Nebula.Models
         public string scrapqty { set; get; }
         public string salerevenue { set; get; }
         public string reqdjostartdate { set; get; }
+        public string pcshipdate { set; get; }
         public string buildlocation { set; get; }
         public string productphase { set; get; }
     }
@@ -575,7 +580,15 @@ namespace Nebula.Models
         {
             if (brworkflowlist.Count > 0)
             {
-                var currentstatus = brworkflowlist[0].WorkFlowStatus;
+                var currentstatus = "";
+                foreach (var item in brworkflowlist)
+                {
+                    if (string.Compare(item.StatusCode, "Current Process", true) == 0)
+                    {
+                        currentstatus = item.WorkFlowStatus;
+                    }
+                }
+                
                 var sql = "update BRAgileBaseInfo set Status = '<Status>' where BRNumber = '<BRNumber>'";
                 sql = sql.Replace("<BRNumber>", BRNumber).Replace("<Status>", currentstatus);
                 DBUtility.ExeLocalSqlNoRes(sql);

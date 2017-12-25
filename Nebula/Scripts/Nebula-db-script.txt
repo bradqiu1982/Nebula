@@ -79,6 +79,7 @@ CREATE TABLE [dbo].[AgilePageThree] (
     [totalcost] NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[scrapqty] NVARCHAR (200) DEFAULT ('') NOT NULL,
     [salerevenue] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[pcshipdate] NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[reqdjostartdate] NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[buildlocation] NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[productphase] NVARCHAR (200) DEFAULT ('') NOT NULL,
@@ -88,6 +89,8 @@ CREATE TABLE [dbo].[AgilePageThree] (
 	[APVal4]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
     [APVal5]     DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL
 );
+
+/*ALTER TABLE  AgilePageThree Add pcshipdate NVARCHAR (200) DEFAULT ('') NOT NULL;*/
 
 CREATE TABLE [dbo].[AgileWorkFlow] (
 	[BRKey] NVARCHAR (200) DEFAULT ('') NOT NULL,
