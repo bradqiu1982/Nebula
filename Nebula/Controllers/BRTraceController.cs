@@ -440,9 +440,47 @@ namespace Nebula.Controllers
                 catch (Exception ex) { logthdinfo("load ERPVM.LoadJOShipTraceInfo exception:" + ex.Message); }
             }
 
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Friday)
+            {
+                datestring = DateTime.Now.ToString("yyyyMMdd");
+                datefolder = Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
+                var weeklyrepotdir = datefolder + "weeklyreport";
+                if (!Directory.Exists(weeklyrepotdir)) {
+                    Directory.CreateDirectory(weeklyrepotdir);
+                    SendWeeklySBRReport();
+                }
+
+            }
+
             logthdinfo("heart beat end");
 
             return View();
+        }
+
+        private void SendWeeklySBRReport()
+        {
+            try
+            {
+                var cfg = CfgUtility.GetSysConfig(this);
+                var to = cfg["REPORTRECIEVER"];
+                var tolist = new List<string>();
+                tolist.AddRange(to.Split(new string[] { ";"},StringSplitOptions.RemoveEmptyEntries));
+
+                var htmltablelist = BRReportVM.RetrieveActiveBRRpt(DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd ")+"00:00:01", DateTime.Now.ToString("yyyy-MM-dd ")+"23:59:00");
+                if (htmltablelist.Count > 0)
+                {
+                    var content = EmailUtility.CreateTableHtml2("Hi guys", "Below is an SBR report of WUXI NPI:", "", htmltablelist);
+                    EmailUtility.SendEmail(this, "WUXI NPI SBR Report", tolist, content,true);
+                    new System.Threading.ManualResetEvent(false).WaitOne(500);
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        public ActionResult HeartBeat2()
+        {
+            SendWeeklySBRReport();
+            return View("HeartBeat");
         }
 
         private void CreateAgileDir(string detaildir)
