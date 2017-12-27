@@ -26,7 +26,14 @@
         <span class="col-xs-3 logo"></span>
         <div class="user-info">
             <span class="header-user">@ViewBag.UserName</span>
-            <span class="logout glyphicon glyphicon-log-out" aria-hidden="true" title="Logout"></span>
+            @if (string.IsNullOrEmpty(ViewBag.UserName))
+            {
+                <a class="a-login" href="/NebulaUser/UserLogin">Login</a>
+            }
+            else
+            {
+                <span class="logout glyphicon glyphicon-log-out" aria-hidden="true" title="Logout"></span>
+            }
         </div>
     </header>
     @RenderBody()

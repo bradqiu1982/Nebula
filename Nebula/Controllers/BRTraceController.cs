@@ -990,6 +990,16 @@ namespace Nebula.Controllers
 
         public ActionResult BRReport(string PM,int Weeks = 1)
         {
+
+            var ckdict = CookieUtility.UnpackCookie(this);
+            if (ckdict.ContainsKey("logonuser"))
+            {
+                ViewBag.UserName = ckdict["logonuser"].Replace("@FINISAR.COM", "");
+            }
+            else
+            {
+                ViewBag.UserName = "";
+            }
             var endtime = DateTime.Now;
             var starttime = DateTime.Now.AddDays(-7 * Weeks);
             var filterbr = new List<BRReportVM>();

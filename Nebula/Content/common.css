@@ -831,3 +831,9 @@ div[MYTP="orange"] {
     padding-right: 5px;
     font-weight: bold;
 }
+
+.a-login {
+    color: #fff;
+    font-style: italic;
+    text-decoration: underline;
+}
