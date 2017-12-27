@@ -15,4 +15,4 @@ ERPJOCOMPONENTINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\Jobs_WXI.CSV
 ERPJOEXISTMAINSTORE:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WXI.csv
 SHIPPINGORDERFOLDER:::\\wux-file01\Public\ERP_Report\WXI\Planning
 
-REPORTRECIEVER:::brad.qiu@finisar.com;yan.shi@finisar.com
+REPORTRECIEVER:::brad.qiu@finisar.com;shawn.zhang@finisar.com

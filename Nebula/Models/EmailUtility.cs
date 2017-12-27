@@ -142,6 +142,7 @@ namespace Nebula.Models
             {
                 content += "<div><br>";
                 content += "<table border='1' cellpadding='0' cellspacing='0' width='100%'>";
+                content += "<colgroup><col style='width:20%;'><col style='width:60%;'><col style='width:20%;'></colgroup>";
                 content += "<thead style='background-color: #006DC0; color: #fff;'>";
                 foreach (var th in table[0])
                 {
