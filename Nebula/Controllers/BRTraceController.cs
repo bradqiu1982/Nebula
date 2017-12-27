@@ -945,7 +945,7 @@ namespace Nebula.Controllers
             if (table != null)
             {
                 content += "<div  style='color: #fff; margin-right: 10%; margin-left: 10%;'><br>";
-                content += "<table border-radius='5px' cellpadding='0' cellspacing='0' width='100%' style='border-radius: 10px; border: 1px solid rgb(204, 204, 204); border-image: none; border-collapse: separate; -webkit-border-radius: 10px;'>";
+                content += "<table border-radius='5px' cellpadding='0' cellspacing='0' width='100%' style='padding: 5px; margin-bottom: 1%; border-radius: 10px; border: 1px solid rgb(204, 204, 204); border-image: none; border-collapse: separate; -webkit-border-radius: 10px;'>";
                 content += "<colgroup><col style='width:20%;'><col style='width:60%;'><col style='width:20%;'></colgroup>";
                 content += "<thead color: #fff;'>";
                 foreach (var th in table[0])
@@ -992,7 +992,7 @@ namespace Nebula.Controllers
             var brlist = BRReportVM.RetrieveActiveBRRptVM(starttime.ToString("yyyy-MM-dd HH:mm:ss"), endtime.ToString("yyyy-MM-dd HH:mm:ss"));
             foreach (var br in brlist)
             {
-                if (!string.IsNullOrEmpty(PM))
+                if (!string.IsNullOrEmpty(PM) && string.Compare(PM, "PM LIST (Optional)") != 0)
                 {
                     if (string.Compare(br.Originator.Replace(".", "").Replace(" ", "").ToUpper()
                         , PM.Replace(".", "").Replace(" ", "").ToUpper()) == 0)

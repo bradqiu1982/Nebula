@@ -206,25 +206,63 @@ div[MYTP="orange"] {
     margin-top: 10px;
 }
 
+.nav-type-h {
+    float: right;
+    color: #f0f0f0;
+    font-size: 14px;
+    margin-top: 1%;
+    margin-right: 2%;
+}
+
 .nav-type {
     float: right;
     color: #f0f0f0;
     font-size: 14px;
-    margin-top: 10px;
+    margin-top: 2%;
     margin-right: 2%;
 }
 
 .nav-link {
-    margin: 5px;
+    margin: 5px 2px;
     text-align: right;
     padding-right: 4px;
     cursor: pointer;
 }
 
-    .nav-link:hover {
-        background-color: #ababab;
-        color: #fff;
-    }
+.nav-link:hover {
+    background-color: #ababab;
+    color: #fff;
+}
+
+.nav-link-o, .nav-link-j {
+    margin: 5px 2px;
+    text-align: right;
+    padding-right: 4px;
+}
+
+.nav-link-a {
+    margin: 5px 0;
+    text-align: right;
+    padding-right: 4px;
+    cursor: pointer;
+}
+
+.nav-link-a:hover {
+    background-color: #ababab;
+    color: #fff;
+}
+
+.nav-label {
+    color: #000;
+    background-color: #33CCFF;
+    border: 1px #33CCFF solid;
+    border-radius: 4px;
+}
+
+.nav-frasl{
+    color: #ababab;
+    margin: auto 2px;
+}
 
 .nav-active {
     background-color: #ababab;
@@ -233,6 +271,12 @@ div[MYTP="orange"] {
 
 .nav-line {
     width: 80px;
+    padding-top: 10px;
+    border-bottom: gray 2px solid;
+}
+
+.nav-line-l {
+    width: 185px;
     padding-top: 10px;
     border-bottom: gray 2px solid;
 }
@@ -256,7 +300,7 @@ div[MYTP="orange"] {
 }
 
 .label-panel {
-    margin-top: 3%;
+    margin-top: 5%;
     margin-right: 0;
     height: 400px;
 }

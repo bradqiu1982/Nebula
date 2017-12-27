@@ -11,10 +11,16 @@
         <div><h1 style="color:white;text-align:center"> BR Report</h1></div>
         
         <div style="padding: 2% 2% 5%; border-radius: 5px; border: 1px solid white; border-image: none; margin-right: 10%; margin-left: 10%;">
-
-            <div class="col-xs-4"><label class="col-xs-3" style="color:white">Weeks</label>@Html.DropDownList("weeksselectlist", null, new { @id = "weeksselectlist", @class = "form-control", @style="width:60%" })</div>
-            <div class="col-xs-4">@Html.DropDownList("pmselectlist", null, new { @id = "pmselectlist", @class = "form-control" })</div>
-            <div class="col-xs-2"><input type="button" class="btn btn-success" value="Search" onclick="SearchReport()" /></div>
+            <div class="col-xs-4">
+                <label class="col-xs-3" style="color:white">Weeks</label>
+                @Html.DropDownList("weeksselectlist", null, new { @id = "weeksselectlist", @class = "form-control", @style="width:60%" })
+            </div>
+            <div class="col-xs-4">
+                @Html.DropDownList("pmselectlist", null, new { @id = "pmselectlist", @class = "form-control" })
+            </div>
+            <div class="col-xs-2">
+                <input type="button" class="btn btn-success" value="Search" onclick="SearchReport()" />
+            </div>
         </div>
 
         <script type="text/javascript">
