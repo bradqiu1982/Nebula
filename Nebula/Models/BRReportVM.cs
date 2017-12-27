@@ -42,7 +42,7 @@ namespace Nebula.Models
         public string BuildLocation { set; get; }
 
 
-        private static List<BRReportVM> RetrieveActiveBRRptVM(string starttime, string endtime)
+        public static List<BRReportVM> RetrieveActiveBRRptVM(string starttime, string endtime)
         {
             var ret = new List<BRReportVM>();
             var brdict = new Dictionary<string, bool>();
@@ -131,12 +131,9 @@ namespace Nebula.Models
             }
         }
 
-        public static List<string> RetrieveActiveBRRpt(string starttime, string endtime)
+
+        public static List<List<string>> BRReportToArray(BRReportVM br)
         {
-            var htabelist = new List<string>();
-            var brlist = RetrieveActiveBRRptVM(starttime, endtime);
-            foreach (var br in brlist)
-            {
                 var temptablist = new List<List<string>>();
 
                 var templist = new List<string>();
@@ -211,12 +208,32 @@ namespace Nebula.Models
                 templist.Add("");
                 temptablist.Add(templist);
 
+            return temptablist;
+        }
+
+        public static List<string> RetrieveActiveBRRpt(string starttime, string endtime)
+        {
+            var htabelist = new List<string>();
+            var brlist = RetrieveActiveBRRptVM(starttime, endtime);
+            foreach (var br in brlist)
+            {
+                var temptablist = BRReportToArray(br);
                 htabelist.Add(EmailUtility.CreateTableStr(temptablist));
             }
-
             return htabelist;
         }
 
+        public static List<string> RetrievePMList()
+        {
+            var ret = new List<string>();
+            var sql = "SELECT distinct Originator FROM  BRAgileBaseInfo order by Originator ASC";
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                ret.Add(Convert.ToString(line[0]));
+            }
+            return ret;
+        }
 
     }
 }

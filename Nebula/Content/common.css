@@ -203,14 +203,14 @@ div[MYTP="orange"] {
     color: #f0f0f0;
     font-size: 16px;
     margin-left: 5%;
-    margin-top: 2%;
+    margin-top: 10px;
 }
 
 .nav-type {
     float: right;
     color: #f0f0f0;
     font-size: 14px;
-    margin-top: 2%;
+    margin-top: 10px;
     margin-right: 2%;
 }
 

@@ -78,6 +78,10 @@ var BR = function(){
             window.location.href = '/BRTrace/DefaultJOList?p=1&Status=CLOSE';
         })
 
+        $('body').on('click', '#reportnav', function () {
+            window.location.href = '/BRTrace/BRReport?PM=&Weeks=1';
+        })
+
         $('body').on('click', '.br-breadcrumb', function () {
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html();
         })
@@ -85,6 +89,7 @@ var BR = function(){
         $('body').on('click', '.current-breadcrumb', function () {
             window.location.href = '/BRTrace/JOInfo?JONum=' + $('#jo_num1').val();
         })
+        
         
     }
 

@@ -938,6 +938,181 @@ namespace Nebula.Controllers
             return res;
         }
 
+        private string  CreateTabelHtml(List<List<string>> table)
+        {
+            var content = string.Empty;
+            var idx = 0;
+            if (table != null)
+            {
+                content += "<div  style='color: #fff; margin-right: 10%; margin-left: 10%;'><br>";
+                content += "<table border-radius='5px' cellpadding='0' cellspacing='0' width='100%' style='border-radius: 10px; border: 1px solid rgb(204, 204, 204); border-image: none; border-collapse: separate; -webkit-border-radius: 10px;'>";
+                content += "<colgroup><col style='width:20%;'><col style='width:60%;'><col style='width:20%;'></colgroup>";
+                content += "<thead color: #fff;'>";
+                foreach (var th in table[0])
+                {
+                    content += "<th>" + th + "</th>";
+                }
+                content += "</thead>";
+                foreach (var tr in table)
+                {
+                    if (idx > 0)
+                    {
+                        var tidx = 0;
+                        content += "<tr>";
+                        foreach (var td in tr)
+                        {
+                            if (tidx == 0)
+                            {
+                                content += "<td><strong>" + td + "</strong></td>";
+                            }
+                            else
+                            {
+                                content += "<td>" + td + "</td>";
+                            }
+                            tidx++;
+                        }
+                        content += "</tr>";
+                    }
+                    idx++;
+                }
+                content += "</table>";
+                content += "</div>";
+
+                return content;
+            }
+
+            return string.Empty;
+        }
+
+        public ActionResult BRReport(string PM,int Weeks = 1)
+        {
+            var endtime = DateTime.Now;
+            var starttime = DateTime.Now.AddDays(-7 * Weeks);
+            var filterbr = new List<BRReportVM>();
+            var brlist = BRReportVM.RetrieveActiveBRRptVM(starttime.ToString("yyyy-MM-dd HH:mm:ss"), endtime.ToString("yyyy-MM-dd HH:mm:ss"));
+            foreach (var br in brlist)
+            {
+                if (!string.IsNullOrEmpty(PM))
+                {
+                    if (string.Compare(br.Originator.Replace(".", "").Replace(" ", "").ToUpper()
+                        , PM.Replace(".", "").Replace(" ", "").ToUpper()) == 0)
+                    {
+                        filterbr.Add(br);
+                    }
+                }
+                else
+                {
+                    filterbr.Add(br);
+                }
+            }
+
+            var tablist = new List<string>();
+            foreach (var br in filterbr)
+            {
+                var temptablist = BRReportVM.BRReportToArray(br);
+                tablist.Add(CreateTabelHtml(temptablist));
+            }
+
+            ViewBag.HPM = "";
+            if (!string.IsNullOrEmpty(PM))
+            {
+                ViewBag.HPM = PM;
+            }
+            ViewBag.HWeeks = Weeks.ToString();
+            ViewBag.tablelist = tablist;
+
+            var pmlist = BRReportVM.RetrievePMList();
+            var templist = new List<string>();
+            templist.Add("PM LIST (Optional)");
+            templist.AddRange(pmlist);
+            ViewBag.pmselectlist = CreateSelectList(templist, PM);
+            if (string.IsNullOrEmpty(PM))
+            {
+                ViewBag.pmselectlist[0].Selected = true;
+                ViewBag.pmselectlist[0].Disabled = true;
+            }
+
+            templist = new List<string>();
+            templist.AddRange(new string[] { "1", "2", "4", "8", "16", "32", "48" });
+            ViewBag.weeksselectlist = CreateSelectList(templist, Weeks.ToString());
+
+            return View();
+        }
+
+        public JsonResult SendBRReport()
+        {
+            UserAuth();
+
+            if (string.IsNullOrEmpty(ViewBag.EmailAddr))
+            {
+                var ret = new JsonResult();
+                ret.Data = new { msg = "Fail to get your email, please login first!" };
+                return ret;
+            }
+            else
+            {
+                var Weeks = Convert.ToInt32(Request.Form["weeks"]);
+                var PM = Request.Form["pm"];
+
+                var endtime = DateTime.Now;
+                var starttime = DateTime.Now.AddDays(-7 * Weeks);
+                var filterbr = new List<BRReportVM>();
+                var brlist = BRReportVM.RetrieveActiveBRRptVM(starttime.ToString("yyyy-MM-dd HH:mm:ss"), endtime.ToString("yyyy-MM-dd HH:mm:ss"));
+                foreach (var br in brlist)
+                {
+                    if (!string.IsNullOrEmpty(PM))
+                    {
+                        if (string.Compare(br.Originator.Replace(".", "").Replace(" ", "").ToUpper()
+                            , PM.Replace(".", "").Replace(" ", "").ToUpper()) == 0)
+                        {
+                            filterbr.Add(br);
+                        }
+                    }
+                    else
+                    {
+                        filterbr.Add(br);
+                    }
+                }
+
+                if (filterbr.Count > 0)
+                {
+                    var tolist = new List<string>();
+                    tolist.Add(ViewBag.EmailAddr);
+                    var htmltablelist = new List<string>();
+                    foreach (var br in filterbr)
+                    {
+                        var temptablist =BRReportVM.BRReportToArray(br);
+                        htmltablelist.Add(EmailUtility.CreateTableStr(temptablist));
+                    }
+
+                    if (htmltablelist.Count > 0)
+                    {
+                        var title = "Below is an SBR report of WUXI NPI in " + Weeks.ToString() + " weeks";
+                        if (!string.IsNullOrEmpty(PM))
+                        {
+                            title = title + " filtered with PM-" + PM;
+                        }
+                        title = title + ":";
+
+                        var content = EmailUtility.CreateTableHtml2("Hi guys",title , "", htmltablelist);
+                        EmailUtility.SendEmail(this, "WUXI NPI SBR Report", tolist, content, true);
+                        new System.Threading.ManualResetEvent(false).WaitOne(500);
+                    }
+
+                    var ret = new JsonResult();
+                    ret.Data = new { msg = "BR report is send,please check your email!" };
+                    return ret;
+                }
+                else
+                {
+                    var ret = new JsonResult();
+                    ret.Data = new { msg = "No BR information is selected!" };
+                    return ret;
+                }
+            }
+        }
+
+
     }
 
 
