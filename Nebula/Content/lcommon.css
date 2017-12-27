@@ -4,6 +4,12 @@
     background-color: #001D2E;
 }
 
+div[MYTP="orange"] {
+    border-left-width: 8px;
+    border-left-style: solid;
+    border-left-color: #FF7400;
+}
+
 .container {
     position: absolute;
     margin: 0;
@@ -199,7 +205,15 @@
     color: #f0f0f0;
     font-size: 16px;
     margin-left: 5%;
-    margin-top: 2%;
+    margin-top: 10px;
+}
+
+.nav-type-h {
+    float: right;
+    color: #f0f0f0;
+    font-size: 14px;
+    margin-top: 1%;
+    margin-right: 2%;
 }
 
 .nav-type {
@@ -211,7 +225,7 @@
 }
 
 .nav-link {
-    margin: 5px;
+    margin: 5px 2px;
     text-align: right;
     padding-right: 4px;
     cursor: pointer;
@@ -222,6 +236,36 @@
         color: #fff;
     }
 
+.nav-link-o, .nav-link-j {
+    margin: 5px 2px;
+    text-align: right;
+    padding-right: 4px;
+}
+
+.nav-link-a {
+    margin: 5px 0;
+    text-align: right;
+    padding-right: 4px;
+    cursor: pointer;
+}
+
+    .nav-link-a:hover {
+        background-color: #ababab;
+        color: #fff;
+    }
+
+.nav-label {
+    color: #000;
+    background-color: #33CCFF;
+    border: 1px #33CCFF solid;
+    border-radius: 4px;
+}
+
+.nav-frasl {
+    color: #ababab;
+    margin: auto 2px;
+}
+
 .nav-active {
     background-color: #ababab;
     color: #fff;
@@ -229,6 +273,12 @@
 
 .nav-line {
     width: 80px;
+    padding-top: 10px;
+    border-bottom: gray 2px solid;
+}
+
+.nav-line-l {
+    width: 185px;
     padding-top: 10px;
     border-bottom: gray 2px solid;
 }
@@ -252,7 +302,7 @@
 }
 
 .label-panel {
-    margin-top: 3%;
+    margin-top: 5%;
     margin-right: 0;
     height: 400px;
 }
@@ -395,7 +445,7 @@
 
 .jo-info-left {
     margin-top: 2%;
-    margin-left: 5%;
+    margin-left: 10%;
     border: #24323B 1px solid;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -736,6 +786,7 @@
     text-decoration: underline;
     font-style: italic;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -784,4 +835,10 @@
     padding-left: 5px;
     padding-right: 5px;
     font-weight: bold;
+}
+
+.a-login {
+    color: #fff;
+    font-style: italic;
+    text-decoration: underline;
 }
