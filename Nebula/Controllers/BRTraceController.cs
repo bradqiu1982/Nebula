@@ -444,8 +444,12 @@ namespace Nebula.Controllers
             {
                 datestring = DateTime.Now.ToString("yyyyMMdd");
                 datefolder = Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
+
                 var weeklyrepotdir = datefolder + "weeklyreport";
-                if (!Directory.Exists(weeklyrepotdir)) {
+                var newqueryfolder = datefolder + "agilenewqueried";
+                if (Directory.Exists(newqueryfolder) 
+                    && !Directory.Exists(weeklyrepotdir))
+                {
                     Directory.CreateDirectory(weeklyrepotdir);
                     SendWeeklySBRReport();
                 }
@@ -469,7 +473,7 @@ namespace Nebula.Controllers
                 var htmltablelist = BRReportVM.RetrieveActiveBRRpt(DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd ")+"00:00:01", DateTime.Now.ToString("yyyy-MM-dd ")+"23:59:00");
                 if (htmltablelist.Count > 0)
                 {
-                    var content = EmailUtility.CreateTableHtml2("Hi guys", "Below is an SBR report of WUXI NPI:", "", htmltablelist);
+                    var content = EmailUtility.CreateTableHtml2("Hi guys", "Below is an SBR report of WUXI NPI:", "More: http://wuxinpi.china.ads.finisar.com:8082/BRTrace/BRReport", htmltablelist);
                     EmailUtility.SendEmail(this, "WUXI NPI SBR Report", tolist, content,true);
                     new System.Threading.ManualResetEvent(false).WaitOne(500);
                 }
@@ -989,7 +993,7 @@ namespace Nebula.Controllers
             var endtime = DateTime.Now;
             var starttime = DateTime.Now.AddDays(-7 * Weeks);
             var filterbr = new List<BRReportVM>();
-            var brlist = BRReportVM.RetrieveActiveBRRptVM(starttime.ToString("yyyy-MM-dd HH:mm:ss"), endtime.ToString("yyyy-MM-dd HH:mm:ss"));
+            var brlist = BRReportVM.RetrieveActiveBRRptVM(starttime.ToString("yyyy-MM-dd ") + "00:00:01", endtime.ToString("yyyy-MM-dd ") + "23:59:00");
             foreach (var br in brlist)
             {
                 if (!string.IsNullOrEmpty(PM) && string.Compare(PM, "PM LIST (Optional)") != 0)
@@ -1057,7 +1061,7 @@ namespace Nebula.Controllers
                 var endtime = DateTime.Now;
                 var starttime = DateTime.Now.AddDays(-7 * Weeks);
                 var filterbr = new List<BRReportVM>();
-                var brlist = BRReportVM.RetrieveActiveBRRptVM(starttime.ToString("yyyy-MM-dd HH:mm:ss"), endtime.ToString("yyyy-MM-dd HH:mm:ss"));
+                var brlist = BRReportVM.RetrieveActiveBRRptVM(starttime.ToString("yyyy-MM-dd ") + "00:00:01", endtime.ToString("yyyy-MM-dd ") + "23:59:00");
                 foreach (var br in brlist)
                 {
                     if (!string.IsNullOrEmpty(PM))
