@@ -49,56 +49,115 @@
                 <div class="br-info-content">
                     <table class="table table-bordered des-table">
                         <tr>
-                            <td class="col-xs-4">Project</td>
-                            <td>@ViewBag.currentbr.ProjectKey</td>
+                            <td class="col-xs-2">Project</td>
+                            <td class="col-xs-6 right-line">@ViewBag.currentbr.ProjectKey</td>
+                            <td class="col-xs-2">Start QTY</td>
+                            <td class="col-xs-2">@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].startqty : "")</td>
                         </tr>
                         <tr>
-                            <td class="col-xs-4">Originator</td>
-                            <td>@ViewBag.currentbr.Originator</td>
+                            <td class="col-xs-2">Originator</td>
+                            <td class="col-xs-6 right-line">@ViewBag.currentbr.Originator</td>
+                            <td class="col-xs-2">Total Cost</td>
+                            <td class="col-xs-2">@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].totalcost : "")</td>
                         </tr>
                         <tr>
-                            <td class="col-xs-4">Original Date</td>
-                            <td>@ViewBag.currentbr.OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            <td class="col-xs-2">Original Date</td>
+                            <td class="col-xs-6 right-line">@ViewBag.currentbr.OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            <td class="col-xs-2">Scrap QTY</td>
+                            <td class="col-xs-3">@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].scrapqty : "")</td>
                         </tr>
                         <tr>
-                            <td class="col-xs-4">Description</td>
-                            <td>@ViewBag.currentbr.Description</td>
+                            <td class="col-xs-2">Agile Status</td>
+                            <td class="col-xs-6 right-line">@ViewBag.currentbr.Status</td>
+                            <td class="col-xs-2">Sale Revenue</td>
+                            <td class="col-xs-2">@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].salerevenue : "")</td>
                         </tr>
                         <tr>
-                            <td class="col-xs-4">Agile Status</td>
-                            <td>@ViewBag.currentbr.Status</td>
-                        </tr>
-                        <tr>
-                            <td class="col-xs-4">Start QTY</td>
-                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].startqty : "")</td>
-                        </tr>
-                        <tr>
-                            <td class="col-xs-4">Total Cost</td>
-                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].totalcost : "")</td>
-                        </tr>
-                        <tr>
-                            <td class="col-xs-4">Scrap QTY</td>
-                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].scrapqty : "")</td>
-                        </tr>
-                        <tr>
-                            <td class="col-xs-4">Sale Revenue</td>
-                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].salerevenue : "")</td>
-                        </tr>
-                        <tr>
-                            <td class="col-xs-4">Product Phase</td>
-                            <td>@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].productphase : "")</td>
-                        </tr>
-                        <tr>
-                            <td class="col-xs-4">JO List</td>
-                            <td>
-                                <a href="/BRTrace/JOList?BR=@ViewBag.currentbr.BRNumber" target="_blank">
-                                    <img src="~/Content/images/loading.png" height="6" width="24" />
-                                </a>
-                            </td>
+                            <td class="col-xs-2">Description</td>
+                            <td class="col-xs-6 right-line">@ViewBag.currentbr.Description</td>
+                            <td class="col-xs-2">Product Phase</td>
+                            <td class="col-xs-2">@((ViewBag.currentbr.pagethreelist.Count > 0) ? ViewBag.currentbr.pagethreelist[0].productphase : "")</td>
                         </tr>
                     </table>
                 </div>
-                <div>
+                <div class="row">
+                    <div class="panel panel-success br-panel">
+                        <div class="panel-heading cursor-pointer br-panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title br-panel-title" data-toggle="collapse" data-target="#jo-list" aria-expanded="true">
+                                <span class="title-box">JO List</span>
+                                <span class="glyphicon glyphicon-chevron-down chevron-down"></span>
+                            </h4>
+                        </div>
+                        <div id="jo-list" class="panel-collapse collapse in" role="tabpanel">
+                            <div class="panel-body">
+                            <div class="col-xs-5 jo-info-left">
+                                <table class="table table-bordered table-hover cus-table">
+                                    @foreach (var item in ViewBag.currentbrjolist)
+                                    {
+                                        <tr><td>@item.JONumber</td><td>@item.JORealStatus</td></tr>
+                                    }
+                                </table>
+                                @if (ViewBag.sub_total_pages > 1)
+                                {
+                                    @Html.Partial("~/Views/Shared/_sub_pagination.cshtml")
+                                }
+                            </div>
+                            <div class="col-xs-6 jo-info-right">
+                                <table class="table table-bordered des-table">
+                                    <tr>
+                                        <td class="col-xs-4">Project</td>
+                                        <td id="jo_pjkey">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">PN</td>
+                                        <td id="jo_pn">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">PN Test Yield</td>
+                                        <td id="jo_yd">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">JO Type</td>
+                                        <td id="jo_type">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">JO Status</td>
+                                        <td id="jo_stat">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">Date Released</td>
+                                        <td id="jo_date">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">MRP Net QTY</td>
+                                        <td id="jo_wip">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">Mainstore QTY</td>
+                                        <td id="jo_store">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">JO Component</td>
+                                        <td><a id="jo_compo" href='#'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">JO Ship</td>
+                                        <td><a id="jo_ship" href='#'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4">Planer</td>
+                                        <td id="jo_planner">Test1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-4"><a id="jo_detail" href="#"><img src="~/Content/images/more.png" height="15" width="30" /></a></td><td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="panel panel-success br-panel">
                         <div class="panel-heading cursor-pointer br-panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title br-panel-title" data-toggle="collapse" data-target="#c_conclusion" aria-expanded="true">
@@ -197,7 +256,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="row">
                     <div class="panel panel-success br-panel">
                         <div class="panel-heading cursor-pointer br-panel-heading" role="tab" id="headingTwo">
                             <h4 class="panel-title br-panel-title" data-toggle="collapse" data-target="#c_comment" aria-expanded="true">

@@ -5,13 +5,11 @@
 }
 
 div[MYTP="orange"] {
-    border-left-width: 8px;
-    border-left-style: solid;
-    border-left-color: #FF7400;
+    border-left-width:8px;border-left-style:solid;border-left-color:#FF7400;
 }
 
-.container {
-    position: absolute;
+.container{
+    position:absolute;
     margin: 0;
     width: 100% !important;
     padding: 0 !important;
@@ -231,10 +229,10 @@ div[MYTP="orange"] {
     cursor: pointer;
 }
 
-    .nav-link:hover {
-        background-color: #ababab;
-        color: #fff;
-    }
+.nav-link:hover {
+    background-color: #ababab;
+    color: #fff;
+}
 
 .nav-link-o, .nav-link-j {
     margin: 5px 2px;
@@ -249,10 +247,10 @@ div[MYTP="orange"] {
     cursor: pointer;
 }
 
-    .nav-link-a:hover {
-        background-color: #ababab;
-        color: #fff;
-    }
+.nav-link-a:hover {
+    background-color: #ababab;
+    color: #fff;
+}
 
 .nav-label {
     color: #000;
@@ -261,7 +259,7 @@ div[MYTP="orange"] {
     border-radius: 4px;
 }
 
-.nav-frasl {
+.nav-frasl{
     color: #ababab;
     margin: auto 2px;
 }
@@ -407,27 +405,30 @@ div[MYTP="orange"] {
 
 .cus-table {
     border: transparent;
+    margin-bottom: 10px;
 }
 
-    .cus-table > tbody > tr {
-        cursor: pointer;
-    }
+.cus-table > tbody > tr {
+    cursor: pointer;
+}
 
-        .cus-table > tbody > tr > td {
-            border: transparent;
-        }
-
-        .cus-table > tbody > tr:hover {
-            background-color: #07151E;
-        }
-
-.des-table {
+.cus-table > tbody > tr > td {
     border: transparent;
 }
 
-    .des-table > tbody > tr > td {
-        border: transparent;
-    }
+.cus-table > tbody > tr:hover {
+    background-color: #07151E;
+}
+
+.des-table {
+    border: transparent;
+    margin-bottom: 10px;
+}
+
+.des-table > tbody > tr > td {
+    border: transparent;
+    padding-left: 15px !important;
+}
 
 /* BR INFO */
 .br-info {
@@ -444,8 +445,7 @@ div[MYTP="orange"] {
 }
 
 .jo-info-left {
-    margin-top: 2%;
-    margin-left: 10%;
+    margin-top: 1%;
     border: #24323B 1px solid;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -454,7 +454,7 @@ div[MYTP="orange"] {
 
 .jo-info-right {
     display: none;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-left: 5%;
     border: #24323B 1px solid;
     -moz-border-radius: 6px;
@@ -787,7 +787,7 @@ div[MYTP="orange"] {
     font-style: italic;
 }
 
-.cursor-pointer {
+.cursor-pointer{
     cursor: pointer;
 }
 
@@ -796,7 +796,6 @@ div[MYTP="orange"] {
     border-color: transparent !important;
     background-color: transparent !important;
 }
-
 .br-panel-title {
     border-color: transparent !important;
     background-color: transparent !important;
@@ -804,7 +803,6 @@ div[MYTP="orange"] {
     border-left-color: #33CCFF !important;
     border-left-width: 5px !important;
 }
-
 .br-panel-heading {
     padding: 0;
     color: #efefef !important;
@@ -817,7 +815,7 @@ div[MYTP="orange"] {
     padding: 2px 5px;
 }
 
-.con-op {
+.con-op{
     margin-top: 2%;
 }
 
@@ -826,12 +824,11 @@ div[MYTP="orange"] {
     border-left-style: solid;
     border-left-color: #006DC0;
 }
-
-.ckedit-box {
+.ckedit-box{
     margin-top: 2%;
 }
 
-.title-box {
+.title-box{
     padding-left: 5px;
     padding-right: 5px;
     font-weight: bold;
@@ -841,4 +838,8 @@ div[MYTP="orange"] {
     color: #fff;
     font-style: italic;
     text-decoration: underline;
+}
+
+.right-line{
+    border-right: 1px #24323B solid !important;
 }
