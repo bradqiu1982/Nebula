@@ -52,8 +52,8 @@
                     <div id="jo-status"><span>OPEN</span></div>
                     <input type="hidden" id="jo_num1" name="jo_num1" value="@Model.JONumber" />
                 </div>
-                <div class="col-xs-5 col-xs-offset-1">
-                    <table class="table table-bordered des-table">
+                <div class="col-xs-5">
+                    <table class="table table-bordered narrow-table">
                         <tr><td class="col-xs-4">Project</td><td id="jo_pjkey">@(Model.ProjectKey)</td></tr>
                         <tr><td class="col-xs-4">PN</td><td id="jo_pn">@(Model.PN)-@(Model.PNDesc.Substring(0,(Model.PNDesc.Length > 23)?23:Model.PNDesc.Length))</td></tr>
                         @if (string.IsNullOrEmpty(Model.ProjectKey))

@@ -420,7 +420,7 @@ div[MYTP="orange"] {
     background-color: #07151E;
 }
 
-.des-table {
+.des-table,.narrow-table {
     border: transparent;
     margin-bottom: 10px;
 }
@@ -428,6 +428,13 @@ div[MYTP="orange"] {
 .des-table > tbody > tr > td {
     border: transparent;
     padding-left: 15px !important;
+}
+
+.narrow-table > tbody > tr > td {
+    border: transparent;
+    padding-left: 15px !important;
+    padding-top:0px!important;
+    padding-bottom:0px!important;
 }
 
 /* BR INFO */
