@@ -15,6 +15,7 @@ namespace Nebula.Models
             PNDesc = "";
             ProductPhase = "";
             BRDesc = "";
+            BRDetail = "";
             Originator = "";
             ReqStartDate = "";
             ExpectedEndDate = "";
@@ -31,6 +32,7 @@ namespace Nebula.Models
         public string PNDesc { set; get; }
         public string ProductPhase { set; get; }
         public string BRDesc { set; get; }
+        public string BRDetail { set; get; }
         public string Originator { set; get; }
         public string ReqStartDate { set; get; }
         public string ExpectedEndDate { set; get; }
@@ -119,13 +121,14 @@ namespace Nebula.Models
         {
             foreach (var br in brlist)
             {
-                var sql = "SELECT Description,Originator FROM  BRAgileBaseInfo  where BRNumber = '<BRNumber>'";
+                var sql = "SELECT Description,Originator,Detail FROM  BRAgileBaseInfo  where BRNumber = '<BRNumber>'";
                 sql = sql.Replace("<BRNumber>", br.BRNum);
                 var dbret = DBUtility.ExeLocalSqlWithRes(sql);
                 foreach (var line in dbret)
                 {
                     br.BRDesc = Convert.ToString(line[0]);
                     br.Originator = Convert.ToString(line[1]);
+                    br.BRDetail = Convert.ToString(line[2]);
                     break;
                 }
             }
@@ -153,6 +156,15 @@ namespace Nebula.Models
                 templist.Add(br.BRDesc);
                 templist.Add("");
                 temptablist.Add(templist);
+
+                if (!string.IsNullOrEmpty(br.BRDetail))
+                {
+                templist = new List<string>();
+                templist.Add("Key Notes");
+                templist.Add(br.BRDetail);
+                templist.Add("");
+                temptablist.Add(templist);
+                }
 
                 templist = new List<string>();
                 templist.Add("Assembly Product Families affected");
