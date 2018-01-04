@@ -16,6 +16,8 @@ CREATE TABLE [dbo].[BRAgileBaseInfo] (
 	[ChangeType] NVARCHAR (200) DEFAULT ('') NOT NULL,
     [OriginalDate] DATETIME       DEFAULT ('1982-05-06 10:00:00') NOT NULL,
 	[BRStatus] NVARCHAR (200) DEFAULT ('CLOSE') NOT NULL,
+	[ProjectKey] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Detail] NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[APVal1]     NVARCHAR (200) DEFAULT ('') NOT NULL,
     [APVal2]     NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[APVal3]     NVARCHAR (200) DEFAULT ('') NOT NULL,
@@ -25,6 +27,7 @@ CREATE TABLE [dbo].[BRAgileBaseInfo] (
 
 ALTER TABLE  [NebulaTrace].[dbo].[BRAgileBaseInfo] Add BRStatus NVARCHAR (200) DEFAULT ('CLOSE') NOT NULL;
 ALTER TABLE  [NebulaTrace].[dbo].[BRAgileBaseInfo] Add ProjectKey NVARCHAR (200) DEFAULT ('') NOT NULL;
+ALTER TABLE  [NebulaTrace].[dbo].[BRAgileBaseInfo] Add Detail NVARCHAR (MAX) DEFAULT ('') NOT NULL;
 
 CREATE TABLE [dbo].[AgileAttach] (
 	[BRKey] NVARCHAR (200) DEFAULT ('') NOT NULL,

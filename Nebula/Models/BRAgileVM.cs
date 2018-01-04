@@ -91,7 +91,7 @@ namespace Nebula.Models
             foreach (var br in newbrlist)
             {
                 AgileDownloadVM.UpdatePMLastUpdateTime(br.Originator, br.OriginalDate);
-                if (!string.IsNullOrEmpty(br.Description))
+                //if (!string.IsNullOrEmpty(br.Description))
                 {
                     if (BRAgileBaseInfo.BRExist(br.BRNumber,br.OriginalDate))
                     {
@@ -494,6 +494,7 @@ namespace Nebula.Models
             ChangeType = "";
             BRNumber = "";
             Description = "";
+            Detail = "";
             Status = "";
             Workflow = "";
             Originator = "";
@@ -524,6 +525,8 @@ namespace Nebula.Models
                     item.BRNumber = value;
                 if (string.Compare(kv[0], "Description", true) == 0)
                     item.Description = value;
+                if (string.Compare(kv[0], "Detail", true) == 0)
+                    item.Detail = value;
                 if (string.Compare(kv[0], "Status", true) == 0)
                     item.Status = value;
                 if (string.Compare(kv[0], "Workflow", true) == 0)
@@ -550,11 +553,12 @@ namespace Nebula.Models
         public void AddBRAgileInfo()
         {
             var brkey = GetUniqKey();
-            var sql = "insert into BRAgileBaseInfo(BRKey,BRNumber,Description,Status,Workflow,Originator,ChangeType,OriginalDate,BRStatus) "
-                + " values('<BRKey>','<BRNumber>',N'<Description>','<Status>','<Workflow>','<Originator>','<ChangeType>','<OriginalDate>','<BRStatus>')";
+            var sql = "insert into BRAgileBaseInfo(BRKey,BRNumber,Description,Status,Workflow,Originator,ChangeType,OriginalDate,BRStatus,Detail) "
+                + " values('<BRKey>','<BRNumber>',N'<Description>','<Status>','<Workflow>','<Originator>','<ChangeType>','<OriginalDate>','<BRStatus>','<Detail>')";
             sql = sql.Replace("<BRKey>",brkey).Replace("<BRNumber>", BRNumber).Replace("<Description>", Description)
                 .Replace("<Status>", Status).Replace("<Workflow>", Workflow).Replace("<Originator>", Originator)
-                .Replace("<ChangeType>", ChangeType).Replace("<OriginalDate>", OriginalDate.ToString("yyyy-MM-dd HH:mm:ss")).Replace("<BRStatus>",BRJOSYSTEMSTATUS.KICKOFF);
+                .Replace("<ChangeType>", ChangeType).Replace("<OriginalDate>", OriginalDate.ToString("yyyy-MM-dd HH:mm:ss"))
+                .Replace("<BRStatus>",BRJOSYSTEMSTATUS.KICKOFF).Replace("<Detail>", Detail);
             DBUtility.ExeLocalSqlNoRes(sql);
 
             foreach (var item in pagethreelist)
@@ -592,6 +596,19 @@ namespace Nebula.Models
                 var sql = "update BRAgileBaseInfo set Status = '<Status>' where BRNumber = '<BRNumber>'";
                 sql = sql.Replace("<BRNumber>", BRNumber).Replace("<Status>", currentstatus);
                 DBUtility.ExeLocalSqlNoRes(sql);
+
+                if (!string.IsNullOrEmpty(Description))
+                {
+                    sql = "update BRAgileBaseInfo set Description = '<Description>' where BRNumber = '<BRNumber>'";
+                    sql = sql.Replace("<BRNumber>", BRNumber).Replace("<Description>", Description);
+                    DBUtility.ExeLocalSqlNoRes(sql);
+                }
+                if (!string.IsNullOrEmpty(Detail))
+                {
+                    sql = "update BRAgileBaseInfo set Detail = '<Detail>' where BRNumber = '<BRNumber>'";
+                    sql = sql.Replace("<BRNumber>", BRNumber).Replace("<Detail>", Detail);
+                    DBUtility.ExeLocalSqlNoRes(sql);
+                }
 
                 sql = "select BRKey from BRAgileBaseInfo where BRNumber = '<BRNumber>'";
                 sql = sql.Replace("<BRNumber>", BRNumber);
@@ -655,12 +672,12 @@ namespace Nebula.Models
             var sql = string.Empty;
             if (reviewer == null)
             {
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey,Detail from BRAgileBaseInfo order by OriginalDate Desc";
             }
             else
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo where Originator = '<Originator>'  order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey,Detail from BRAgileBaseInfo where Originator = '<Originator>'  order by OriginalDate Desc";
                 sql = sql.Replace("<Originator>", reviewer);
             }
 
@@ -676,6 +693,7 @@ namespace Nebula.Models
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
+                temp.Detail = Convert.ToString(line[8]);
                 temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
                 temp.pagethreelist.AddRange(AgilePageThree.RetrieveAgileInfo(temp.BRKey));
                 ret.Add(temp);
@@ -691,13 +709,13 @@ namespace Nebula.Models
             var sql = string.Empty;
             if (reviewer == null)
             {
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo where BRStatus = '<BRStatus>' order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey,Detail from BRAgileBaseInfo where BRStatus = '<BRStatus>' order by OriginalDate Desc";
                 sql = sql.Replace("<BRStatus>",BRStatus);
             }
             else
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
-                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo where Originator = '<Originator>' and BRStatus = '<BRStatus>' order by OriginalDate Desc";
+                sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey,Detail from BRAgileBaseInfo where Originator = '<Originator>' and BRStatus = '<BRStatus>' order by OriginalDate Desc";
                 sql = sql.Replace("<Originator>", reviewer).Replace("<BRStatus>", BRStatus);
             }
 
@@ -713,6 +731,7 @@ namespace Nebula.Models
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
+                temp.Detail = Convert.ToString(line[8]);
                 temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
                 temp.pagethreelist.AddRange(AgilePageThree.RetrieveAgileInfo(temp.BRKey));
                 ret.Add(temp);
@@ -725,7 +744,7 @@ namespace Nebula.Models
         {
             var ret = new List<BRAgileBaseInfo>();
 
-            var sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey from BRAgileBaseInfo where BRNumber like '%<BRNumber>%'";
+            var sql = "select BRKey,BRNumber,Description,Status,Originator,OriginalDate,BRStatus,ProjectKey,Detail from BRAgileBaseInfo where BRNumber like '%<BRNumber>%'";
             sql = sql.Replace("<BRNumber>", BRNum);
 
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
@@ -740,6 +759,7 @@ namespace Nebula.Models
                 temp.OriginalDate = Convert.ToDateTime(line[5]);
                 temp.BRStatus = Convert.ToString(line[6]);
                 temp.ProjectKey = Convert.ToString(line[7]);
+                temp.Detail = Convert.ToString(line[8]);
                 temp.CommentList = RetriveBRComment(temp.BRNumber,ctrl);
                 temp.pagethreelist.AddRange(AgilePageThree.RetrieveAgileInfo(temp.BRKey));
                 ret.Add(temp);
@@ -934,6 +954,7 @@ namespace Nebula.Models
         public string ChangeType{set;get;}
         public string BRNumber{set;get;}
         public string Description{set;get;}
+        public string Detail { set; get; }
         public string Status{set;get;}
         public string Workflow{set;get;}
         public string Originator{set;get;}

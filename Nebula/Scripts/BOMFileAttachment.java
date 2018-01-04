@@ -114,6 +114,8 @@ class BRBaseInfo
 		history = null;
 		attach = null;
 		pagethree = null;
+		
+		Detail = "";
 	}
 	
 	public void SetValue(int key,String value)
@@ -129,6 +131,7 @@ class BRBaseInfo
 		if(key == ChangeConstants.ATT_COVER_PAGE_WORKFLOW) Workflow = value;
 		if(key == ChangeConstants.ATT_COVER_PAGE_ORIGINATOR) Originator = value;
 		if(key == ChangeConstants.ATT_COVER_PAGE_DATE_ORIGINATED) OriginalDate = value;
+		if(key == ChangeConstants.ATT_COVER_PAGE_REASON_FOR_CHANGE) Detail = value;
 	}
 	
 	public String ChangeType;
@@ -138,6 +141,8 @@ class BRBaseInfo
 	public String Workflow;
 	public String Originator;
 	public String OriginalDate;
+	
+	public String Detail;
 	
 	List<WorkFlowTable> brworkflowlist;
 	List<BRAffectItem> affectitem;
@@ -184,7 +189,7 @@ class BRBaseInfo
 				try {
 					out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(brfilename)));
 					out.writeBytes("<<BASEINFO>> Number:::"+Number+"###"+"ChangeType:::"+ChangeType+"###"+"Status:::"+Status
-							+"###"+"Workflow:::"+Workflow+"###"+"Originator:::"+Originator+"###"+"OriginalDate:::"+OriginalDate+"###"+"Description:::"+Description+"\r\n");
+							+"###"+"Workflow:::"+Workflow+"###"+"Originator:::"+Originator+"###"+"OriginalDate:::"+OriginalDate+"###"+"Description:::"+Description+"###"+"Detail:::"+Detail+"\r\n");
 					
 					if(pagethree != null && pagethree.size() > 0)
 					{
@@ -508,6 +513,9 @@ public class BOMFileAttachment {
 						IChange BR = (IChange)sess.getObject(IChange.OBJECT_TYPE, brstr);
 						if(BR != null)
 						{
+							brinfo.Description = ((String) BR.getValue(ChangeConstants.ATT_COVER_PAGE_DESCRIPTION)).replace("'", "").replace(",", "").replace("\r", "").replace("\n", "");
+							brinfo.Detail = ((String) BR.getValue(ChangeConstants.ATT_COVER_PAGE_REASON_FOR_CHANGE)).replace("'", "").replace(",", "").replace("\r", "").replace("\n", "");
+							
 							brinfo.pagethree = gfa.RetrieveCovePage(BR);
 							brinfo.brworkflowlist = gfa.RetrieveBRWorkFlow(BR);
 							brinfo.affectitem =  gfa.RetrieveBRAffectItem(BR);
