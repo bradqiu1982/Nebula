@@ -1,6 +1,6 @@
 ﻿AGILEURL:::http://sny-agile9app-p64:7001/Agile
 LOCALSITEPORT:::8082
-TRACEPM:::Rose Wang;Chris Bao;Albert Cui;Stone Fang;Penny Jin
+TRACEPM:::Rose Wang;Chris Bao;Albert Cui;Stone Fang;Penny Jin;Shibei Song
 FIRSTTRACETIME:::2017-10-01 10:00:00
 
 APPEMAILADRESS:::WXNPI.Trace@finisar.com
