@@ -1022,6 +1022,9 @@ namespace Nebula.Controllers
             var tablist = new List<string>();
             foreach (var br in filterbr)
             {
+                if (string.IsNullOrEmpty(br.BRDesc.Trim()))
+                    continue;
+
                 var temptablist = BRReportVM.BRReportToArray(br);
                 tablist.Add(CreateTabelHtml(temptablist));
             }
