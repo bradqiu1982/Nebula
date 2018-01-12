@@ -84,6 +84,19 @@
                 </script>
             }
         </div>
+
+        @if (!string.IsNullOrEmpty(Model.ElementAt(0).JONumber))
+        {
+            <div style='height:60px;width:60px;border-radius: 5px;position:fixed;top:130px;right:40px; border: 1px solid white; border-image: none;text-align:center;cursor:pointer;' data-toggle="tooltip" data-placement="center" title="Query Open Component" onclick="QueryComponent()">
+                <span class="glyphicon glyphicon-search" style="color:white;font-size:40px;"></span>
+                <script type="text/javascript">
+                function QueryComponent()
+                {
+                    window.location.href='/BRTrace/JOOpenComponent?JONum=@(Model.ElementAt(0).JONumber)'
+                }
+                </script>
+            </div>
+        }
     </div>
 </div>
 <footer>

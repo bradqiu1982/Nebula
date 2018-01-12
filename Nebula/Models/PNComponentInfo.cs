@@ -398,7 +398,7 @@ namespace Nebula.Models
             pncond = pncond.Substring(0, pncond.Length - 2);
             pncond = pncond + ")";
 
-            var sql = "select PN,Rev,QTY,[Desc],RecieveDate,MakeBuy,LotNum,Planner,Place from OnhandComponentVM where PN in <pncond> order by PN";
+            var sql = "select PN,Rev,QTY,[Desc],RecieveDate,MakeBuy,LotNum,Planner,Place from OnhandComponentVM where PN in <pncond> and MakeBuy <> 'Make' order by PN";
             sql = sql.Replace("<pncond>", pncond);
 
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);

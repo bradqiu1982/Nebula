@@ -1128,7 +1128,6 @@ namespace Nebula.Controllers
         public ActionResult ERPComponent()
         {
             UserAuth();
-
             return View();
         }
 
@@ -1159,6 +1158,41 @@ namespace Nebula.Controllers
             ViewBag.OnhandCompoList = OnhandComponentVM.RetrieveComponentInfo(pnlist, ViewBag.OnhandTotalDict);
 
             return View();
+        }
+
+
+        public ActionResult JOOpenComponent(string JONum)
+        {
+            UserAuth();
+
+            var jocomps = JOComponentInfo.RetrieveInfo(JONum);
+            var pns = "";
+            foreach (var item in jocomps)
+            {
+                if (item.QtyOpen > 0 && !item.QtyOpen.ToString().Contains("."))
+                {
+                    pns = pns + item.MPN + ";";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(pns))
+            {
+                pns = pns.Substring(0, (pns.Length - 1));
+                ViewBag.PNs = pns;
+                var pnlist = new List<string>();
+                pnlist.AddRange(pns.Split(new string[] { ";", ",", " " }, StringSplitOptions.RemoveEmptyEntries));
+
+                ViewBag.POTotalDict = new Dictionary<string, double>();
+                ViewBag.POCompoList = POComponentVM.RetrieveComponentInfo(pnlist, ViewBag.POTotalDict);
+
+
+                ViewBag.IQCTotalDict = new Dictionary<string, double>();
+                ViewBag.IQCCompoList = IQCComponentVM.RetrieveComponentInfo(pnlist, ViewBag.IQCTotalDict);
+
+                ViewBag.OnhandTotalDict = new Dictionary<string, double>();
+                ViewBag.OnhandCompoList = OnhandComponentVM.RetrieveComponentInfo(pnlist, ViewBag.OnhandTotalDict);
+            }
+            return View("ERPComponent");
         }
 
     }
