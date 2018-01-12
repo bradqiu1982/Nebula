@@ -8,6 +8,15 @@ div[MYTP="orange"] {
     border-left-width:8px;border-left-style:solid;border-left-color:#FF7400;
 }
 
+.lcontainer{
+    position:absolute;
+    margin: 0;
+    width: 100% !important;
+    padding: 0 !important;
+    top: 30px;
+    z-index: 1001;
+}
+
 .container{
     position:absolute;
     margin: 0;

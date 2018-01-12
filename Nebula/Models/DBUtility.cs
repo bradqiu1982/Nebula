@@ -72,6 +72,32 @@ namespace Nebula.Models
             }
         }
 
+        public static void WriteDBWithTable(System.Data.DataTable dt, string tablename)
+        {
+            if (dt.Rows.Count > 0)
+            {
+                var targetcon = DBUtility.GetLocalConnector();
+                using (SqlBulkCopy bulkCopy = new SqlBulkCopy(targetcon))
+                {
+                    bulkCopy.DestinationTableName = tablename;
+                    bulkCopy.BulkCopyTimeout = 180;
+
+                    try
+                    {
+                        for (int i = 0; i < dt.Columns.Count; i++)
+                        {
+                            bulkCopy.ColumnMappings.Add(dt.Columns[i].ColumnName, dt.Columns[i].ColumnName);
+                        }
+                        bulkCopy.WriteToServer(dt);
+                        dt.Clear();
+                    }
+                    catch (Exception ex) { logthdinfo("WriteDBWithTable exception: " + ex.Message + "\r\n"); }
+
+                }//end using
+                DBUtility.CloseConnector(targetcon);
+            }//end if
+        }
+
         //"Server=CN-CSSQL;uid=SHG_Read;pwd=shgread;Database=InsiteDB;Connection Timeout=30;"
         public static SqlConnection GetConnector(string constr)
         {

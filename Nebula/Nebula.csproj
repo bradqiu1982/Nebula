@@ -203,6 +203,7 @@
     <Compile Include="Models\AgileDownloadVM.cs" />
     <Compile Include="Models\BRAgileVM.cs" />
     <Compile Include="Models\BRComment.cs" />
+    <Compile Include="Models\BRReportVM.cs" />
     <Compile Include="Models\CamstarVM.cs" />
     <Compile Include="Models\CfgUtility.cs" />
     <Compile Include="Models\CookieUtility.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Models\NebulaVM.cs" />
     <Compile Include="Models\EmailUtility.cs" />
     <Compile Include="Models\ExcelReader.cs" />
+    <Compile Include="Models\PNComponentInfo.cs" />
     <Compile Include="Models\UserCustomizeThemeVM.cs" />
     <Compile Include="Models\WebPageVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1006,6 +1008,8 @@
     <Content Include="Scripts\npidepartmentmachine.cfg" />
     <Content Include="Views\BRTrace\JOComponent.cshtml" />
     <Content Include="Views\BRTrace\JOShipping.cshtml" />
+    <Content Include="Views\BRTrace\BRReport.cshtml" />
+    <Content Include="Views\BRTrace\ERPComponent.cshtml" />
     <None Include="Views\Shared\_layout0.cshtml" />
     <None Include="Views\Shared\_layout1.cshtml" />
     <None Include="Views\Shared\_layout2.cshtml" />

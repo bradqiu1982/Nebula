@@ -287,3 +287,44 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'1: Dark 2: Llight' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserCustomizeTheme', @level2type=N'COLUMN',@level2name=N'Theme'
 GO
 
+
+
+CREATE TABLE [dbo].[POComponentVM] (
+	[PN] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[PO] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Rev] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[QTY]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[QTYRecieve]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[PromiseDate] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[PNDesc] NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+	[PODesc] NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+	[POStaus]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[MakeBuy]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Planner]     NVARCHAR (200) DEFAULT ('') NOT NULL
+);
+
+
+CREATE TABLE [dbo].[IQCComponentVM] (
+	[PN] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Rev] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[QTY] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Desc]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+	[LotNum]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[IQCWorkFlow] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[TransactionDate] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Planner] NVARCHAR (200) DEFAULT ('') NOT NULL
+);
+
+
+CREATE TABLE [dbo].[OnhandComponentVM] (
+	[PN] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Rev] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[QTY] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Desc]     NVARCHAR (MAX) DEFAULT ('') NOT NULL,
+	[RecieveDate]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[MakeBuy] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[LotNum] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Planner] NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Place]     NVARCHAR (200) DEFAULT ('') NOT NULL
+);
+

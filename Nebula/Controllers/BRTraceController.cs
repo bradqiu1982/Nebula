@@ -438,6 +438,14 @@ namespace Nebula.Controllers
                     ERPVM.LoadJOShipTraceInfo(this);
                 }
                 catch (Exception ex) { logthdinfo("load ERPVM.LoadJOShipTraceInfo exception:" + ex.Message); }
+                try
+                {
+                    logthdinfo("Load available component Info");
+                    POComponentVM.LoadComponentInfo(this);
+                    IQCComponentVM.LoadComponentInfo(this);
+                    OnhandComponentVM.LoadComponentInfo(this);
+                }
+                catch (Exception ex) { logthdinfo("Load available component Info exception:" + ex.Message); }
             }
 
             if (DateTime.Now.DayOfWeek == DayOfWeek.Friday)
@@ -483,7 +491,6 @@ namespace Nebula.Controllers
 
         public ActionResult HeartBeat2()
         {
-            SendWeeklySBRReport();
             return View("HeartBeat");
         }
 
@@ -990,16 +997,8 @@ namespace Nebula.Controllers
 
         public ActionResult BRReport(string PM,int Weeks = 1)
         {
+            UserAuth();
 
-            var ckdict = CookieUtility.UnpackCookie(this);
-            if (ckdict.ContainsKey("logonuser"))
-            {
-                ViewBag.UserName = ckdict["logonuser"].Replace("@FINISAR.COM", "");
-            }
-            else
-            {
-                ViewBag.UserName = "";
-            }
             var endtime = DateTime.Now;
             var starttime = DateTime.Now.AddDays(-7 * Weeks);
             var filterbr = new List<BRReportVM>();
@@ -1126,6 +1125,41 @@ namespace Nebula.Controllers
             }
         }
 
+        public ActionResult ERPComponent()
+        {
+            UserAuth();
+
+            return View();
+        }
+
+
+        [HttpPost,ActionName("ERPComponent")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ERPComponentPost()
+        {
+            UserAuth();
+            var pnstr = Request.Form["pns"].Replace("'","");
+            if (string.IsNullOrEmpty(pnstr))
+            {
+                return View();
+            }
+
+            ViewBag.PNs = pnstr;
+            var pnlist = new List<string>();
+            pnlist.AddRange(pnstr.Split(new string[] { ";", ",", " " }, StringSplitOptions.RemoveEmptyEntries));
+
+            ViewBag.POTotalDict = new Dictionary<string, double>();
+            ViewBag.POCompoList = POComponentVM.RetrieveComponentInfo(pnlist, ViewBag.POTotalDict);
+
+
+            ViewBag.IQCTotalDict = new Dictionary<string, double>();
+            ViewBag.IQCCompoList = IQCComponentVM.RetrieveComponentInfo(pnlist, ViewBag.IQCTotalDict);
+
+            ViewBag.OnhandTotalDict = new Dictionary<string, double>();
+            ViewBag.OnhandCompoList = OnhandComponentVM.RetrieveComponentInfo(pnlist, ViewBag.OnhandTotalDict);
+
+            return View();
+        }
 
     }
 

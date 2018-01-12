@@ -738,7 +738,7 @@ namespace Nebula.Models
             }
         }
 
-        private static string DownloadERPFile(string srcfile, Controller ctrl)
+        public static string DownloadERPFile(string srcfile, Controller ctrl)
         {
             try
             {

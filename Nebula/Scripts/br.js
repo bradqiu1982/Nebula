@@ -82,6 +82,10 @@ var BR = function(){
             window.location.href = '/BRTrace/BRReport?PM=&Weeks=1';
         })
 
+        $('body').on('click', '#erpcomponav', function () {
+            window.location.href = '/BRTrace/ERPComponent';
+        })
+        
         $('body').on('click', '.br-breadcrumb', function () {
             window.location.href = '/BRTrace/BRInfo?BRNum=' + $(this).html();
         })

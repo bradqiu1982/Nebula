@@ -95,56 +95,6 @@ namespace Nebula.Models
         }
     }
     
-    public class ECOWorkFlowRAWData
-    {
-        public ECOWorkFlowRAWData()
-        {
-            StatusCode = "";
-            WorkFlow = "";
-            WorkFlowStatus = "";
-            Action = "";
-            Reqd = "";
-            Reviewer = "";
-            SignoffUser = "";
-            StatusChangedBy = "";
-            LocalTime = "";
-            SignoffComment = "";
-            SignoffDuration = "";
-        }
-
-        public string StatusCode { set; get; }
-        public string WorkFlow { set; get; }
-        public string WorkFlowStatus { set; get; }
-        public string Action { set; get; }
-        public string Reqd { set; get; }
-        public string Reviewer { set; get; }
-        public string SignoffUser { set; get; }
-        public string StatusChangedBy { set; get; }
-        public string LocalTime { set; get; }
-        public string SignoffComment { set; get; }
-        public string SignoffDuration { set; get; }
-    }
-
-    public class ECOWorkFlowInfo
-    {
-        public ECOWorkFlowInfo()
-        {
-            CurrentProcess = "";
-            ECOTRApprover = "";
-            ECOMDApprover = "";
-            CApproveHoldDate = "";
-            ECOCompleteDate = "";
-            WorkFlowType = "";
-        }
-
-        public string CurrentProcess { set; get; }
-        public string ECOTRApprover { set; get; }
-        public string ECOMDApprover { set; get; }
-        public string CApproveHoldDate { set; get; }
-        public string ECOCompleteDate { set; get; }
-        public string WorkFlowType { set; get; }
-    }
-
     public class NebulaDataCollector
     {
 
