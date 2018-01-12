@@ -229,6 +229,11 @@ namespace Nebula.Models
             var brlist = RetrieveActiveBRRptVM(starttime, endtime);
             foreach (var br in brlist)
             {
+                if (string.IsNullOrEmpty(br.BRDesc.Trim()))
+                {
+                    continue;
+                }
+
                 var temptablist = BRReportToArray(br);
                 htabelist.Add(EmailUtility.CreateTableStr(temptablist));
             }
