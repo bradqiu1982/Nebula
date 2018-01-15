@@ -39,8 +39,38 @@ namespace Nebula.Models
             Planner = pl;
         }
 
+        public static Dictionary<string, string> RetrievePlannerDict(Controller ctrl)
+        {
+            var ret = new Dictionary<string, string>();
+
+            var syscfgdict = CfgUtility.GetSysConfig(ctrl);
+            var srcfile = syscfgdict["PLANNERCODEDICT"];
+            var descfile = ERPVM.DownloadERPFile(srcfile, ctrl);
+            if (descfile != null && NebulaDataCollector.FileExist(ctrl, descfile))
+            {
+                var data = NebulaDataCollector.RetrieveDataFromExcel(ctrl, descfile, null);
+                foreach (var line in data)
+                {
+                    var plannercode = line[5];
+                    var plannername = line[6];
+
+                    if (!string.IsNullOrEmpty(plannercode)
+                        && !string.IsNullOrEmpty(plannername))
+                    {
+                        if (!ret.ContainsKey(plannercode.ToUpper()))
+                        {
+                            ret.Add(plannercode.ToUpper(), plannername.ToUpper());
+                        }
+                    }
+                }//end foreach
+            }
+            return ret;
+        }
+
         public static void LoadComponentInfo(Controller ctrl)
         {
+            var plannerdict = RetrievePlannerDict(ctrl);
+
             var syscfgdict = CfgUtility.GetSysConfig(ctrl);
             var srcfile = syscfgdict["POCOMPONETINFO"];
             var descfile = ERPVM.DownloadERPFile(srcfile, ctrl);
@@ -62,7 +92,11 @@ namespace Nebula.Models
                         var PODesc = line[6];
                         var POStaus = line[7];
                         var MakeBuy = line[46];
-                        var Planner = line[52];
+                        var Planner = line[44];
+                        if (plannerdict.ContainsKey(Planner))
+                        {
+                            Planner = plannerdict[Planner];
+                        }
                         polist.Add(new POComponentVM(PN, PO, Rev, QTY, QTYRecieve, PromiseDate, PNDesc, PODesc, POStaus, MakeBuy, Planner));
                     }
                 }//end foreach
@@ -319,7 +353,9 @@ namespace Nebula.Models
 
         public static void LoadComponentInfo(Controller ctrl)
         {
-            var onhandlist = new string[] { "ONHANDCOMPONETINFO1", "ONHANDCOMPONETINFO2" };
+            var plannerdict = POComponentVM.RetrievePlannerDict(ctrl);
+
+            var onhandlist = new string[] { "ONHANDCOMPONETINFO1" };
             var syscfgdict = CfgUtility.GetSysConfig(ctrl);
 
             var vmlist = new List<OnhandComponentVM>();
@@ -349,6 +385,11 @@ namespace Nebula.Models
                                 var LotNum = line[8];
                                 var Planner = line[16];
                                 var Place = componentplace;
+                                if (plannerdict.ContainsKey(Planner))
+                                {
+                                    Planner = plannerdict[Planner];
+                                }
+
                                 vmlist.Add(new OnhandComponentVM(PN,Rev,QTY,Desc,RecieveDate,MakeBuy,LotNum,Planner,Place));
                             }//end if
                         }//end foreach

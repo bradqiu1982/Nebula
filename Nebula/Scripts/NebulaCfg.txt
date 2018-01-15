@@ -19,5 +19,6 @@ IQCCOMPONETINFO:::\\wux-fs\Public\Camstar_report\IQC\ReceivingValueReport.xls
 ONHANDCOMPONETINFO1:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WXI.csv
 ONHANDCOMPONETINFO2:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WUXI-MFG.csv
 POCOMPONETINFO:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Open PO Report (Pending Receiving) for WXI.csv
+PLANNERCODEDICT:::\\wux-file01\Public\ERP_Report\WXI\Planning\Finisar - Item Attributes Listing Report for WXI.csv
 
 REPORTRECIEVER:::brad.qiu@finisar.com;shawn.zhang@finisar.com
