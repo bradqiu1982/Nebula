@@ -188,7 +188,7 @@ namespace Nebula.Models
                  + " where pb.ProductName in (<pncond>)"
                  + " and p.WorkflowBaseId is not null and p.WorkflowBaseId <> '0000000000000000'";
                 sql = sql.Replace("<pncond>", pncond);
-                var dbret = DBUtility.ExeMESSqlWithRes(sql);
+                var dbret = DBUtility.ExeMESSqlWithRes(sql); //DBUtility.ExeSumSqlWithRes(sql);
                 if (dbret.Count == 0)
                 {
 
@@ -198,7 +198,7 @@ namespace Nebula.Models
                      + " where pb.ProductName in (<pncond>)"
                      + " and p.WorkflowId is not null and p.WorkflowId <> '0000000000000000' ";
                     sql = sql.Replace("<pncond>", pncond);
-                    dbret = DBUtility.ExeMESSqlWithRes(sql);
+                    dbret = DBUtility.ExeMESSqlWithRes(sql); //DBUtility.ExeSumSqlWithRes(sql);
                 }
 
                 var pnworkflowlist = new List<PNWorkflow>();
@@ -233,9 +233,15 @@ namespace Nebula.Models
                             + " left join InsiteDB.insite.CurrentStatus cs (nolock) on cs.CurrentStatusId = c.CurrentStatusId"
                             + " left join InsiteDB.insite.WorkflowStep w (nolock) on w.WorkflowStepId = cs.WorkflowStepId"
                             + " where m.MfgOrderName  = '<jocond>'";
+
+                //sql = "select ContainerName,WorkflowStepName,LastActivityDate from SummaryDB.SUM_Popular_Container where MfgOrderName = '<jocond>' and Len(ContainerName) = 7";
+
                 sql = sql.Replace("<jocond>", jo);
+
+                
+
                 var jostatuslist = new List<JOSNStatus>();
-                var dbret = DBUtility.ExeMESSqlWithRes(sql);
+                var dbret = DBUtility.ExeMESSqlWithRes(sql); //DBUtility.ExeSumSqlWithRes(sql);
                 foreach (var line in dbret)
                 {
                     try
