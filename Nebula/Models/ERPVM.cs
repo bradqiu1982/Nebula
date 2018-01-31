@@ -818,7 +818,9 @@ namespace Nebula.Models
                         var jobnum = line[11];
                         foreach (var br in brlist)
                         {
-                            if (jobnum.ToUpper().Contains(br.ToUpper()+"-"))
+                            if (jobnum.ToUpper().Contains(br.ToUpper()+"-") 
+                                && jobnum.Length > 3
+                                && !jobnum.ToUpper().Substring(jobnum.Length-3,3).Contains("OQM"))
                             {
                                 try
                                 {
@@ -836,6 +838,25 @@ namespace Nebula.Models
                                 catch (Exception ex) { }
                             }
                         }//end foreach
+                    }//end foreach
+
+                    foreach (var line in data)
+                    {
+                        var jobnum = line[11];
+
+                        if (jobnum.Length > 3
+                            && !jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains("OQM"))
+                        {
+                            try
+                            {
+                                var tempinfo = JOBaseInfo.CreateItem(line);
+                                tempinfo.BRKey = "OQM";
+                                tempinfo.BRNumber = "OQM";
+                                jobaseinfolist.Add(tempinfo);
+                                break;
+                            }
+                            catch (Exception ex) { }
+                        }
                     }//end foreach
 
                     foreach (var item in jobaseinfolist)
