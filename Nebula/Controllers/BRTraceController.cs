@@ -128,12 +128,15 @@ namespace Nebula.Controllers
             var reviewer = (ViewBag.IsPM) ? ViewBag.UserName.Replace(".", " ") : null;
             List<BRAgileBaseInfo> allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(reviewer, BRJOSYSTEMSTATUS.OPEN,this);
             List<JOBaseInfo> allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(reviewer, BRJOSYSTEMSTATUS.OPEN);
+            List<JOBaseInfo> alloqmlist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN, JOSHOWTYPE.OQM);
+
             var page_size = 10;
             ViewBag.brlist = allBrlist.Skip((intp - 1) * page_size).Take(page_size);
             ViewBag.page = intp;
             ViewBag.total_pages = allBrlist.Count / page_size + 1;
             ViewBag.brlist_count = allBrlist.Count;
             ViewBag.jolist_count = allJolist.Count;
+            ViewBag.oqmjolist_count = alloqmlist.Count;
 
             return View();
         }
@@ -175,6 +178,25 @@ namespace Nebula.Controllers
             ViewBag.searchkeyword = "";
 
             return View("JOList");
+        }
+
+        public ActionResult OQMJOList(int p = 1, string Status = null)
+        {
+            UserAuth();
+            var allJolist = new List<JOBaseInfo>();
+            Status = string.IsNullOrEmpty(Status) ? BRJOSYSTEMSTATUS.OPEN : Status;
+
+            var reviewer = (ViewBag.IsPM) ? ViewBag.UserName : null;
+            allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, Status, JOSHOWTYPE.OQM);
+            ViewBag.withstatus = Status;
+
+            var page_size = 10;
+            ViewBag.jolist = allJolist.Skip((p - 1) * page_size).Take(page_size);
+            ViewBag.page = p;
+            ViewBag.total_pages = allJolist.Count / page_size + 1;
+            ViewBag.searchkeyword = "";
+
+            return View("JOOQMList");
         }
 
         public ActionResult JOList(string BR, int p = 1)
@@ -1197,6 +1219,53 @@ namespace Nebula.Controllers
             }
             return View("ERPComponent");
         }
+
+        private List<string> PrepeareAllOQMReport()
+        {
+            var ret = new List<string>();
+            var allreldata = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, null, JOSHOWTYPE.OQM);
+
+            var line = "JO Num,JO Status,Category,JO Type,Release Date,PN,PN Desc,Planner,CreatedBy,Project Key,PN Yield";
+            ret.Add(line);
+
+            foreach (var item in allreldata)
+            {
+                var line1 = string.Empty;
+                line1 = "\"" + item.JONumber.Replace("\"", "") + "\"," + "\"" + item.JORealStatus.Replace("\"", "") + "\"," + "\"" + item.Category.Replace("\"", "") + "\","
+                    + "\"" + item.JOType.Replace("\"", "") + "\"," + "\"" + item.DateReleased.ToString("yyyy-MM-dd").Replace("\"", "") + "\"," + "\"" + item.PN.Replace("\"", "") + "\","
+                    + "\"" + item.PNDesc.Replace("\"", "") + "\"," + "\"" + item.Planner.Replace("\"", "") + "\"," + "\"" + item.CreatedBy.Replace("\"", "") + "\","
+                    + "\"" + item.ProjectKey.Replace("\"", "") + "\"," + "\"" + item.PNYieldStr.Replace("\"", "") + "\",";
+
+                ret.Add(line1);
+            }
+
+            return ret;
+        }
+
+        public ActionResult ExportAllOQMJO()
+        {
+            string datestring = DateTime.Now.ToString("yyyyMMdd");
+            string imgdir = Server.MapPath("~/userfiles") + "\\docs\\" + datestring + "\\";
+            if (!Directory.Exists(imgdir))
+            {
+                Directory.CreateDirectory(imgdir);
+            }
+
+            var fn = "OQM_JO_LIST_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+            var filename = imgdir + fn;
+
+            var lines = PrepeareAllOQMReport();
+
+            var wholefile = "";
+            foreach (var l in lines)
+            {
+                wholefile = wholefile + l + "\r\n";
+            }
+            System.IO.File.WriteAllText(filename, wholefile, Encoding.UTF8);
+
+            return File(filename, "application/vnd.ms-excel", fn);
+        }
+
 
     }
 

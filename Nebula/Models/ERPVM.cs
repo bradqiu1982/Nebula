@@ -6,6 +6,11 @@ using System.Web.Mvc;
 
 namespace Nebula.Models
 {
+    public class JOSHOWTYPE
+    {
+        public static string OQM = "OQM";
+    }
+
     public class PNErrorDistribute
     {
         public PNErrorDistribute()
@@ -238,21 +243,27 @@ namespace Nebula.Models
             if(jostatus != null)
             {
                 sql += " and JORealStatus = '<JORealStatus>' ";
+                sql = sql.Replace("<JORealStatus>", jostatus);
             }
             if (reviewer != null)
             {
                 reviewer = reviewer.Replace("@FINISAR.COM", "").Replace(".", " ");
                 sql += "and Originator = '<Originator>' ";
+                sql = sql.Replace("<Originator>", reviewer);
             }
-            if(br != null)
+            if (br != null)
             {
                 sql += "and j.BRNumber = '<BRNumber>' ";
+                sql = sql.Replace("<BRNumber>", br);
             }
+            else
+            {
+                sql += "and j.BRNumber <> 'OQM' ";
+            }
+
             sql += "order by JONumber";
 
-            sql = sql.Replace("<Originator>", reviewer)
-                    .Replace("<JORealStatus>", jostatus)
-                    .Replace("<BRNumber>", br);
+                    
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             foreach (var line in dbret)
             {
@@ -565,7 +576,7 @@ namespace Nebula.Models
         public string PNYieldStr { get {
                 if (string.IsNullOrEmpty(PNYield))
                 {
-                    return PNYield;
+                    return "";
                 }
                 else
                 {
@@ -820,7 +831,7 @@ namespace Nebula.Models
                         {
                             if (jobnum.ToUpper().Contains(br.ToUpper()+"-") 
                                 && jobnum.Length > 3
-                                && !jobnum.ToUpper().Substring(jobnum.Length-3,3).Contains("OQM"))
+                                && !jobnum.ToUpper().Substring(jobnum.Length-3,3).Contains(JOSHOWTYPE.OQM))
                             {
                                 try
                                 {
@@ -845,13 +856,13 @@ namespace Nebula.Models
                         var jobnum = line[11];
 
                         if (jobnum.Length > 3
-                            && !jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains("OQM"))
+                            && !jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains(JOSHOWTYPE.OQM))
                         {
                             try
                             {
                                 var tempinfo = JOBaseInfo.CreateItem(line);
-                                tempinfo.BRKey = "OQM";
-                                tempinfo.BRNumber = "OQM";
+                                tempinfo.BRKey = JOSHOWTYPE.OQM;
+                                tempinfo.BRNumber = JOSHOWTYPE.OQM;
                                 jobaseinfolist.Add(tempinfo);
                                 break;
                             }

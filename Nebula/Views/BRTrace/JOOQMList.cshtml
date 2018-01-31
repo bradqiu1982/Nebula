@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Nebula.Models.JOBaseInfo>
+
+@{
+    ViewBag.Title = "OQM JO List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/br.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function(){
+        BR.jolist();
+    })
+</script>
+
+<div class="content">
+    <div class="container">
+        <div class="row row-search">
+            <span class="search"></span>
+            <div class="input-group search-div hide">
+                <input type="text" class="search-input" id="keywords" placeholder="Search for..." value="@ViewBag.searchkeyword">
+                <span class="input-group-btn search-icon"></span>
+            </div>
+        </div>
+        <div class="nav-type">
+            @*<div class="nav-link-o">
+                <span class="nav-link-a" id="brkickoffnav">KickOff</span>
+                <span class="nav-frasl">&frasl;</span>
+                <span class="nav-link-a" id="brnav">Open</span>
+                <span class="nav-frasl">&frasl;</span>
+                <span class="nav-link-a" id="brclosenav">Closed</span>
+                <span class="nav-label">BR</span>
+            </div>
+            <div class="nav-link-j">
+                <span class="nav-link-a" id="jonav">Open</span>
+                <span class="nav-frasl">&frasl;</span>
+                <span class="nav-link-a" id="joclosenav">Closed</span>
+                <span class="nav-label">JO</span>
+            </div>*@
+            <div class="nav-link" id="downloadoqm">
+                <span>DownLoad</span>
+            </div>
+            <div class="nav-line-l"></div>
+        </div>
+        <div class="br-list">
+            <div class="content-title">
+                OQM JO List
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-1 jo-list-left">
+                    <table class="table table-bordered table-hover cus-table">
+                        @foreach (var item in ViewBag.jolist)
+                        {
+                            <tr><td>@item.JONumber</td><td>@item.JORealStatus</td></tr>
+                        }
+                    </table>
+                    @if (ViewBag.total_pages > 1)
+                    {
+                        @Html.Partial("~/Views/Shared/_pagination.cshtml")
+                    }
+                </div>
+                <div class="col-xs-5 col-xs-offset-1 jo-list-right">
+                    <table class="table table-bordered des-table">
+                        <tr>
+                            <td class="col-xs-4">Project</td>
+                            <td id="jo_pjkey">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">PN</td>
+                            <td id="jo_pn">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">PN Test Yield</td>
+                            <td id="jo_yd">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">JO Type</td>
+                            <td id="jo_type">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">JO Status</td>
+                            <td id="jo_stat">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Date Released</td>
+                            <td id="jo_date">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">MRP Net QTY</td>
+                            <td id="jo_wip">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Mainstore QTY</td>
+                            <td id="jo_store">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">JO Component</td>
+                            <td><a id="jo_compo" href='#'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">JO Ship</td>
+                            <td><a id="jo_ship" href='#'><img src='~/Content/images/loading.png' height='6' width='24' /></a></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4">Planer</td>
+                            <td id="jo_planner">Test1</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-4"><a id="jo_detail" href="#"><img src="~/Content/images/more.png" height="15" width="30" /></a></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <input id="withstatus" name="withstatus" value="@(ViewBag.withstatus)" type="hidden">
+        <input id="withoqm" name="withoqm" value="withoqm" type="hidden">
+    </div>
+</div>
+<footer>
+    <span class="col-xs-5"></span>
+</footer>
+

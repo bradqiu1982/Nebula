@@ -78,6 +78,14 @@ var BR = function(){
             window.location.href = '/BRTrace/DefaultJOList?p=1&Status=CLOSE';
         })
 
+        $('body').on('click', '#oqmjonav', function () {
+            window.location.href = '/BRTrace/OQMJOList';
+        })
+
+        $('body').on('click', '#oqmjoclosenav', function () {
+            window.location.href = '/BRTrace/OQMJOList?p=1&Status=CLOSE';
+        })
+
         $('body').on('click', '#reportnav', function () {
             window.location.href = '/BRTrace/BRReport?PM=&Weeks=1';
         })
@@ -252,6 +260,11 @@ var BR = function(){
             })
         })
 
+        $('body').on('click', '#downloadoqm', function () {
+            var myurl = '/BRTrace/ExportAllOQMJO';
+            window.open(myurl, '_blank');
+        })
+        
         $('body').on('click', '.pages', function () {
             var page = $(this).attr("data-data");
             if ($('#keywords').val()) {
@@ -259,12 +272,25 @@ var BR = function(){
             }
             else {
                 var withstatus = $('#withstatus').val();
-                if (withstatus) {
-                    window.location.href = '/BRTrace/DefaultJOList?p=' + page + '&Status=' + withstatus;
+                var withoqm = $('withoqm').val();
+                if (withoqm) {
+                    if (withstatus) {
+                        window.location.href = '/BRTrace/OQMJOList?p=' + page + '&Status=' + withstatus;
+                    }
+                    else {
+                        window.location.href = '/BRTrace/OQMJOList';
+                    }
                 }
                 else {
-                    window.location.href = '/BRTrace/DefaultJOList';
+                    if (withstatus) {
+                        window.location.href = '/BRTrace/DefaultJOList?p=' + page + '&Status=' + withstatus;
+                    }
+                    else {
+                        window.location.href = '/BRTrace/DefaultJOList';
+                    }
                 }
+
+
             }
         })
     }

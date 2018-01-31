@@ -63,7 +63,6 @@
     <Reference Include="Oracle.DataAccess, Version=4.112.4.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\oracle\odp.net\bin\4\Oracle.DataAccess.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -1010,6 +1009,7 @@
     <Content Include="Views\BRTrace\JOShipping.cshtml" />
     <Content Include="Views\BRTrace\BRReport.cshtml" />
     <Content Include="Views\BRTrace\ERPComponent.cshtml" />
+    <Content Include="Views\BRTrace\JOOQMList.cshtml" />
     <None Include="Views\Shared\_layout0.cshtml" />
     <None Include="Views\Shared\_layout1.cshtml" />
     <None Include="Views\Shared\_layout2.cshtml" />
