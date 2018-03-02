@@ -22,9 +22,10 @@ namespace Nebula.Models
             POStaus = "";
             MakeBuy = "";
             Planner = "";
+            Cost = "";
         }
 
-        public POComponentVM(string pn,string po,string rev,string qty,string qtyr,string promdate,string pndes,string podes,string postat,string buy,string pl)
+        public POComponentVM(string pn,string po,string rev,string qty,string qtyr,string promdate,string pndes,string podes,string postat,string buy,string pl,string cost)
         {
             PN = pn;
             PO = po;
@@ -37,6 +38,7 @@ namespace Nebula.Models
             POStaus = postat;
             MakeBuy = buy;
             Planner = pl;
+            Cost = cost;
         }
 
         public static Dictionary<string, string> RetrievePlannerDict(Controller ctrl)
@@ -93,11 +95,13 @@ namespace Nebula.Models
                         var POStaus = line[7];
                         var MakeBuy = line[46];
                         var Planner = line[44];
+                        var cost = line[31] + " " + line[10] + "/" + line[19];
+
                         if (plannerdict.ContainsKey(Planner))
                         {
                             Planner = plannerdict[Planner];
                         }
-                        polist.Add(new POComponentVM(PN, PO, Rev, QTY, QTYRecieve, PromiseDate, PNDesc, PODesc, POStaus, MakeBuy, Planner));
+                        polist.Add(new POComponentVM(PN, PO, Rev, QTY, QTYRecieve, PromiseDate, PNDesc, PODesc, POStaus, MakeBuy, Planner,cost));
                     }
                 }//end foreach
 
@@ -144,7 +148,7 @@ namespace Nebula.Models
             pncond = pncond.Substring(0, pncond.Length - 2);
             pncond = pncond + ")";
 
-            var sql = "select PN, PO, Rev, QTY, QTYRecieve, PromiseDate, PNDesc, PODesc, POStaus, MakeBuy, Planner from POComponentVM where PN in <pncond> order by PN";
+            var sql = "select PN, PO, Rev, QTY, QTYRecieve, PromiseDate, PNDesc, PODesc, POStaus, MakeBuy, Planner,Cost from POComponentVM where PN in <pncond> order by PN";
             sql = sql.Replace("<pncond>", pncond);
 
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
@@ -153,7 +157,7 @@ namespace Nebula.Models
                 var temp = new POComponentVM(Convert.ToString(line[0]), Convert.ToString(line[1]), Convert.ToString(line[2])
                     , Convert.ToString(line[3]), Convert.ToString(line[4]), Convert.ToString(line[5])
                     , Convert.ToString(line[6]), Convert.ToString(line[7]), Convert.ToString(line[8])
-                    , Convert.ToString(line[9]), Convert.ToString(line[10]));
+                    , Convert.ToString(line[9]), Convert.ToString(line[10]), Convert.ToString(line[11]));
                 ret.Add(temp);
 
                 var qty = 0.0;
@@ -183,6 +187,7 @@ namespace Nebula.Models
         public string POStaus { set; get; }
         public string MakeBuy { set; get; }
         public string Planner { set; get; }
+        public string Cost { set; get; }
     }
 
 
@@ -360,10 +365,10 @@ namespace Nebula.Models
 
             var vmlist = new List<OnhandComponentVM>();
 
-            var componentplace = "MAINSTORE";
+            //var componentplace = "MAINSTORE";
             foreach (var oh in onhandlist)
             {
-                if (oh.Contains("MFG")) { componentplace = "MFG"; }
+                //if (oh.Contains("MFG")) { componentplace = "MFG"; }
 
                 var srcfile = syscfgdict[oh];
                 var descfile = ERPVM.DownloadERPFile(srcfile, ctrl);
@@ -376,6 +381,7 @@ namespace Nebula.Models
                         {
                             if (!string.IsNullOrEmpty(line[0]))
                             {
+                                
                                 var PN = line[0];
                                 var Rev = line[2];
                                 var QTY = line[14];
@@ -384,7 +390,7 @@ namespace Nebula.Models
                                 var MakeBuy = line[22];
                                 var LotNum = line[8];
                                 var Planner = line[16];
-                                var Place = componentplace;
+                                var Place = line[4]; //componentplace;
                                 if (plannerdict.ContainsKey(Planner))
                                 {
                                     Planner = plannerdict[Planner];
@@ -439,7 +445,8 @@ namespace Nebula.Models
             pncond = pncond.Substring(0, pncond.Length - 2);
             pncond = pncond + ")";
 
-            var sql = "select PN,Rev,QTY,[Desc],RecieveDate,MakeBuy,LotNum,Planner,Place from OnhandComponentVM where PN in <pncond> and MakeBuy <> 'Make' order by PN";
+            //var sql = "select PN,Rev,QTY,[Desc],RecieveDate,MakeBuy,LotNum,Planner,Place from OnhandComponentVM where PN in <pncond> and MakeBuy <> 'Make' order by PN";
+            var sql = "select PN,Rev,QTY,[Desc],RecieveDate,MakeBuy,LotNum,Planner,Place from OnhandComponentVM where PN in <pncond>  order by PN";
             sql = sql.Replace("<pncond>", pncond);
 
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);

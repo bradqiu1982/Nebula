@@ -300,7 +300,8 @@ CREATE TABLE [dbo].[POComponentVM] (
 	[PODesc] NVARCHAR (MAX) DEFAULT ('') NOT NULL,
 	[POStaus]     NVARCHAR (200) DEFAULT ('') NOT NULL,
 	[MakeBuy]     NVARCHAR (200) DEFAULT ('') NOT NULL,
-	[Planner]     NVARCHAR (200) DEFAULT ('') NOT NULL
+	[Planner]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+	[Cost]     NVARCHAR (200) DEFAULT ('') NOT NULL
 );
 
 

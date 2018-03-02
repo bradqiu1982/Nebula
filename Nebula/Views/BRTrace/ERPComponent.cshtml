@@ -85,6 +85,7 @@
                             <th>Rev</th>
                             <th>PO</th>
                             <th>QTY</th>
+                            <th>Cost</th>
                             @*<th>QTY Recieved</th>*@
                             <th>Total QTY</th>
                             <th>Promise Date</th>
@@ -103,6 +104,7 @@
                                 <td>@item.Rev</td>
                                 <td>@item.PO</td>
                                 <td>@item.QTY</td>
+                                <td>@item.Cost</td>
                                 @*<td>@item.QTYRecieve</td>*@
                                 <td>@(ViewBag.POTotalDict[item.PN])</td>
                                 <td style="font-size:9px">@item.PromiseDate</td>
@@ -201,7 +203,13 @@
                     <tbody>
                         @foreach (var item in ViewBag.OnhandCompoList)
                         {
-                            <tr>
+                            var trstyle = "";
+                            if (item.Place.Contains("MFG.")
+                                || item.Place.Contains("MRB."))
+                            {
+                                trstyle = "danger";
+                            }
+                            <tr class="@(trstyle)">
                                 <td>@item.PN</td>
                                 <td>@item.Rev</td>
                                 <td>@item.QTY</td>
