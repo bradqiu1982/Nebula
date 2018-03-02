@@ -207,9 +207,9 @@
                             if (item.Place.Contains("MFG.")
                                 || item.Place.Contains("MRB."))
                             {
-                                trstyle = "danger";
+                                trstyle = "background-color: #f59d2b!important;";
                             }
-                            <tr class="@(trstyle)">
+                            <tr style="@(trstyle)">
                                 <td>@item.PN</td>
                                 <td>@item.Rev</td>
                                 <td>@item.QTY</td>
