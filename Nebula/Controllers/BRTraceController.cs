@@ -128,7 +128,7 @@ namespace Nebula.Controllers
             var reviewer = (ViewBag.IsPM) ? ViewBag.UserName.Replace(".", " ") : null;
             List<BRAgileBaseInfo> allBrlist = BRAgileBaseInfo.RetrieveActiveBRAgileInfoWithStatus(reviewer, BRJOSYSTEMSTATUS.OPEN,this);
             List<JOBaseInfo> allJolist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(reviewer, BRJOSYSTEMSTATUS.OPEN);
-            List<JOBaseInfo> alloqmlist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN, JOSHOWTYPE.OQM);
+            //List<JOBaseInfo> alloqmlist = JOBaseInfo.RetrieveActiveJoInfoWithStatus(null, BRJOSYSTEMSTATUS.OPEN, JOSHOWTYPE.OQM);
 
             var page_size = 10;
             ViewBag.brlist = allBrlist.Skip((intp - 1) * page_size).Take(page_size);
@@ -136,7 +136,7 @@ namespace Nebula.Controllers
             ViewBag.total_pages = allBrlist.Count / page_size + 1;
             ViewBag.brlist_count = allBrlist.Count;
             ViewBag.jolist_count = allJolist.Count;
-            ViewBag.oqmjolist_count = alloqmlist.Count;
+            //ViewBag.oqmjolist_count = alloqmlist.Count;
 
             return View();
         }
@@ -513,6 +513,7 @@ namespace Nebula.Controllers
 
         public ActionResult HeartBeat2()
         {
+            //OnhandComponentVM.LoadComponentInfo(this);
             return View("HeartBeat");
         }
 
