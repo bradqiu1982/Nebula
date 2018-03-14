@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Nebula.Models.FAFJoVM>
+
+@{
+    ViewBag.Title = "FAF JO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="@Url.Content("~/Content/jquery.dataTables.min.css")" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery.dataTables.min.js" type="text/javascript"></script>
+
+
+<style type="text/css">
+    label {
+        color: #fff;
+    }
+
+    .dataTables_info {
+        color: #fff !important;
+    }
+
+    tr {
+        background-color: #001d2e !important;
+    }
+
+    .dataTables_filter input {
+        color: #000 !important;
+    }
+
+    .dataTables_length select {
+        color: #000 !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        color: #fff !important;
+    }
+</style>
+
+
+<div class="content">
+    <div class="container">
+        <div><h1 style="color:white;text-align:center">FAF JO VMI Status</h1></div>
+        <div class="row">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-10">
+                <table id="iqcdatatable" class="table table-bordered" cellspacing="0" style="color:white">
+                    <thead>
+                        <tr>
+                            <th>JO Num</th>
+                            <th>PN</th>
+                            <th>SN</th>
+                            <th>WorkFlow Step</th>
+                            <th>Move Time</th>
+                            <th>PN Desc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.JO</td>
+                                    <td>@item.PN</td>
+                                    <td>@item.SN</td>
+                                    <td>@item.WorkFlowStep</td>
+                                    <td>@item.ArriveTime</td>
+                                    <td style="word-break:break-word;font-size:10px">@item.PNDes</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#iqcdatatable').DataTable({
+                            'iDisplayLength': 10,
+                            'aLengthMenu': [[10, 20, 30, -1],
+                                            [10, 20, 30, "All"]],
+                            "bAutoWidth": false,
+                            "aaSorting": [],
+                            "order": false
+                        });
+                    });
+                </script>
+            </div>
+
+            <div class="col-xs-1"></div>
+        </div>
+    </div>
+    </div>
+
+

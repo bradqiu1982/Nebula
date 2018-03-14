@@ -513,7 +513,7 @@ namespace Nebula.Controllers
 
         public ActionResult HeartBeat2()
         {
-            //OnhandComponentVM.LoadComponentInfo(this);
+            //ERPVM.TestFAFJO(this);
             return View("HeartBeat");
         }
 
@@ -1265,6 +1265,12 @@ namespace Nebula.Controllers
             System.IO.File.WriteAllText(filename, wholefile, Encoding.UTF8);
 
             return File(filename, "application/vnd.ms-excel", fn);
+        }
+
+        public ActionResult FAFJO()
+        {
+            var vm = FAFJoVM.RetrieveAllFAFJO();
+            return View(vm);
         }
 
 

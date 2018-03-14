@@ -90,6 +90,11 @@ var BR = function(){
             window.location.href = '/BRTrace/BRReport?PM=&Weeks=1';
         })
 
+        $('body').on('click', '#fafjonav', function () {
+            var myurl = '/BRTrace/FAFJO';
+            window.open(myurl, '_blank');
+        })
+
         $('body').on('click', '#erpcomponav', function () {
             window.location.href = '/BRTrace/ERPComponent';
         })

@@ -9,7 +9,7 @@ EMAILSERVER:::wmail.finisar.com
 
 SHAREFOLDERUSER:::brad.qiu
 SHAREFOLDERDOMIN:::china
-SHAREFOLDERPWD:::wangle@123456
+SHAREFOLDERPWD:::wangle@234567
 ERPJOBASEINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\WXI Finisar WIP Value Report.xls
 ERPJOCOMPONENTINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\Jobs_WXI.CSV
 ERPJOEXISTMAINSTORE:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WXI.csv

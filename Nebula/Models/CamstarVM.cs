@@ -266,5 +266,37 @@ namespace Nebula.Models
         }
 
 
+        public static List<JOSNStatus> UpdateJoMESStatus(string jo)
+        {
+                var sql = " select c.ContainerName,w.WorkflowStepName,cs.LastMoveDate from [InsiteDB].[insite].[Container] c (nolock) "
+                            + " left join[InsiteDB].[insite].[MfgOrder] m(nolock) on m.MfgOrderId = c.MfgOrderId"
+                            + " left join InsiteDB.insite.CurrentStatus cs (nolock) on cs.CurrentStatusId = c.CurrentStatusId"
+                            + " left join InsiteDB.insite.WorkflowStep w (nolock) on w.WorkflowStepId = cs.WorkflowStepId"
+                            + " where m.MfgOrderName  = '<jocond>'";
+
+                //sql = "select ContainerName,WorkflowStepName,LastActivityDate from SummaryDB.SUM_Popular_Container where MfgOrderName = '<jocond>' and Len(ContainerName) = 7";
+
+                sql = sql.Replace("<jocond>", jo);
+
+                var jostatuslist = new List<JOSNStatus>();
+                var dbret = DBUtility.ExeMESSqlWithRes(sql); //DBUtility.ExeSumSqlWithRes(sql);
+                foreach (var line in dbret)
+                {
+                    try
+                    {
+                        var temp = new JOSNStatus();
+                        temp.JONumber = jo;
+                        temp.ModuleSN = Convert.ToString(line[0]);
+                        temp.WorkflowStepName = Convert.ToString(line[1]);
+                        temp.LastMoveDate = Convert.ToDateTime(line[2]);
+                        jostatuslist.Add(temp);
+                    }
+                    catch (Exception ex) { }
+
+                }//end foreach
+
+            return jostatuslist;
+        }
+
     }
 }

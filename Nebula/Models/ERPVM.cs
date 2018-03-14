@@ -9,6 +9,7 @@ namespace Nebula.Models
     public class JOSHOWTYPE
     {
         public static string OQM = "OQM";
+        public static string FAF = "FAF";
     }
 
     public class PNErrorDistribute
@@ -821,6 +822,7 @@ namespace Nebula.Models
 
                     //load new jo
                     var jobaseinfolist = new List<JOBaseInfo>();
+                    var FAFJOList = new List<JOBaseInfo>();
 
                     var brdict = BRAgileBaseInfo.RetrieveAllBRDictIn3Month();
                     var brlist = brdict.Keys.ToList();
@@ -855,16 +857,26 @@ namespace Nebula.Models
                     {
                         var jobnum = line[11];
 
+                        //if (jobnum.Length > 3
+                        //    && jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains(JOSHOWTYPE.OQM))
+                        //{
+                        //    try
+                        //    {
+                        //        var tempinfo = JOBaseInfo.CreateItem(line);
+                        //        tempinfo.BRKey = JOSHOWTYPE.OQM;
+                        //        tempinfo.BRNumber = JOSHOWTYPE.OQM;
+                        //        jobaseinfolist.Add(tempinfo);
+                        //    }
+                        //    catch (Exception ex) { }
+                        //}
+
                         if (jobnum.Length > 3
-                            && !jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains(JOSHOWTYPE.OQM))
+                            && jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains(JOSHOWTYPE.FAF))
                         {
                             try
                             {
                                 var tempinfo = JOBaseInfo.CreateItem(line);
-                                tempinfo.BRKey = JOSHOWTYPE.OQM;
-                                tempinfo.BRNumber = JOSHOWTYPE.OQM;
-                                jobaseinfolist.Add(tempinfo);
-                                break;
+                                FAFJOList.Add(tempinfo);
                             }
                             catch (Exception ex) { }
                         }
@@ -879,9 +891,130 @@ namespace Nebula.Models
                     {
                         JOBaseInfo.OpenBR(item.JONumber);
                     }
+
+                    SolveFAFJo(ctrl,FAFJOList);
+
                 }//end if
             }//end if
         }
+
+        //public static void TestFAFJO(Controller ctrl)
+        //{
+
+        //    var syscfgdict = CfgUtility.GetSysConfig(ctrl);
+        //    var srcfile = syscfgdict["ERPJOBASEINFO"];
+        //    var descfile = DownloadERPFile(srcfile, ctrl);
+        //    if (descfile != null && NebulaDataCollector.FileExist(ctrl, descfile))
+        //    {
+        //        var data = NebulaDataCollector.RetrieveDataFromExcel(ctrl, descfile, null);
+        //        if (data.Count > 0)
+        //        {
+
+        //            var FAFJOList = new List<JOBaseInfo>();
+
+        //            foreach (var line in data)
+        //            {
+        //                var jobnum = line[11];
+
+        //                if (jobnum.Length > 3
+        //                    && jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains(JOSHOWTYPE.FAF))
+        //                {
+        //                    try
+        //                    {
+        //                        var tempinfo = JOBaseInfo.CreateItem(line);
+        //                        FAFJOList.Add(tempinfo);
+        //                    }
+        //                    catch (Exception ex) { }
+        //                }
+        //            }//end foreach
+
+        //            SolveFAFJo(ctrl,FAFJOList);
+
+        //        }//end if
+        //    }//end if
+        //}
+
+        public static void SolveFAFJo(Controller ctrl,List<JOBaseInfo> FAFJOList)
+        {
+            var solveddict = FAFJoVM.RetrieveAllSolvedFAFJODict();
+            var jotobesolved = new List<FAFJoVM>();
+            foreach (var item in FAFJOList)
+            {
+                if (!solveddict.ContainsKey(item.JONumber))
+                {
+                    jotobesolved.Add(new FAFJoVM(item.PN,item.PNDesc,item.JONumber,"","","1982-05-06 10:00:00"));
+                }
+            }
+
+            if (jotobesolved.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in jotobesolved)
+            {
+                var snstatuslist = CamstarVM.UpdateJoMESStatus(item.JO);
+                foreach (var snstat in snstatuslist)
+                {
+                    if (snstat.WorkflowStepName.ToUpper().Contains("VMI"))
+                    {
+                        item.SN = snstat.ModuleSN;
+                        item.WorkFlowStep = snstat.WorkflowStepName;
+                        item.ArriveTime = snstat.LastMoveDate.ToString("yyyy-MM-dd HH:mm:ss");
+                        break;
+                    }
+                }
+            }
+
+            var FAFJOTab = new List<List<string>>();
+            var thlist = new List<string>();
+            thlist.Add("JO Num");
+            thlist.Add("PN");
+            thlist.Add("SN");
+            thlist.Add("WorkFlow Step");
+            thlist.Add("Move Time");
+            thlist.Add("PN Desc");
+            FAFJOTab.Add(thlist);
+
+            foreach (var item in jotobesolved)
+            {
+                if (!string.IsNullOrEmpty(item.WorkFlowStep))
+                {
+                    var trlist = new List<string>();
+                    trlist.Add(item.JO);
+                    trlist.Add(item.PN);
+                    trlist.Add(item.SN);
+                    trlist.Add(item.WorkFlowStep);
+                    trlist.Add(item.ArriveTime);
+                    trlist.Add(item.PNDes);
+                    FAFJOTab.Add(trlist);
+                }
+            }
+
+            if (FAFJOTab.Count > 1)
+            {
+                var tabstr = EmailUtility.CreateTableStr(FAFJOTab);
+                var tablist = new List<string>();
+                tablist.Add(tabstr);
+                var content = EmailUtility.CreateTableHtml2("Hi Guys", "Below is a FAF Report:", "More: http://wuxinpi.china.ads.finisar.com:8082/BRTrace/FAFJO", tablist);
+
+                var tolist = new List<string>();
+                tolist.Add("brad.qiu@finisar.com");
+                tolist.Add("sherry.zhang@finisar.com");
+                EmailUtility.SendEmail(ctrl, "WUXI NPI FAF Report", tolist, content, true);
+                new System.Threading.ManualResetEvent(false).WaitOne(500);
+            }
+
+            foreach (var item in jotobesolved)
+            {
+                if (!string.IsNullOrEmpty(item.WorkFlowStep))
+                {
+                    FAFJoVM.StoreFAFJO(item.PN, item.PNDes, item.JO, item.SN, item.WorkFlowStep, item.ArriveTime);
+                }
+            }
+
+        }
+
 
         public static void LoadJOComponentInfo(Controller ctrl)
         {
