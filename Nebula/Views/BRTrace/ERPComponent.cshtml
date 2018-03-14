@@ -43,7 +43,7 @@
     <div class="container">
         <div><h1 style="color:white;text-align:center">ERP Component</h1></div>
 
-        @using (Html.BeginForm("ERPComponent", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("ERPComponent", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data",id= "ERPComponentForm", name= "ERPComponentForm" }))
         {
             @Html.AntiForgeryToken()
 
@@ -56,6 +56,16 @@
                      <input type="submit" class="btn btn-success" value="Query"/>
                 </div>
             </div>
+            <script type="text/javascript">
+                $('body').on('keypress', '#pns', function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#pns').val())
+                        {
+                            $('#ERPComponentForm').submit();
+                        }
+                    }
+                })
+            </script>
         }
 
         <div style="color: #fff; margin-top: 2%; margin-right: 10%; margin-left: 10%;">
