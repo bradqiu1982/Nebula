@@ -791,7 +791,7 @@ div[MYTP="orange"] {
     position: absolute;
     top: 5px;
     right: 5px;
-    width: 120px;
+    width: 180px;
     z-index: 1003;
 }
 
@@ -802,6 +802,10 @@ div[MYTP="orange"] {
     margin-right: 5%;
     text-decoration: underline;
     font-style: italic;
+}
+
+.brtracehelp {
+    color:white;
 }
 
 .cursor-pointer{
