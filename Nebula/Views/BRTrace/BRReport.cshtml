@@ -13,11 +13,11 @@
 
 <div class="content">
     <div class="container">
-        <div><h1 style="color:white;text-align:center"> BR Report</h1></div>
+        <div><h1 class="erp-co-title"> BR Report</h1></div>
         
-        <div style="padding: 2% 2% 5%; border-radius: 5px; border: 1px solid white; border-image: none; margin-right: 10%; margin-left: 10%;">
+        <div class="br-report-container">
             <div class="col-xs-4">
-                <label class="col-xs-3" style="color:white">Weeks</label>
+                <label class="col-xs-3 br-report-week">Weeks</label>
                 @Html.DropDownList("weeksselectlist", null, new { @id = "weeksselectlist", @class = "form-control", @style="width:60%" })
             </div>
             <div class="col-xs-4">
@@ -50,8 +50,8 @@
             }
         }
 
-        <div style='height:60px;width:60px;border-radius: 5px;position:fixed;bottom:40px;right:40px; border: 1px solid white; border-image: none;text-align:center;cursor:pointer;' data-toggle="tooltip" data-placement="center" title="Download BR report by email" onclick="SendReport()">
-            <span class="glyphicon glyphicon-cloud-download" style="color:white;font-size:40px;"></span>
+        <div class="br-send" data-toggle="tooltip" data-placement="center" title="Download BR report by email" onclick="SendReport()">
+            <span class="glyphicon glyphicon-cloud-download br-download"></span>
             <script type="text/javascript">
             function SendReport()
             {

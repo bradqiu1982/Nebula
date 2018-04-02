@@ -8,38 +8,12 @@
 <link href="@Url.Content("~/Content/jquery.dataTables.min.css")" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/jquery.dataTables.min.js" type="text/javascript"></script>
 
-<style type="text/css">
-    label {
-        color: #fff;
-    }
-
-    .dataTables_info {
-        color: #fff !important;
-    }
-
-    tr {
-        background-color: #001d2e !important;
-    }
-
-    .dataTables_filter input {
-        color: #000 !important;
-    }
-
-    .dataTables_length select {
-        color: #000 !important;
-    }
-
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-        color: #fff !important;
-    }
-</style>
-
 <div class="content">
     <div class="container">
-        <div style="color: #fff; margin-top: 2%; margin-right: 10%; margin-left: 10%;">
+        <div class="jo-co-container">
             @if (Model != null && Model.Count() > 0)
             {
-                <div style="color: #fff;text-align: center;margin-bottom: 4%;">
+                <div class="jo-co-title">
                     <h3>@Model.ElementAt(0).JO Shipping</h3>
                 </div>
                 <table id="pndatatable" class="table table-bordered" cellspacing="0">

@@ -12,45 +12,18 @@
         BR.common();
     })
 </script>
-
-<style type="text/css">
-    label {
-        color: #fff;
-    }
-
-    .dataTables_info {
-        color: #fff !important;
-    }
-
-    tr {
-        background-color: #001d2e !important;
-    }
-
-    .dataTables_filter input {
-        color: #000 !important;
-    }
-
-    .dataTables_length select {
-        color: #000 !important;
-    }
-
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-        color: #fff !important;
-    }
-</style>
-
 <div class="content">
     <div class="container">
-        <div><h1 style="color:white;text-align:center">ERP Component</h1></div>
+        <div><h1 class="erp-co-title">ERP Component</h1></div>
 
         @using (Html.BeginForm("ERPComponent", "BRTrace", FormMethod.Post, new { enctype = "multipart/form-data",id= "ERPComponentForm", name= "ERPComponentForm" }))
         {
             @Html.AntiForgeryToken()
 
-            <div style="padding: 2% 2% 1%; border-radius: 5px; border: 1px solid white; border-image: none; margin-right: 10%; margin-left: 10%;">
+            <div class="erp-co-container">
                 <div class="form-group">
-                    <label class="control-label">PNs:</label>
-                    <textarea rows="2" class="form-control" id="pns" name="pns" data-toggle="tooltip" title="PN1;PN2;PN3;PN4;....." style="background-color: #001D2E;color:white">@((ViewBag.PNs == null)?"": ViewBag.PNs)</textarea>
+                    <label class="control-label erp-co-pn">PNs:</label>
+                    <textarea rows="2" class="form-control erp-co-pns" id="pns" name="pns" data-toggle="tooltip" title="PN1;PN2;PN3;PN4;.....">@((ViewBag.PNs == null)?"": ViewBag.PNs)</textarea>
                 </div>
                 <div class="form-group">
                      <input type="submit" class="btn btn-success" value="Query"/>
@@ -68,12 +41,12 @@
             </script>
         }
 
-        <div style="color: #fff; margin-top: 2%; margin-right: 10%; margin-left: 10%;">
+        <div class="jo-co-container">
             @if (ViewBag.POCompoList != null && ViewBag.POCompoList.Count > 0)
             {
                 <br>
                 <table id="podatatable" class="table table-bordered" cellspacing="0">
-                    <caption style="text-align:center;color:white;font-size:24px;">Open PO Component</caption>
+                    <caption class="erp-co-subtitle">Open PO Component</caption>
                     <colgroup>
                         <col style="width:5%" />
                         <col style="width:5%" />
@@ -146,7 +119,7 @@
             {
                 <br>
                 <table id="iqcdatatable" class="table table-bordered" cellspacing="0" width="100%">
-                    <caption style="text-align:center;color:white;font-size:24px;">IQC Component</caption>
+                    <caption class="erp-co-subtitle">IQC Component</caption>
                     <thead>
                         <tr>
                             <th>PN</th>
@@ -195,7 +168,7 @@
             {
                 <br>
                 <table id="onhanddatatable" class="table table-bordered" cellspacing="0">
-                    <caption style="text-align:center;color:white;font-size:24px;">Onhand Component</caption>
+                    <caption class="erp-co-subtitle">Onhand Component</caption>
                     <thead>
                         <tr>
                             <th>PN</th>

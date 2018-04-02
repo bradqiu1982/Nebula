@@ -1,15 +1,17 @@
 ﻿html, body {
     margin: 0px;
     height: auto;
-    background-color: #001D2E;
+    background-color: #fefefe;
 }
 
 div[MYTP="orange"] {
-    border-left-width:8px;border-left-style:solid;border-left-color:#FF7400;
+    border-left-width: 8px;
+    border-left-style: solid;
+    border-left-color: #FF7400;
 }
 
-.lcontainer{
-    position:absolute;
+.lcontainer {
+    position: absolute;
     margin: 0;
     width: 100% !important;
     padding: 0 !important;
@@ -17,8 +19,8 @@ div[MYTP="orange"] {
     z-index: 1001;
 }
 
-.container{
-    position:absolute;
+.container {
+    position: absolute;
     margin: 0;
     width: 100% !important;
     padding: 0 !important;
@@ -42,7 +44,7 @@ div[MYTP="orange"] {
     position: absolute;
     margin-top: 3%;
     height: 50px;
-    background-image: url(./images/logo.png);
+    background-image: url(./images/light/logo.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -54,7 +56,7 @@ div[MYTP="orange"] {
 
 .user-info {
     float: right;
-    color: #f0f0f0;
+    color: #333;
     margin-top: 2%;
     margin-right: 2%;
 }
@@ -79,25 +81,25 @@ div[MYTP="orange"] {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #000;
-    background-image: url(./images/login.png);
+    background-color: #aaa;
+    background-image: url(./images/light/login.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
-    opacity: 0.5;
-    -moz-opacity: 0.5;
-    filter: alpha(opacity=50);
+    opacity: 0.6;
+    -moz-opacity: 0.6;
+    filter: alpha(opacity=60);
     z-index: 1000;
 }
 
 .login-welcome {
-    margin-top: 15%;
+    margin-top: 13%;
     margin-left: 25%;
     text-align: left;
     font-size: 64px;
-    color: #fff;
+    color: #000;
 }
 
 .login-form {
@@ -113,7 +115,7 @@ div[MYTP="orange"] {
     font-size: 14px;
     border-radius: 6px;
     background-color: transparent;
-    color: #fff;
+    color: #000;
     margin-left: 2%;
     margin-bottom: 5%;
 }
@@ -137,7 +139,7 @@ div[MYTP="orange"] {
 .remember-me {
     font-size: 10px;
     margin-left: 2%;
-    color: #fff;
+    color: #000;
 }
 
 .div-forget-pwd {
@@ -149,7 +151,7 @@ div[MYTP="orange"] {
 .forget-pwd {
     font-size: 10px;
     margin-left: 2%;
-    color: #fff;
+    color: #000;
     text-decoration: underline;
 }
 
@@ -163,7 +165,7 @@ div[MYTP="orange"] {
     float: right;
     height: 30px;
     width: 30px;
-    background-image: url(./images/search.png);
+    background-image: url(./images/light/search.png);
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center center;
@@ -176,7 +178,7 @@ div[MYTP="orange"] {
     position: relative;
     float: right;
     width: 20%;
-    background-image: url(./images/search_stretch.png);
+    background-image: url(./images/light/search_stretch.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -197,7 +199,7 @@ div[MYTP="orange"] {
 .search-icon {
     width: 10%;
     color: #fff;
-    background-image: url(./images/search_icon.png);
+    background-image: url(./images/light/search_icon.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 18px;
@@ -209,7 +211,7 @@ div[MYTP="orange"] {
 .welcome {
     position: relative;
     float: left;
-    color: #f0f0f0;
+    color: #333;
     font-size: 16px;
     margin-left: 5%;
     margin-top: 10px;
@@ -217,7 +219,7 @@ div[MYTP="orange"] {
 
 .nav-type-h {
     float: right;
-    color: #f0f0f0;
+    color: #333;
     font-size: 14px;
     margin-top: 1%;
     margin-right: 2%;
@@ -225,7 +227,7 @@ div[MYTP="orange"] {
 
 .nav-type {
     float: right;
-    color: #f0f0f0;
+    color: #333;
     font-size: 14px;
     margin-top: 2%;
     margin-right: 2%;
@@ -238,10 +240,10 @@ div[MYTP="orange"] {
     cursor: pointer;
 }
 
-.nav-link:hover {
-    background-color: #ababab;
-    color: #fff;
-}
+    .nav-link:hover {
+        background-color: #ababab;
+        color: #fff;
+    }
 
 .nav-link-o, .nav-link-j {
     margin: 5px 2px;
@@ -256,10 +258,10 @@ div[MYTP="orange"] {
     cursor: pointer;
 }
 
-.nav-link-a:hover {
-    background-color: #ababab;
-    color: #fff;
-}
+    .nav-link-a:hover {
+        background-color: #ababab;
+        color: #fff;
+    }
 
 .nav-label {
     color: #000;
@@ -268,7 +270,7 @@ div[MYTP="orange"] {
     border-radius: 4px;
 }
 
-.nav-frasl{
+.nav-frasl {
     color: #ababab;
     margin: auto 2px;
 }
@@ -296,7 +298,7 @@ div[MYTP="orange"] {
 }
 
 .info-count {
-    color: #f0f0f0;
+    color: #333;
     font-size: 96px;
     /*font-size: 80px;*/
     text-align: center;
@@ -304,7 +306,7 @@ div[MYTP="orange"] {
 }
 
 .info-description {
-    color: #f0f0f0;
+    color: #333;
     font-size: 40px;
     text-align: center;
 }
@@ -333,30 +335,30 @@ div[MYTP="orange"] {
 }
 
 .label-green {
-    background-image: url(./images/label_green.png);
+    background-image: url(./images/light/label_green.png);
 }
 
 .label-blue {
-    background-image: url(./images/label_blue.png);
+    background-image: url(./images/light/label_blue.png);
 }
 
 .label-purple {
-    background-image: url(./images/label_purple.png);
+    background-image: url(./images/light/label_purple.png);
 }
 
 .label-yellow {
-    background-image: url(./images/label_yellow.png);
+    background-image: url(./images/light/label_yellow.png);
 }
 
 .label-rosered {
-    background-image: url(./images/label_rosered.png);
+    background-image: url(./images/light/label_rosered.png);
 }
 
 .f-picture {
     position: fixed;
     bottom: 0;
     height: 360px;
-    background-image: url(./images/fpic.png);
+    background-image: url(./images/light/fpic.png);
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center center;
@@ -370,7 +372,7 @@ div[MYTP="orange"] {
     bottom: 0;
     height: 20px;
     margin-left: -5%;
-    background-image: url(./images/fpic_hide.png);
+    background-image: url(./images/light/fpic_hide.png);
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center center;
@@ -385,7 +387,7 @@ div[MYTP="orange"] {
     position: absolute;
     margin: 0;
     width: 85% !important;
-    color: #fff;
+    color: #000;
     font-size: 14px;
 }
 
@@ -410,7 +412,7 @@ div[MYTP="orange"] {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    background-color: #07151E;
+    /*background-color: #07151E;*/
 }
 
 .cus-table {
@@ -427,10 +429,10 @@ div[MYTP="orange"] {
 }
 
 .cus-table > tbody > tr:hover {
-    background-color: #07151E;
+    background-color: #ccc;
 }
 
-.des-table,.narrow-table {
+.des-table, .narrow-table {
     border: transparent;
     margin-bottom: 10px;
 }
@@ -443,8 +445,8 @@ div[MYTP="orange"] {
 .narrow-table > tbody > tr > td {
     border: transparent;
     padding-left: 15px !important;
-    padding-top:0px!important;
-    padding-bottom:0px!important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
 }
 
 /* BR INFO */
@@ -452,7 +454,7 @@ div[MYTP="orange"] {
     position: absolute;
     margin-top: 2%;
     width: 100% !important;
-    color: #fff;
+    color: #333;
     font-size: 14px;
 }
 
@@ -477,7 +479,7 @@ div[MYTP="orange"] {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    background-color: #07151E;
+    /*background-color: #07151E;*/
 }
 
 /* JO */
@@ -497,7 +499,7 @@ div[MYTP="orange"] {
     text-align: right;
     margin-top: 2%;
     width: 30%;
-    color: #fff;
+    color: #000;
     z-index: 1004;
 }
 
@@ -505,7 +507,7 @@ div[MYTP="orange"] {
     font-size: 14px;
     padding: 4%;
     margin-right: -4%;
-    background-image: url(./images/label_white.png);
+    background-image: url(./images/light/label_white.png);
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center center;
@@ -517,7 +519,7 @@ div[MYTP="orange"] {
 .bc-br {
     font-size: 14px;
     padding: 5.5%;
-    background-image: url(./images/label_white.png);
+    background-image: url(./images/light/label_white.png);
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center center;
@@ -528,7 +530,7 @@ div[MYTP="orange"] {
 
 .jo-detail {
     width: 85% !important;
-    color: #fff;
+    color: #000;
     font-size: 14px;
 }
 
@@ -602,19 +604,19 @@ div[MYTP="orange"] {
 }
 
 .jo-blue {
-    background-image: url(./images/jo_blue.png);
+    background-image: url(./images/light/jo_blue.png);
 }
 
 .jo-green {
-    background-image: url(./images/jo_green.png);
+    background-image: url(./images/light/jo_green.png);
 }
 
 .jo-yellow {
-    background-image: url(./images/jo_yellow.png);
+    background-image: url(./images/light/jo_yellow.png);
 }
 
 .jo-darkblue {
-    background-image: url(./images/jo_darkblue.png);
+    background-image: url(./images/light/jo_darkblue.png);
 }
 
 /*pagination*/
@@ -624,7 +626,7 @@ div[MYTP="orange"] {
     margin: 0 5% 2% 0;
     width: 30%;
     font-size: 10px;
-    color: #ababab;
+    color: #888;
 }
 
 .pages, .sub-pages {
@@ -634,11 +636,11 @@ div[MYTP="orange"] {
 
 .current-page, .sub-current-page {
     padding: 2%;
-    color: #fff;
+    color: #000;
 }
 
 .current-breadcrumb {
-    color: #ababab;
+    color: #888;
 }
 
 .br-breadcrumb {
@@ -697,19 +699,19 @@ div[MYTP="orange"] {
 }
 
 .op-tag-schedule {
-    background-image: url(./images/jo-tag-schedule.png);
+    background-image: url(./images/light/jo-tag-schedule.png);
 }
 
 .op-tag-pro-line {
-    background-image: url(./images/jo-tag-product-line.png);
+    background-image: url(./images/light/jo-tag-product-line.png);
 }
 
 .op-tag-pqe-oqc {
-    background-image: url(./images/jo-tag-pqe-oqc.png);
+    background-image: url(./images/light/jo-tag-pqe-oqc.png);
 }
 
 .op-tag-warehouse {
-    background-image: url(./images/jo-tag-warehouse.png);
+    background-image: url(./images/light/jo-tag-warehouse.png);
 }
 
 .schedule, .pro-line, .pqe-oqc, .warehouse {
@@ -727,9 +729,9 @@ div[MYTP="orange"] {
 
 /* JO Schedule */
 .panel-cus {
-    background-color: transparent !important;
+    background-color: #001D2E !important;
     color: #efefef !important;
-    border-color: transparent !important;
+    border-color: #001D2E !important;
 }
 
 .fc-left {
@@ -743,8 +745,8 @@ div[MYTP="orange"] {
 }
 
 .fc-toolbar .fc-button {
-    background-color: transparent !important;
-    border-color: transparent !important;
+    background-color: #001D2E !important;
+    border-color: #001D2E !important;
     margin: auto 2px !important;
     padding: 0 !important;
 }
@@ -798,17 +800,17 @@ div[MYTP="orange"] {
 .span-theme-setting {
     cursor: pointer;
     font-size: 14px;
-    color: #efefef;
+    color: #000;
     margin-right: 5%;
     text-decoration: underline;
     font-style: italic;
 }
 
 .brtracehelp {
-    color:white;
+    color: #000;
 }
 
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
 }
 
@@ -817,6 +819,7 @@ div[MYTP="orange"] {
     border-color: transparent !important;
     background-color: transparent !important;
 }
+
 .br-panel-title {
     border-color: transparent !important;
     background-color: transparent !important;
@@ -824,9 +827,10 @@ div[MYTP="orange"] {
     border-left-color: #33CCFF !important;
     border-left-width: 5px !important;
 }
+
 .br-panel-heading {
     padding: 0;
-    color: #efefef !important;
+    /*color: #efefef !important;*/
     border-color: transparent !important;
     background-color: transparent !important;
 }
@@ -836,7 +840,7 @@ div[MYTP="orange"] {
     padding: 2px 5px;
 }
 
-.con-op{
+.con-op {
     margin-top: 2%;
 }
 
@@ -845,11 +849,12 @@ div[MYTP="orange"] {
     border-left-style: solid;
     border-left-color: #006DC0;
 }
-.ckedit-box{
+
+.ckedit-box {
     margin-top: 2%;
 }
 
-.title-box{
+.title-box {
     padding-left: 5px;
     padding-right: 5px;
     font-weight: bold;
@@ -861,6 +866,114 @@ div[MYTP="orange"] {
     text-decoration: underline;
 }
 
-.right-line{
+.right-line {
     border-right: 1px #24323B solid !important;
+}
+
+.tr-bg {
+    background-color: #ccc;
+}
+
+.tr-bg-transparent {
+    background-color: transparent;
+}
+
+.jo-co-container {
+    color: #000;
+    margin-top: 2%;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+.jo-co-container label {
+    color: #000;
+}
+
+.jo-co-container .dataTables_info {
+    color: #000 !important;
+}
+
+.jo-co-container tr {
+    background-color: #fff !important;
+}
+
+.jo-co-container .dataTables_filter input {
+    color: #000 !important;
+}
+
+.jo-co-container .dataTables_length select {
+    color: #000 !important;
+}
+
+.jo-co-container .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #000 !important;
+}
+
+.jo-co-title {
+    color: #000;
+    text-align: center;
+    margin-bottom: 4%;
+}
+
+.erp-co-title {
+    color: #000;
+    text-align: center;
+}
+
+.erp-co-container {
+    padding: 2% 2% 1%;
+    border-radius: 5px;
+    border: 1px solid #000;
+    border-image: none;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.erp-co-pn {
+    color: #000;
+}
+
+.erp-co-pns {
+    background-color: #fefefe;
+    color: #000;
+}
+
+.erp-co-subtitle {
+    text-align: center;
+    color: #000;
+    font-size: 24px;
+}
+
+.br-report-container {
+    padding: 2% 2% 5%;
+    border-radius: 5px;
+    border: 1px solid #000;
+    border-image: none;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.br-report-week{
+    color: #000;
+}
+
+.br-send {
+    height: 60px;
+    width: 60px;
+    border-radius: 5px;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    border: 1px solid #000;
+    border-image: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.br-download {
+    color: #000;
+    font-size: 40px;
+}
+
+.jo-detail-title {
+    color: #000;
 }

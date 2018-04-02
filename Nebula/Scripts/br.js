@@ -113,10 +113,10 @@ var BR = function(){
     var brlist = function () {
         //tr click event
         $('body').on('click', '.cus-table > tbody > tr', function(){
-            $('.cus-table > tbody > tr').each(function(){
-                $(this).attr('style', 'background-color: transparent;');
+            $('.cus-table > tbody > tr').each(function () {
+                $(this).removeClass().addClass('tr-bg-transparent');
             })
-            $(this).attr('style', 'background-color: #07151E;');
+            $(this).removeClass().addClass('tr-bg');
             var br_no = $(this).children().eq(0).html();
             $.post('/BRTrace/BRAgileData', {
                  br_no: br_no
@@ -167,9 +167,9 @@ var BR = function(){
         //tr click event
         $('body').on('click', '.cus-table > tbody > tr', function () {
             $('.cus-table > tbody > tr').each(function () {
-                $(this).attr('style', 'background-color: transparent;');
+                $(this).removeClass().addClass('tr-bg-transparent');
             })
-            $(this).attr('style', 'background-color: #07151E;');
+            $(this).removeClass().addClass('tr-bg');
             var jo_no = $(this).children().eq(0).html();
             $.post('/BRTrace/BRJOData', {
                 jo_no: jo_no
@@ -229,10 +229,10 @@ var BR = function(){
     var jolist = function(){
         //jo tr click event
         $('body').on('click', '.cus-table > tbody > tr', function () {
-            $('.cus-table > tbody > tr').each(function(){
-                $(this).attr('style', 'background-color: transparent;');
+            $('.cus-table > tbody > tr').each(function () {
+                $(this).removeClass().addClass('tr-bg-transparent');
             })
-            $(this).attr('style', 'background-color: #07151E;');
+            $(this).removeClass().addClass('tr-bg');
             var jo_no = $(this).children().eq(0).html();
             $.post('/BRTrace/BRJOData', {
                 jo_no: jo_no

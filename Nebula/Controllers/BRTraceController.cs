@@ -978,7 +978,7 @@ namespace Nebula.Controllers
             var idx = 0;
             if (table != null)
             {
-                content += "<div  style='color: #fff; margin-right: 10%; margin-left: 10%;'><br>";
+                content += "<div class='jo-co-container'><br>";
                 content += "<table border-radius='5px' cellpadding='0' cellspacing='0' width='100%' style='padding: 5px; margin-bottom: 1%; border-radius: 10px; border: 1px solid rgb(204, 204, 204); border-image: none; border-collapse: separate; -webkit-border-radius: 10px;'>";
                 content += "<colgroup><col style='width:20%;'><col style='width:60%;'><col style='width:20%;'></colgroup>";
                 content += "<thead color: #fff;'>";
