@@ -44,7 +44,8 @@ namespace Nebula.Models
             {
                 if (IsDebug())
                 {
-                    conn.ConnectionString = "Server=wux-d80008792;User ID=NebulaNPI;Password=abc@123;Database=NebulaTrace;Connection Timeout=120;";
+                    //conn.ConnectionString = "Server=wux-d80008792;User ID=NebulaNPI;Password=abc@123;Database=NebulaTrace;Connection Timeout=120;";
+                    conn.ConnectionString = "Server=wuxinpi;User ID=NebulaNPI;Password=abc@123;Database=NebulaTrace;Connection Timeout=120;";
                 }
                 else
                 {
