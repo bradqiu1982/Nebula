@@ -956,7 +956,9 @@ namespace Nebula.Models
                 var snstatuslist = CamstarVM.UpdateJoMESStatus(item.JO);
                 foreach (var snstat in snstatuslist)
                 {
-                    if (snstat.WorkflowStepName.ToUpper().Contains("VMI"))
+                    if (snstat.WorkflowStepName.ToUpper().Contains("VMI")
+                        || snstat.WorkflowStepName.ToUpper().Contains("LABEL")
+                        || snstat.WorkflowStepName.ToUpper().Contains("BARCODE"))
                     {
                         item.SN = snstat.ModuleSN;
                         item.WorkFlowStep = snstat.WorkflowStepName;
