@@ -38,9 +38,12 @@
     </script>
 
     <div class="login-theme-setting">
-        <a tabindex="0" class="btn" role="button" data-toggle="popover" data-container="body" placement="bottom" title="BR Trace Introduce" data-content="<video src='/Content/BRTraceIntroduce.mp4' width='200' height='160' controls type='video/mp4'></video>">
-            <span class="glyphicon glyphicon-question-sign brtracehelp"></span>
-        </a>
+        @if (isvideook)
+        {
+            <a tabindex="0" class="btn" role="button" data-toggle="popover" data-container="body" placement="bottom" title="BR Trace Introduce" data-content="<video src='/Content/BRTraceIntroduce.mp4' width='200' height='160' controls type='video/mp4'></video>">
+                <span class="glyphicon glyphicon-question-sign brtracehelp"></span>
+            </a>
+        }
         <span class="span-theme-setting">Change Theme</span>
     </div>
     @RenderBody()
