@@ -952,10 +952,10 @@ namespace Nebula.Controllers
         {
             string IP = Request.UserHostName;
             string machine = DetermineCompName(IP).ToUpper();
-            int theme = Theme.Dark;
-            if (Session["utheme"] == null || Convert.ToInt32(Session["utheme"]) == Theme.Dark)
+            int theme = Theme.Light;
+            if (Session["utheme"] == null || Convert.ToInt32(Session["utheme"]) == Theme.Light)
             {
-                theme = Theme.Light;
+                theme = Theme.Dark;
             }
             var ctheme = new UserCustomizeThemeVM(
                 0,
