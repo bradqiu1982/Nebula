@@ -1000,9 +1000,13 @@ namespace Nebula.Models
                 tablist.Add(tabstr);
                 var content = EmailUtility.CreateTableHtml2("Hi Guys", "Below is a FAF Report:", "More: http://wuxinpi.china.ads.finisar.com:8082/BRTrace/FAFJO", tablist);
 
+                var cfg = CfgUtility.GetSysConfig(ctrl);
+                var to = cfg["FAFREPORTRECIEVER"];
                 var tolist = new List<string>();
-                tolist.Add("brad.qiu@finisar.com");
-                tolist.Add("sherry.zhang@finisar.com");
+                tolist.AddRange(to.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries));
+                //var tolist = new List<string>();
+                //tolist.Add("brad.qiu@finisar.com");
+                //tolist.Add("sherry.zhang@finisar.com");
                 EmailUtility.SendEmail(ctrl, "WUXI NPI FAF Report", tolist, content, true);
                 new System.Threading.ManualResetEvent(false).WaitOne(500);
             }

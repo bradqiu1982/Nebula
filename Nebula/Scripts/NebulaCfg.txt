@@ -22,3 +22,4 @@ POCOMPONETINFO:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Open PO R
 PLANNERCODEDICT:::\\wux-file01\Public\ERP_Report\WXI\Planning\Finisar - Item Attributes Listing Report for WXI.csv
 
 REPORTRECIEVER:::brad.qiu@finisar.com;shawn.zhang@finisar.com
+FAFREPORTRECIEVER:::brad.qiu@finisar.com;sherry.zhang@finisar.com;Shan.Xia@finisar.com
