@@ -179,8 +179,8 @@ namespace Nebula.Models
 
         public static void CloseBR(string jonum)
         {
-            var sql = "select BRKey from JOBaseInfo where JONumber = '<JONumber>'";
-            sql = sql.Replace("<JONumber>", jonum);
+            var sql = "select BRKey from JOBaseInfo where JONumber = '<JONumber>' and BRKey <> '<BRKey>'";
+            sql = sql.Replace("<JONumber>", jonum).Replace("<BRKey>", JOSHOWTYPE.OQM);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             if (dbret.Count > 0)
             {
@@ -197,8 +197,8 @@ namespace Nebula.Models
 
         public static void OpenBR(string jonum)
         {
-            var sql = "select BRKey from JOBaseInfo where JONumber = '<JONumber>'";
-            sql = sql.Replace("<JONumber>", jonum);
+            var sql = "select BRKey from JOBaseInfo where JONumber = '<JONumber>' and BRKey <> '<BRKey>'";
+            sql = sql.Replace("<JONumber>", jonum).Replace("<BRKey>", JOSHOWTYPE.OQM);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             if (dbret.Count > 0)
             {
@@ -857,18 +857,18 @@ namespace Nebula.Models
                     {
                         var jobnum = line[11];
 
-                        //if (jobnum.Length > 3
-                        //    && jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains(JOSHOWTYPE.OQM))
-                        //{
-                        //    try
-                        //    {
-                        //        var tempinfo = JOBaseInfo.CreateItem(line);
-                        //        tempinfo.BRKey = JOSHOWTYPE.OQM;
-                        //        tempinfo.BRNumber = JOSHOWTYPE.OQM;
-                        //        jobaseinfolist.Add(tempinfo);
-                        //    }
-                        //    catch (Exception ex) { }
-                        //}
+                        if (jobnum.Length > 3
+                            && jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains(JOSHOWTYPE.OQM))
+                        {
+                            try
+                            {
+                                var tempinfo = JOBaseInfo.CreateItem(line);
+                                tempinfo.BRKey = JOSHOWTYPE.OQM;
+                                tempinfo.BRNumber = JOSHOWTYPE.OQM;
+                                jobaseinfolist.Add(tempinfo);
+                            }
+                            catch (Exception ex) { }
+                        }
 
                         if (jobnum.Length > 3
                             && jobnum.ToUpper().Substring(jobnum.Length - 3, 3).Contains(JOSHOWTYPE.FAF))
