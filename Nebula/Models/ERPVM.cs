@@ -957,7 +957,7 @@ namespace Nebula.Models
                 foreach (var snstat in snstatuslist)
                 {
                     if (snstat.WorkflowStepName.ToUpper().Contains("VMI")
-                        || snstat.WorkflowStepName.ToUpper().Contains("LABEL")
+                        || snstat.WorkflowStepName.ToUpper().Contains("OBA")
                         || snstat.WorkflowStepName.ToUpper().Contains("BARCODE"))
                     {
                         item.SN = snstat.ModuleSN;
