@@ -934,8 +934,24 @@ namespace Nebula.Models
         //    }//end if
         //}
 
+
+        public static string FindPEByPD(string pddesc, Dictionary<string, string> pdpmmap)
+        {
+            var ret = "";
+            foreach (var kv in pdpmmap)
+            {
+                if (pddesc.ToUpper().Contains(kv.Key.ToUpper()))
+                {
+                    return kv.Value;
+                }
+            }
+            return ret;
+        }
+
         public static void SolveFAFJo(Controller ctrl,List<JOBaseInfo> FAFJOList)
         {
+            var pdpmmap = CfgUtility.GetProductPEMap(ctrl);
+
             var solveddict = FAFJoVM.RetrieveAllSolvedFAFJODict();
             var jotobesolved = new List<FAFJoVM>();
             foreach (var item in FAFJOList)
@@ -1016,7 +1032,8 @@ namespace Nebula.Models
             {
                 if (!string.IsNullOrEmpty(item.WorkFlowStep))
                 {
-                    FAFJoVM.StoreFAFJO(item.PN, item.PNDes, item.JO, item.SN, item.WorkFlowStep, item.ArriveTime);
+                    var pe = FindPEByPD(item.PNDes, pdpmmap);
+                    FAFJoVM.StoreFAFJO(item.PN, item.PNDes, item.JO, item.SN, item.WorkFlowStep, item.ArriveTime,pe);
                 }
             }
 

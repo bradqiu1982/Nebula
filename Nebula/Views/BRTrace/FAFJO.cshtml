@@ -48,9 +48,12 @@
                             <th>JO Num</th>
                             <th>PN</th>
                             <th>SN</th>
-                            <th>WorkFlow Step</th>
+                            <th>Warning Step</th>
                             <th>Move Time</th>
                             <th>PN Desc</th>
+                            <th>Current Status</th>
+                            <th>Warning PE</th>
+                            <th>Checked</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,13 +61,30 @@
                         {
                             foreach (var item in Model)
                             {
-                                <tr>
+                                var cl = "background-color:red!important";
+                                if (string.Compare(item.Checked, "FALSE", true) != 0)
+                                {
+                                    cl = "background-color:lightgreen!important";
+                                }
+                                <tr style="word-break:break-word;font-size:10px;@cl">
                                     <td>@item.JO</td>
                                     <td>@item.PN</td>
                                     <td>@item.SN</td>
                                     <td>@item.WorkFlowStep</td>
                                     <td>@item.ArriveTime</td>
-                                    <td style="word-break:break-word;font-size:10px">@item.PNDes</td>
+                                    <td>@item.PNDes</td>
+                                    @if (string.Compare(item.Checked, "FALSE", true) == 0)
+                                    {
+                                        <td><button class="btn btn-primary" onclick="CheckStatus('@item.JO')">Status</button></td>
+                                        <td><button class="btn btn-danger" onclick="WarningPE('@item.JO')">Warning</button></td>
+                                        <td><button class="btn btn-success" onclick="JoChecked('@item.JO')">Done</button></td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    }
                                 </tr>
                             }
                         }
@@ -82,6 +102,34 @@
                             "order": false
                         });
                     });
+
+                    function CheckStatus(jo)
+                    {
+                        var url = 'http://wuxinpi.china.ads.finisar.com/CustomerData/JOMesProgress?jo=' + jo;
+                        window.open(url, '_blank');
+                    }
+
+                    function WarningPE(jo)
+                    {
+                        $.post('/BRTrace/WarningPE',
+                        {
+                            jo:jo
+                        },
+                        function (output) {
+                            alert(output.msg);
+                        });
+                    }
+
+                    function JoChecked(jo)
+                    {
+                        $.post('/BRTrace/JOChecked',
+                            {
+                                jo:jo
+                            },
+                            function (output) {
+                                window.location.reload();
+                            });
+                    }
                 </script>
             </div>
 

@@ -30,12 +30,18 @@ namespace Nebula.Models
         public static List<FAFJoVM> RetrieveAllFAFJO()
         {
             var ret = new List<FAFJoVM>();
-            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime from FAFJoVM order by ArriveTime desc";
-            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked from FAFJoVM where ArriveTime > @ArriveTime  order by ArriveTime desc";
+            var dict = new Dictionary<string, string>();
+            dict.Add("@ArriveTime", DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd HH:mm:ss"));
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql,dict);
+            
             foreach (var line in dbret)
             {
-                ret.Add(new FAFJoVM(Convert.ToString(line[0]), Convert.ToString(line[1]), Convert.ToString(line[2])
-                    , Convert.ToString(line[3]), Convert.ToString(line[4]), Convert.ToDateTime(line[5]).ToString("yyyy-MM-dd HH:mm:ss")));
+                var tempvm = new FAFJoVM(Convert.ToString(line[0]), Convert.ToString(line[1]), Convert.ToString(line[2])
+                    , Convert.ToString(line[3]), Convert.ToString(line[4]), Convert.ToDateTime(line[5]).ToString("yyyy-MM-dd HH:mm:ss"));
+                tempvm.PE = Convert.ToString(line[6]);
+                tempvm.Checked = Convert.ToString(line[7]);
+                ret.Add(tempvm);
             }
             return ret;
         }
@@ -54,9 +60,9 @@ namespace Nebula.Models
             return dict;
         }
 
-        public static void StoreFAFJO(string pn, string des, string jo, string sn, string wf, string at)
+        public static void StoreFAFJO(string pn, string des, string jo, string sn, string wf, string at,string pe)
         {
-            var sql = "insert into FAFJoVM(PN,PNDes,JO,SN,WorkFlowStep,ArriveTime) values(@PN,@PNDes,@JO,@SN,@WorkFlowStep,@ArriveTime)";
+            var sql = "insert into FAFJoVM(PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked) values(@PN,@PNDes,@JO,@SN,@WorkFlowStep,@ArriveTime,@PE,@Checked)";
             var param = new Dictionary<string, string>();
             param.Add("@PN", pn);
             param.Add("@PNDes", des);
@@ -64,6 +70,8 @@ namespace Nebula.Models
             param.Add("@SN", sn);
             param.Add("@WorkFlowStep", wf);
             param.Add("@ArriveTime", at);
+            param.Add("@PE", pe);
+            param.Add("@Checked", "FALSE");
             DBUtility.ExeLocalSqlNoRes(sql, param);
         }
 
@@ -73,6 +81,7 @@ namespace Nebula.Models
         public string SN { set; get; }
         public string WorkFlowStep { set; get; }
         public string ArriveTime { set; get; }
-
+        public string PE { set; get; }
+        public string Checked { set; get; }
     }
 }

@@ -598,7 +598,9 @@
     <Content Include="Content\images\label_white.png" />
     <Content Include="Content\images\label_yellow.png" />
     <Content Include="Content\images\light\box.png" />
+    <Content Include="Content\images\light\cd-icon-menu.svg" />
     <Content Include="Content\images\light\close.png" />
+    <Content Include="Content\images\light\contentbg.jpg" />
     <Content Include="Content\images\light\delete2.png" />
     <Content Include="Content\images\light\edit2.png" />
     <Content Include="Content\images\light\export.png" />
@@ -623,6 +625,7 @@
     <Content Include="Content\images\light\label_yellow.png" />
     <Content Include="Content\images\light\loading.png" />
     <Content Include="Content\images\light\login.png" />
+    <Content Include="Content\images\light\login2.png" />
     <Content Include="Content\images\light\login_1.png" />
     <Content Include="Content\images\light\logo.png" />
     <Content Include="Content\images\light\loupe.png" />
@@ -983,6 +986,7 @@
     <Content Include="Scripts\fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Scripts\highcharts-more.js" />
     <Content Include="Scripts\jo.js" />
     <Content Include="Scripts\jodistribution.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -1024,6 +1028,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\offline-exporting.js" />
     <Content Include="Scripts\ParetoChart.xml" />
     <Content Include="Scripts\PieChart.xml" />
     <Content Include="Scripts\pnerrordistribution.js" />
@@ -1074,6 +1079,7 @@
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_pagination.cshtml" />
     <Content Include="Views\Shared\_sub_pagination.cshtml" />
+    <Content Include="Scripts\ProductPEMap.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
