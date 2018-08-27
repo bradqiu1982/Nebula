@@ -211,6 +211,7 @@
     <Compile Include="Models\EventDataVM.cs" />
     <Compile Include="Models\FAFJoVM.cs" />
     <Compile Include="Models\JOShipTrace.cs" />
+    <Compile Include="Models\MachineUserMap.cs" />
     <Compile Include="Models\NebulaDataCollector.cs" />
     <Compile Include="Models\NebulaUserCacheVM.cs" />
     <Compile Include="Models\NebulaUserViewModels.cs" />

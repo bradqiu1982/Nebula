@@ -30,7 +30,7 @@ namespace Nebula.Models
         public static List<FAFJoVM> RetrieveAllFAFJO()
         {
             var ret = new List<FAFJoVM>();
-            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked from FAFJoVM";
+            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked,ConfirmPeople,ConfirmTime from FAFJoVM";
             var dbret = DBUtility.ExeLocalSqlWithRes(sql);
             
             foreach (var line in dbret)
@@ -39,6 +39,8 @@ namespace Nebula.Models
                     , Convert.ToString(line[3]), Convert.ToString(line[4]), Convert.ToDateTime(line[5]).ToString("yyyy-MM-dd HH:mm:ss"));
                 tempvm.PE = Convert.ToString(line[6]);
                 tempvm.Checked = Convert.ToString(line[7]);
+                tempvm.ConfirmPeople = Convert.ToString(line[8]);
+                tempvm.ConfirmTime = Convert.ToString(line[9]);
                 ret.Add(tempvm);
             }
             return ret;
@@ -47,7 +49,7 @@ namespace Nebula.Models
         public static List<FAFJoVM> RetrieveAllFAFJOIn3Month()
         {
             var ret = new List<FAFJoVM>();
-            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked from FAFJoVM where ArriveTime > @ArriveTime  order by ArriveTime desc";
+            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked,ConfirmPeople,ConfirmTime from FAFJoVM where ArriveTime > @ArriveTime  order by ArriveTime desc";
             var dict = new Dictionary<string, string>();
             dict.Add("@ArriveTime", DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd HH:mm:ss"));
             var dbret = DBUtility.ExeLocalSqlWithRes(sql, dict);
@@ -58,6 +60,8 @@ namespace Nebula.Models
                     , Convert.ToString(line[3]), Convert.ToString(line[4]), Convert.ToDateTime(line[5]).ToString("yyyy-MM-dd HH:mm:ss"));
                 tempvm.PE = Convert.ToString(line[6]);
                 tempvm.Checked = Convert.ToString(line[7]);
+                tempvm.ConfirmPeople = Convert.ToString(line[8]);
+                tempvm.ConfirmTime = Convert.ToString(line[9]);
                 ret.Add(tempvm);
             }
             return ret;
@@ -66,7 +70,7 @@ namespace Nebula.Models
         public static List<FAFJoVM> RetrieveAllFAFJOByNum(string jonum)
         {
             var ret = new List<FAFJoVM>();
-            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked from FAFJoVM where JO = @JO";
+            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked,ConfirmPeople,ConfirmTime from FAFJoVM where JO = @JO";
             var dict = new Dictionary<string, string>();
             dict.Add("@JO", jonum);
             var dbret = DBUtility.ExeLocalSqlWithRes(sql, dict);
@@ -77,6 +81,8 @@ namespace Nebula.Models
                     , Convert.ToString(line[3]), Convert.ToString(line[4]), Convert.ToDateTime(line[5]).ToString("yyyy-MM-dd HH:mm:ss"));
                 tempvm.PE = Convert.ToString(line[6]);
                 tempvm.Checked = Convert.ToString(line[7]);
+                tempvm.ConfirmPeople = Convert.ToString(line[8]);
+                tempvm.ConfirmTime = Convert.ToString(line[9]);
                 ret.Add(tempvm);
             }
             return ret;
@@ -99,8 +105,8 @@ namespace Nebula.Models
         public static void StoreFAFJO(string pn, string des, string jo, string sn, string wf, string at,string pe)
         {
             var Checked = "FALSE";
-            if (string.IsNullOrEmpty(pe))
-            { Checked = "TRUE"; }
+            //if (string.IsNullOrEmpty(pe))
+            //{ Checked = "TRUE"; }
 
             var sql = "insert into FAFJoVM(PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked) values(@PN,@PNDes,@JO,@SN,@WorkFlowStep,@ArriveTime,@PE,@Checked)";
             var param = new Dictionary<string, string>();
@@ -115,11 +121,14 @@ namespace Nebula.Models
             DBUtility.ExeLocalSqlNoRes(sql, param);
         }
 
-        public static void UpdateFAFCheckStatus(string jo)
+        public static void UpdateFAFCheckStatus(string jo,string cname)
         {
-            var sql = "update FAFJoVM set Checked = 'TRUE' where JO=@JO";
+            var sql = "update FAFJoVM set Checked = 'TRUE',ConfirmPeople=@ConfirmPeople,ConfirmTime=@ConfirmTime where JO=@JO";
             var param = new Dictionary<string, string>();
             param.Add("@JO", jo);
+            param.Add("@ConfirmPeople", cname);
+            param.Add("@ConfirmTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+
             DBUtility.ExeLocalSqlNoRes(sql, param);
         }
 
@@ -131,5 +140,7 @@ namespace Nebula.Models
         public string ArriveTime { set; get; }
         public string PE { set; get; }
         public string Checked { set; get; }
+        public string ConfirmPeople { set; get; }
+        public string ConfirmTime { set; get; }
     }
 }

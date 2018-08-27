@@ -1,6 +1,6 @@
 ﻿AGILEURL:::http://sny-agile9app-p64:7001/Agile
 LOCALSITEPORT:::8082
-TRACEPM:::Rose Wang;Chris Bao;Albert Cui;Stone Fang;Penny Jin;Shibei Song;Meg Wang;Garvin Zeng;Meg Wang;Garvin Zeng;
+TRACEPM:::Rose Wang;Chris Bao;Albert Cui;Stone Fang;Penny Jin;Shibei Song;Meg Wang;Garvin Zeng;
 FIRSTTRACETIME:::2018-05-01 10:00:00
 
 APPEMAILPWD:::abc@12345
@@ -9,7 +9,7 @@ EMAILSERVER:::wmail.finisar.com
 
 SHAREFOLDERUSER:::brad.qiu
 SHAREFOLDERDOMIN:::china
-SHAREFOLDERPWD:::wangle@345678
+SHAREFOLDERPWD:::wangle@456789
 ERPJOBASEINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\WXI Finisar WIP Value Report.xls
 ERPJOCOMPONENTINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\Jobs_WXI.CSV
 ERPJOEXISTMAINSTORE:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WXI.csv
@@ -22,4 +22,4 @@ POCOMPONETINFO:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Open PO R
 PLANNERCODEDICT:::\\wux-file01\Public\ERP_Report\WXI\Planning\Finisar - Item Attributes Listing Report for WXI.csv
 
 REPORTRECIEVER:::brad.qiu@finisar.com;shawn.zhang@finisar.com
-FAFREPORTRECIEVER:::brad.qiu@finisar.com;sherry.zhang@finisar.com;Shan.Xia@finisar.com
+FAFREPORTRECIEVER:::brad.qiu@finisar.com;chengjing.wu@finisar.com;Shan.Xia@finisar.com;jamie.dai@finisar.com

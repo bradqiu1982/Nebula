@@ -51,9 +51,10 @@
                             <th>Warning Step</th>
                             <th>Move Time</th>
                             <th>PN Desc</th>
-                            <th>Current Status</th>
-                            <th>Warning PE</th>
-                            <th>Checked</th>
+                            <th>PE</th>
+                            <th>INFO1</th>
+                            <th>INFO2</th>
+                            <th>INFO3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,6 +74,7 @@
                                     <td>@item.WorkFlowStep</td>
                                     <td>@item.ArriveTime</td>
                                     <td>@item.PNDes</td>
+                                    <td>@item.PE</td>
                                     @if (string.Compare(item.Checked, "FALSE", true) == 0)
                                     {
                                         <td><button class="btn btn-primary" onclick="CheckStatus('@item.JO')">Status</button></td>
@@ -81,9 +83,18 @@
                                     }
                                     else
                                     {
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        if (!string.IsNullOrEmpty(item.ConfirmPeople))
+                                        {
+                                            <td>CFM/@item.ConfirmPeople</td>
+                                            <td>CFM/@item.ConfirmTime</td>
+                                            <td></td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        }
                                     }
                                 </tr>
                             }

@@ -1275,8 +1275,16 @@ namespace Nebula.Controllers
 
         public JsonResult JOChecked()
         {
+            string IP = Request.UserHostName;
+            string compName = DetermineCompName(IP).ToUpper();
+            var mudict = MachineUserMap.RetrieveUserMap(compName);
+            if (mudict.ContainsKey(compName))
+            {
+                compName = mudict[compName];
+            }
+
             string jo = Request.Form["jo"];
-            FAFJoVM.UpdateFAFCheckStatus(jo);
+            FAFJoVM.UpdateFAFCheckStatus(jo, compName);
             var ret = new JsonResult();
             ret.Data = new { success = true  };
             return ret;
@@ -1284,7 +1292,15 @@ namespace Nebula.Controllers
 
         public ActionResult UpdateFAFCheckStatus(string JO)
         {
-            FAFJoVM.UpdateFAFCheckStatus(JO);
+            string IP = Request.UserHostName;
+            string compName = DetermineCompName(IP).ToUpper();
+            var mudict = MachineUserMap.RetrieveUserMap(compName);
+            if (mudict.ContainsKey(compName))
+            {
+                compName = mudict[compName];
+            }
+
+            FAFJoVM.UpdateFAFCheckStatus(JO,compName);
             ViewBag.JO = JO;
             return View();
         }
