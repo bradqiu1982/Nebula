@@ -30,11 +30,47 @@ namespace Nebula.Models
         public static List<FAFJoVM> RetrieveAllFAFJO()
         {
             var ret = new List<FAFJoVM>();
+            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked from FAFJoVM";
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql);
+            
+            foreach (var line in dbret)
+            {
+                var tempvm = new FAFJoVM(Convert.ToString(line[0]), Convert.ToString(line[1]), Convert.ToString(line[2])
+                    , Convert.ToString(line[3]), Convert.ToString(line[4]), Convert.ToDateTime(line[5]).ToString("yyyy-MM-dd HH:mm:ss"));
+                tempvm.PE = Convert.ToString(line[6]);
+                tempvm.Checked = Convert.ToString(line[7]);
+                ret.Add(tempvm);
+            }
+            return ret;
+        }
+
+        public static List<FAFJoVM> RetrieveAllFAFJOIn3Month()
+        {
+            var ret = new List<FAFJoVM>();
             var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked from FAFJoVM where ArriveTime > @ArriveTime  order by ArriveTime desc";
             var dict = new Dictionary<string, string>();
             dict.Add("@ArriveTime", DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd HH:mm:ss"));
-            var dbret = DBUtility.ExeLocalSqlWithRes(sql,dict);
-            
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql, dict);
+
+            foreach (var line in dbret)
+            {
+                var tempvm = new FAFJoVM(Convert.ToString(line[0]), Convert.ToString(line[1]), Convert.ToString(line[2])
+                    , Convert.ToString(line[3]), Convert.ToString(line[4]), Convert.ToDateTime(line[5]).ToString("yyyy-MM-dd HH:mm:ss"));
+                tempvm.PE = Convert.ToString(line[6]);
+                tempvm.Checked = Convert.ToString(line[7]);
+                ret.Add(tempvm);
+            }
+            return ret;
+        }
+
+        public static List<FAFJoVM> RetrieveAllFAFJOByNum(string jonum)
+        {
+            var ret = new List<FAFJoVM>();
+            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked from FAFJoVM where JO = @JO";
+            var dict = new Dictionary<string, string>();
+            dict.Add("@JO", jonum);
+            var dbret = DBUtility.ExeLocalSqlWithRes(sql, dict);
+
             foreach (var line in dbret)
             {
                 var tempvm = new FAFJoVM(Convert.ToString(line[0]), Convert.ToString(line[1]), Convert.ToString(line[2])
@@ -62,6 +98,10 @@ namespace Nebula.Models
 
         public static void StoreFAFJO(string pn, string des, string jo, string sn, string wf, string at,string pe)
         {
+            var Checked = "FALSE";
+            if (string.IsNullOrEmpty(pe))
+            { Checked = "TRUE"; }
+
             var sql = "insert into FAFJoVM(PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked) values(@PN,@PNDes,@JO,@SN,@WorkFlowStep,@ArriveTime,@PE,@Checked)";
             var param = new Dictionary<string, string>();
             param.Add("@PN", pn);
@@ -71,7 +111,15 @@ namespace Nebula.Models
             param.Add("@WorkFlowStep", wf);
             param.Add("@ArriveTime", at);
             param.Add("@PE", pe);
-            param.Add("@Checked", "FALSE");
+            param.Add("@Checked", Checked);
+            DBUtility.ExeLocalSqlNoRes(sql, param);
+        }
+
+        public static void UpdateFAFCheckStatus(string jo)
+        {
+            var sql = "update FAFJoVM set Checked = 'TRUE' where JO=@JO";
+            var param = new Dictionary<string, string>();
+            param.Add("@JO", jo);
             DBUtility.ExeLocalSqlNoRes(sql, param);
         }
 

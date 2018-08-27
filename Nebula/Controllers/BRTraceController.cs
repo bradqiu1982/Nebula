@@ -1269,8 +1269,56 @@ namespace Nebula.Controllers
 
         public ActionResult FAFJO()
         {
-            var vm = FAFJoVM.RetrieveAllFAFJO();
+            var vm = FAFJoVM.RetrieveAllFAFJOIn3Month();
             return View(vm);
+        }
+
+        public JsonResult JOChecked()
+        {
+            string jo = Request.Form["jo"];
+            FAFJoVM.UpdateFAFCheckStatus(jo);
+            var ret = new JsonResult();
+            ret.Data = new { success = true  };
+            return ret;
+        }
+
+        public ActionResult UpdateFAFCheckStatus(string JO)
+        {
+            FAFJoVM.UpdateFAFCheckStatus(JO);
+            ViewBag.JO = JO;
+            return View();
+        }
+
+        public JsonResult WarningPE()
+        {
+            string jo = Request.Form["jo"];
+            var msg = "Successfully Send Warning EMail To PE";
+
+            var fafjo = FAFJoVM.RetrieveAllFAFJOByNum(jo);
+            if (fafjo.Count > 0)
+            {
+                var pdpmmap = CfgUtility.GetProductPEMap(this);
+                var pe = ERPVM.FindPEByPD(fafjo[0].PNDes, pdpmmap);
+                if (string.IsNullOrEmpty(pe))
+                { pe = fafjo[0].PE; }
+
+                if (!string.IsNullOrEmpty(pe))
+                {
+                    ERPVM.SendWarningPEEmail(fafjo, pdpmmap,this);
+                }
+                else
+                {
+                    msg = "No PE Can Be Found To Send Warning Email.";
+                }
+            }
+            else
+            {
+                msg = "Failed To Find FAFJO By This JO Number.";
+            }
+
+            var ret = new JsonResult();
+            ret.Data = new { msg = msg };
+            return ret;
         }
 
 

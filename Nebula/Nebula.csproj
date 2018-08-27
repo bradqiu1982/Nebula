@@ -1080,6 +1080,7 @@
     <Content Include="Views\Shared\_pagination.cshtml" />
     <Content Include="Views\Shared\_sub_pagination.cshtml" />
     <Content Include="Scripts\ProductPEMap.cfg" />
+    <Content Include="Views\BRTrace\UpdateFAFCheckStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
