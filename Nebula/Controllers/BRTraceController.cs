@@ -416,8 +416,23 @@ namespace Nebula.Controllers
             { }
         }
 
+        private void SendOQMWarning()
+        {
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
+            {
+                var fn = "log" + DateTime.Now.ToString("yyyy-MM-dd");
+                var filename = Server.MapPath("~/userfiles") + "\\" + fn;
+                if (!System.IO.File.Exists(filename))
+                {
+                    OQMWarning.SendOQMWarning(this);
+                }
+            }
+        }
+
         public ActionResult HeartBeat()
         {
+            SendOQMWarning();
+
             UserAuth();
 
             logthdinfo("heart beat start");
@@ -1336,6 +1351,12 @@ namespace Nebula.Controllers
             ret.Data = new { msg = msg };
             return ret;
         }
+
+        //public ActionResult SendOQMWarning()
+        //{
+        //    OQMWarning.SendOQMWarning(this);
+        //    return RedirectToAction("Home");
+        //}
 
 
     }
