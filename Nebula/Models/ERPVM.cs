@@ -940,9 +940,27 @@ namespace Nebula.Models
             var ret = "";
             foreach (var kv in pdpmmap)
             {
-                if (pddesc.ToUpper().Contains(kv.Key.ToUpper()))
+                var tmpkey = kv.Key.ToUpper();
+                var tmpdesc = pddesc.ToUpper();
+                if (tmpkey.Contains("X"))
                 {
-                    return kv.Value;
+                    try
+                    {
+                        var xi = tmpkey.IndexOf("X");
+                        var newdes = tmpdesc.Substring(0, xi) + tmpdesc.Substring(xi + 1);
+                        if (newdes.Contains(tmpkey.Replace("X","")))
+                        {
+                            return kv.Value;
+                        }
+                    }
+                    catch (Exception ex) { }
+                }
+                else
+                {
+                    if (tmpdesc.Contains(tmpkey))
+                    {
+                        return kv.Value;
+                    }
                 }
             }
             return ret;
