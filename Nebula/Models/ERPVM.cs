@@ -977,6 +977,7 @@ namespace Nebula.Models
             thlist.Add("Move Time");
             thlist.Add("PN Desc");
             thlist.Add("PE");
+            thlist.Add("Check List");
             thlist.Add("Action");
             FAFJOTab.Add(thlist);
 
@@ -1011,11 +1012,13 @@ namespace Nebula.Models
                         }
 
                         trlist.Add(pe);
+                        trlist.Add("Label/Package;EEPROM;Appearance;Test data");
                         trlist.Add("<a href='http://wuxinpi.china.ads.finisar.com:8082/BRTrace/UpdateFAFCheckStatus?JO=" + item.JO + "'>Done</a>");
                     }
                     else
                     {
                         trlist.Add(" ");
+                        trlist.Add("Label/Package;EEPROM;Appearance;Test data");
                         trlist.Add(" ");
                     }
 
