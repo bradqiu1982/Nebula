@@ -9,7 +9,7 @@ EMAILSERVER:::wmail.finisar.com
 
 SHAREFOLDERUSER:::brad.qiu
 SHAREFOLDERDOMIN:::china
-SHAREFOLDERPWD:::wangle@456789
+SHAREFOLDERPWD:::wangle@4567890
 ERPJOBASEINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\WXI Finisar WIP Value Report.xls
 ERPJOCOMPONENTINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\Jobs_WXI.CSV
 ERPJOEXISTMAINSTORE:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WXI.csv
@@ -23,6 +23,7 @@ PLANNERCODEDICT:::\\wux-file01\Public\ERP_Report\WXI\Planning\Finisar - Item Att
 
 REPORTRECIEVER:::brad.qiu@finisar.com;shawn.zhang@finisar.com
 FAFREPORTRECIEVER:::brad.qiu@finisar.com;chengjing.wu@finisar.com;Shan.Xia@finisar.com;jamie.dai@finisar.com
+FAFWARNINGSTEPS:::VMI;OBA;PACKING;BARCODE
 
 OQMWARNING:::\\wux-file01\Public\Quality\25.Parallel TQM\3_FAI Check\OQM_Plan.xlsx
 OQMWARNLIST:::brad.qiu@finisar.com;nevin.niu@finisar.com;quan.zhuo@finisar.com;ping.wang@finisar.com

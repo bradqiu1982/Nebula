@@ -1050,6 +1050,7 @@ namespace Nebula.Models
         public static void SolveFAFJo(Controller ctrl,List<JOBaseInfo> FAFJOList)
         {
             var pdpmmap = CfgUtility.GetProductPEMap(ctrl);
+            var fafwarningsteps = CfgUtility.GetSysConfig(ctrl)["FAFWARNINGSTEPS"].Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             var solveddict = FAFJoVM.RetrieveAllSolvedFAFJODict();
             var jotobesolved = new List<FAFJoVM>();
@@ -1071,10 +1072,17 @@ namespace Nebula.Models
                 var snstatuslist = CamstarVM.UpdateJoMESStatus(item.JO);
                 foreach (var snstat in snstatuslist)
                 {
-                    if (snstat.WorkflowStepName.ToUpper().Contains("VMI")
-                        || snstat.WorkflowStepName.ToUpper().Contains("OBA")
-                        || snstat.WorkflowStepName.ToUpper().Contains("PACKING")
-                        || snstat.WorkflowStepName.ToUpper().Contains("BARCODE"))
+                    var matchflag = false;
+                    foreach (var ws in fafwarningsteps)
+                    {
+                        if (snstat.WorkflowStepName.ToUpper().Contains(ws.ToUpper())
+                            && !snstat.WorkflowStepName.ToUpper().Contains("SCRAP"))
+                        {
+                            matchflag = true;
+                            break;
+                        }
+                    }
+                    if (matchflag)
                     {
                         item.SN = snstat.ModuleSN;
                         item.WorkFlowStep = snstat.WorkflowStepName;

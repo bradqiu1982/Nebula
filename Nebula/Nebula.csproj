@@ -218,6 +218,7 @@
     <Compile Include="Models\NebulaVM.cs" />
     <Compile Include="Models\EmailUtility.cs" />
     <Compile Include="Models\ExcelReader.cs" />
+    <Compile Include="Models\OQMWarning.cs" />
     <Compile Include="Models\PNComponentInfo.cs" />
     <Compile Include="Models\UserCustomizeThemeVM.cs" />
     <Compile Include="Models\WebPageVM.cs" />
@@ -988,6 +989,7 @@
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\fonts\weathericons-regular-webfont.svg" />
     <Content Include="Scripts\highcharts-more.js" />
+    <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\jo.js" />
     <Content Include="Scripts\jodistribution.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -1014,7 +1016,6 @@
     <Content Include="Scripts\NebulaWorkLoad.xml" />
     <Content Include="Scripts\Nebulaheartbeat.txt" />
     <Content Include="Scripts\exporting.js" />
-    <Content Include="Scripts\highcharts.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.base64.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
