@@ -22,8 +22,9 @@ POCOMPONETINFO:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Open PO R
 PLANNERCODEDICT:::\\wux-file01\Public\ERP_Report\WXI\Planning\Finisar - Item Attributes Listing Report for WXI.csv
 
 REPORTRECIEVER:::brad.qiu@finisar.com;shawn.zhang@finisar.com
-FAFREPORTRECIEVER:::brad.qiu@finisar.com;chengjing.wu@finisar.com;Shan.Xia@finisar.com;jamie.dai@finisar.com
+FAFREPORTRECIEVER:::chengjing.wu@finisar.com;Shan.Xia@finisar.com;jamie.dai@finisar.com
 FAFWARNINGSTEPS:::VMI;OBA;PACKING;BARCODE
+FAFWHITELIST:::AAA
 
 OQMWARNING:::\\wux-file01\Public\Quality\25.Parallel TQM\3_FAI Check\OQM_Plan.xlsx
 OQMWARNLIST:::brad.qiu@finisar.com;nevin.niu@finisar.com;quan.zhuo@finisar.com;ping.wang@finisar.com

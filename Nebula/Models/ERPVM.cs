@@ -1049,8 +1049,11 @@ namespace Nebula.Models
 
         public static void SolveFAFJo(Controller ctrl,List<JOBaseInfo> FAFJOList)
         {
+            var syscfg = CfgUtility.GetSysConfig(ctrl);
             var pdpmmap = CfgUtility.GetProductPEMap(ctrl);
-            var fafwarningsteps = CfgUtility.GetSysConfig(ctrl)["FAFWARNINGSTEPS"].Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            var nongenericwhitelist = syscfg["FAFWHITELIST"].Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var fafwarningsteps = syscfg["FAFWARNINGSTEPS"].Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             var solveddict = FAFJoVM.RetrieveAllSolvedFAFJODict();
             var jotobesolved = new List<FAFJoVM>();
@@ -1058,9 +1061,30 @@ namespace Nebula.Models
             {
                 if (!solveddict.ContainsKey(item.JONumber))
                 {
-                    jotobesolved.Add(new FAFJoVM(item.PN,item.PNDesc,item.JONumber,"","","1982-05-06 10:00:00"));
-                }
-            }
+                    var nongeneric = false;
+                    var pndes = item.PNDesc.Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries)[0].ToUpper();
+                    if (pndes.Contains("-"))
+                    {
+                        nongeneric = true;
+                    }
+                    else
+                    {
+                        foreach (var wl in nongenericwhitelist)
+                        {
+                            if (pndes.Contains(wl.ToUpper()))
+                            {
+                                nongeneric = true;
+                                break;
+                            }
+                        }//end foreach
+                    }
+
+                    if (nongeneric)
+                    {
+                        jotobesolved.Add(new FAFJoVM(item.PN,item.PNDesc,item.JONumber,"","","1982-05-06 10:00:00"));
+                    }
+                }//end if
+            }//end foreach
 
             if (jotobesolved.Count == 0)
             {
@@ -1093,52 +1117,6 @@ namespace Nebula.Models
             }
 
             SendWarningPEEmail(jotobesolved, pdpmmap, ctrl);
-
-            //var FAFJOTab = new List<List<string>>();
-            //var thlist = new List<string>();
-            //thlist.Add("JO Num");
-            //thlist.Add("PN");
-            //thlist.Add("SN");
-            //thlist.Add("WorkFlow Step");
-            //thlist.Add("Move Time");
-            //thlist.Add("PN Desc");
-            //thlist.Add("PE");
-            //FAFJOTab.Add(thlist);
-
-            //foreach (var item in jotobesolved)
-            //{
-            //    if (!string.IsNullOrEmpty(item.WorkFlowStep))
-            //    {
-            //        var pe = FindPEByPD(item.PNDes, pdpmmap);
-            //        var trlist = new List<string>();
-            //        trlist.Add(item.JO);
-            //        trlist.Add(item.PN);
-            //        trlist.Add(item.SN);
-            //        trlist.Add(item.WorkFlowStep);
-            //        trlist.Add(item.ArriveTime);
-            //        trlist.Add(item.PNDes);
-            //        trlist.Add(pe);
-            //        FAFJOTab.Add(trlist);
-            //    }
-            //}
-
-            //if (FAFJOTab.Count > 1)
-            //{
-            //    var tabstr = EmailUtility.CreateTableStr(FAFJOTab);
-            //    var tablist = new List<string>();
-            //    tablist.Add(tabstr);
-            //    var content = EmailUtility.CreateTableHtml2("Hi Guys", "Below is a FAF Report:", "More: http://wuxinpi.china.ads.finisar.com:8082/BRTrace/FAFJO", tablist);
-
-            //    var cfg = CfgUtility.GetSysConfig(ctrl);
-            //    var to = cfg["FAFREPORTRECIEVER"];
-            //    var tolist = new List<string>();
-            //    tolist.AddRange(to.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries));
-            //    //var tolist = new List<string>();
-            //    //tolist.Add("brad.qiu@finisar.com");
-            //    //tolist.Add("sherry.zhang@finisar.com");
-            //    EmailUtility.SendEmail(ctrl, "WUXI NPI FAF Report", tolist, content, true);
-            //    new System.Threading.ManualResetEvent(false).WaitOne(500);
-            //}
 
             foreach (var item in jotobesolved)
             {
