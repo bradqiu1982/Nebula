@@ -1071,11 +1071,16 @@ namespace Nebula.Models
                     {
                         foreach (var wl in nongenericwhitelist)
                         {
-                            if (pndes.Contains(wl.ToUpper()))
+                            try
                             {
-                                nongeneric = true;
-                                break;
+                                var appendix = pndes.Substring(pndes.Length - 3);
+                                if (appendix.Contains(wl.ToUpper()))
+                                {
+                                    nongeneric = true;
+                                    break;
+                                }
                             }
+                            catch (Exception ex) { }
                         }//end foreach
                     }
 

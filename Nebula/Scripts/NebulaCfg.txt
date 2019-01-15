@@ -24,7 +24,7 @@ PLANNERCODEDICT:::\\wux-file01\Public\ERP_Report\WXI\Planning\Finisar - Item Att
 REPORTRECIEVER:::brad.qiu@finisar.com;shawn.zhang@finisar.com
 FAFREPORTRECIEVER:::chengjing.wu@finisar.com;Shan.Xia@finisar.com;jamie.dai@finisar.com
 FAFWARNINGSTEPS:::VMI;OBA;PACKING;BARCODE
-FAFWHITELIST:::AAA
+FAFWHITELIST:::EB2;SME;AF2;SEI;AF1;AH1;AHH;AHP;CB1;CTX;INS;LE1;LF1;LO1;MSA;BTE
 
 OQMWARNING:::\\wux-file01\Public\Quality\25.Parallel TQM\3_FAI Check\OQM_Plan.xlsx
 OQMWARNLIST:::brad.qiu@finisar.com;nevin.niu@finisar.com;quan.zhuo@finisar.com;ping.wang@finisar.com
