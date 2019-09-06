@@ -431,6 +431,18 @@ namespace Nebula.Controllers
 
         public ActionResult HeartBeat()
         {
+            var heartbeatinprocess = Server.MapPath("~/userfiles") + "\\" + "InHeartBeatProcess";
+            if (System.IO.File.Exists(heartbeatinprocess))
+            {
+                var lastinprocesstime = System.IO.File.GetLastWriteTime(heartbeatinprocess);
+                if ((DateTime.Now - lastinprocesstime).Hours >= 6)
+                { System.IO.File.Delete(heartbeatinprocess); }
+                else
+                { return View(); }
+            }
+            System.IO.File.WriteAllText(heartbeatinprocess, "hello");
+
+
             SendOQMWarning();
 
             UserAuth();
@@ -502,6 +514,10 @@ namespace Nebula.Controllers
             }
 
             logthdinfo("heart beat end");
+
+            try
+            { System.IO.File.Delete(heartbeatinprocess); }
+            catch (Exception ex) { }
 
             return View();
         }
