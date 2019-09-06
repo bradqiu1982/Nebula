@@ -265,6 +265,19 @@ namespace Nebula.Models
             }//end foreach
         }
 
+        public static string GetSubContainerName(string pcontainer)
+        {
+            var sql = @"select top 1 co.ContainerName from [InsiteDB].[insite].[Container] co
+                    left join [InsiteDB].[insite].[Container] c on co.ParentContainerId = c.ContainerId
+                    where c.ContainerName = '<pcontainer>'";
+            sql = sql.Replace("<pcontainer>", pcontainer);
+            var dbret = DBUtility.ExeMESSqlWithRes(sql);
+            foreach (var line in dbret)
+            {
+                return Convert.ToString(line[0]);
+            }
+            return string.Empty;
+        }
 
         public static List<JOSNStatus> UpdateJoMESStatus(string jo)
         {
@@ -287,6 +300,15 @@ namespace Nebula.Models
                         var temp = new JOSNStatus();
                         temp.JONumber = jo;
                         temp.ModuleSN = Convert.ToString(line[0]);
+                        if (!string.IsNullOrEmpty(temp.ModuleSN))
+                        {
+                            var subsn = GetSubContainerName(temp.ModuleSN);
+                            if (!string.IsNullOrEmpty(subsn))
+                            {
+                                temp.ModuleSN += "/" + subsn;
+                            }//end if
+                        }//end if
+
                         temp.WorkflowStepName = Convert.ToString(line[1]);
                         temp.LastMoveDate = Convert.ToDateTime(line[2]);
                         jostatuslist.Add(temp);
