@@ -59,9 +59,9 @@ namespace Nebula.Models
                         continue;
                     try
                     {
-                        if (item.Contains(";"))
+                        if (item.Contains(";") || item.Contains("/"))
                         {
-                            var ts = item.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                            var ts = item.Split(new string[] { ";","/" }, StringSplitOptions.RemoveEmptyEntries);
                             foreach (var t in ts)
                             {
                                 message.To.Add(t);
