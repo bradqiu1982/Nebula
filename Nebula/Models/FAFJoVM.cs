@@ -49,7 +49,7 @@ namespace Nebula.Models
         public static List<FAFJoVM> RetrieveAllFAFJOIn3Month()
         {
             var ret = new List<FAFJoVM>();
-            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked,ConfirmPeople,ConfirmTime from FAFJoVM where ArriveTime > @ArriveTime  order by ArriveTime desc";
+            var sql = "select PN,PNDes,JO,SN,WorkFlowStep,ArriveTime,PE,Checked,ConfirmPeople,ConfirmTime from FAFJoVM where ArriveTime > @ArriveTime  order by Checked, ArriveTime desc";
             var dict = new Dictionary<string, string>();
             dict.Add("@ArriveTime", DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd HH:mm:ss"));
             var dbret = DBUtility.ExeLocalSqlWithRes(sql, dict);
