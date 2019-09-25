@@ -9,7 +9,7 @@ EMAILSERVER:::wmail.finisar.com
 
 SHAREFOLDERUSER:::brad.qiu
 SHAREFOLDERDOMIN:::china
-SHAREFOLDERPWD:::wangle@4567892
+SHAREFOLDERPWD:::wangle@4567893
 ERPJOBASEINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\WXI Finisar WIP Value Report.xls
 ERPJOCOMPONENTINFO:::\\wux-file01\Public\ERP_Report\WXI\Planning\Jobs_WXI.CSV
 ERPJOEXISTMAINSTORE:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Onhand for WXI.csv
@@ -22,7 +22,7 @@ POCOMPONETINFO:::\\wux-file01\Public\ERP_Report\WXI\Logistic\Finisar - Open PO R
 PLANNERCODEDICT:::\\wux-file01\Public\ERP_Report\WXI\Planning\Finisar - Item Attributes Listing Report for WXI.csv
 
 REPORTRECIEVER:::brad.qiu@finisar.com;shawn.zhang@finisar.com
-FAFREPORTRECIEVER:::chengjing.wu@finisar.com;Shan.Xia@finisar.com;jamie.dai@finisar.com
+FAFREPORTRECIEVER:::chengjing.wu@finisar.com;Shan.Xia@finisar.com;jamie.dai@finisar.com;brad.qiu@finisar.com
 FAFWARNINGSTEPS:::VMI;OBA;PACKING;BARCODE
 FAFWHITELIST:::EB2;SME;AF2;SEI;AF1;AH1;AHH;AHP;CB1;CTX;INS;LE1;LF1;LO1;MSA;BTE
 
