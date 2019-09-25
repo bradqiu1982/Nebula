@@ -121,7 +121,7 @@ namespace Nebula.Models
                     }
                     catch (Exception ex)
                     {
-                        logthdinfo("send exception: " + ex.Message);
+                        logthdinfo("Nebula send exception: " + ex.Message);
                     }
                 }).Start();
             }
