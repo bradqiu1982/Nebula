@@ -5,7 +5,10 @@ FIRSTTRACETIME:::2018-05-01 10:00:00
 
 APPEMAILPWD:::abc@12345
 APPEMAILADRESS:::WXNPI.Trace@finisar.com
-EMAILSERVER:::wmail.finisar.com
+#EMAILSERVER:::wmail.finisar.com
+#EMAILSSL:::TRUE
+EMAILSERVER:::sny-mrs.ads.finisar.com
+EMAILSSL:::FALSE
 
 SHAREFOLDERUSER:::brad.qiu
 SHAREFOLDERDOMIN:::china
